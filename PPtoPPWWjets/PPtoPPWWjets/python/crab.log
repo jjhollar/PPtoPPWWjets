@@ -1,0 +1,168 @@
+DEBUG 2018-08-03 10:53:23,796: 	 Executing command: 'submit'
+DEBUG 2018-08-03 10:53:23,796: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+DEBUG 2018-08-03 10:53:23,802: 	 Checking credentials
+DEBUG 2018-08-03 10:53:23,803: 	 Found proxy file /tmp/x509up_u23476
+DEBUG 2018-08-03 10:53:23,803: 	 Getting proxy life time left
+DEBUG 2018-08-03 10:53:24,607: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -timeleft
+ output : 84107
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-03 10:53:25,315: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -actimeleft
+ output : 84106
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-03 10:53:25,316: 	 Proxy valid for 23:21:47 hours
+INFO 2018-08-03 10:53:25,316: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2018-08-03 10:53:25,316: 	 Loading CRAB configuration file.
+DEBUG 2018-08-03 10:53:25,322: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-08-03 10:53:25,322: 	 Working area '/afs/cern.ch/work/j/jjhollar/CTPPSTestrels/CMSSW_9_4_9/src/PPtoPPWWjets/PPtoPPWWjets/python/crab_WWhadronic_QCDPt600to800_Pythia8' already exists 
+Please change the requestName in the config file
+ERROR 2018-08-03 10:53:25,322: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 404, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/work/j/jjhollar/CTPPSTestrels/CMSSW_9_4_9/src/PPtoPPWWjets/PPtoPPWWjets/python/crab_WWhadronic_QCDPt600to800_Pythia8' already exists 
+Please change the requestName in the config file
+DEBUG 2018-08-03 10:53:48,077: 	 Executing command: 'submit'
+DEBUG 2018-08-03 10:53:48,077: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+DEBUG 2018-08-03 10:53:48,088: 	 Checking credentials
+DEBUG 2018-08-03 10:53:48,088: 	 Found proxy file /tmp/x509up_u23476
+DEBUG 2018-08-03 10:53:48,088: 	 Getting proxy life time left
+DEBUG 2018-08-03 10:53:48,898: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -timeleft
+ output : 84083
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-03 10:53:49,705: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -actimeleft
+ output : 84082
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-03 10:53:49,705: 	 Proxy valid for 23:21:23 hours
+INFO 2018-08-03 10:53:49,705: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2018-08-03 10:53:49,705: 	 Loading CRAB configuration file.
+DEBUG 2018-08-03 10:53:49,710: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-08-03 10:53:49,710: 	 Error: The '/' character is not accepted in the requestName parameter. If your intention was to specify the location of your task, please use the General.workArea parameter.
+ERROR 2018-08-03 10:53:49,710: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 398, in createWorkArea
+    requestName = getRequestName(requestName)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 376, in getRequestName
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: The '/' character is not accepted in the requestName parameter. If your intention was to specify the location of your task, please use the General.workArea parameter.
+DEBUG 2018-08-03 11:35:28,219: 	 Executing command: 'status'
+DEBUG 2018-08-03 11:35:28,219: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+ERROR 2018-08-03 11:35:28,222: 	 Cannot find .requestcache file in CRAB project directory /tmp/jjhollar/WWhadronic_JetHT_2017Cv1_17Nov/
+ERROR 2018-08-03 11:35:28,222: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/status.py", line 39, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 262, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/status.py", line 1019, in validateOptions
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 580, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 441, in loadLocalCache
+    raise ex
+CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /tmp/jjhollar/WWhadronic_JetHT_2017Cv1_17Nov/
+ERROR 2018-08-03 13:38:30,494: 	 Unhandled Exception!
+ERROR 2018-08-03 13:38:30,517: 	 
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 207, in <module>
+    flushMemoryLogger(client.tblogger, client.memhandler, client.logger.logfile)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 162, in flushMemoryLogger
+    filehandler = logging.FileHandler(logfilename)
+  File "/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/python/2.7.11-fmblme/lib/python2.7/logging/__init__.py", line 905, in __init__
+    StreamHandler.__init__(self, self._open())
+  File "/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/python/2.7.11-fmblme/lib/python2.7/logging/__init__.py", line 935, in _open
+    stream = open(self.baseFilename, self.mode)
+KeyboardInterrupt
+ERROR 2018-08-03 13:38:30,529: 	 ERROR: KeyboardInterrupt: 
+ERROR 2018-08-03 13:38:30,530: 	 
+	Please email hn-cms-computing-tools@cern.ch for support with the crab.log file or crab.log URL.
+ERROR 2018-08-03 13:38:30,530: 	 	Client Version: 3.3.1805.patch1
+ERROR 2018-08-03 13:38:30,530: 	 	Please use 'crab uploadlog' to upload the log file /afs/cern.ch/work/j/jjhollar/CTPPSTestrels/CMSSW_9_4_9/src/PPtoPPWWjets/PPtoPPWWjets/python/crab.log to the CRAB cache.
+DEBUG 2018-08-17 14:57:16,002: 	 Executing command: 'submit'
+DEBUG 2018-08-17 14:57:16,003: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+DEBUG 2018-08-17 14:57:16,072: 	 Checking credentials
+DEBUG 2018-08-17 14:57:16,073: 	 Found proxy file /tmp/x509up_u23476
+DEBUG 2018-08-17 14:57:16,073: 	 Getting proxy life time left
+DEBUG 2018-08-17 14:57:19,519: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -timeleft
+ output : 0
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-17 14:57:19,519: 	 Proxy valid for 00:00:00 hours
+DEBUG 2018-08-17 14:57:19,519: 	 Creating new proxy for 24:00 hours with VO group '' and VO role 'NULL'.
+DEBUG 2018-08-17 14:57:29,550: 	 Executing : 
+ command : voms-proxy-init -voms cms:/cms -valid 24:00 -rfc
+ output : None
+ error: None
+ retcode : 0
+DEBUG 2018-08-17 14:57:30,771: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -timeleft
+ output : 86398
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-17 14:57:31,995: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u23476 -actimeleft
+ output : 86396
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-17 14:57:33,116: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u23476 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+/cms/uscms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2018-08-17 14:57:33,116: 	 Proxy created.
+INFO 2018-08-17 14:57:33,116: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2018-08-17 14:57:33,116: 	 Loading CRAB configuration file.
+DEBUG 2018-08-17 14:57:33,166: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-08-17 14:57:33,182: 	 Working area '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8/crab_WWhadronic_QCDPt800to1000_Pythia8' already exists 
+Please change the requestName in the config file
+ERROR 2018-08-17 14:57:33,182: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 404, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8/crab_WWhadronic_QCDPt800to1000_Pythia8' already exists 
+Please change the requestName in the config file
