@@ -89,6 +89,8 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT<double> rho_token_;
   edm::EDGetTokenT<edm::TriggerResults> hlt_token_;
   edm::EDGetTokenT<std::vector< PileupSummaryInfo > > pu_token_;
+  edm::EDGetTokenT<reco::GenParticleCollection> gen_part_token_;
+  edm::EDGetTokenT<reco::GenJetCollection> gen_jet_token_;
 
   TTree * tree_;
 
@@ -112,6 +114,12 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * pps_track_x_;
   std::vector<float> * pps_track_y_;
   std::vector<int> * pps_track_rpid_;
+
+  std::vector<float> * gen_proton_px_;
+  std::vector<float> * gen_proton_py_;
+  std::vector<float> * gen_proton_pz_;
+  std::vector<float> * gen_proton_xi_;
+  std::vector<float> * gen_proton_t_;
 
   std::vector<string> * hlt_;
 
@@ -144,10 +152,13 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) : 
   jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("slimmedJetsAK8JetId")))),
   pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsLocalTrackLiteProducer")))),
+  //  pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsFastProtonSimulationWithBeamSm")))),
   vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
   pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("slimmedAddPileupInfo"))),
+  gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("prunedGenParticles"))),
+  gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJetsAK8"))),
   hltPrescaleProvider_(iConfig, consumesCollector(), *this)
 
 {
@@ -250,6 +261,12 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      {
        reco::Jet jet = (*jets)[ijet];;
 
+       // CMSSW_8_X samples
+       //       double pruned_mass = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
+       //       double tau1         = (*jets)[ijet].userFloat("NjettinessAK8:tau1");
+       //       double tau2         = (*jets)[ijet].userFloat("NjettinessAK8:tau2");
+
+       // CMSSW_9_4_X
        double pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
        double tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
        double tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
@@ -300,6 +317,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    // Proton lite tracks
    edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
    iEvent.getByToken( pps_token_, ppsTracks );
+
    for ( const auto& trk : *ppsTracks ) 
      {
        const CTPPSDetId detid( trk.getRPId() );
@@ -331,6 +349,30 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        //cout<<"True num interactions is: "<<PupInfo->begin()->getTrueNumInteractions()<<endl;                                                              
        trueInteractions=PupInfo->begin()->getTrueNumInteractions();
        *pileupWeight_ = LumiWeights->weight( trueInteractions );
+     }
+
+   // Fill GEN infor if running on MC
+   if(isMC == true)
+     {
+       edm::Handle<reco::GenParticleCollection> genP;
+       iEvent.getByLabel("prunedGenParticles",genP);
+
+       for (reco::GenParticleCollection::const_iterator mcIter=genP->begin(); mcIter != genP->end(); mcIter++ ) {
+	 if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
+	   {
+	     double thexi = 1 - ((mcIter->energy())/(13000.0/2.0));
+	     double thet = -(std::pow(mcIter->pt(), 2));
+	     double thepz = mcIter->pz();
+	     double thepx = mcIter->px();
+	     double thepy = mcIter->py();
+
+	     (*gen_proton_xi_).push_back(thexi);
+	     (*gen_proton_t_).push_back(thet);
+	     (*gen_proton_pz_).push_back(thepz);
+	     (*gen_proton_py_).push_back(thepy);
+	     (*gen_proton_px_).push_back(thepx);
+	   }
+       }
      }
 
    tree_->Fill();
@@ -365,6 +407,12 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*pps_track_y_).clear();
    (*pps_track_rpid_).clear();
 
+   (*gen_proton_px_).clear();
+   (*gen_proton_py_).clear();
+   (*gen_proton_pz_).clear();
+   (*gen_proton_xi_).clear();
+   (*gen_proton_t_).clear();
+
    (*hlt_).clear();
 
 }
@@ -397,6 +445,13 @@ PPtoPPWWjets::beginJob()
   pps_track_x_ = new std::vector<float>;
   pps_track_y_ = new std::vector<float>;
   pps_track_rpid_ = new std::vector<int>;
+
+  gen_proton_px_ = new std::vector<float>;
+  gen_proton_py_ = new std::vector<float>;
+  gen_proton_pz_ = new std::vector<float>;
+  gen_proton_xi_ = new std::vector<float>;
+  gen_proton_t_ = new std::vector<float>;
+
   hlt_ = new std::vector<string>;
 
   ev_ = new long int;
@@ -423,6 +478,11 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("pps_track_y",&pps_track_y_);
   tree_->Branch("pps_track_rpid",&pps_track_rpid_);
   tree_->Branch("hlt",&hlt_);
+  tree_->Branch("gen_proton_px",&gen_proton_px_);
+  tree_->Branch("gen_proton_py",&gen_proton_py_);
+  tree_->Branch("gen_proton_pz",&gen_proton_pz_);
+  tree_->Branch("gen_proton_xi",&gen_proton_xi_);
+  tree_->Branch("gen_proton_t",&gen_proton_t_);
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
   tree_->Branch("pileupWeight",pileupWeight_,"pileupWeight/f");
   tree_->Branch("run",run_,"run/I");
@@ -452,6 +512,11 @@ PPtoPPWWjets::endJob()
   delete pps_track_x_;
   delete pps_track_y_;
   delete pps_track_rpid_;
+  delete gen_proton_px_;
+  delete gen_proton_py_;
+  delete gen_proton_pz_;
+  delete gen_proton_xi_;
+  delete gen_proton_t_;
   delete hlt_;
 }
 
