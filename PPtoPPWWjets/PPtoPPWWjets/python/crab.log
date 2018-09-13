@@ -166,3 +166,67 @@ Traceback (most recent call last):
     raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
 ConfigException: Working area '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8/crab_WWhadronic_QCDPt800to1000_Pythia8' already exists 
 Please change the requestName in the config file
+DEBUG 2018-08-22 10:50:54,055: 	 Executing command: 'kill'
+DEBUG 2018-08-22 10:50:54,062: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+ERROR 2018-08-22 10:50:54,063: 	 Error: all is not a valid CRAB project directory.
+ERROR 2018-08-22 10:50:54,063: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 262, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/kill.py", line 63, in validateOptions
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1805.patch1/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 575, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: all is not a valid CRAB project directory.
+DEBUG 2018-09-10 09:58:24,003: 	 Executing command: 'kill'
+DEBUG 2018-09-10 09:58:24,003: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+ERROR 2018-09-10 09:58:24,003: 	 Error: all is not a valid CRAB project directory.
+ERROR 2018-09-10 09:58:24,004: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 262, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/kill.py", line 55, in validateOptions
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 575, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: all is not a valid CRAB project directory.
+DEBUG 2018-09-10 11:20:10,546: 	 Executing command: 'kill'
+DEBUG 2018-09-10 11:20:10,547: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+ERROR 2018-09-10 11:20:10,547: 	 Error: Please indicate the CRAB project directory with --dir=<project-directory>.
+ERROR 2018-09-10 11:20:10,547: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 262, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/kill.py", line 55, in validateOptions
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 571, in validateOptions
+    raise ex
+MissingOptionException: [91mError[0m: Please indicate the CRAB project directory with --dir=<project-directory>.
+DEBUG 2018-09-10 11:20:16,830: 	 Executing command: 'kill'
+DEBUG 2018-09-10 11:20:16,830: 	 Found CRAB cache file /afs/cern.ch/user/j/jjhollar/.crab3
+ERROR 2018-09-10 11:20:16,831: 	 Error: all is not a valid CRAB project directory.
+ERROR 2018-09-10 11:20:16,831: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 262, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/kill.py", line 55, in validateOptions
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 575, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: all is not a valid CRAB project directory.

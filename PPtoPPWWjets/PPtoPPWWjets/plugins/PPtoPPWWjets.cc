@@ -45,6 +45,7 @@
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
 #include "DataFormats/CTPPSReco/interface/CTPPSLocalTrackLite.h"
 #include "DataFormats/CTPPSDetId/interface/CTPPSDetId.h"
+#include "DataFormats/Math/interface/LorentzVector.h"
 
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/Common/interface/TriggerNames.h"
@@ -56,6 +57,9 @@
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
+
+// For uncorrected jets
+typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<double> > LorentzVector;
 
 
 //
@@ -120,6 +124,12 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * gen_proton_pz_;
   std::vector<float> * gen_proton_xi_;
   std::vector<float> * gen_proton_t_;
+  std::vector<float> * gen_jet_pt_;
+  std::vector<float> * gen_jet_eta_;
+  std::vector<float> * gen_jet_phi_;
+  std::vector<float> * gen_jet_energy_;
+  std::vector<float> * gen_dijet_mass_;
+  std::vector<float> * gen_dijet_y_;
 
   std::vector<string> * hlt_;
 
@@ -194,6 +204,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt");
      }
 
+
    std::vector<JetCorrectorParameters> vPar;
    for ( std::vector<std::string>::const_iterator payloadBegin = jecAK8PayloadNames_.begin(),
 	   payloadEnd = jecAK8PayloadNames_.end(),
@@ -202,7 +213,8 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
      vPar.push_back(pars);
    }
 
-   // Make the FactorizedJetCorrector                                                                                                                                                      
+
+   // Make the FactorizedJetCorrector                                                                                                                            
    jecAK8_ = boost::shared_ptr<FactorizedJetCorrector> ( new FactorizedJetCorrector(vPar) );
 
 }
@@ -243,13 +255,14 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
    
 
-   //Get Vertices and rho                                                                                                                                             
+   //Get Vertices and rho                                                                                                                                        
    edm::Handle< std::vector<reco::Vertex> > vertices_;
    iEvent.getByToken(vertex_token_, vertices_);
 
    edm::Handle<double> rhoHandle;
    iEvent.getByToken(rho_token_,rhoHandle);
    double rho = *rhoHandle; 
+
 
    // Get ak8Jets
    edm::Handle<edm::View<pat::Jet>> jets;
@@ -280,12 +293,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*jet_tau2_).push_back(tau2);
        (*jet_vertexz_).push_back(jet.vz());
 
-       // Now apply corrections!
+       // Now apply pruned mass corrections to the uncorrected jets!
+       const LorentzVector uncorrJet = (*jets)[ijet].correctedP4(0);
        double pruned_masscorr = 0;
        double corr = 0;
-       jecAK8_->setJetEta( jet.eta() );
-       jecAK8_->setJetPt ( jet.pt() );
-       jecAK8_->setJetE  ( jet.energy() );
+       jecAK8_->setJetEta( uncorrJet.eta() );
+       jecAK8_->setJetPt ( uncorrJet.pt() );
+       jecAK8_->setJetE  ( uncorrJet.energy() );
        jecAK8_->setJetA  ( jet.jetArea() );
        jecAK8_->setRho   ( rho );
        jecAK8_->setNPV   ( vertices_->size() );
@@ -373,7 +387,33 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     (*gen_proton_px_).push_back(thepx);
 	   }
        }
+
+       edm::Handle<reco::GenJetCollection> genJet;
+       iEvent.getByLabel("slimmedGenJetsAK8",genJet);
+
+       TLorentzVector genjet1, genjet2, genjj;
+
+       for (reco::GenJetCollection::const_iterator genJetIter=genJet->begin(); genJetIter != genJet->end(); genJetIter++ ) {
+	 (*gen_jet_pt_).push_back(genJetIter->pt());
+	 (*gen_jet_phi_).push_back(genJetIter->phi());
+	 (*gen_jet_eta_).push_back(genJetIter->eta());
+	 (*gen_jet_energy_).push_back(genJetIter->energy());
+       }
+       genjet1.SetPtEtaPhiE((*gen_jet_pt_)[0],(*gen_jet_eta_)[0],(*gen_jet_phi_)[0],(*gen_jet_energy_)[0]);
+       genjet2.SetPtEtaPhiE((*gen_jet_pt_)[1],(*gen_jet_eta_)[1],(*gen_jet_phi_)[1],(*gen_jet_energy_)[1]);
+       genjj = genjet1+genjet2;
+       (*gen_dijet_mass_).push_back(genjj.M());
+       (*gen_dijet_y_).push_back(genjj.Rapidity());
      }
+
+   
+
+   /*
+   std::cout << "JH: Filling tree!" << std::endl;
+   std::cout << "\tJH: pps_track_rpid_.size() = " << pps_track_rpid_->size() << std::endl
+	     << "\tJH: jet_pt_.size() = " << jet_pt_->size() << std::endl
+	     << "\tJH: dijet_phi_.size() = " << dijet_phi_->size() << std::endl;
+   */
 
    tree_->Fill();
 
@@ -407,11 +447,20 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*pps_track_y_).clear();
    (*pps_track_rpid_).clear();
 
-   (*gen_proton_px_).clear();
-   (*gen_proton_py_).clear();
-   (*gen_proton_pz_).clear();
-   (*gen_proton_xi_).clear();
-   (*gen_proton_t_).clear();
+   if(isMC == true)
+     {
+       (*gen_proton_px_).clear();
+       (*gen_proton_py_).clear();
+       (*gen_proton_pz_).clear();
+       (*gen_proton_xi_).clear();
+       (*gen_proton_t_).clear();
+       (*gen_jet_pt_).clear();
+       (*gen_jet_eta_).clear();
+       (*gen_jet_phi_).clear();
+       (*gen_jet_energy_).clear();
+       (*gen_dijet_mass_).clear();
+       (*gen_dijet_y_).clear();
+     }
 
    (*hlt_).clear();
 
@@ -451,6 +500,12 @@ PPtoPPWWjets::beginJob()
   gen_proton_pz_ = new std::vector<float>;
   gen_proton_xi_ = new std::vector<float>;
   gen_proton_t_ = new std::vector<float>;
+  gen_jet_pt_ = new std::vector<float>;
+  gen_jet_eta_ = new std::vector<float>;
+  gen_jet_phi_ = new std::vector<float>;
+  gen_jet_energy_ = new std::vector<float>;
+  gen_dijet_mass_ = new std::vector<float>;
+  gen_dijet_y_ = new std::vector<float>;
 
   hlt_ = new std::vector<string>;
 
@@ -478,11 +533,22 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("pps_track_y",&pps_track_y_);
   tree_->Branch("pps_track_rpid",&pps_track_rpid_);
   tree_->Branch("hlt",&hlt_);
-  tree_->Branch("gen_proton_px",&gen_proton_px_);
-  tree_->Branch("gen_proton_py",&gen_proton_py_);
-  tree_->Branch("gen_proton_pz",&gen_proton_pz_);
-  tree_->Branch("gen_proton_xi",&gen_proton_xi_);
-  tree_->Branch("gen_proton_t",&gen_proton_t_);
+
+  if(isMC == true)
+    {
+      tree_->Branch("gen_proton_px",&gen_proton_px_);
+      tree_->Branch("gen_proton_py",&gen_proton_py_);
+      tree_->Branch("gen_proton_pz",&gen_proton_pz_);
+      tree_->Branch("gen_proton_xi",&gen_proton_xi_);
+      tree_->Branch("gen_proton_t",&gen_proton_t_);
+      tree_->Branch("gen_jet_pt",&gen_jet_pt_);
+      tree_->Branch("gen_jet_eta",&gen_jet_eta_);
+      tree_->Branch("gen_jet_phi",&gen_jet_phi_);
+      tree_->Branch("gen_jet_energy",&gen_jet_energy_);
+      tree_->Branch("gen_dijet_mass",&gen_dijet_mass_);
+      tree_->Branch("gen_dijet_y",&gen_dijet_y_);
+    }
+
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
   tree_->Branch("pileupWeight",pileupWeight_,"pileupWeight/f");
   tree_->Branch("run",run_,"run/I");
@@ -517,6 +583,12 @@ PPtoPPWWjets::endJob()
   delete gen_proton_pz_;
   delete gen_proton_xi_;
   delete gen_proton_t_;
+  delete gen_jet_pt_;
+  delete gen_jet_eta_;
+  delete gen_jet_phi_;
+  delete gen_jet_energy_;
+  delete gen_dijet_mass_;
+  delete gen_dijet_y_;
   delete hlt_;
 }
 

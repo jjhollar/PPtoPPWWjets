@@ -1,22 +1,34 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
+
 #config.General.requestName = 'WWhadronic_JetHT_2017Cv1_17Nov'
 #config.General.workArea = '/tmp/jjhollar/WWhadronic_JetHT_2017Cv1_17Nov'
+#config.General.requestName = 'WWhadronic_JetHT_2017Bv1_17Nov'                                                                    
+                               
+#config.General.workArea = '/tmp/jjhollar/WWhadronic_JetHT_2017Bv1_17Nov'                                                         
+                               
+config.General.requestName = 'WWhadronic_JetHT_2017Dv1_17Nov'
+config.General.workArea = '/tmp/jjhollar/WWhadronic_JetHT_2017Dv1_17Nov'                           
+
 #config.General.requestName = 'WWhadronic_QCDPt600to800_Pythia8'
 #config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt600to800_Pythia8'
 #config.General.requestName = 'WWhadronic_QCDPt470to600_Pythia8'
 #config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt470to600_Pythia8'
-#config.General.requestName = 'WWhadronic_QCDPt800to1000_Pythia8'                                                                                                                   
-#config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'                                                                                                        
+#config.General.requestName = 'WWhadronic_QCDPt800to1000_Pythia8'                                                                 
+                               
+                   
+#config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'                                                      
+                               
+                   
 #config.General.requestName = 'WWhadronic_QCDPt300to470_Pythia8'
 #config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt300to470_Pythia8'
 
 #config.General.requestName = 'WWhadronic_QCDPt170to300_Pythia8'
 #config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt170to300_Pythia8'
 
-config.General.requestName = 'WWhadronic_QCDPt800to1000_Pythia8'
-config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'
+#config.General.requestName = 'WWhadronic_QCDPt1000to1400_Pythia8'
+#config.General.workArea = '/tmp/jjhollar/WWhadronic_QCDPt1000to1400_Pythia8'
 
 
 config.General.transferOutputs = True
@@ -37,41 +49,55 @@ config.JobType.inputFiles = [
     'PUHistos_mc.root'
 ]
 
-
+#config.Data.inputDataset = '/JetHT/Run2017B-17Nov2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-17Nov2017-v1/MINIAOD'
+config.Data.inputDataset = '/JetHT/Run2017D-17Nov2017-v1/MINIAOD'
+
 #config.Data.inputDataset = '/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'
 #config.Data.inputDataset = '/QCD_Pt_470to600_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'
 #config.Data.inputDataset = '/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v2/MINIAODSIM'
 #config.Data.inputDataset = '/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'
-#config.Data.inputDataset = '/QCD_Pt_170to300_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'                                   
-config.Data.inputDataset = '/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v2/MINIAODSIM' 
-                                 
+#config.Data.inputDataset = '/QCD_Pt_170to300_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'    
+#config.Data.inputDataset = '/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v2/MINIAODSIM' 
+#config.Data.inputDataset = '/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM'
+                                
 
 config.Data.inputDBS = 'global'
 # for data
 #config.Data.splitting = 'Automatic'
 # for MC
-config.Data.splitting = 'FileBased'                                                                                                                                 
-config.Data.unitsPerJob = 9                                                                                                                                         
-#config.Data.lumiMask = 'Cert_13TeV_PromptReco_Collisions17_RPIN_JSON_all.txt'
+config.Data.splitting = 'FileBased'                                                                                               
+config.Data.unitsPerJob = 9                                                                                                       
+                              
+    
+config.Data.lumiMask = 'Cert_13TeV_PromptReco_Collisions17_RPIN_JSON_all.txt'
 
 
 #config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_JetHT_2017Cv1_17Nov/'
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_JetHT_2017Bv1_17Nov/'                                               
+                                
+config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_JetHT_2017Dv1_17Nov/'                        
+
 #config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt600to800_Pythia8'
 #config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt470to600_Pythia8'
-#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'                                                                                              
-#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt300to470_Pythia8'                                                                                                              
-#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt170to300_Pythia8'                                                                             
-config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'                                
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt300to470_Pythia8'                                              
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt170to300_Pythia8'                                              
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt800to1000_Pythia8'                                
+#config.Data.outLFNDirBase = '/store/user/jjhollar/WWhadronic_QCDPt1000to1400_Pythia8'
 
 
 config.Data.publication = False
+#config.Data.outputDatasetTag = 'WWhadronic_JetHT_2017Bv1_17Nov'                                                                  
 #config.Data.outputDatasetTag = 'WWhadronic_JetHT_2017Cv1_17Nov'
+config.Data.outputDatasetTag = 'WWhadronic_JetHT_2017Dv1_17Nov'
+
 #config.Data.outputDatasetTag = 'WWhadronic_QCDPt600to800_Pythia8'
 #config.Data.outputDatasetTag = 'WWhadronic_QCDPt470to600_Pythia8'
 #config.Data.outputDatasetTag = 'WWhadronic_QCDPt800to1000_Pythia8'
-#config.Data.outputDatasetTag = 'WWhadronic_QCDPt300to470_Pythia8'                                                                                               
-#config.Data.outputDatasetTag = 'WWhadronic_QCDPt170to300_Pythia8'                                                                                               config.Data.outputDatasetTag = 'WWhadronic_QCDPt800to1000_Pythia8'                                 
-
+#config.Data.outputDatasetTag = 'WWhadronic_QCDPt300to470_Pythia8'                                                                
+#config.Data.outputDatasetTag = 'WWhadronic_QCDPt170to300_Pythia8'                                                                
+#config.Data.outputDatasetTag = 'WWhadronic_QCDPt800to1000_Pythia8'                                 
+#config.Data.outputDatasetTag = 'WWhadronic_QCDPt1000to1400_Pythia8'
 
 config.Site.storageSite = 'T2_US_Wisconsin'
