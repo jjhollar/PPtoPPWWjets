@@ -39,6 +39,8 @@
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "JetMETCorrections/Objects/interface/JetCorrectionsRecord.h"
+#include "JetMETCorrections/Modules/interface/JetResolution.h"
+#include "CondFormats/JetMETObjects/interface/JetResolutionObject.h"
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "DataFormats/PatCandidates/interface/Jet.h"
@@ -87,6 +89,8 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 
       // ----------member data ---------------------------
   boost::shared_ptr<FactorizedJetCorrector> jecAK8_;
+  std::string jerAK8chsName_res_ ;
+  std::string jerAK8chsName_sf_ ;
   edm::EDGetTokenT<edm::View<pat::Jet>> jet_token_;
   edm::EDGetTokenT<std::vector<CTPPSLocalTrackLite> > pps_token_;
   edm::EDGetTokenT<std::vector<reco::Vertex>> vertex_token_;
@@ -130,6 +134,11 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * gen_jet_energy_;
   std::vector<float> * gen_dijet_mass_;
   std::vector<float> * gen_dijet_y_;
+  std::vector<float> * jet_jer_res_;
+  std::vector<float> * jet_jer_sf_;
+  std::vector<float> * jet_jer_sfup_;
+  std::vector<float> * jet_jer_sfdown_;
+
 
   std::vector<string> * hlt_;
 
@@ -188,15 +197,35 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
                                   
    std::vector<std::string> jecAK8PayloadNames_;
    if(isMC==false && year==2017 && era == "B")
-     {jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2L3Residual_AK8PFchs.txt");}
+     {
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2L3Residual_AK8PFchs.txt");
+     }
    if(isMC==false && year==2017 && era == "C")
-     {jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt");}
+     {
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt");
+     }
    if(isMC==false && year==2017 && era == "D")
-     {jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L2L3Residual_AK8PFchs.txt");}
+     {
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L2L3Residual_AK8PFchs.txt");
+     }
    if(isMC==false && year==2017 && era == "E")
-     {jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L2L3Residual_AK8PFchs.txt");}
+     {
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L2L3Residual_AK8PFchs.txt");
+     }
    if(isMC==false && year==2017 && era == "F")
-     {jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFchs.txt");}
+     {
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFchs.txt");
+     }
 
    if(isMC==true && year==2017)
      {
@@ -217,6 +246,12 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    // Make the FactorizedJetCorrector                                                                                                                            
    jecAK8_ = boost::shared_ptr<FactorizedJetCorrector> ( new FactorizedJetCorrector(vPar) );
 
+   // Get JER smearing                                                                                                                                               
+   if(isMC==true && year==2017) // Note - here we're using Summer16 for 2017 MC, until the 2017 version is ready
+     {                                     
+       jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "Summer16_25nsV1_MC_SF_AK8PFchs.txt";
+     }
 }
 
 
@@ -270,6 +305,9 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    unsigned int collSize=jets->size();
    TLorentzVector jet1, jet2, jj;
 
+   JME::JetResolution resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
+   JME::JetResolutionScaleFactor resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
+
    for (unsigned int ijet=0; ijet<collSize; ijet++) 
      {
        reco::Jet jet = (*jets)[ijet];;
@@ -306,6 +344,26 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        corr = jecAK8_->getCorrection();
        pruned_masscorr = corr*pruned_mass;
        (*jet_corrmass_).push_back(pruned_masscorr);
+
+       // JER
+       if(isMC == true)
+	 {
+	   JME::JetParameters parameters_ak8;
+	   parameters_ak8.setJetPt(jet.pt());
+	   parameters_ak8.setJetEta(jet.eta());
+	   parameters_ak8.setRho(rho);
+      
+	   float jer_res= resolution_ak8.getResolution(parameters_ak8);
+	   float jer_sf = resolution_ak8_sf.getScaleFactor(parameters_ak8);
+	   float jer_sf_up = resolution_ak8_sf.getScaleFactor(parameters_ak8, Variation::UP);
+	   float jer_sf_down = resolution_ak8_sf.getScaleFactor(parameters_ak8, Variation::DOWN);
+
+	   (*jet_jer_res_).push_back(jer_res);
+	   (*jet_jer_sf_).push_back(jer_sf);
+	   (*jet_jer_sfup_).push_back(jer_sf_up);
+           (*jet_jer_sfdown_).push_back(jer_sf_down);
+
+	 }
        
      }
 
@@ -460,6 +518,11 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*gen_jet_energy_).clear();
        (*gen_dijet_mass_).clear();
        (*gen_dijet_y_).clear();
+
+       (*jet_jer_res_).clear();
+       (*jet_jer_sf_).clear();
+       (*jet_jer_sfup_).clear();
+       (*jet_jer_sfdown_).clear();
      }
 
    (*hlt_).clear();
@@ -507,6 +570,12 @@ PPtoPPWWjets::beginJob()
   gen_dijet_mass_ = new std::vector<float>;
   gen_dijet_y_ = new std::vector<float>;
 
+  jet_jer_res_ = new std::vector<float>;
+  jet_jer_sf_ = new std::vector<float>;
+  jet_jer_sfup_ = new std::vector<float>;
+  jet_jer_sfdown_ = new std::vector<float>;
+
+
   hlt_ = new std::vector<string>;
 
   ev_ = new long int;
@@ -547,6 +616,12 @@ PPtoPPWWjets::beginJob()
       tree_->Branch("gen_jet_energy",&gen_jet_energy_);
       tree_->Branch("gen_dijet_mass",&gen_dijet_mass_);
       tree_->Branch("gen_dijet_y",&gen_dijet_y_);
+
+      tree_->Branch("jet_jer_res",&jet_jer_res_);
+      tree_->Branch("jet_jer_sf",&jet_jer_sf_);
+      tree_->Branch("jet_jer_sfup",&jet_jer_sfup_);
+      tree_->Branch("jet_jer_sfdown",&jet_jer_sfdown_);
+
     }
 
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
@@ -589,6 +664,11 @@ PPtoPPWWjets::endJob()
   delete gen_jet_energy_;
   delete gen_dijet_mass_;
   delete gen_dijet_y_;
+  delete jet_jer_res_;
+  delete jet_jer_sf_;
+  delete jet_jer_sfup_;
+  delete jet_jer_sfdown_;
+
   delete hlt_;
 }
 
