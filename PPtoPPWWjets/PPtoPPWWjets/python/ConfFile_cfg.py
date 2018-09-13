@@ -22,6 +22,16 @@ process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 
+# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                                                                      
+# Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                             
+# is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                           
+# and 94X_dataRun2_v6.                                                                                                                                                                                       
+MC=True
+if MC:
+    process.GlobalTag.globaltag ='94X_mc2017_realistic_v14'
+else:
+    process.GlobalTag.globaltag ='94X_dataRun2_v6'
+
 
 # New from Ksenia+Finn - update jet corrections
 from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
@@ -57,16 +67,10 @@ process.slimmedJetsJetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
 
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
-# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                                          
-# Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag 
-# is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8 
-# and 94X_dataRun2_v6.                                                                                           
-MC=True
+
 if MC:
-    process.GlobalTag.globaltag ='94X_mc2017_realistic_v8'
     process.demo.isMC = cms.bool(True)
 else:
-    process.GlobalTag.globaltag ='94X_dataRun2_v6'
     process.demo.isMC = cms.bool(False)
 
 process.demo.year = cms.int32(2017)
@@ -80,3 +84,5 @@ process.p = cms.Path(process.hltFilter *
                      process.slimmedJetsAK8JetId *
                      process.slimmedJetsJetId *
                      process.demo)
+
+#print process.dumpPython()
