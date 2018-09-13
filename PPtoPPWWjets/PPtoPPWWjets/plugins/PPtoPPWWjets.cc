@@ -139,8 +139,11 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * jet_jer_sfup_;
   std::vector<float> * jet_jer_sfdown_;
 
-
   std::vector<string> * hlt_;
+
+  int  ngenmu_;
+  int  ngene_;
+  int  ngentau_;
 
   int * run_;
   long int * ev_;
@@ -426,6 +429,10 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    // Fill GEN infor if running on MC
    if(isMC == true)
      {
+       ngenmu_ = 0;
+       ngene_ = 0;
+       ngentau_ = 0;
+
        edm::Handle<reco::GenParticleCollection> genP;
        iEvent.getByLabel("prunedGenParticles",genP);
 
@@ -444,6 +451,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     (*gen_proton_py_).push_back(thepy);
 	     (*gen_proton_px_).push_back(thepx);
 	   }
+	 
+	 if(fabs(mcIter->pdgId()) == 11 && fabs(mcIter->mother()->pdgId()) == 24)
+	   ngene_++;
+         if(fabs(mcIter->pdgId()) == 13 && fabs(mcIter->mother()->pdgId()) == 24)
+	   ngenmu_++;
+         if(fabs(mcIter->pdgId()) == 15 && fabs(mcIter->mother()->pdgId()) == 24)
+	   ngentau_++;
        }
 
        edm::Handle<reco::GenJetCollection> genJet;
@@ -622,6 +636,9 @@ PPtoPPWWjets::beginJob()
       tree_->Branch("jet_jer_sfup",&jet_jer_sfup_);
       tree_->Branch("jet_jer_sfdown",&jet_jer_sfdown_);
 
+      tree_->Branch("gen_n_e",&ngene_,"gen_n_e/I");
+      tree_->Branch("gen_n_mu",&ngenmu_,"gen_n_mu/I");
+      tree_->Branch("gen_n_tau",&ngentau_,"gen_n_tau/I");
     }
 
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
