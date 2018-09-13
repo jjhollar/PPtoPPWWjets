@@ -9,6 +9,7 @@
 <use name="DataFormats/PatCandidates"/>
 <use name="DataFormats/CTPPSDetId"/>
 <use name="DataFormats/CTPPSReco"/>
+<use name="JetMETCorrections/Modules"/>
 <use name="HLTrigger/HLTcore"/>
 <use name="PhysicsTools/Utilities"/>
 <flags EDM_PLUGIN="1"/>
