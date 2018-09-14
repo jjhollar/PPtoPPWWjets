@@ -308,8 +308,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    unsigned int collSize=jets->size();
    TLorentzVector jet1, jet2, jj;
 
-   JME::JetResolution resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
-   JME::JetResolutionScaleFactor resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
+   JME::JetResolution resolution_ak8;
+   JME::JetResolutionScaleFactor resolution_ak8_sf;
+   if(isMC == true)
+     {
+       resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
+       resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
+     }
 
    for (unsigned int ijet=0; ijet<collSize; ijet++) 
      {
