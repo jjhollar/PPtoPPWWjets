@@ -137,6 +137,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
     if(samplenumber == 6)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root");
+    if(samplenumber == 7)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
     
     if(samplenumber == 21)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
@@ -166,6 +168,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	f = new TFile("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
       if(samplenumber == 6)
 	f = new TFile("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root");
+      if(samplenumber == 7)
+	f = new TFile("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
       
       if(samplenumber == 21)
 	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
@@ -196,6 +200,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
     if(samplenumber == 6)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+    if(samplenumber == 7)
+      dir = (TDirectory*)f->Get("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root:/demo");
     
     if(samplenumber == 21)
       dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root:/demo");

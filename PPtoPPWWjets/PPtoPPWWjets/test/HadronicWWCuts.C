@@ -187,138 +187,143 @@ void HadronicWWCuts::Loop()
        if(jet_pt->size() < 2)
 	 continue;
 
-       if(jet_pt->at(0)>200 && jet_pt->at(1)>200 && fabs(jet_eta->at(0))<2.5 && fabs(jet_eta->at(1))<2.5)// && dijet_mass->at(0)>0)
+       Int_t passht = 0;
+       Int_t passpfjet = 0;
+       Int_t passpfjettrim = 0;
+       Int_t passpfhttrim = 0;
+
+       for(Int_t j = 0; j < hlt->size(); j++)
 	 {
-	   if((fabs(jet_eta->at(0) - jet_eta->at(1))<1.3))
-	   //	   if((fabs(jet_eta->at(0) - jet_eta->at(1))<5.0))
+	   TString myhlt = hlt->at(j);
+	   if(strstr(myhlt,"HLT_PFHT1050_v")) {passht = 1;}
+	   if(strstr(myhlt,"HLT_AK8PFJet500_v")) {passpfjet = 1;};
+	   if(strstr(myhlt,"HLT_AK8PFJet360_TrimMass30_") ||
+	      strstr(myhlt,"HLT_AK8PFJet380_TrimMass30_") ||
+	      strstr(myhlt,"HLT_AK8PFJet400_TrimMass30_") ||
+	      strstr(myhlt,"HLT_AK8PFJet420_TrimMass30_")) {passpfjettrim = 1;}
+	   if(strstr(myhlt,"HLT_AK8PFHT750_TrimMass50_") ||
+	      strstr(myhlt,"HLT_AK8PFHT800_TrimMass50_") ||
+	      strstr(myhlt,"HLT_AK8PFHT850_TrimMass50_") ||
+	      strstr(myhlt,"HLT_AK8PFHT900_TrimMass50_")) {passpfhttrim = 1;}
+	 }
+
+       if((passht == 1) || (passpfjet == 1) || (passpfhttrim == 1) || (passpfjettrim == 1))
+	 {
+	   if(samplenumber > 0)
+	     myweight = pileupWeight;
+
+
+	   TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
+	   jet1.SetPtEtaPhiE(jet_pt->at(0),jet_eta->at(0),jet_phi->at(0),jet_energy->at(0));
+	   jet2.SetPtEtaPhiE(jet_pt->at(1),jet_eta->at(1),jet_phi->at(1),jet_energy->at(1));
+	   
+	   int indleading = -1;
+	   int indsecond = -1;
+	   float C_JER1=-999.;
+	   float C_JER2=-999.;
+	   
+	   /* Applying JER smearing to MC before using jets */
+	   if(samplenumber > 0)
 	     {
-	       Int_t passht = 0;
-	       Int_t passpfjet = 0;
-	       Int_t passpfjettrim = 0;
-	       Int_t passpfhttrim = 0;
-
-	       for(Int_t j = 0; j < hlt->size(); j++)
+	       TLorentzVector recojtmp, genjtmp;
+	       TRandom3 randomSrc;
+	       int matchedgen=0;
+	       int indmatchedgen=-1;
+	       float ptleading = 0;
+	       float ptsecond = 0;
+	       float C_JER=-999;
+	       
+	       //	       cout << "Starting checks on JER" << endl;
+	       for(int ir = 0; ir < jet_pt->size(); ir++)
 		 {
-		   TString myhlt = hlt->at(j);
-		   if(strstr(myhlt,"HLT_PFHT1050_v")) {passht = 1;} 
-		   if(strstr(myhlt,"HLT_AK8PFJet500_v")) {passpfjet = 1;};
-		   if(strstr(myhlt,"HLT_AK8PFJet360_TrimMass30_") || 
-		      strstr(myhlt,"HLT_AK8PFJet380_TrimMass30_") || 
-		      strstr(myhlt,"HLT_AK8PFJet400_TrimMass30_") || 
-		      strstr(myhlt,"HLT_AK8PFJet420_TrimMass30_")) {passpfjettrim = 1;} 
-		   if(strstr(myhlt,"HLT_AK8PFHT750_TrimMass50_") || 
-		      strstr(myhlt,"HLT_AK8PFHT800_TrimMass50_") || 
-		      strstr(myhlt,"HLT_AK8PFHT850_TrimMass50_") || 
-		      strstr(myhlt,"HLT_AK8PFHT900_TrimMass50_")) {passpfhttrim = 1;}
-		 }
-
-	       if(samplenumber > 0)
-		 myweight = pileupWeight;
-
-	       //	       if(passpfjettrim == 1)
-	       //		 hmjjdatpfjettrim->Fill(dijet_mass->at(0),myweight);
-
-	       //	       if((passht == 1) || (passpfjet == 1) || (passpfhttrim == 1))
-	       if((passht == 1) || (passpfjet == 1) || (passpfhttrim == 1) || (passpfjettrim == 1))
-	       //	       if(1)
-		 {
-		   TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
-		   jet1.SetPtEtaPhiE(jet_pt->at(0),jet_eta->at(0),jet_phi->at(0),jet_energy->at(0));
-		   jet2.SetPtEtaPhiE(jet_pt->at(1),jet_eta->at(1),jet_phi->at(1),jet_energy->at(1));
-
-		   int indleading = -1;
-		   int indsecond = -1;
-		   float C_JER1=-999.;
-		   float C_JER2=-999.;
-
-		   /* Applying JER smearing to MC before using jets */
-		   if(samplenumber > 0)
-		     {
-		       TLorentzVector recojtmp, genjtmp;
-		       TRandom3 randomSrc;
-		       int matchedgen=0;
-		       int indmatchedgen=-1;
-		       float ptleading = 0;
-		       float ptsecond = 0;
-		       float C_JER=-999;
-
-		       //		       cout << "Starting checks on JER" << endl;
-		       for(int ir = 0; ir < jet_pt->size(); ir++)
-			 {
-			   recojtmp.SetPtEtaPhiE(jet_pt->at(ir),jet_eta->at(ir),jet_phi->at(ir),jet_energy->at(ir));
-
-			   for(int ig=0; ig<gen_jet_pt->size(); ig++)
-			     { // loop over gen jets
-			       genjtmp.SetPtEtaPhiE(gen_jet_pt->at(ig),gen_jet_eta->at(ig),gen_jet_phi->at(ig),gen_jet_energy->at(ig));
-			       if( (recojtmp.DeltaR(genjtmp) < (0.8/2.)) && 
-				   (fabs(recojtmp.Pt() - genjtmp.Pt())<(3*jet_jer_res->at(0)*recojtmp.Pt()) ) )
-				 {
-				   matchedgen=1; 
-				   indmatchedgen=ig;
-				 } 
-			       // 0.8 is cone radius
-			     }
-			   
-			   if(matchedgen == 1)
-			     {
-			       C_JER = 1 + (jet_jer_sf->at(0) -1 )*( (recojtmp.Pt() - gen_jet_pt->at(indmatchedgen)) / recojtmp.Pt() );
-			       if(C_JER < 0) C_JER = 0;
-			     }
-			   else       
-			     {
-			       C_JER = 1 + randomSrc.Gaus(0, jet_jer_res->at(0))*(sqrt(max(jet_jer_sf->at(0)*jet_jer_sf->at(0) - 1., 0.)));
-			     }
-			   
-			   // Re-check for the leading and second leading jets after JER correction
-			   //			   cout << "\tChecking " << C_JER*recojtmp.Pt() << " against leading pT = " << ptleading << ", second leading pT = " << ptsecond << endl;
-			   if(C_JER*recojtmp.Pt() > ptleading) 
-			     {
-			       // If we already found 1 jet with lower pT, make that the second leading jet
-			       if(ptleading > 0)
-				 {
-				   ptsecond = ptleading;
-				   indsecond = indleading;
-				   C_JER2 = C_JER1;
-				 }
-			       ptleading = C_JER*recojtmp.Pt();
-			       C_JER1 = C_JER;
-			       indleading = ir;
-			       //			       cout << "\t\tSetting new leading to pT = " << ptleading << ", index = " << indleading << endl;
-			     }
-			   if((C_JER*recojtmp.Pt() > ptsecond) && (C_JER*recojtmp.Pt() < ptleading) && (ir != indleading))
-			     {
-			       //			       cout << "\t\t" << C_JER*recojtmp.Pt() << " is greater than " << ptsecond << " and less than " << ptleading << endl;
-			       ptsecond = C_JER*recojtmp.Pt();
-			       C_JER2 = C_JER;
-			       indsecond = ir;
-			       //			       cout << "\t\tSetting new second leading to pT = " << ptsecond << ", index = " << indsecond << endl;
-			     }
-			   //			   cout << "\tjet size = " << jet_pt->size() << ", leading index = " << indleading << ", second leading index = " << indsecond << endl;
-			 }
-		       //		       cout << "Resetting jets after JER: " << endl;
-		       //		       cout << "\tleading pT, index = " << C_JER1*jet_pt->at(indleading) << ", " << indleading << endl;
-		       //		       cout << "\tsecond leading pT, index = " << C_JER2*jet_pt->at(indsecond) << ", " << indsecond << endl;
-
-
-		       //		       cout << "Jet pT's = " << jet1.Pt() << ", " << jet2.Pt() 
-		       //			    << ", JER factors (jet1, jet2) = " << C_JER << ", " << C_JER2 << endl;
-		       jet1.SetPtEtaPhiE(C_JER1*jet_pt->at(indleading),jet_eta->at(indleading),jet_phi->at(indleading),C_JER1*jet_energy->at(indleading));
-		       jet2.SetPtEtaPhiE(C_JER2*jet_pt->at(indsecond),jet_eta->at(indsecond),jet_phi->at(indsecond),C_JER2*jet_energy->at(indsecond));
-		     }
-		   else
-		     {
-		       indleading = 0;
-		       indsecond = 1;
-		     }
-		   mydijet = jet1+jet2;                                                                                                       
-
-		   if(indleading != 0 || indsecond != 1)
-		     {
-		       cout << "Index flip! Leading jet is at index = " << indleading << " with pT = " << jet1.Pt() << ", second leading jet is at index = " 
-			    << indsecond << " with pT = " << jet2.Pt() << endl;
-		     }
-                   /* Ending JER */
+		   recojtmp.SetPtEtaPhiE(jet_pt->at(ir),jet_eta->at(ir),jet_phi->at(ir),jet_energy->at(ir));
 		   
+		   for(int ig=0; ig<gen_jet_pt->size(); ig++)
+		     { // loop over gen jets
+		       genjtmp.SetPtEtaPhiE(gen_jet_pt->at(ig),gen_jet_eta->at(ig),gen_jet_phi->at(ig),gen_jet_energy->at(ig));
+		       if( (recojtmp.DeltaR(genjtmp) < (0.8/2.)) && 
+			   (fabs(recojtmp.Pt() - genjtmp.Pt())<(3*jet_jer_res->at(ir)*recojtmp.Pt()) ) )
+			 {
+			   matchedgen=1; 
+			   indmatchedgen=ig;
+			 } 
+		       // 0.8 is cone radius
+		     }
+		   
+		   if(matchedgen == 1)
+		     {
+		       C_JER = 1 + (jet_jer_sf->at(ir) -1 )*( (recojtmp.Pt() - gen_jet_pt->at(indmatchedgen)) / recojtmp.Pt() );
+		       if(C_JER < 0) {C_JER = 0;}
+		     }
+		   else       
+		     {
+		       C_JER = 1 + randomSrc.Gaus(0, jet_jer_res->at(ir))*(sqrt(max(jet_jer_sf->at(ir)*jet_jer_sf->at(ir) - 1., 0.)));
+		     }
+		   
+		   // Re-check for the leading and second leading jets after JER correction
+		   //		   cout << "\tChecking " << C_JER*recojtmp.Pt() << " against leading pT = " << ptleading << ", second leading pT = " << ptsecond << endl;
+		   if(C_JER*recojtmp.Pt() > ptleading) 
+		     {
+		       // If we already found 1 jet with lower pT, make that the second leading jet
+		       if(ptleading > 0)
+			 {
+			   ptsecond = ptleading;
+			   indsecond = indleading;
+			   C_JER2 = C_JER1;
+			 }
+		       ptleading = C_JER*recojtmp.Pt();
+		       C_JER1 = C_JER;
+		       indleading = ir;
+		       //		       cout << "\t\tSetting new leading to pT = " << ptleading << ", index = " << indleading << endl;
+		     }
+		   if((C_JER*recojtmp.Pt() > ptsecond) && (C_JER*recojtmp.Pt() < ptleading) && (ir != indleading))
+		     {
+		       //		       cout << "\t\t" << C_JER*recojtmp.Pt() << " is greater than " << ptsecond << " and less than " << ptleading << endl;
+		       ptsecond = C_JER*recojtmp.Pt();
+		       C_JER2 = C_JER;
+		       indsecond = ir;
+		       //		       cout << "\t\tSetting new second leading to pT = " << ptsecond << ", index = " << indsecond << endl;
+		     }
+		   //		   cout << "\tjet size = " << jet_pt->size() << ", leading index = " << indleading << ", second leading index = " << indsecond << endl;
+		 }
+	       if(indleading >= 0 && indsecond >= 0)
+		 {
+		   //		   cout << "Resetting jets after JER: " << endl;
+		   //		   cout << "\tleading pT, index = " << C_JER1*jet_pt->at(indleading) << ", " << indleading << endl;
+		   //		   cout << "\tsecond leading pT, index = " << C_JER2*jet_pt->at(indsecond) << ", " << indsecond << endl;
+		   
+		   
+		   //		   cout << "Jet pT's = " << jet1.Pt() << ", " << jet2.Pt() 
+		   //			<< ", JER factors (jet1, jet2) = " << C_JER << ", " << C_JER2 << endl;
+		   jet1.SetPtEtaPhiE(C_JER1*jet_pt->at(indleading),jet_eta->at(indleading),jet_phi->at(indleading),C_JER1*jet_energy->at(indleading));
+		   jet2.SetPtEtaPhiE(C_JER2*jet_pt->at(indsecond),jet_eta->at(indsecond),jet_phi->at(indsecond),C_JER2*jet_energy->at(indsecond));
+		 }
+	     }
+	   else
+	     {
+	       indleading = 0;
+	       indsecond = 1;
+	     }
+
+	   // Check that there are still two non-zero jets after the JER corrections
+	   if(indleading < 0 || indsecond < 0)
+	     {
+	       //	       cout << "Skipping this event because one the indices after JER is < 0" << endl;
+	       continue;
+	     }
+
+	   mydijet = jet1+jet2;                                                                                                       
+	   
+	   if(indleading != 0 || indsecond != 1)
+	     {
+	       cout << "Index flip! Leading jet is at index = " << indleading << " with pT = " << jet1.Pt() << ", second leading jet is at index = " 
+		    << indsecond << " with pT = " << jet2.Pt() << " in collection of size = " << jet_pt->size() << endl;
+	     }
+	   /* Ending JER */
+	   if(jet_pt->at(indleading)>200 && jet_pt->at(indsecond)>200 && fabs(jet_eta->at(indleading))<2.5 && fabs(jet_eta->at(indsecond))<2.5)
+	     {
+	       if((fabs(jet_eta->at(indleading) - jet_eta->at(indsecond))<1.3))
+		 {
 		   hmjjdat->Fill(mydijet.M(),myweight);
 		   if(passpfjet == 1)
 		     hmjjdatpfjet->Fill(mydijet.M(),myweight);
@@ -410,8 +415,6 @@ void HadronicWWCuts::Loop()
 			 {
 			   hmasswwantitau->Fill(mydijet.M());
 			 }
-
-		       
 
 		       // Proton part
 		       float mpp = 0;
@@ -661,14 +664,14 @@ void HadronicWWCuts::Loop()
 		 }
 	     }
 	 }
-
+       
        mpps->clear();
        ypps->clear();
        xipix45s->clear();
        xipix56s->clear();
        ypix45s->clear();
        ypix56s->clear();
-
+       
      }
 
    delete mpps;
@@ -692,31 +695,33 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt170to300.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt300to470.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt470to600.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt800to1000.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root","RECREATE");
+   if(samplenumber == 7)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_ttbarhadronic.root","RECREATE");
 
    if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_exclwwa0w2point5.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point5.root","RECREATE");
 
 
    hmjjdat->Write();
