@@ -10,7 +10,8 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        '/store/user/kshcheli/wwhad/FPMC_Fall17/step3_fpmc_MiniAOD.root'
+#        '/store/user/kshcheli/wwhad/FPMC_Fall17/step3_fpmc_MiniAOD.root'
+'/store/data/Run2016B/JetHT/MINIAOD/07Aug17_ver2-v1/110000/5EF65117-437F-E711-AF5B-0025905A60A8.root'
     )
 )
 
@@ -22,15 +23,25 @@ process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 
-# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                                                                      
-# Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                             
-# is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                           
-# and 94X_dataRun2_v6.                                                                                                                                                                                       
-MC=True
+# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                                                             
+# Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                    
+# is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                  
+# and 94X_dataRun2_v6.                                                                                                                                                                              
+         
+MC=False
+YEAR=2016
+ERA="C"
+
 if MC:
-    process.GlobalTag.globaltag ='94X_mc2017_realistic_v14'
+    if YEAR==2016:
+        process.GlobalTag.globaltag = '94X_mcRun2_asymptotic_v3'
+    if YEAR==2017:
+        process.GlobalTag.globaltag ='94X_mc2017_realistic_v14'
 else:
-    process.GlobalTag.globaltag ='94X_dataRun2_v6'
+    if YEAR == 2016:
+        process.GlobalTag.globaltag = '94X_dataRun2_v10'
+    if YEAR == 2017:
+        process.GlobalTag.globaltag ='94X_dataRun2_v6'
 
 
 # New from Ksenia+Finn - update jet corrections
@@ -73,8 +84,8 @@ if MC:
 else:
     process.demo.isMC = cms.bool(False)
 
-process.demo.year = cms.int32(2017)
-process.demo.era = cms.string("D")
+process.demo.year = cms.int32(YEAR)
+process.demo.era = cms.string(ERA)
 
 process.p = cms.Path(process.hltFilter * 
                      process.patJetCorrFactorsUpdatedJEC * 
