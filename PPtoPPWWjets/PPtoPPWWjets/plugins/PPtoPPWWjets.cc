@@ -150,6 +150,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   int * lumiblock_;
   int * nVertices_;
   float * pileupWeight_;
+  int * mc_pu_trueinteractions_;
 
   HLTConfigProvider hltConfig_;
   HLTPrescaleProvider hltPrescaleProvider_;
@@ -199,6 +200,8 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
      }
                                   
    std::vector<std::string> jecAK8PayloadNames_;
+
+   /* 2017 */
    if(isMC==false && year==2017 && era == "B")
      {
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2Relative_AK8PFchs.txt");
@@ -229,11 +232,35 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L3Absolute_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFchs.txt");
      }
-
    if(isMC==true && year==2017)
      {
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L2Relative_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt");
+     }
+
+   /* 2016 */
+   if(isMC==true && year==2016)
+     {
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017_V11_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017_V11_MC_L3Absolute_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2016 && (era == "B" || era == "C" || era == "D"))
+     {
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2016 && (era == "E" || era == "F"))
+     {
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2016 && (era == "G" || era == "H"))
+     {
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L2L3Residual_AK8PFchs.txt");
      }
 
 
@@ -252,6 +279,11 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    // Get JER smearing                                                                                                                                               
    if(isMC==true && year==2017) // Note - here we're using Summer16 for 2017 MC, until the 2017 version is ready
      {                                     
+       jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "Summer16_25nsV1_MC_SF_AK8PFchs.txt";
+     }
+   if(isMC==true && year==2016)
+     {
        jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
        jerAK8chsName_sf_ = "Summer16_25nsV1_MC_SF_AK8PFchs.txt";
      }
@@ -326,9 +358,21 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        //       double tau2         = (*jets)[ijet].userFloat("NjettinessAK8:tau2");
 
        // CMSSW_9_4_X
-       double pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-       double tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
-       double tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+       double pruned_mass = 0.0;
+       double tau1 = 0.0;
+       double tau2 = 0.0;
+       if(year == 2017)
+	 {
+	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
+	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
+	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+	 }
+       if(year == 2016)
+	 {
+	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
+	   tau1         = (*jets)[ijet].userFloat("NjettinessAK8:tau1");
+	   tau2         = (*jets)[ijet].userFloat("NjettinessAK8:tau2");
+	 }
 
        (*jet_pt_).push_back(jet.pt());
        (*jet_phi_).push_back(jet.phi());
@@ -420,6 +464,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    // Fill pileup reweighting info if running on MC
    *pileupWeight_=1;
+   *mc_pu_trueinteractions_=-1;
    if(isMC == true)
      {
        float trueInteractions=0;
@@ -429,6 +474,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        //cout<<"True num interactions is: "<<PupInfo->begin()->getTrueNumInteractions()<<endl;                                                              
        trueInteractions=PupInfo->begin()->getTrueNumInteractions();
        *pileupWeight_ = LumiWeights->weight( trueInteractions );
+       *mc_pu_trueinteractions_ = trueInteractions;
      }
 
    // Fill GEN infor if running on MC
@@ -594,7 +640,6 @@ PPtoPPWWjets::beginJob()
   jet_jer_sfup_ = new std::vector<float>;
   jet_jer_sfdown_ = new std::vector<float>;
 
-
   hlt_ = new std::vector<string>;
 
   ev_ = new long int;
@@ -602,6 +647,7 @@ PPtoPPWWjets::beginJob()
   lumiblock_ = new int;
   nVertices_ = new int;
   pileupWeight_ = new float;
+  mc_pu_trueinteractions_ = new int;
 
   tree_->Branch("jet_pt",&jet_pt_);
   tree_->Branch("jet_energy",&jet_energy_);
@@ -648,6 +694,7 @@ PPtoPPWWjets::beginJob()
 
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
   tree_->Branch("pileupWeight",pileupWeight_,"pileupWeight/f");
+  tree_->Branch("mc_pu_trueinteractions_",mc_pu_trueinteractions_,"mc_pu_trueinteractions/i");
   tree_->Branch("run",run_,"run/I");
   tree_->Branch("event",ev_,"event/L");
   tree_->Branch("lumiblock",lumiblock_,"lumiblock/I");
