@@ -152,6 +152,9 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   float * pileupWeight_;
   int * mc_pu_trueinteractions_;
 
+  std::string mcPileupFile;
+  std::string dataPileupFile;
+
   HLTConfigProvider hltConfig_;
   HLTPrescaleProvider hltPrescaleProvider_;
   edm::LumiReWeighting *LumiWeights;
@@ -196,7 +199,9 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
 
    if(isMC == true)
      {
-       LumiWeights = new edm::LumiReWeighting("PUHistos_mc.root", "PUHistos_data.root", "pileup", "pileup");
+       mcPileupFile = iConfig.getParameter<std::string>("mcPileupFile");
+       dataPileupFile = iConfig.getParameter<std::string>("dataPileupFile");
+       LumiWeights = new edm::LumiReWeighting(mcPileupFile, dataPileupFile, "pileup", "pileup");
      }
                                   
    std::vector<std::string> jecAK8PayloadNames_;
