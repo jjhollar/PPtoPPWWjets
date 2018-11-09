@@ -7,15 +7,24 @@ void PlotStack2(Int_t var = 1)
   Float_t mc4xsec = 185.9;
   Float_t mc2xsec = 6830.0;
   Float_t mc1xsec = 103500.0;
+  Float_t mc7xsec = 377.96;
+  Float_t mc8xsec = 33.7;
+  Float_t mc9xsec = 14.6;
+
+  Float_t mcaxsec = 0.1282; // pb
+  Float_t mbaaxsec = 0.1074; // pb 
+  Float_t mcbxsec = 0.0391; // pb
 
   Float_t rangelo = 0.0;
   Float_t rangehi = 1.0;
+  Float_t rangeylo = 0.0;
+  Float_t rangeyhi = 10000000.0;
 
   TString hist = "hmjjdat";
   TString thetitle = "";
   TString filetitle = "";
   if(var == 1)
-    {rangelo = 0; rangehi = 2500; thetitle = "m(jj) [GeV]"; filetitle = "mjj";}
+    {rangelo = 00; rangehi = 2500; thetitle = "m(jj) [GeV]"; filetitle = "mjj";}
   if(var == 2)
     {hist = "hmjdat1"; rangelo = 55; rangehi = 215; thetitle = "m(j1) [GeV]"; filetitle = "mj1";}
   if(var == 3)
@@ -66,41 +75,56 @@ void PlotStack2(Int_t var = 1)
     {hist = "hywwsignal"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind";}
 
 
-  TFile *f100 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017C.root");
+  TFile *f100 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017C.root");
   TH1F *h100 = (TH1F *)f100->Get(hist);
 
-  TFile *f101 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017B.root");
+  TFile *f101 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017B.root");
   TH1F *h101 = (TH1F *)f101->Get(hist);
 
-  TFile *f102 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017D.root");
+  TFile *f102 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017D.root");
   TH1F *h102 = (TH1F *)f102->Get(hist);
 
-  TFile *f103 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017E.root");
+  TFile *f103 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017E.root");
   TH1F *h103 = (TH1F *)f103->Get(hist);
 
-  TFile *f104 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_datahist2017F.root");
+  TFile *f104 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017F.root");
   TH1F *h104 = (TH1F *)f104->Get(hist);
   
-  TFile *f1 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt170to300.root");
+  TFile *f1 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root");
   TH1F *h1 = (TH1F *)f1->Get(hist);
 
-  TFile *f2 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt300to470.root");
+  TFile *f2 = TFile::Open("vars_cuts_ntuplev3recalcmjcut_jerallhltfixptetacuts_qcdpt300to470.root");
   TH1F *h2 = (TH1F *)f2->Get(hist);
 
-  TFile *f3 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt470to600.root");
+  TFile *f3 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt470to600.root");
   TH1F *h3 = (TH1F *)f3->Get(hist);
 
-  TFile *f4 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt600to800.root");
+  TFile *f4 = TFile::Open("vars_cuts_ntuplev3recalcmjcut_jerallhltfixptetacuts_qcdpt600to800.root");
   TH1F *h4 = (TH1F *)f4->Get(hist);
 
-  TFile *f5 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt800to1000.root");
+  TFile *f5 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt800to1000.root");
   TH1F *h5 = (TH1F *)f5->Get(hist);
 
-  TFile *f6 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_qcdpt1000to1400.root");
+  TFile *f6 = TFile::Open("vars_cuts_ntuplev3recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root");
   TH1F *h6 = (TH1F *)f6->Get(hist);
 
-  TFile *fa = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhlt_exclwwa0w2point5.root");
+  TFile *f7 = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_ttbarhadronic.root");
+  TH1F *h7 = (TH1F *)f7->Get(hist);
+
+  TFile *f8 = TFile::Open("vars_cuts_ntuplev3recalcmjcut_jerallhltfixptetacuts_wjetshadronic.root");
+  TH1F *h8 = (TH1F *)f8->Get(hist);
+
+  TFile *f9 = TFile::Open("vars_cuts_ntuplev3recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root");
+  TH1F *h9 = (TH1F *)f9->Get(hist);
+
+  TFile *fa = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point5.root");
   TH1F *ha = (TH1F *)fa->Get(hist);
+
+  TFile *fb = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwSM.root");
+  TH1F *hb = (TH1F *)fb->Get(hist);
+
+  TFile *faa = TFile::Open("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root");
+  TH1F *haa = (TH1F *)faa->Get(hist);
 
   h100->Sumw2(); h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -112,47 +136,63 @@ void PlotStack2(Int_t var = 1)
 
   
   int rebinfactor = 1;
-  if((var > 20 && var < 25) || (var == 16))
+  //  if((var > 20 && var < 25) || (var == 16))
+  if((var > 20 && var < 25))
     {
       rebinfactor = 25;
       if(var == 25) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
-      h1->Rebin(rebinfactor); h2->Rebin(rebinfactor); h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor); h6->Rebin(rebinfactor);
-      ha->Rebin(rebinfactor);
+      h1->Rebin(rebinfactor); h2->Rebin(rebinfactor); h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor); h6->Rebin(rebinfactor); 
+      h7->Rebin(rebinfactor); h8->Rebin(rebinfactor); h9->Rebin(rebinfactor);
+      ha->Rebin(rebinfactor); hb->Rebin(rebinfactor);
+      haa->Rebin(rebinfactor);
       h100->Rebin(rebinfactor); h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
     }
 
   h1->Sumw2();
   h1->Scale(mc1xsec*1000*lumi/29791322.0);
-  h1->SetFillColor(25);
+  h1->SetFillColor(kAzure+1);
 
   // For MC in higher QCD pT bins, only running on 1M events from the ntuple per bin, so renormalize to that
   h2->Sumw2();
   h2->Scale(mc2xsec*1000*lumi/(65665222.0*100000.0/14999535.0));
-  h2->SetFillColor(24);
+  h2->SetFillColor(kAzure+1);
 
   h3->Sumw2();
   h3->Scale(mc3xsec*1000*lumi/(27384428.0*100000.0/24828195.0));
-  h3->SetFillColor(23);
+  h3->SetFillColor(kAzure+1);
 
   h4->Sumw2();
   h4->Scale(mc4xsec*1000*lumi/(65665222.0*100000.0/65529198.0));
-  h4->SetFillColor(22);
+  h4->SetFillColor(kAzure+1);
 
   h5->Sumw2();
   h5->Scale(mc5xsec*1000*lumi/(33677480.0*100000.0/33670567.0));
-  h5->SetFillColor(21);
+  h5->SetFillColor(kAzure+1);
 
   h6->Sumw2();
   h6->Scale(mc6xsec*1000*lumi/(19631814.0*100000.0/19630824.0));
-  h6->SetFillColor(20);
+  h6->SetFillColor(kAzure+1);
+
+  h7->Sumw2();
+  h7->Scale(mc7xsec*1000*lumi/(41248864.0*100000.0/987692.0));
+
+  h8->Sumw2();
+  h8->Scale(mc8xsec*1000*lumi/(9412869.0*100000.0/7488475.0));
+
+  h9->Sumw2();
+  h9->Scale(mc9xsec*1000*lumi/(9736656.0*100000.0/7200365.0));
 
   h6->Add(h5);
   h6->Add(h4);
   h6->Add(h3);
   h6->Add(h2);
   h6->Add(h1);
+  h6->Add(h7);
+  h6->Add(h8);
+  h6->Add(h9);
+
   h6->SetStats(0);
   if(rangelo != 0 || rangehi != 1)
     h6->GetXaxis()->SetRangeUser(rangelo,rangehi);
@@ -170,32 +210,64 @@ void PlotStack2(Int_t var = 1)
   h5->Add(h3);
   h5->Add(h2);
   h5->Add(h1);
+  h5->Add(h7);
+  h5->Add(h8);
+  h5->Add(h9);
   h5->Draw("histsame");
 
   h4->Add(h3);
   h4->Add(h2);
   h4->Add(h1);
+  h4->Add(h7);
+  h4->Add(h8);
+  h4->Add(h9);
   h4->Draw("histsame");
 
   h3->Add(h2);
   h3->Add(h1);
+  h3->Add(h7);
+  h3->Add(h8);
+  h3->Add(h9);
   h3->Draw("histsame");
 
   h2->Add(h1);
+  h2->Add(h7);
+  h2->Add(h8);
+  h2->Add(h9);
   h2->Draw("histsame");
 
+  h1->Add(h7);
+  h1->Add(h8);
+  h1->Add(h9);
   h1->Draw("histsame");
+
+  h8->SetFillColor(kGreen+1);
+  h8->Add(h7);
+  h8->Add(h9);
+  h8->Draw("histsame");
+
+  h9->SetFillColor(kYellow+1);
+  h9->Add(h7);
+  h9->Draw("histsame");
+
+  h7->SetFillColor(kOrange+1);
+  h7->Draw("histsame");
 
   h100->SetMarkerStyle(20); h100->SetLineWidth(3);
   h100->Draw("esame");
 
-  ha->SetLineWidth(3); ha->SetLineColor(4); ha->Scale(500); ha->Draw("histsame");
+  ha->SetLineWidth(3); ha->SetLineColor(kCyan); ha->Scale(mcaxsec*1000.0*lumi/993.0); ha->Draw("histsame");
+  hb->SetFillColor(kCyan); hb->Scale(mcbxsec*1000.0*lumi/38000.0); hb->Draw("histsame");
 
-
+  haa->SetLineWidth(3); haa->SetLineColor(6); haa->Scale(mbaaxsec*1000.0*lumi/5000.0); haa->Draw("histsame");
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
   lg1->AddEntry(h6,"Pythia8 QCD (bins)");
+  lg1->AddEntry(h8,"Madgraph W+jets");
+  lg1->AddEntry(h9,"Madgraph Z+jets");
+  lg1->AddEntry(h7,"Powheg ttbar");
   lg1->AddEntry(ha,"Excl. WW signal (a0W = 2.5E-6), arb. normalization");
+  lg1->AddEntry(haa,"Excl. ZZ signal (a0Z = 2.5E-6), arb. normalization");
   lg1->AddEntry(h100,"2017BCDEF Data");
   lg1->Draw("same");
   
@@ -208,10 +280,16 @@ void PlotStack2(Int_t var = 1)
   h3->Draw("histsame");
   h2->Draw("histsame");
   h1->Draw("histsame");
+  h8->Draw("histsame");
+  h9->Draw("histsame");
+  h7->Draw("histsame");
   gPad->SetLogy();
   h100->Draw("esame");
 
   ha->Draw("histsame");
+  hb->Draw("histsame");
+
+  haa->Draw("histsame");
 
   c1->cd(3);
   h1000->SetMarkerStyle(20); h1000->SetLineWidth(3);
@@ -256,11 +334,13 @@ void PlotStack2(Int_t var = 1)
   l3->SetLineWidth(3);
   //  l3->Draw("same");
 
-  TString outplotname = "validationplots2017BCDEF_ntuplesv2recalcmjcutjerallhlt_preselection_" + filetitle + ".png";
+  TString outplotname = "validationplots2017BCDEF_ntuplesv2recalcmjcutjerallhltfixptetacuts_preselection_" + filetitle + ".png";
   c1->SaveAs(outplotname);
 
-  TCanvas *c3 = new TCanvas("c3","c3");
-  ha->Draw("hist");
+  // Signal MC only
+  //  TCanvas *c3 = new TCanvas("c3","c3");
+  //  h7->Draw("hist");
+  //  ha->Draw("hist");
 }
 
 void PlotStackAll()
@@ -278,5 +358,8 @@ void PlotStackAll()
   PlotStack2(14);
   PlotStack2(15);
   PlotStack2(16);
-
+  PlotStack2(17);
+  PlotStack2(18);
+  PlotStack2(19);
+  PlotStack2(20);
 }

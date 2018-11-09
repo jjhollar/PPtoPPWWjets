@@ -124,25 +124,43 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == -5)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
 
+    if(samplenumber == -6)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
+    if(samplenumber == -7)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016C-07Aug2017-v1_all.root");
+    if(samplenumber == -8)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016G-07Aug2017-v1_all.root");
+    if(samplenumber == -9)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
+
 
     if(samplenumber == 1)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root");
     if(samplenumber == 2)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv2.root");  
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root");
     if(samplenumber == 3)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root");   
     if(samplenumber == 4)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root");
     if(samplenumber == 5)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
     if(samplenumber == 6)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root");
     if(samplenumber == 7)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
-    
+    if(samplenumber == 8)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root");
+    if(samplenumber == 9)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root");
+
+    if(samplenumber == 20)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
     if(samplenumber == 21)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
     
+    if(samplenumber == 31)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
+
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
         f = new TFile("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
@@ -155,24 +173,42 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       if(samplenumber == -5)
         f = new TFile("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
 
+      if(samplenumber == -6)
+        f = new TFile("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
+      if(samplenumber == -7)
+	f = new TFile("ExclWWjets_Run2016C-07Aug2017-v1_all.root");
+      if(samplenumber == -8)
+	f = new TFile("ExclWWjets_Run2016G-07Aug2017-v1_all.root");
+      if(samplenumber == -9)
+	f = new TFile("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
+
       
       if(samplenumber == 1)
 	f = new TFile("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root");
       if(samplenumber == 2)
-	f = new TFile("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root");
       if(samplenumber == 3)
 	f = new TFile("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root");
       if(samplenumber == 4)
-	f = new TFile("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root");
       if(samplenumber == 5)
 	f = new TFile("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
       if(samplenumber == 6)
-	f = new TFile("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root");
       if(samplenumber == 7)
 	f = new TFile("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
-      
+      if(samplenumber == 8)
+	f = new TFile("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root");
+      if(samplenumber == 9)
+        f = new TFile("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root");
+
+      if(samplenumber == 20)
+	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
       if(samplenumber == 21)
 	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
+
+      if(samplenumber == 31)
+	f = new TFile("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
     }
     TDirectory * dir;
 
@@ -187,24 +223,41 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == -5)
       dir = (TDirectory*)f->Get("ExclWWjets_Run2017F-31Mar2018-v1_all.root:/demo");
 
+    if(samplenumber == -6)
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
+    if(samplenumber == -7)
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016C-07Aug2017-v1_all.root");
+    if(samplenumber == -8)
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016G-07Aug2017-v1_all.root");
+    if(samplenumber == -9)
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
     
     if(samplenumber == 1)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
     if(samplenumber == 2)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
     if(samplenumber == 3)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
     if(samplenumber == 4)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
     if(samplenumber == 5)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
     if(samplenumber == 6)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
     if(samplenumber == 7)
       dir = (TDirectory*)f->Get("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+    if(samplenumber == 8)
+      dir = (TDirectory*)f->Get("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root:/demo");
+    if(samplenumber == 9)
+      dir = (TDirectory*)f->Get("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root:/demo");
     
+    if(samplenumber == 20)
+      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root:/demo");
     if(samplenumber == 21)
       dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
+
+    if(samplenumber == 31)
+      dir = (TDirectory*)f->Get("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
     
     dir->GetObject("ntp1",tree);
 

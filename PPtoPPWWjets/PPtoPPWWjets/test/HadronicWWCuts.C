@@ -314,13 +314,13 @@ void HadronicWWCuts::Loop()
 
 	   mydijet = jet1+jet2;                                                                                                       
 	   
-	   if(indleading != 0 || indsecond != 1)
+	   if((indleading != 0) || (indsecond != 1))
 	     {
-	       cout << "Index flip! Leading jet is at index = " << indleading << " with pT = " << jet1.Pt() << ", second leading jet is at index = " 
-		    << indsecond << " with pT = " << jet2.Pt() << " in collection of size = " << jet_pt->size() << endl;
+	       //	       cout << "Index flip! Leading jet is at index = " << indleading << " with pT = " << jet1.Pt() << ", second leading jet is at index = " 
+	       //		    << indsecond << " with pT = " << jet2.Pt() << " in collection of size = " << jet_pt->size() << endl;
 	     }
 	   /* Ending JER */
-	   if(jet_pt->at(indleading)>200 && jet_pt->at(indsecond)>200 && fabs(jet_eta->at(indleading))<2.5 && fabs(jet_eta->at(indsecond))<2.5)
+	   if(jet1.Pt()>200 && jet2.Pt()>200 && fabs(jet_eta->at(indleading))<2.5 && fabs(jet_eta->at(indsecond))<2.5)
 	     {
 	       if((fabs(jet_eta->at(indleading) - jet_eta->at(indsecond))<1.3))
 		 {
@@ -362,7 +362,7 @@ void HadronicWWCuts::Loop()
 		       hphidat2->Fill(jet_phi->at(indsecond),myweight);
 		       hdeta->Fill(fabs(jet_eta->at(indleading) - jet_eta->at(indsecond)),myweight);
 		       hnvtx->Fill(nVertices,myweight);
-		       hptratio->Fill(jet_pt->at(indleading)/jet_pt->at(indsecond),myweight);
+		       hptratio->Fill(jet1.Pt()/jet2.Pt(),myweight);
 		       
 		       float dphi = fabs(jet_phi->at(indleading) - jet_phi->at(indsecond));
 		       if(dphi > 3.14159)
@@ -383,9 +383,10 @@ void HadronicWWCuts::Loop()
 			 {
 			   // Signal region, only for MC
 			   if((acop < acopcut) && 
-			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && 
+															jet_corrmass->at(indsecond) <= mwhicut) &&
 			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-			      (jet_pt->at(indleading)/jet_pt->at(indsecond) < ptbalcut))
+			      (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
 			       hmasswwsignal->Fill(mydijet.M());
 			       hywwsignal->Fill(mydijet.Rapidity());
@@ -395,12 +396,12 @@ void HadronicWWCuts::Loop()
 		       if((acop > acopcut) &&
 			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
 			  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-			  (jet_pt->at(indleading)/jet_pt->at(indsecond) < ptbalcut))
+			  (jet1.Pt()/jet2.Pt() < ptbalcut))
 			 {
 			   hmasswwantiacop->Fill(mydijet.M());
 			 }
 		       // Anti pT balance                                                                                                                                          
-		       if((jet_pt->at(indleading)/jet_pt->at(indsecond)) > ptbalcut &&
+		       if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
 			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
 			  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 			  (acop < 0.005))
@@ -411,7 +412,7 @@ void HadronicWWCuts::Loop()
 		       if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
 			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
 			  (acop < 0.005) &&
-			  (jet_pt->at(indleading)/jet_pt->at(indsecond) <  ptbalcut))
+			  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
 			 {
 			   hmasswwantitau->Fill(mydijet.M());
 			 }
@@ -629,14 +630,15 @@ void HadronicWWCuts::Loop()
 			       if((jet_tau2->at(indsecond)/jet_tau1->at(indsecond) > 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) > 0.75))
 				 {
 				   //				   cout << "Anti tau selection: " << endl;
-				   if((jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105))
+				   if((jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && 
+				      (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105))
 				     {
-				       cout << "\tPassed jet mass cuts: " << jet_corrmass->at(indleading) << ", " << jet_corrmass->at(indsecond) << endl;
+				       //				       cout << "\tPassed jet mass cuts: " << jet_corrmass->at(indleading) << ", " << jet_corrmass->at(indsecond) << endl;
 				       if(acop < 0.005)
 					 {
-					   cout << "\t\tPassed acop cuts: = " << acop << endl;
-					   if(jet_pt->at(indleading)/jet_pt->at(indsecond) < 1.08)
-					     cout << "\t\t\tPassed pT balance cuts: " << jet_pt->at(indleading) << "/" << jet_pt->at(indsecond) << " = " << jet_pt->at(indleading)/jet_pt->at(indsecond) << endl;
+					   //					   cout << "\t\tPassed acop cuts: = " << acop << endl;
+					   //					   if(jet1.Pt()/jet2.Pt() < 1.08)
+					     //					     cout << "\t\t\tPassed pT balance cuts: " << jet_pt->at(indleading) << "/" << jet_pt->at(indsecond) << " = " << jet_pt->at(indleading)/jet_pt->at(indsecond) << endl;
 					 }
 				     }
 				 }
@@ -705,6 +707,16 @@ void HadronicWWCuts::Loop()
    if(samplenumber == -5)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
 
+   if(samplenumber == -6)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
+   if(samplenumber == -7)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016C.root","RECREATE");
+   if(samplenumber == -8)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016G.root","RECREATE");
+   if(samplenumber == -9)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016H.root","RECREATE");
+
+
    if(samplenumber == 1)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
@@ -718,11 +730,19 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 6)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhlt_ttbarhadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_ttbarhadronic.root","RECREATE");
+   if(samplenumber == 8)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_wjetshadronic.root","RECREATE");
+   if(samplenumber == 9)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root","RECREATE");
 
+   if(samplenumber == 20)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwSM.root","RECREATE");
    if(samplenumber == 21)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point5.root","RECREATE");
 
+   if(samplenumber == 31)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root","RECREATE");
 
    hmjjdat->Write();
    hmjdat1->Write();
