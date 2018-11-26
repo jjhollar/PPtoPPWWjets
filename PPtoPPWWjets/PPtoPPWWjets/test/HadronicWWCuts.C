@@ -744,6 +744,19 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 31)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root","RECREATE");
 
+   if(samplenumber == 101)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt170to300.root","RECREATE");
+   if(samplenumber == 102)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt300to470.root","RECREATE");
+   if(samplenumber == 103)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt470to600.root","RECREATE");
+   if(samplenumber == 104)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt600to800.root","RECREATE");
+   if(samplenumber == 105)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt800to1000.root","RECREATE");
+   if(samplenumber == 106)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt1000to1400.root","RECREATE");
+
    hmjjdat->Write();
    hmjdat1->Write();
    htau21dat1->Write();

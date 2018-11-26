@@ -113,6 +113,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 // used to generate this class and read the Tree.
   if (tree == 0) {
     TFile *f;
+    // 2017 data
     if(samplenumber == -1)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
     if(samplenumber == -2)
@@ -124,16 +125,17 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == -5)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
 
+    // 2016 data
     if(samplenumber == -6)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016B-07Aug2017-ver2-v1_ntuplesv4_all.root");
     if(samplenumber == -7)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016C-07Aug2017-v1_all.root");
     if(samplenumber == -8)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016G-07Aug2017-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016G-07Aug2017-v1_ntuplesv4_all.root");
     if(samplenumber == -9)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
 
-
+    // 2017 MC
     if(samplenumber == 1)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root");
     if(samplenumber == 2)
@@ -156,10 +158,23 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
     if(samplenumber == 21)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
-    
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");    
     if(samplenumber == 31)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
+
+    // 2016 MC
+    if(samplenumber == 101)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt170to300_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 102)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt300to470_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 103)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt470to600_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 104)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt600to800_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 105)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 106)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
@@ -209,6 +224,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 31)
 	f = new TFile("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
+
+      if(samplenumber == 101)
+        f = new TFile("WWhadronic_QCDPt170to300_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 102)
+        f = new TFile("WWhadronic_QCDPt300to470_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 103)
+	f = new TFile("WWhadronic_QCDPt470to600_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 104)
+        f = new TFile("WWhadronic_QCDPt600to800_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 105)
+        f = new TFile("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 106)
+        f = new TFile("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+
     }
     TDirectory * dir;
 
@@ -224,13 +253,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("ExclWWjets_Run2017F-31Mar2018-v1_all.root:/demo");
 
     if(samplenumber == -6)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root:/demo");
     if(samplenumber == -7)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2016C-07Aug2017-v1_all.root");
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016C-07Aug2017-v1_all.root:/demo");
     if(samplenumber == -8)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2016G-07Aug2017-v1_all.root");
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016G-07Aug2017-v1_all.root:/demo");
     if(samplenumber == -9)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
+      dir = (TDirectory*)f->Get("ExclWWjets_Run2016H-07Aug2017-v1_all.root:/demo");
     
     if(samplenumber == 1)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
@@ -258,6 +287,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 31)
       dir = (TDirectory*)f->Get("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
+
+    if(samplenumber == 101)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt170to300_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 102)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt300to470_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 103)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt470to600_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 104)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt600to800_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 105)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 106)
+      dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
+
     
     dir->GetObject("ntp1",tree);
 

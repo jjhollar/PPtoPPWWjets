@@ -47,6 +47,7 @@
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
 #include "DataFormats/CTPPSReco/interface/CTPPSLocalTrackLite.h"
 #include "DataFormats/CTPPSDetId/interface/CTPPSDetId.h"
+#include "DataFormats/ProtonReco/interface/ProtonTrack.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
 
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -93,6 +94,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::string jerAK8chsName_sf_ ;
   edm::EDGetTokenT<edm::View<pat::Jet>> jet_token_;
   edm::EDGetTokenT<std::vector<CTPPSLocalTrackLite> > pps_token_;
+  edm::EDGetTokenT<std::vector<reco::ProtonTrack>> reco_protons_token_;
   edm::EDGetTokenT<std::vector<reco::Vertex>> vertex_token_;
   edm::EDGetTokenT<double> rho_token_;
   edm::EDGetTokenT<edm::TriggerResults> hlt_token_;
@@ -122,6 +124,14 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * pps_track_x_;
   std::vector<float> * pps_track_y_;
   std::vector<int> * pps_track_rpid_;
+
+  std::vector<float> * proton_xi_;
+  std::vector<float> * proton_thy_;
+  std::vector<float> * proton_thx_;
+  std::vector<float> * proton_t_;
+  std::vector<int> * proton_ismultirp_;
+  std::vector<int> * proton_rpid_;
+  std::vector<int> * proton_arm_;
 
   std::vector<float> * gen_proton_px_;
   std::vector<float> * gen_proton_py_;
@@ -179,6 +189,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("slimmedJetsAK8JetId")))),
   pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsLocalTrackLiteProducer")))),
   //  pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsFastProtonSimulationWithBeamSm")))),
+  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstruction"))),
   vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
@@ -444,20 +455,77 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
 
    // Proton lite tracks
-   edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
-   iEvent.getByToken( pps_token_, ppsTracks );
-
-   for ( const auto& trk : *ppsTracks ) 
+   if((isMC==false) || (year!=2016))
      {
-       const CTPPSDetId detid( trk.getRPId() );
+       edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
+       iEvent.getByToken( pps_token_, ppsTracks );
        
-       // transform the raw, 32-bit unsigned integer detId into the TOTEM "decimal" notation
-       const unsigned short raw_id = 100*detid.arm()+10*detid.station()+detid.rp();
+       for ( const auto& trk : *ppsTracks ) 
+	 {
+	   const CTPPSDetId detid( trk.getRPId() );
+	   
+	   // transform the raw, 32-bit unsigned integer detId into the TOTEM "decimal" notation
+	   const unsigned short raw_id = 100*detid.arm()+10*detid.station()+detid.rp();
 
-       (*pps_track_x_).push_back(trk.getX());
-       (*pps_track_y_).push_back(trk.getY());
-       (*pps_track_rpid_).push_back(raw_id);
+	   (*pps_track_x_).push_back(trk.getX());
+	   (*pps_track_y_).push_back(trk.getY());
+	   (*pps_track_rpid_).push_back(raw_id);
+	 }
+       
+       // Full reco protons
+       edm::Handle<vector<reco::ProtonTrack>> recoProtons;
+       iEvent.getByToken(reco_protons_token_, recoProtons);
+       
+       // make single-RP-reco plots                                                                                                                                         
+       for (const auto & proton : *recoProtons)
+	 {
+	   int ismultirp = -999;
+	   unsigned int decRPId = -999;
+	   unsigned int armId = -999;
+	   float th_y = -999;
+	   float th_x = -999;
+	   float t = -999;
+	   float xi = -999;
+	   
+	   if (proton.valid())
+	     {
+	       th_y = (proton.direction().y()) / (proton.direction().mag());
+	       th_x = (proton.direction().x()) / (proton.direction().mag());
+	       xi = proton.xi();
+	       
+	       // t
+	       const double m = 0.938; // GeV                                                                                                                                               
+	       const double p = 6500.; // GeV                                                                                                                                               
+	       
+	       float t0 = 2.*m*m + 2.*p*p*(1.-xi) - 2.*sqrt( (m*m + p*p) * (m*m + p*p*(1.-xi)*(1.-xi)) );
+	       float th = sqrt(th_x * th_x + th_y * th_y);
+	       float S = sin(th/2.);
+	       t = t0 - 4. * p*p * (1.-xi) * S*S;
+	       
+	       if (proton.method == reco::ProtonTrack::rmSingleRP)
+		 {
+		   CTPPSDetId rpId(* proton.contributingRPIds.begin());
+		   decRPId = rpId.arm()*100 + rpId.station()*10 + rpId.rp();                                                                
+		   ismultirp = 0;
+		 }
+	       if (proton.method == reco::ProtonTrack::rmMultiRP)
+		 {
+		   CTPPSDetId rpId(* proton.contributingRPIds.begin());
+		   armId = rpId.arm();                                                                                                      
+		   ismultirp = 1;
+		 }
+
+	       (*proton_xi_).push_back(proton.xi());
+	       (*proton_thy_).push_back(th_y);
+	       (*proton_thx_).push_back(th_x);
+	       (*proton_t_).push_back(t);
+	       (*proton_ismultirp_).push_back(ismultirp);
+	       (*proton_rpid_).push_back(decRPId);
+	       (*proton_arm_).push_back(armId);
+	     }
+	 }
      }
+
 
    // Run and vertex multiplicity info
    *run_ = iEvent.id().run();
@@ -575,6 +643,14 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*pps_track_y_).clear();
    (*pps_track_rpid_).clear();
 
+   (*proton_xi_).clear();
+   (*proton_thy_).clear();
+   (*proton_thx_).clear();
+   (*proton_t_).clear();
+   (*proton_ismultirp_).clear();
+   (*proton_rpid_).clear();
+   (*proton_arm_).clear();
+
    if(isMC == true)
      {
        (*gen_proton_px_).clear();
@@ -628,6 +704,14 @@ PPtoPPWWjets::beginJob()
   pps_track_y_ = new std::vector<float>;
   pps_track_rpid_ = new std::vector<int>;
 
+  proton_xi_ = new std::vector<float>;
+  proton_thy_ = new std::vector<float>;
+  proton_thx_ = new std::vector<float>;
+  proton_t_ = new std::vector<float>;
+  proton_ismultirp_ = new std::vector<int>;
+  proton_rpid_ = new std::vector<int>;
+  proton_arm_ = new std::vector<int>;
+
   gen_proton_px_ = new std::vector<float>;
   gen_proton_py_ = new std::vector<float>;
   gen_proton_pz_ = new std::vector<float>;
@@ -671,6 +755,14 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("pps_track_x",&pps_track_x_);
   tree_->Branch("pps_track_y",&pps_track_y_);
   tree_->Branch("pps_track_rpid",&pps_track_rpid_);
+  tree_->Branch("proton_xi",&proton_xi_);
+  tree_->Branch("proton_thy",&proton_thy_);
+  tree_->Branch("proton_thx",&proton_thx_);
+  tree_->Branch("proton_t",&proton_t_);
+  tree_->Branch("proton_ismultirp",&proton_ismultirp_);
+  tree_->Branch("proton_rpid",&proton_rpid_);
+  tree_->Branch("proton_arm",&proton_arm_);
+
   tree_->Branch("hlt",&hlt_);
 
   if(isMC == true)
@@ -727,6 +819,13 @@ PPtoPPWWjets::endJob()
   delete pps_track_x_;
   delete pps_track_y_;
   delete pps_track_rpid_;
+  delete proton_xi_;
+  delete proton_thy_;
+  delete proton_thx_;
+  delete proton_t_;
+  delete proton_ismultirp_;
+  delete proton_rpid_;
+  delete proton_arm_;
   delete gen_proton_px_;
   delete gen_proton_py_;
   delete gen_proton_pz_;

@@ -32,7 +32,10 @@ process.source = cms.Source("PoolSource",
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_17.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_18.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_19.root',
-'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_20.root'
+#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_20.root'
+
+#'/store/data/Run2016B/JetHT/MINIAOD/07Aug17_ver2-v1/110000/D8E01E1F-CF7D-E711-A9E9-0CC47A4D7614.root'
+'/store/mc/RunIISummer16MiniAODv2/QCD_Pt-600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_backup_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/8274BB36-3DB5-E611-816C-0025907DE266.root'
 
     )
 ,
@@ -40,9 +43,6 @@ duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 )
 
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
-
-process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
-process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
@@ -53,19 +53,27 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 # and 94X_dataRun2_v6.                                                                                                                                                                              
          
 MC=True
-YEAR=2017
-ERA="G"
+YEAR=2016
+ERA="B"
 
 if MC:
     if YEAR==2016:
         process.GlobalTag.globaltag = '94X_mcRun2_asymptotic_v3'
+        process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
+        process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR==2017:
         process.GlobalTag.globaltag ='94X_mc2017_realistic_v14'
+        process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
+        process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 else:
     if YEAR == 2016:
         process.GlobalTag.globaltag = '94X_dataRun2_v10'
+        process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
+        process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR == 2017:
         process.GlobalTag.globaltag ='94X_dataRun2_v6'
+        process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
+        process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
 
 # New from Ksenia+Finn - update jet corrections
@@ -101,21 +109,31 @@ process.slimmedJetsJetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                                            )
 
 
+# If using full proton reco (2016 style)
+process.load("RecoCTPPS.ProtonReconstruction.year_2016.ctppsProtonReconstruction_cfi")
+
+
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
 if MC:
     process.demo.isMC = cms.bool(True)
-    process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
 
-    # Standard 2017 central production input distribution                                                                                                    
-    #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017.root")                                                                                     
+    if YEAR == 2016:
+        process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
+        process.demo.mcPileupFile = cms.string("PUHistos_mc_2016.root")
 
-    # Special cases for buggy datasets in 2017 MC                                                                                                            
-    #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt300to470.root")
-    #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt600to800.root")
-    #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt1000to1400.root")                                                                     
-    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
-    #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
+    if YEAR == 2017:
+        process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
+        
+        # Standard 2017 central production input distribution                                                                                                    
+        process.demo.mcPileupFile = cms.string("PUHistos_mc_2017.root")                                                                                     
+
+        # Special cases for buggy datasets in 2017 MC                                                                                                            
+        #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt300to470.root")
+        #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt600to800.root")
+        #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt1000to1400.root")                                                                     
+        #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
+        #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
 
 else:
     process.demo.isMC = cms.bool(False)
@@ -130,6 +148,7 @@ process.p = cms.Path(process.hltFilter *
                      process.updatedPatJetsUpdatedJECAK8 *
                      process.slimmedJetsAK8JetId *
                      process.slimmedJetsJetId *
+#                     process.ctppsProtonReconstruction *
                      process.demo)
 
 #print process.dumpPython()
