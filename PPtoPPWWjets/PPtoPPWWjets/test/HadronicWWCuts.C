@@ -9,17 +9,6 @@
 
 Int_t HadronicWWCuts::getXangle(int run,int lumi, const char* filename)
 {
-
-  /*
-  TString runs; runs.Form("%d", run);
-  TString lumis; lumis.Form("%d", lumi);
-
-  TString drun;
-  TString dfill;
-  TString dlumi;
-  TString temp;
-  */
-
   int runnum = -1;
   int lsmin = -1;
   int lsmax = -1;
@@ -95,7 +84,7 @@ void HadronicWWCuts::Loop()
    // 123 pixels sector 56  +z, right
 
    Int_t nentries = fChain->GetEntries();
-   if(samplenumber > 1 && samplenumber < 20)
+   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 101 && samplenumber < 120))
      nentries = 100000;
    Float_t myweight = 1.0;
 
@@ -756,6 +745,15 @@ void HadronicWWCuts::Loop()
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 106)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_qcdpt1000to1400.root","RECREATE");
+   if(samplenumber == 107)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_ttbar700to1000.root","RECREATE");
+   if(samplenumber == 108)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_wjetshadronic.root","RECREATE");
+   if(samplenumber == 109)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_zjetshadronic.root","RECREATE");
+   if(samplenumber == 110)
+     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_2016_ttbar1000toInf.root","RECREATE");
+
 
    hmjjdat->Write();
    hmjdat1->Write();

@@ -175,6 +175,14 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root");
     if(samplenumber == 106)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 107)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_TTbar700to1000_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root");
+    if(samplenumber == 108)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_WJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root"); 
+    if(samplenumber == 109)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ZJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root"); 
+    if(samplenumber == 110)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_TTbar1000toInf_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
@@ -237,7 +245,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
         f = new TFile("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root");
       if(samplenumber == 106)
         f = new TFile("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root");
-
+      if(samplenumber == 107)
+	f = new TFile("WWhadronic_TTbar700to1000_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root");
+      if(samplenumber == 108)
+        f = new TFile("WWhadronic_WJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root"); 
+      if(samplenumber == 109)
+        f = new TFile("WWhadronic_ZJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root"); 
+      if(samplenumber == 110)
+	f = new TFile("WWhadronic_TTbar1000toInf_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root");
+      
     }
     TDirectory * dir;
 
@@ -300,7 +316,14 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt800to1000_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
     if(samplenumber == 106)
       dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_2016_Pythia8_merge_Summer16_ntuplesv4.root:/demo");
-
+    if(samplenumber == 107)
+      dir = (TDirectory*)f->Get("WWhadronic_TTbar700to1000_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root:/demo");
+    if(samplenumber == 108)
+      dir = (TDirectory*)f->Get("WWhadronic_WJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root:/demo"); 
+    if(samplenumber == 109)
+      dir = (TDirectory*)f->Get("WWhadronic_ZJetsToQQ_MadgraphPythia8_2016_merge_Summer16_ntuplesv4.root:/demo"); 
+    if(samplenumber == 110)
+      dir = (TDirectory*)f->Get("WWhadronic_TTbar1000toInf_PowhegPythia8_2016_merge_Summer16_ntuplesv4.root:/demo");
     
     dir->GetObject("ntp1",tree);
 
