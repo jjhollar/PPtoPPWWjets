@@ -189,7 +189,10 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("slimmedJetsAK8JetId")))),
   pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsLocalTrackLiteProducer")))),
   //  pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsFastProtonSimulationWithBeamSm")))),
-  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstruction"))),
+  // 2016 full reco
+  //  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstruction"))),
+  // 2017 full reco
+  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstructionOF"))),
   vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
@@ -220,38 +223,38 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    /* 2017 */
    if(isMC==false && year==2017 && era == "B")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V6_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "C")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "D")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017D_V6_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017D_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017D_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "E")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017E_V6_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017E_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017E_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017E_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "F")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==true && year==2017)
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017_V8_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt");
      }
 
    /* 2016 */
@@ -379,9 +382,10 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        double tau2 = 0.0;
        if(year == 2017)
 	 {
-	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
-	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+	   // V8 JEC, V32?
+	   //	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
+	   //	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
+	   //	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
 	 }
        if(year == 2016)
 	 {
@@ -680,6 +684,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 PPtoPPWWjets::beginJob()
 {
+
   edm::Service<TFileService> fs;
   tree_=fs->make<TTree>("ntp1","ntp1");
 
