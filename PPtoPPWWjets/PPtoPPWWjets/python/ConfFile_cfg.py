@@ -35,7 +35,7 @@ process.source = cms.Source("PoolSource",
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_18.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_19.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_20.root'
-'file:/tmp/jjhollar/60422E26-0939-E811-87A0-E4115BCE9004.root'
+'file:/tmp/jjhollar/365A165C-0C39-E811-9EFB-984BE164D05E.root'
 #'/store/mc/RunIISummer16MiniAODv2/QCD_Pt-600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_backup_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/8274BB36-3DB5-E611-816C-0025907DE266.root'
 
     )
@@ -55,7 +55,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
          
 MC=False
 YEAR=2017
-ERA="B"
+ERA="C"
 
 if MC:
     if YEAR==2016:
@@ -72,7 +72,7 @@ else:
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR == 2017:
-        process.GlobalTag.globaltag ='94X_dataRun2_v6'
+        process.GlobalTag.globaltag ='94X_dataRun2_v11'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
@@ -81,58 +81,58 @@ else:
 # JEC, if using from sqlite file instead of global tag. 
 ############################### JEC #####################
 #### Load from a sqlite db, if not read from the global tag
-process.load("CondCore.DBCommon.CondDBCommon_cfi")
-from CondCore.DBCommon.CondDBSetup_cfi import *
-
-if MC == True:
-    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_MC.db')
-    #JetCorrectorParametersCollection_Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi                                                                               
-    tagName = 'Fall17_17Nov2017_V32_94X_MC_AK4PFchs'
-    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi'
-else:
-    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_DATA.db')
-    # B C DE F
-    tagName = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFchs'
-    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFPuppi'
-
+#process.load("CondCore.DBCommon.CondDBCommon_cfi")
+#from CondCore.DBCommon.CondDBSetup_cfi import *
+#
+#if MC == True:
+#    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_MC.db')
+#    #JetCorrectorParametersCollection_Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi                                                                               
+#    tagName = 'Fall17_17Nov2017_V32_94X_MC_AK4PFchs'
+#    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi'
+#else:
+#    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_DATA.db')
+#    # B C DE F
+#    tagName = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFchs'
+#    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFPuppi'
+#
 #data only, mc hard coded. Need to be fixed per Run
-
-
-process.jec = cms.ESSource("PoolDBESSource",
-      DBParameters = cms.PSet(
-        messageLevel = cms.untracked.int32(0)
-        ),
-      timetype = cms.string('runnumber'),
-      toGet = cms.VPSet(
-      cms.PSet(
-            record = cms.string('JetCorrectionsRecord'),
-            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagName),
-            label  = cms.untracked.string('AK4PFchs')
-            ),
-      cms.PSet( ## AK8
-            record = cms.string('JetCorrectionsRecord'),
-            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagName)),
-            label  = cms.untracked.string('AK8PFchs')
-            ),
-      cms.PSet(#puppi
-            record = cms.string('JetCorrectionsRecord'),
-            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagNamePuppi),
-            label  = cms.untracked.string('AK4PFPuppi')
-            ),
-      cms.PSet( ## AK8 puppi
-            record = cms.string('JetCorrectionsRecord'),
-            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagNamePuppi)),
-            label  = cms.untracked.string('AK8PFPuppi')
-            ),
-      ## here you add as many jet types as you need
-      ## note that the tag name is specific for the particular sqlite file 
-      ), 
-      connect = connectString
-     # uncomment above tag lines and this comment to use MC JEC
-)
-## add an es_prefer statement to resolve a possible conflict from simultaneous connection to a global tag
-process.es_prefer_jec = cms.ESPrefer('PoolDBESSource','jec')
-# end JH
+#
+#
+#process.jec = cms.ESSource("PoolDBESSource",
+#      DBParameters = cms.PSet(
+#        messageLevel = cms.untracked.int32(0)
+#        ),
+#      timetype = cms.string('runnumber'),
+#      toGet = cms.VPSet(
+#      cms.PSet(
+#            record = cms.string('JetCorrectionsRecord'),
+#            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagName),
+#            label  = cms.untracked.string('AK4PFchs')
+#            ),
+#      cms.PSet( ## AK8
+#            record = cms.string('JetCorrectionsRecord'),
+#            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagName)),
+#            label  = cms.untracked.string('AK8PFchs')
+#            ),
+#      cms.PSet(#puppi
+#            record = cms.string('JetCorrectionsRecord'),
+#            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagNamePuppi),
+#            label  = cms.untracked.string('AK4PFPuppi')
+#            ),
+#      cms.PSet( ## AK8 puppi
+#            record = cms.string('JetCorrectionsRecord'),
+#            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagNamePuppi)),
+#            label  = cms.untracked.string('AK8PFPuppi')
+#            ),
+#      ## here you add as many jet types as you need
+#      ## note that the tag name is specific for the particular sqlite file 
+#      ), 
+#      connect = connectString
+#     # uncomment above tag lines and this comment to use MC JEC
+#)
+### add an es_prefer statement to resolve a possible conflict from simultaneous connection to a global tag
+#process.es_prefer_jec = cms.ESPrefer('PoolDBESSource','jec')
+# end JH - JEC, if using from sqlite file instead of global tag.                                                                                                           
 
 
 # New from Ksenia+Finn - update jet corrections
@@ -171,12 +171,10 @@ process.slimmedJetsJetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
 # If using full proton reco (2016 style)
 #process.load("RecoCTPPS.ProtonReconstruction.year_2016.ctppsProtonReconstruction_cfi")
 # If using full proton reco (2017 style) 
-#process.load("RecoCTPPS.ProtonReconstruction.year_2017_OF.ctppsProtonReconstructionOF_cfi")
-from RecoCTPPS.ProtonReconstruction.year_2017_OF.ctppsProtonReconstructionOF_cfi import *
-process.ctppsProtonReconstructionOF = ctppsProtonReconstructionOF
+process.load("RecoCTPPS.ProtonReconstruction.year_2017_OF.ctppsProtonReconstructionOF_cfi")
+#from RecoCTPPS.ProtonReconstruction.year_2017_OF.ctppsProtonReconstructionOF_cfi import *
+#process.ctppsProtonReconstructionOF = ctppsProtonReconstructionOF
 #process.ctppsProtonReconstructionOF.alignmentFiles = cms.vstring("RecoCTPPS/ProtonReconstruction/data/alignment/2017_preTS2/collect_alignments_$alignment.out")
-# JH - for testing, use xing angle=140. Not sure how to select all angles                                                                                                                   
-UseCrossingAngle(130, process.source)                                                                                                                                                       
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
@@ -214,7 +212,8 @@ process.p = cms.Path(process.hltFilter *
                      process.slimmedJetsAK8JetId *
                      process.slimmedJetsJetId *
 #                     process.ctppsProtonReconstruction *
-                     process.ctppsProtonReconstructionOF * 
+#                     process.ctppsProtonReconstructionOF * 
+                     process.ctppsProtonReconstructionOFDB *
                      process.demo)
 
-#print process.dumpPython()
+print process.dumpPython()
