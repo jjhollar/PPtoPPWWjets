@@ -35,35 +35,32 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'ConfFile_cfg.py'
 config.JobType.outputFiles = ['ExclWWjets.root']
 config.JobType.inputFiles = [
-    'JEC2017/Fall17_17Nov2017B_V6_DATA_L2L3Residual_AK8PFchs.txt',  
-    'JEC2017/Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt',  
-    'JEC2017/Fall17_17Nov2017D_V6_DATA_L2L3Residual_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017E_V6_DATA_L2L3Residual_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017F_V32_DATA_L2L3Residual_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017F_V32_DATA_L2Relative_AK8PFchs.txt',
+    'JEC2017/Fall17_17Nov2017F_V32_DATA_L3Absolute_AK8PFchs.txt',
     'JEC2017/Fall17_17Nov2017_V8_MC_L2Relative_AK8PFchs.txt',
     'JEC2017/Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017B_V6_DATA_L2Relative_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017D_V6_DATA_L2Relative_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017F_V6_DATA_L2Relative_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017E_V6_DATA_L2Relative_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017B_V6_DATA_L3Absolute_AK8PFchs.txt',  
-    'JEC2017/Fall17_17Nov2017D_V6_DATA_L3Absolute_AK8PFchs.txt',  
-    'JEC2017/Fall17_17Nov2017F_V6_DATA_L3Absolute_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFchs.txt',
-    'JEC2017/Fall17_17Nov2017E_V6_DATA_L3Absolute_AK8PFchs.txt',
     'Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt',
     'Summer16_25nsV1_MC_SF_AK8PFchs.txt',
     'PUHistos_data.root',
     'PUHistos_mc.root'
 ]
 
-config.Data.inputDataset = '/JetHT/Run2017B-17Nov2017-v1/MINIAOD'
+#config.Data.inputDataset = '/JetHT/Run2017B-17Nov2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017C-17Nov2017-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017D-17Nov2017-v1/MINIAOD'
 
 #MiniAOD v2
-#config.Data.inputDataset = '/JetHT/Run2017B-31Mar2018-v1/MINIAOD'                                                                                                
+config.Data.inputDataset = '/JetHT/Run2017B-31Mar2018-v1/MINIAOD'                                                                                                
 #config.Data.inputDataset = '/JetHT/Run2017C-31Mar2018-v1/MINIAOD'                                                                                                
 #config.Data.inputDataset = '/JetHT/Run2017D-31Mar2018-v1/MINIAOD'
 #config.Data.inputDataset = '/JetHT/Run2017E-31Mar2018-v1/MINIAOD'                                                                                                
@@ -97,6 +94,8 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 9                                                                                                       
                               
     
+config.Data.lumiMask = 'combined_RPIN_CMS_2017.json'
+
 #config.Data.lumiMask = 'Cert_13TeV_PromptReco_Collisions17_RPIN_JSON_all.txt'
 
 
