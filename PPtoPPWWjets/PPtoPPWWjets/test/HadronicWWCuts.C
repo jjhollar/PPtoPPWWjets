@@ -105,6 +105,11 @@ void HadronicWWCuts::Loop()
    TH1F *hmjjdatpfhttrim = new TH1F("hmjjdatpfhttrim","hmjjdatpfhttrim",250,0,5000);
    TH1F *hmjjdatpfjettrim = new TH1F("hmjjdatpfjettrim","hmjjdatpfjettrim",250,0,5000);
 
+   TH1F *hmppdat = new TH1F("hmppdat","hmppdat",250,0,5000);
+   TH1F *hyppdat = new TH1F("hyppdat","hyppdat",250,-5,5);
+   TH2F *hxit45 = new TH2F("hxit45","hxit45",500,0,1,500,0,5);
+   TH2F *hxit56 = new TH2F("hxit56","hxit56",500,0,1,500,0,5);
+
 
    TH1F *hmjdat1 = new TH1F("hmjdat1","hmjdat1",250,0,1000);
    TH1F *htau21dat1 = new TH1F("htau21dat1","htau21dat1",250,0,1);
@@ -149,6 +154,7 @@ void HadronicWWCuts::Loop()
    TH1F *hmassmatchsigmc = new TH1F("hmassmatchsigmc","hmassmatchsigmc",500,-2500,2500);
    TH1F *hymatchsigmc = new TH1F("hymatchsigmc","hymatchsigmc",100,-5,5);
 
+
    TH1F *hmasswwantitau = new TH1F("hmasswwantitau","hmasswwantitau",250,0,5000);
    TH1F *hmasswwantiacop = new TH1F("hmasswwantiacop","hmasswwantiacop",250,0,5000);
    TH1F *hmasswwantiptbal = new TH1F("hmasswwantiptbal","hmasswwantiptbal",250,0,5000);
@@ -162,6 +168,13 @@ void HadronicWWCuts::Loop()
    std::vector<float> *xipix56s = new std::vector<float>;
    std::vector<float> *ypix45s = new std::vector<float>;
    std::vector<float> *ypix56s = new std::vector<float>;
+   std::vector<float> *xi45s = new std::vector<float>;
+   std::vector<float> *xi56s = new std::vector<float>;
+   std::vector<float> *t45s = new std::vector<float>;
+   std::vector<float> *t56s = new std::vector<float>;
+   std::vector<int> *alg45s = new std::vector<int>;
+   std::vector<int> *alg56s = new std::vector<int>;
+
 
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) 
@@ -405,11 +418,69 @@ void HadronicWWCuts::Loop()
 			 {
 			   hmasswwantitau->Fill(mydijet.M());
 			 }
-
+		     
 		       // Proton part
 		       float mpp = 0;
 		       float ypp = 0;
 
+		       // Full proton reco
+		       int nmultirpprotons45 = 0;
+		       int nmultirpprotons56 = 0;
+		       if(proton_xi->size() > 0)
+			 {
+			   for(Int_t p = 0; p < proton_xi->size(); p++)
+			     {
+			       if(proton_ismultirp->at(p) == 1)
+				 {
+				   if(proton_arm->at(p) == 0)
+				     {
+				       xi45s->push_back(proton_xi->at(p));
+				       t45s->push_back(-1.0*proton_t->at(p));
+				       alg45s->push_back(1);
+				       hxit45->Fill(proton_xi->at(p),-1.0*proton_t->at(p));
+				       nmultirpprotons45++;
+				     }
+				   if(proton_arm->at(p) == 1)
+				     {
+				       xi56s->push_back(proton_xi->at(p));
+                                       t56s->push_back(-1.0*proton_t->at(p));
+				       alg56s->push_back(1);
+				       hxit56->Fill(proton_xi->at(p),-1.0*proton_t->at(p));
+				       nmultirpprotons56++;
+				     }
+				 }
+			     }
+			   // If no multi-rp proton on one arm, use single-rp
+			   if((nmultirpprotons45) == 0 || (nmultirpprotons56 == 0))
+			     {
+			       for(Int_t p = 0; p < proton_xi->size(); p++)
+				 {
+				   if(((proton_rpid->at(p) == 3) || (proton_rpid->at(p) == 23)) && ((nmultirpprotons45) == 0))
+				     {
+				       xi45s->push_back(proton_xi->at(p));
+				       t45s->push_back(-999.0);
+				       alg45s->push_back(proton_rpid->at(p));
+				     }
+				   if(((proton_rpid->at(p) == 103) || (proton_rpid->at(p) == 123)) && ((nmultirpprotons56) == 0))
+                                     {
+				       xi56s->push_back(proton_xi->at(p));
+				       t56s->push_back(-999.0);
+				       alg56s->push_back(proton_rpid->at(p));
+                                     }
+				 }
+			     }
+			 
+			   for(int a = 0; a < xi45s->size(); a++)                                                                                  
+			     {                                                                                                                      
+			       for(int b = 0; b < xi56s->size(); b++)                                                                              
+				 {                                                                                                                  
+				   mpps->push_back(TMath::Sqrt(13000.0*13000.0*xi56s->at(b)*xi45s->at(a)));                                   
+				   ypps->push_back(0.5*TMath::Log(xi56s->at(b)/xi45s->at(a)));                                                
+				 }                                                                                                                  
+			     }                                                                                                                      
+			 }
+
+		       /* Local tracks, initial by-hand single-RP corrections
 		       if(pps_track_x->size() > 0)
 			 {
 			   int nPixelTracks45 = 0;
@@ -517,6 +588,7 @@ void HadronicWWCuts::Loop()
 			       mpps->push_back(TMath::Sqrt(13000.0*13000.0*xipix56s->at(0)*xipix45s->at(0)));
 			       ypps->push_back(0.5*TMath::Log(xipix56s->at(0)/xipix45s->at(0)));
 			     }
+		       */
 
 			   /*
 			   for(int p = 0; p < pps_track_x->size(); p++)
@@ -587,14 +659,17 @@ void HadronicWWCuts::Loop()
 			       mpp = TMath::Sqrt(13000.0*13000.0*pixelxi45smallesty*pixelxi56smallesty);
 			       ypp = 0.5*TMath::Log(pixelxi56smallesty/pixelxi45smallesty);
 			     }
-			   */
 			 }
+			   */
 		   
 		       // Control regions
 		       for(Int_t pr = 0; pr < mpps->size(); pr++)
 			 {
 			   if(mpps->at(pr)>0)
 			     {
+			       hmppdat->Fill(mpps->at(pr));
+			       hyppdat->Fill(ypps->at(pr));
+
 			       hmassmatchsigmc->Fill(mydijet.M()-mpps->at(pr));
 			       hymatchsigmc->Fill(mydijet.Rapidity()-ypps->at(pr));
 			       // Anti W-mass                                                                                                                                                          
@@ -662,7 +737,12 @@ void HadronicWWCuts::Loop()
        xipix56s->clear();
        ypix45s->clear();
        ypix56s->clear();
-       
+       xi45s->clear();
+       xi56s->clear();
+       t45s->clear();
+       t56s->clear();
+       alg45s->clear();
+       alg56s->clear();
      }
 
    delete mpps;
@@ -671,6 +751,12 @@ void HadronicWWCuts::Loop()
    delete xipix56s;
    delete ypix45s;
    delete ypix56s;
+   delete xi45s;
+   delete xi56s;
+   delete t45s;
+   delete t56s;
+   delete alg45s;
+   delete alg56s;
 
    // if (Cut(ientry) < 0) continue;
 
@@ -686,15 +772,15 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev4recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev4recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev4recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev4recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntuplev4recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
      fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
@@ -788,6 +874,11 @@ void HadronicWWCuts::Loop()
    hdy45->Write();
    hdxi56->Write();
    hdy56->Write();
+
+   hmppdat->Write();
+   hyppdat->Write();
+   hxit45->Write();
+   hxit56->Write();
 
    hmassmatchantiw->Write();
    hymatchantiw->Write();

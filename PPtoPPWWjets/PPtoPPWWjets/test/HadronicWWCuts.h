@@ -46,6 +46,13 @@ public :
    vector<float>   *pps_track_x;
    vector<float>   *pps_track_y;
    vector<int>     *pps_track_rpid;
+   vector<float>   *proton_xi;
+   vector<float>   *proton_thy;
+   vector<float>   *proton_thx;
+   vector<float>   *proton_t;
+   vector<int>     *proton_ismultirp;
+   vector<int>     *proton_rpid;
+   vector<int>     *proton_arm;
    vector<float>   *gen_jet_pt;
    vector<float>   *gen_jet_energy;
    vector<float>   *gen_jet_phi;
@@ -78,6 +85,13 @@ public :
    TBranch        *b_pps_track_x;   //!
    TBranch        *b_pps_track_y;   //!
    TBranch        *b_pps_track_rpid;   //!
+   TBranch        *b_proton_xi;   //!                                                                                                                 
+   TBranch        *b_proton_thy;   //!                                                                                                                
+   TBranch        *b_proton_thx;   //!                                                                                                                
+   TBranch        *b_proton_t;   //!                                                                                                                  
+   TBranch        *b_proton_ismultirp;   //!                                                                                                          
+   TBranch        *b_proton_rpid;   //!                                                                                                               
+   TBranch        *b_proton_arm;   //!                                                                                                                
    TBranch        *b_gen_jet_pt;   //!                                                                                                         
    TBranch        *b_gen_jet_energy;   //!                                                                                                     
    TBranch        *b_gen_jet_phi;   //!                                                                                                        
@@ -115,15 +129,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     TFile *f;
     // 2017 data
     if(samplenumber == -1)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/ExclWWjets_Run2017B-31Mar2018-v1_all_ntuplesv4.root");
     if(samplenumber == -2)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+      f= (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/ExclWWjets_Run2017C-31Mar2018-v1_all_ntuplesv4.root");
     if(samplenumber == -3)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+      f= (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/ExclWWjets_Run2017D-31Mar2018-v1_all_ntuplesv4.root");
     if(samplenumber == -4)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+      f= (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/ExclWWjets_Run2017E-31Mar2018-v1_all_ntuplesv4.root");
     if(samplenumber == -5)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+      f= (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/ExclWWjets_Run2017F-31Mar2018-v1_all_ntuplesv4.root");
 
     // 2016 data
     if(samplenumber == -6)
@@ -186,15 +205,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
-        f = new TFile("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+	//        f = new TFile("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+	f= new TFile("/tmp/jjhollar/ExclWWjets_Run2017B-31Mar2018-v1_all_ntuplesv4.root");
       if(samplenumber == -2)
-	f = new TFile("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+	//	f = new TFile("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+        f= new TFile("/tmp/jjhollar/ExclWWjets_Run2017C-31Mar2018-v1_all_ntuplesv4.root");
       if(samplenumber == -3)
-        f = new TFile("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+	//        f = new TFile("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+        f= new TFile("/tmp/jjhollar/ExclWWjets_Run2017D-31Mar2018-v1_all_ntuplesv4.root");
       if(samplenumber == -4)
-        f = new TFile("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+	//        f = new TFile("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+        f= new TFile("/tmp/jjhollar/ExclWWjets_Run2017E-31Mar2018-v1_all_ntuplesv4.root");
       if(samplenumber == -5)
-        f = new TFile("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+	//        f = new TFile("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+        f= new TFile("/tmp/jjhollar/ExclWWjets_Run2017F-31Mar2018-v1_all_ntuplesv4.root");
 
       if(samplenumber == -6)
         f = new TFile("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
@@ -258,15 +282,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     TDirectory * dir;
 
     if(samplenumber == -1)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017B-31Mar2018-v1_all.root:/demo");
+      //      dir = (TDirectory*)f->Get("ExclWWjets_Run2017B-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/ExclWWjets_Run2017B-31Mar2018-v1_all_ntuplesv4.root:/demo");
     if(samplenumber == -2)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017C-31Mar2018-v1_all.root:/demo");
+      //      dir = (TDirectory*)f->Get("ExclWWjets_Run2017C-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/ExclWWjets_Run2017C-31Mar2018-v1_all_ntuplesv4.root:/demo");
     if(samplenumber == -3)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017D-31Mar2018-v1_all.root:/demo");
+      //      dir = (TDirectory*)f->Get("ExclWWjets_Run2017D-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/ExclWWjets_Run2017D-31Mar2018-v1_all_ntuplesv4.root:/demo");
     if(samplenumber == -4)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017E-31Mar2018-v1_all.root:/demo");
+      //      dir = (TDirectory*)f->Get("ExclWWjets_Run2017E-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/ExclWWjets_Run2017E-31Mar2018-v1_all_ntuplesv4.root:/demo");
     if(samplenumber == -5)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017F-31Mar2018-v1_all.root:/demo");
+      //      dir = (TDirectory*)f->Get("ExclWWjets_Run2017F-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/ExclWWjets_Run2017F-31Mar2018-v1_all_ntuplesv4.root:/demo");
 
     if(samplenumber == -6)
       dir = (TDirectory*)f->Get("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root:/demo");
@@ -387,6 +416,13 @@ void HadronicWWCuts::Init(TTree *tree)
    pps_track_x = 0;
    pps_track_y = 0;
    pps_track_rpid = 0;
+   proton_xi = 0;
+   proton_thy = 0;
+   proton_thx = 0;
+   proton_t = 0;
+   proton_ismultirp = 0;
+   proton_rpid = 0;
+   proton_arm = 0;
    gen_jet_pt = 0;
    gen_jet_energy = 0;
    gen_jet_phi = 0;
@@ -417,6 +453,13 @@ void HadronicWWCuts::Init(TTree *tree)
    fChain->SetBranchAddress("pps_track_x", &pps_track_x, &b_pps_track_x);
    fChain->SetBranchAddress("pps_track_y", &pps_track_y, &b_pps_track_y);
    fChain->SetBranchAddress("pps_track_rpid", &pps_track_rpid, &b_pps_track_rpid);
+   fChain->SetBranchAddress("proton_xi", &proton_xi, &b_proton_xi);
+   fChain->SetBranchAddress("proton_thy", &proton_thy, &b_proton_thy);
+   fChain->SetBranchAddress("proton_thx", &proton_thx, &b_proton_thx);
+   fChain->SetBranchAddress("proton_t", &proton_t, &b_proton_t);
+   fChain->SetBranchAddress("proton_ismultirp", &proton_ismultirp, &b_proton_ismultirp);
+   fChain->SetBranchAddress("proton_rpid", &proton_rpid, &b_proton_rpid);
+   fChain->SetBranchAddress("proton_arm", &proton_arm, &b_proton_arm);
    fChain->SetBranchAddress("gen_jet_pt", &gen_jet_pt, &b_gen_jet_pt);
    fChain->SetBranchAddress("gen_jet_energy", &gen_jet_energy, &b_gen_jet_energy);
    fChain->SetBranchAddress("gen_jet_phi", &gen_jet_phi, &b_gen_jet_phi);
