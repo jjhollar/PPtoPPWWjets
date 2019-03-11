@@ -58,6 +58,10 @@
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "PhysicsTools/Utilities/interface/LumiReWeighting.h"
 
+#include "GeneratorInterface/LHEInterface/interface/LHEEvent.h"
+#include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
@@ -101,6 +105,8 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT<std::vector< PileupSummaryInfo > > pu_token_;
   edm::EDGetTokenT<reco::GenParticleCollection> gen_part_token_;
   edm::EDGetTokenT<reco::GenJetCollection> gen_jet_token_;
+  edm::EDGetTokenT< GenEventInfoProduct > geneventToken_; 
+  edm::EDGetTokenT<LHEEventProduct > lheEventProductToken_;
 
   TTree * tree_;
 
@@ -109,6 +115,11 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * jet_energy_;
   std::vector<float> * jet_phi_;
   std::vector<float> * jet_eta_;
+  std::vector<float> * jet_uncorr_pt_;
+  std::vector<float> * jet_uncorr_energy_;
+  std::vector<float> * jet_uncorr_phi_;
+  std::vector<float> * jet_uncorr_eta_;
+
   std::vector<float> * jet_mass_;
   std::vector<float> * jet_tau1_;
   std::vector<float> * jet_tau2_;
@@ -155,6 +166,17 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   int  ngene_;
   int  ngentau_;
 
+  double genweightFacUp_; 
+  double genweightFacDown_;
+  double genweightRenUp_; 
+  double genweightRenDown_; 
+  double genweightFacRenUp_; 
+  double genweightFacRenDown_;
+  double genpdfRMS_;
+  double genweight_;
+  double genqscale_;
+
+
   int * run_;
   long int * ev_;
   int * lumiblock_;
@@ -186,20 +208,27 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 // constructors and destructor
 //
 PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) : 
-  jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("slimmedJetsAK8JetId")))),
+  jet_token_(consumes<edm::View<pat::Jet>>(iConfig.getParameter<edm::InputTag>( "jetAK8CHSCollection" ))),
+  // New with jet toolbox
+  //  jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("selectedPatJetsAK8PFCHS")))),
+  // March 8, 2019 - old default before using jet toolbox for AK8 CHS jets:
+  //  jet_token_(consumes<edm::View<pat::Jet>>(edm::InputTag(("slimmedJetsAK8JetId")))),
   pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsLocalTrackLiteProducer")))),
   //  pps_token_(consumes<std::vector<CTPPSLocalTrackLite>>(edm::InputTag(("ctppsFastProtonSimulationWithBeamSm")))),
   // 2016 full reco
   //  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstruction"))),
   // 2017 full reco
   //  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstructionOF"))),
-  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstructionOFDB"))),
+  //  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(edm::InputTag("ctppsProtonReconstructionOFDB"))),
+  reco_protons_token_(consumes<std::vector<reco::ProtonTrack>>(iConfig.getParameter<edm::InputTag>( "recoProtonsCollection" ))),
   vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
   pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("slimmedAddPileupInfo"))),
   gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("prunedGenParticles"))),
   gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJetsAK8"))),
+  geneventToken_            (consumes<GenEventInfoProduct>(edm::InputTag("generator"))),     
+  lheEventProductToken_       (consumes<LHEEventProduct>(edm::InputTag("externalLHEProducer"))),     
   hltPrescaleProvider_(iConfig, consumesCollector(), *this)
 
 {
@@ -224,11 +253,8 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    /* 2017 */
    if(isMC==false && year==2017 && era == "B")
      {
-       std::cout << "JH: Push back Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt" << std::endl;
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt");
-       std::cout << "JH: Push back Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt" << std::endl;
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt");
-       std::cout << "JH: Push back Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt" << std::endl;
        jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "C")
@@ -386,9 +412,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        if(year == 2017)
 	 {
 	   // V8 JEC, V32?
-	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
-	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+	   //	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
+	   //	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
+	   //	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+	   // March 8, 2019 - From jet toolbox
+	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
+	   tau1              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau1");
+	   tau2              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau2");
 	 }
        if(year == 2016)
 	 {
@@ -407,9 +437,17 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*jet_vertexz_).push_back(jet.vz());
 
        // Now apply pruned mass corrections to the uncorrected jets!
-       const LorentzVector uncorrJet = (*jets)[ijet].correctedP4(0);
+       //       const LorentzVector uncorrJet = (*jets)[ijet].correctedP4(0);
+       LorentzVector uncorrJet = (*jets)[ijet].correctedP4(0);
        double pruned_masscorr = 0;
        double corr = 0;
+
+       (*jet_uncorr_pt_).push_back(uncorrJet.pt());
+       (*jet_uncorr_phi_).push_back(uncorrJet.phi());
+       (*jet_uncorr_eta_).push_back(uncorrJet.eta());
+       (*jet_uncorr_energy_).push_back(uncorrJet.energy());
+
+
        jecAK8_->setJetEta( uncorrJet.eta() );
        jecAK8_->setJetPt ( uncorrJet.pt() );
        jecAK8_->setJetE  ( uncorrJet.energy() );
@@ -462,7 +500,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
 
    // Proton lite tracks
-   if((isMC==false) || (year!=2016))
+   //   if((isMC==false) || (year!=2016))
+   if(isMC==false)
      {
        edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
        iEvent.getByToken( pps_token_, ppsTracks );
@@ -533,7 +572,6 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 }
      }
 
-
    // Run and vertex multiplicity info
    *run_ = iEvent.id().run();
    *ev_ = iEvent.id().event();
@@ -563,6 +601,17 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        ngenmu_ = 0;
        ngene_ = 0;
        ngentau_ = 0;
+
+       genweightFacUp_ = 0;
+       genweightFacDown_ = 0;
+       genweightRenUp_ = 0;
+       genweightRenDown_ = 0;
+       genweightFacRenUp_ = 0;
+       genweightFacRenDown_ = 0;
+       genpdfRMS_ = 0;
+       genweight_ = 0;
+       genqscale_ = 0;
+
 
        edm::Handle<reco::GenParticleCollection> genP;
        iEvent.getByLabel("prunedGenParticles",genP);
@@ -607,6 +656,41 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        genjj = genjet1+genjet2;
        (*gen_dijet_mass_).push_back(genjj.M());
        (*gen_dijet_y_).push_back(genjj.Rapidity());
+
+       // JH - not in MiniAOD?
+       if(0)
+	 {
+	   // GEN Event info for pdf/scale/etc. systematics - from https://github.com/UZHCMS/EXOVVNtuplizerRunII
+	   edm::Handle< GenEventInfoProduct >  geneventInfo_;
+	   edm::Handle<LHEEventProduct> lheEventProduct_;
+	   iEvent.getByToken(lheEventProductToken_, lheEventProduct_);
+	   iEvent.getByToken(geneventToken_, geneventInfo_);  
+	   genweight_ = geneventInfo_->weight();
+	   genqscale_ = geneventInfo_->qScale();
+	   
+	   const LHEEventProduct* Product = lheEventProduct_.product();
+	   
+	   if(Product->weights().size() >= 9) {
+	     genweightFacUp_ = Product->weights()[1].wgt / Product->originalXWGTUP();
+	     genweightFacDown_ = Product->weights()[2].wgt / Product->originalXWGTUP();
+	     genweightRenUp_ = Product->weights()[3].wgt / Product->originalXWGTUP();
+	     genweightRenDown_ = Product->weights()[6].wgt / Product->originalXWGTUP();
+	     genweightFacRenUp_ = Product->weights()[4].wgt / Product->originalXWGTUP();
+	     genweightFacRenDown_ = Product->weights()[8].wgt / Product->originalXWGTUP();
+	   }    
+	   std::vector<double> pdfWeights;
+	   for(unsigned int i = 10; i <= 110 && i < Product->weights().size(); i++) {
+	     pdfWeights.push_back(Product->weights()[i].wgt / Product->originalXWGTUP());
+	   }
+	   // Calculate RMS
+	   if(pdfWeights.size() > 0) {
+	     double sum = std::accumulate(pdfWeights.begin(), pdfWeights.end(), 0.0);
+	     double mean = sum / pdfWeights.size();
+	     
+	     double sq_sum = std::inner_product(pdfWeights.begin(), pdfWeights.end(), pdfWeights.begin(), 0.0);
+	     genpdfRMS_ = std::sqrt(sq_sum / pdfWeights.size() - mean * mean);
+	   }
+	 }
      }
 
    
@@ -634,6 +718,11 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*jet_energy_).clear();
    (*jet_phi_).clear();
    (*jet_eta_).clear();
+   (*jet_uncorr_pt_).clear();
+   (*jet_uncorr_energy_).clear();
+   (*jet_uncorr_phi_).clear();
+   (*jet_uncorr_eta_).clear();
+
    (*jet_mass_).clear();
    (*jet_tau1_).clear();
    (*jet_tau2_).clear();
@@ -701,6 +790,10 @@ PPtoPPWWjets::beginJob()
   jet_tau2_ = new std::vector<float>;
   jet_corrmass_ = new std::vector<float>;
   jet_vertexz_ = new std::vector<float>;
+  jet_uncorr_pt_ = new std::vector<float>;
+  jet_uncorr_energy_ = new std::vector<float>;
+  jet_uncorr_phi_ = new std::vector<float>;
+  jet_uncorr_eta_ = new std::vector<float>;
 
   dijet_mass_ = new std::vector<float>;
   dijet_pt_ = new std::vector<float>;
@@ -750,6 +843,10 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("jet_energy",&jet_energy_);
   tree_->Branch("jet_phi",&jet_phi_);
   tree_->Branch("jet_eta",&jet_eta_);
+  tree_->Branch("jet_uncorr_pt",&jet_uncorr_pt_);
+  tree_->Branch("jet_uncorr_energy",&jet_uncorr_energy_);
+  tree_->Branch("jet_uncorr_phi",&jet_uncorr_phi_);
+  tree_->Branch("jet_uncorr_eta",&jet_uncorr_eta_);
   tree_->Branch("jet_mass",&jet_mass_);
   tree_->Branch("jet_tau1",&jet_tau1_);
   tree_->Branch("jet_tau2",&jet_tau2_);
@@ -795,6 +892,17 @@ PPtoPPWWjets::beginJob()
       tree_->Branch("gen_n_e",&ngene_,"gen_n_e/I");
       tree_->Branch("gen_n_mu",&ngenmu_,"gen_n_mu/I");
       tree_->Branch("gen_n_tau",&ngentau_,"gen_n_tau/I");
+
+      tree_->Branch("gen_weight_FacUp",&genweightFacUp_,"gen_weight_FacUp/D");
+      tree_->Branch("gen_weight_FacDown",&genweightFacDown_,"gen_weight_FacDown/D");
+      tree_->Branch("gen_weight_RenUp",&genweightRenUp_,"gen_weight_RenUp/D");
+      tree_->Branch("gen_weight_RenDown",&genweightRenDown_,"gen_weight_RenDown/D");
+      tree_->Branch("gen_weight_FacRenUp",&genweightFacRenUp_,"gen_weight_FacRenUp/D");
+      tree_->Branch("gen_weight_FacRenDown",&genweightFacRenDown_,"gen_weight_FacRenDown/D");
+      tree_->Branch("gen_pdf_RMS",&genpdfRMS_,"gen_pdf_RMS/D");
+      tree_->Branch("gen_weight",&genweight_,"gen_weight/D");
+      tree_->Branch("gen_q_scale",&genqscale_,"gen_q_scale/D");
+
     }
 
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
@@ -814,6 +922,10 @@ PPtoPPWWjets::endJob()
   delete jet_energy_;
   delete jet_phi_;
   delete jet_eta_;
+  delete jet_uncorr_pt_;
+  delete jet_uncorr_energy_;
+  delete jet_uncorr_phi_;
+  delete jet_uncorr_eta_;
   delete jet_mass_;
   delete jet_tau1_;
   delete jet_tau2_;
