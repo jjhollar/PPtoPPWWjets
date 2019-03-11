@@ -165,10 +165,8 @@ if YEAR == 2017:
                 addTrimming=True, addFiltering=True,
                 addSoftDropSubjets=True,
                 addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                      
-                # As copied from the example file:
-                    JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L2Relative', 'L3Absolute'],
-                # Testing - JH, added L1FastJet
-                #                JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute']
+                # added L1FastJet on top of the example config file
+                JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute']
                 )
 
 
