@@ -283,8 +283,8 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
      }
    if(isMC==true && year==2017)
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V8_MC_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V32_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V32_MC_L3Absolute_AK8PFchs.txt");
      }
 
    /* 2016 */
