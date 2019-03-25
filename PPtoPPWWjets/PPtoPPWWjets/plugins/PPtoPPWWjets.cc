@@ -126,6 +126,9 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * jet_corrmass_;
   std::vector<float> * jet_vertexz_;
 
+  std::vector<float> * subjet_ptratio_;
+  std::vector<float> * subjet_deltaR_;
+
   std::vector<float> * dijet_mass_;
   std::vector<float> * dijet_pt_;
   std::vector<float> * dijet_y_;
@@ -398,7 +401,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    for (unsigned int ijet=0; ijet<collSize; ijet++) 
      {
-       reco::Jet jet = (*jets)[ijet];;
+       pat::Jet jet = (*jets)[ijet];;
 
        // CMSSW_8_X samples
        //       double pruned_mass = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
@@ -475,9 +478,27 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   (*jet_jer_sf_).push_back(jer_sf);
 	   (*jet_jer_sfup_).push_back(jer_sf_up);
            (*jet_jer_sfdown_).push_back(jer_sf_down);
-
 	 }
+
+       // Now access subjet variables for this jet
+       int nsj = 0;  
+       TLorentzVector sja,sjb;
        
+       auto wSubjets = jet.subjets("Pruned");
+       for ( auto const & iw : wSubjets ) 
+	 {
+	   if(nsj==0 ){
+	     sja.SetPtEtaPhiE(iw->correctedP4(0).pt(),iw->correctedP4(0).eta(),iw->correctedP4(0).phi(),iw->correctedP4(0).e());
+	   }
+	   if(nsj==1 )
+	     {
+	       sjb.SetPtEtaPhiE(iw->correctedP4(0).pt(),iw->correctedP4(0).eta(),iw->correctedP4(0).phi(),iw->correctedP4(0).e());
+	       (*subjet_ptratio_).push_back(sja.Pt()/sjb.Pt());
+	       (*subjet_deltaR_).push_back(sja.DeltaR(sjb));
+	     }
+	   nsj++;
+	 }
+
      }
 
    // If at least 2 jets, make dijet pairs of the leading 2
@@ -729,6 +750,9 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*jet_corrmass_).clear();
    (*jet_vertexz_).clear();
 
+   (*subjet_ptratio_).clear();
+   (*subjet_deltaR_).clear();
+
    (*dijet_mass_).clear();
    (*dijet_y_).clear();
    (*dijet_phi_).clear();
@@ -795,6 +819,9 @@ PPtoPPWWjets::beginJob()
   jet_uncorr_phi_ = new std::vector<float>;
   jet_uncorr_eta_ = new std::vector<float>;
 
+  subjet_ptratio_ = new std::vector<float>;
+  subjet_deltaR_ = new std::vector<float>;
+
   dijet_mass_ = new std::vector<float>;
   dijet_pt_ = new std::vector<float>;
   dijet_y_ = new std::vector<float>;
@@ -852,6 +879,8 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("jet_tau2",&jet_tau2_);
   tree_->Branch("jet_corrmass",&jet_corrmass_);
   tree_->Branch("jet_vertexz",&jet_vertexz_);
+  tree_->Branch("subjet_ptratio",&subjet_ptratio_);
+  tree_->Branch("subjet_deltaR_",&subjet_deltaR_);
   tree_->Branch("dijet_mass",&dijet_mass_);
   tree_->Branch("dijet_pt",&dijet_pt_);
   tree_->Branch("dijet_y",&dijet_y_);
@@ -931,6 +960,8 @@ PPtoPPWWjets::endJob()
   delete jet_tau2_;
   delete jet_corrmass_;
   delete jet_vertexz_;
+  delete subjet_ptratio_;
+  delete subjet_deltaR_;
   delete dijet_mass_;
   delete dijet_pt_;
   delete dijet_y_;
