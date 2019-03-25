@@ -403,6 +403,9 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      {
        pat::Jet jet = (*jets)[ijet];;
 
+       if(jet.pt() < 200)
+	 continue;
+
        // CMSSW_8_X samples
        //       double pruned_mass = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
        //       double tau1         = (*jets)[ijet].userFloat("NjettinessAK8:tau1");
@@ -880,7 +883,7 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("jet_corrmass",&jet_corrmass_);
   tree_->Branch("jet_vertexz",&jet_vertexz_);
   tree_->Branch("subjet_ptratio",&subjet_ptratio_);
-  tree_->Branch("subjet_deltaR_",&subjet_deltaR_);
+  tree_->Branch("subjet_deltaR",&subjet_deltaR_);
   tree_->Branch("dijet_mass",&dijet_mass_);
   tree_->Branch("dijet_pt",&dijet_pt_);
   tree_->Branch("dijet_y",&dijet_y_);
