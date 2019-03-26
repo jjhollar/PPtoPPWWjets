@@ -12,10 +12,11 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
+#'file:/tmp/jjhollar//AA748FB2-AF0A-E811-9276-002590E7DFD6.root'
 #'/store/user/jjhollar/ExclWWHadronic2018/step3miniaod_gammagammaww_all_xi1pt5to25percent_a0W2pt5e-6_digi_withprotonsfix_20kevents_19jobs_job3.root'
 #'file:/tmp/jjhollar/50D30A02-FB08-E811-8D0B-44A842CFD5D8.root'
 
-'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root',
+'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root'
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_2.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_3.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_4.root',
@@ -71,10 +72,12 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 # Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                    
 # is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                  
 # and 94X_dataRun2_v6.                                                                                                                                                                              
+
          
 MC=True
 YEAR=2017
 ERA="F"
+DoTheorySystematics=False
 
 if MC:
     DOSMEARING=True
@@ -244,6 +247,10 @@ process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
 if MC:
     process.demo.isMC = cms.bool(True)
+    process.demo.doMCTheorySystematics = cms.bool(False)
+
+    if DoTheorySystematics:
+        process.demo.doMCTheorySystematics = cms.bool(True)
 
     if YEAR == 2016:
         process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
@@ -270,6 +277,8 @@ if MC:
 
 else:
     process.demo.isMC = cms.bool(False)
+    process.demo.doMCTheorySystematics = cms.bool(False)
+
     if YEAR == 2016:
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
         process.demo.recoProtonsCollection = cms.InputTag("ctppsProtonReconstruction")

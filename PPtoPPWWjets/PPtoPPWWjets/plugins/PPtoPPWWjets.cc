@@ -195,6 +195,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::LumiReWeighting *LumiWeights;
 
   bool isMC;
+  bool doMCTheorySystematics;
   int year;
   std::string era;
 };
@@ -243,6 +244,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    isMC = iConfig.getParameter<bool>("isMC");
    year = iConfig.getParameter<int>("year");
    era = iConfig.getParameter<std::string>("era");
+   doMCTheorySystematics = iConfig.getParameter<bool>("doMCTheorySystematics");
 
    if(isMC == true)
      {
@@ -681,8 +683,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*gen_dijet_mass_).push_back(genjj.M());
        (*gen_dijet_y_).push_back(genjj.Rapidity());
 
-       // JH - not in MiniAOD?
-       if(0)
+       // JH - not in signal MC, so only fill these if requested
+       if(doMCTheorySystematics == true)
 	 {
 	   // GEN Event info for pdf/scale/etc. systematics - from https://github.com/UZHCMS/EXOVVNtuplizerRunII
 	   edm::Handle< GenEventInfoProduct >  geneventInfo_;
@@ -925,16 +927,18 @@ PPtoPPWWjets::beginJob()
       tree_->Branch("gen_n_mu",&ngenmu_,"gen_n_mu/I");
       tree_->Branch("gen_n_tau",&ngentau_,"gen_n_tau/I");
 
-      tree_->Branch("gen_weight_FacUp",&genweightFacUp_,"gen_weight_FacUp/D");
-      tree_->Branch("gen_weight_FacDown",&genweightFacDown_,"gen_weight_FacDown/D");
-      tree_->Branch("gen_weight_RenUp",&genweightRenUp_,"gen_weight_RenUp/D");
-      tree_->Branch("gen_weight_RenDown",&genweightRenDown_,"gen_weight_RenDown/D");
-      tree_->Branch("gen_weight_FacRenUp",&genweightFacRenUp_,"gen_weight_FacRenUp/D");
-      tree_->Branch("gen_weight_FacRenDown",&genweightFacRenDown_,"gen_weight_FacRenDown/D");
-      tree_->Branch("gen_pdf_RMS",&genpdfRMS_,"gen_pdf_RMS/D");
-      tree_->Branch("gen_weight",&genweight_,"gen_weight/D");
-      tree_->Branch("gen_q_scale",&genqscale_,"gen_q_scale/D");
-
+      if(doMCTheorySystematics == true)
+	{
+	  tree_->Branch("gen_weight_FacUp",&genweightFacUp_,"gen_weight_FacUp/D");
+	  tree_->Branch("gen_weight_FacDown",&genweightFacDown_,"gen_weight_FacDown/D");
+	  tree_->Branch("gen_weight_RenUp",&genweightRenUp_,"gen_weight_RenUp/D");
+	  tree_->Branch("gen_weight_RenDown",&genweightRenDown_,"gen_weight_RenDown/D");
+	  tree_->Branch("gen_weight_FacRenUp",&genweightFacRenUp_,"gen_weight_FacRenUp/D");
+	  tree_->Branch("gen_weight_FacRenDown",&genweightFacRenDown_,"gen_weight_FacRenDown/D");
+	  tree_->Branch("gen_pdf_RMS",&genpdfRMS_,"gen_pdf_RMS/D");
+	  tree_->Branch("gen_weight",&genweight_,"gen_weight/D");
+	  tree_->Branch("gen_q_scale",&genqscale_,"gen_q_scale/D");
+	}
     }
 
   tree_->Branch("nVertices",nVertices_,"nVertices/i");
