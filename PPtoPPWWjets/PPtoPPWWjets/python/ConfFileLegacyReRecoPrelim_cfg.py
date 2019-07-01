@@ -101,64 +101,10 @@ else:
         process.GlobalTag.globaltag ='106X_dataRun2_v15'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+    if YEAR == 2016 or YEAR == 2017:
+        # For legacy re-reco, for now testing with GT for 2016 or 2017                                                                                     
+        process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v15")
 
-
-# JH - modified Dec 10, 2018
-# JEC, if using from sqlite file instead of global tag. 
-############################### JEC #####################
-#### Load from a sqlite db, if not read from the global tag
-#process.load("CondCore.DBCommon.CondDBCommon_cfi")
-#from CondCore.DBCommon.CondDBSetup_cfi import *
-#
-#if MC == True:
-#    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_MC.db')
-#    #JetCorrectorParametersCollection_Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi                                                                               
-#    tagName = 'Fall17_17Nov2017_V32_94X_MC_AK4PFchs'
-#    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_MC_AK4PFPuppi'
-#else:
-#    connectString = cms.string('sqlite:JEC2017/Fall17_17Nov2017_V32_94X_DATA.db')
-#    # B C DE F
-#    tagName = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFchs'
-#    tagNamePuppi = 'Fall17_17Nov2017_V32_94X_DATA_AK4PFPuppi'
-#
-#data only, mc hard coded. Need to be fixed per Run
-#
-#
-#process.jec = cms.ESSource("PoolDBESSource",
-#      DBParameters = cms.PSet(
-#        messageLevel = cms.untracked.int32(0)
-#        ),
-#      timetype = cms.string('runnumber'),
-#      toGet = cms.VPSet(
-#      cms.PSet(
-#            record = cms.string('JetCorrectionsRecord'),
-#            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagName),
-#            label  = cms.untracked.string('AK4PFchs')
-#            ),
-#      cms.PSet( ## AK8
-#            record = cms.string('JetCorrectionsRecord'),
-#            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagName)),
-#            label  = cms.untracked.string('AK8PFchs')
-#            ),
-#      cms.PSet(#puppi
-#            record = cms.string('JetCorrectionsRecord'),
-#            tag    = cms.string('JetCorrectorParametersCollection_%s'%tagNamePuppi),
-#            label  = cms.untracked.string('AK4PFPuppi')
-#            ),
-#      cms.PSet( ## AK8 puppi
-#            record = cms.string('JetCorrectionsRecord'),
-#            tag    = cms.string('JetCorrectorParametersCollection_%s'%re.sub('AK4','AK8',tagNamePuppi)),
-#            label  = cms.untracked.string('AK8PFPuppi')
-#            ),
-#      ## here you add as many jet types as you need
-#      ## note that the tag name is specific for the particular sqlite file 
-#      ), 
-#      connect = connectString
-#     # uncomment above tag lines and this comment to use MC JEC
-#)
-### add an es_prefer statement to resolve a possible conflict from simultaneous connection to a global tag
-#process.es_prefer_jec = cms.ESPrefer('PoolDBESSource','jec')
-# end JH - JEC, if using from sqlite file instead of global tag.                                                                              
 
 ### ADD SOME NEW JET COLLECTIONS                                                                                                              
 # New (March 8, 2019) - to recover ak8 CHS jets with 2017 MiniAOD
@@ -169,14 +115,19 @@ else:
 from JMEAnalysis.JetToolbox.jetToolbox_cff import *
 
 jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
-                PUMethod='CHS',
-                addPruning=True, addSoftDrop=False ,           # add basic grooming                                                            
-                addTrimming=False, addFiltering=False,
-                addPrunedSubjets=True, addSoftDropSubjets=False,
-                addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                      
-                # added L1FastJet on top of the example config file
-                JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual']
-                )
+            PUMethod='CHS',
+            addPruning=True, addSoftDrop=False ,           # add basic grooming                                                            
+            addTrimming=False, addFiltering=False,
+            addPrunedSubjets=True, addSoftDropSubjets=False,
+            addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                      
+            miniAOD = False, runOnMC=False, 
+            bTagDiscriminators = None,  # blank means default list of discriminators, None means none
+            bTagInfos = None,
+            subjetBTagDiscriminators = None,
+            subjetBTagInfos = None,
+            # added L1FastJet on top of the example config file
+            JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual']
+)
 
 #################################
     ###  RECORRECTING JETS ###
@@ -235,12 +186,15 @@ process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                                            
 #################################
 
-# If using full proton re-reco (legacy) - local RP reconstruction chain with standard settings                                                                                            
+# If using full proton re-reco (legacy) - local RP reconstruction chain with standard settings                                                             
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
 process.ctppsLocalTrackLiteProducer.includePixels = cms.bool(True)
 process.ctppsLocalTrackLiteProducer.includeStrips = cms.bool(True)
 process.ctppsProtons.doSingleRPReconstruction = cms.bool(True)
 process.ctppsProtons.doMultiRPReconstruction = cms.bool(True)
+
+# If running on AOD, remake goodOfflinePrimaryVertices for jet stuff
+process.load('CommonTools.ParticleFlow.goodOfflinePrimaryVertices_cfi')
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
@@ -300,6 +254,7 @@ process.demo.era = cms.string(ERA)
 process.p = cms.Path(process.hltFilter *           
                     # process.patJetCorrFactorsUpdatedJECAK8 *
                     # process.updatedPatJetsUpdatedJECAK8 * 
+                     process.goodOfflinePrimaryVertices * 
                      process.slimmedJetsAK8JetId *
                      process.slimmedAK8JetsSmeared *
                      # Legacy re-reco from AOD sequence

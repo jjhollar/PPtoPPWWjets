@@ -243,7 +243,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   // 106X legacy re-reco 
   recoProtonsSingleRPToken_   ( consumes<std::vector<reco::ForwardProton> >      ( iConfig.getParameter<edm::InputTag>( "ppsRecoProtonSingleRPTag" ) ) ),
   recoProtonsMultiRPToken_   ( consumes<std::vector<reco::ForwardProton> >      ( iConfig.getParameter<edm::InputTag>( "ppsRecoProtonMultiRPTag" ) ) ),
-  vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
+  vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlinePrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
   pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("slimmedAddPileupInfo"))),
