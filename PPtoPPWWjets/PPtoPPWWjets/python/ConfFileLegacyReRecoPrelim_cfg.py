@@ -12,11 +12,13 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
+# Test file - 2017C 94X AOD
+'/store/data/Run2017C/JetHT/AOD/17Nov2017-v1/30004/9A36D46F-01D8-E711-93DA-A4BF0112BE4C.root'
 #'file:/tmp/jjhollar//AA748FB2-AF0A-E811-9276-002590E7DFD6.root'
 #'/store/user/jjhollar/ExclWWHadronic2018/step3miniaod_gammagammaww_all_xi1pt5to25percent_a0W2pt5e-6_digi_withprotonsfix_20kevents_19jobs_job3.root'
 #'file:/tmp/jjhollar/50D30A02-FB08-E811-8D0B-44A842CFD5D8.root'
 
-'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root'
+#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root'
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_2.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_3.root',
 #'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_4.root',
@@ -74,9 +76,9 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 # and 94X_dataRun2_v6.                                                                                                                                                                              
 
          
-MC=True
+MC=False
 YEAR=2017
-ERA="F"
+ERA="C"
 DoTheorySystematics=False
 
 if MC:
@@ -92,16 +94,13 @@ if MC:
 else:
     DOSMEARING=False
     if YEAR == 2016:
-        process.GlobalTag.globaltag = '94X_dataRun2_v10'
+        process.GlobalTag.globaltag = '106X_dataRun2_v15'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR == 2017:
-        process.GlobalTag.globaltag ='94X_dataRun2_v11'
+        process.GlobalTag.globaltag ='106X_dataRun2_v15'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
-    if YEAR == 2016 or YEAR == 2017:
-        # For legacy re-reco, for now testing with GT for 2016 or 2017
-        process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
 
 
 # JH - modified Dec 10, 2018
@@ -257,7 +256,8 @@ if MC:
         process.demo.mcPileupFile = cms.string("PUHistos_mc_2016.root")
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
 
-        process.demo.recoProtonsCollection = cms.InputTag("ctppsProtonReconstruction")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
 
     if YEAR == 2017:
         process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
@@ -273,7 +273,8 @@ if MC:
         #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
         #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
 
-        process.demo.recoProtonsCollection = cms.InputTag("ctppsProtonReconstructionOFDB")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
 
 else:
     process.demo.isMC = cms.bool(False)
@@ -281,13 +282,15 @@ else:
 
     if YEAR == 2016:
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
-        process.demo.recoProtonsCollection = cms.InputTag("ctppsProtonReconstruction")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
     if YEAR == 2017:
 #        process.demo.jetAK8CHSCollection = cms.InputTag("selectedPatJetsAK8PFCHS")
 #        process.demo.jetAK8CHSCollection = cms.InputTag("slimmedAK8JetsSmearedJetID")
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
 
-        process.demo.recoProtonsCollection = cms.InputTag("ctppsProtonReconstructionOFDB")
 
 process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
@@ -304,7 +307,7 @@ process.p = cms.Path(process.hltFilter *
                      process.totemRPLocalTrackFitter *
                      process.ctppsDiamondRecHits *
                      process.ctppsDiamondLocalTracks *
-                     process.ctppsPixelLocalReconstruction *
+                     process.ctppsPixelLocalTracks *
                      process.ctppsLocalTrackLiteProducer *
                      process.ctppsProtons *
                      # Analyzer
