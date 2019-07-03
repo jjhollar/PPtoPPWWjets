@@ -79,6 +79,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 MC=False
 YEAR=2017
 ERA="C"
+MINIAOD=False
 DoTheorySystematics=False
 
 if MC:
@@ -94,15 +95,13 @@ if MC:
 else:
     DOSMEARING=False
     if YEAR == 2016:
-        process.GlobalTag.globaltag = '106X_dataRun2_v15'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR == 2017:
-        process.GlobalTag.globaltag ='106X_dataRun2_v15'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR == 2016 or YEAR == 2017:
-        # For legacy re-reco, for now testing with GT for 2016 or 2017                                                                                     
+        # For legacy re-reco, for now using standard GT for 2016 or 2017                                                                                     
         process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v15")
 
 
@@ -120,7 +119,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
             addTrimming=False, addFiltering=False,
             addPrunedSubjets=True, addSoftDropSubjets=False,
             addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                      
-            miniAOD = False, runOnMC=False, 
+            miniAOD = MINIAOD, runOnMC=MC, 
             bTagDiscriminators = None,  # blank means default list of discriminators, None means none
             bTagInfos = None,
             subjetBTagDiscriminators = None,
@@ -190,6 +189,7 @@ process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
 process.ctppsLocalTrackLiteProducer.includePixels = cms.bool(True)
 process.ctppsLocalTrackLiteProducer.includeStrips = cms.bool(True)
+process.ctppsLocalTrackLiteProducer.includeDiamonds = cms.bool(True)
 process.ctppsProtons.doSingleRPReconstruction = cms.bool(True)
 process.ctppsProtons.doMultiRPReconstruction = cms.bool(True)
 

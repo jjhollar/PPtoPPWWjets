@@ -142,6 +142,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * pps_track_x_;
   std::vector<float> * pps_track_y_;
   std::vector<int> * pps_track_rpid_;
+  std::vector<float> * pps_track_time_;
 
   std::vector<float> * proton_xi_;
   std::vector<float> * proton_thy_;
@@ -560,6 +561,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   (*pps_track_x_).push_back(trk.getX());
 	   (*pps_track_y_).push_back(trk.getY());
 	   (*pps_track_rpid_).push_back(raw_id);
+	   (*pps_track_time_).push_back(trk.getTime());
 	 }
        
        // Full reco protons
@@ -875,6 +877,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*pps_track_x_).clear();
    (*pps_track_y_).clear();
    (*pps_track_rpid_).clear();
+   (*pps_track_time_).clear();
 
    (*proton_xi_).clear();
    (*proton_thy_).clear();
@@ -954,6 +957,7 @@ PPtoPPWWjets::beginJob()
   pps_track_x_ = new std::vector<float>;
   pps_track_y_ = new std::vector<float>;
   pps_track_rpid_ = new std::vector<int>;
+  pps_track_time_ = new std::vector<float>;
 
   proton_xi_ = new std::vector<float>;
   proton_thy_ = new std::vector<float>;
@@ -1023,6 +1027,7 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("pps_track_x",&pps_track_x_);
   tree_->Branch("pps_track_y",&pps_track_y_);
   tree_->Branch("pps_track_rpid",&pps_track_rpid_);
+  tree_->Branch("pps_track_time",&pps_track_time_);
   tree_->Branch("proton_xi",&proton_xi_);
   tree_->Branch("proton_thy",&proton_thy_);
   tree_->Branch("proton_thx",&proton_thx_);
@@ -1116,6 +1121,7 @@ PPtoPPWWjets::endJob()
   delete pps_track_x_;
   delete pps_track_y_;
   delete pps_track_rpid_;
+  delete pps_track_time_;
   delete proton_xi_;
   delete proton_thy_;
   delete proton_thx_;
