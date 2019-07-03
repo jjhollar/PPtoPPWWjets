@@ -40,10 +40,10 @@ config.Data.inputDataset = '/JetHT/Run2017B-17Nov2017-v1/AOD'
 
 config.Data.inputDBS = 'global'
 # for data
-#config.Data.splitting = 'Automatic'
+config.Data.splitting = 'Automatic'
 # for MC
-config.Data.splitting = 'FileBased'                                                                                               
-config.Data.unitsPerJob = 9                                                                                                       
+#config.Data.splitting = 'FileBased'                                                                                               
+#config.Data.unitsPerJob = 25                                                                                                       
                               
     
 config.Data.lumiMask = 'combined_RPIN_CMS_2017.json'
