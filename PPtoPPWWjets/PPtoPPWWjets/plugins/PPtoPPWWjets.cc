@@ -184,6 +184,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   int  ngenmu_;
   int  ngene_;
   int  ngentau_;
+  int  nhighptjets_;
 
   double genweightFacUp_; 
   double genweightFacDown_;
@@ -405,12 +406,12 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    iEvent.getByToken(rho_token_,rhoHandle);
    double rho = *rhoHandle; 
 
-
    // Get ak8Jets
    edm::Handle<edm::View<pat::Jet>> jets;
    iEvent.getByToken(jet_token_, jets);
    unsigned int collSize=jets->size();
    TLorentzVector jet1, jet2, jj;
+   nhighptjets_ = 0;
 
    JME::JetResolution resolution_ak8;
    JME::JetResolutionScaleFactor resolution_ak8_sf;
@@ -424,8 +425,10 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      {
        pat::Jet jet = (*jets)[ijet];;
 
-       if(jet.pt() < 200)
+       if(jet.pt() < 180)
 	 continue;
+
+       nhighptjets_++;
 
        // CMSSW_8_X samples
        //       double pruned_mass = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
@@ -526,7 +529,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
 
    // If at least 2 jets, make dijet pairs of the leading 2
-   if(collSize >= 2)
+   if(nhighptjets_ >= 2)
      {
        jet1.SetPtEtaPhiM((*jet_pt_)[0],(*jet_eta_)[0],(*jet_phi_)[0],(*jet_corrmass_)[0]);
        jet2.SetPtEtaPhiM((*jet_pt_)[1],(*jet_eta_)[1],(*jet_phi_)[1],(*jet_corrmass_)[1]);
@@ -563,7 +566,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   (*pps_track_rpid_).push_back(raw_id);
 	   (*pps_track_time_).push_back(trk.getTime());
 	 }
-       
+
        // Full reco protons
        edm::Handle<vector<reco::ForwardProton>> recoMultiRPProtons;
        iEvent.getByToken(recoProtonsMultiRPToken_, recoMultiRPProtons);
@@ -830,7 +833,6 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
 
    
-
    /*
    std::cout << "JH: Filling tree!" << std::endl;
    std::cout << "\tJH: pps_track_rpid_.size() = " << pps_track_rpid_->size() << std::endl
@@ -838,7 +840,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     << "\tJH: dijet_phi_.size() = " << dijet_phi_->size() << std::endl;
    */
 
-   tree_->Fill();
+   if(nhighptjets_ >= 2)
+     tree_->Fill();
 
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
