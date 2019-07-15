@@ -706,7 +706,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    *lumiblock_ = iEvent.luminosityBlock();
 
    // Crossing angle information from DB - available for all years in legacy re-RECO
-   if(year == 2018 || year == 2017 || year == 2016)
+   if((year == 2018 || year == 2017 || year == 2016) && (isMC == false))
      {
        edm::ESHandle<LHCInfo> pSetup;
        const string label = "";
