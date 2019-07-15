@@ -249,7 +249,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
 //  pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("slimmedAddPileupInfo"))),
-  pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("AddPileupInfo"))),
+  pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("addPileupInfo"))),
 //  gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("prunedGenParticles"))),
   gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("genParticles"))),
 //  gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJetsAK8"))),
@@ -552,7 +552,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    // Proton lite tracks
    //   if((isMC==false) || (year!=2016))
-   if(isMC==false)
+   //   if(isMC==false)
+   if(1)
      {
        edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
        iEvent.getByToken( pps_token_, ppsTracks );
@@ -756,7 +757,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 
        edm::Handle<reco::GenParticleCollection> genP;
-       iEvent.getByLabel("prunedGenParticles",genP);
+       //       iEvent.getByLabel("prunedGenParticles",genP);
+       iEvent.getByLabel("genParticles",genP);                                                                                                     
 
        for (reco::GenParticleCollection::const_iterator mcIter=genP->begin(); mcIter != genP->end(); mcIter++ ) {
 	 if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
@@ -774,19 +776,30 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     (*gen_proton_px_).push_back(thepx);
 	   }
 	 
+	 /*
 	 if(fabs(mcIter->pdgId()) == 11 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngene_++;
          if(fabs(mcIter->pdgId()) == 13 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngenmu_++;
          if(fabs(mcIter->pdgId()) == 15 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngentau_++;
+	 */
+	 // Fall17 central production signal MC - crash when retrieving lepton mother. 
+	 // Instead for now just count all GEN leptons...
+	 if(fabs(mcIter->pdgId()) == 11)
+           ngene_++;                                                                                                                                            
+         if(fabs(mcIter->pdgId()) == 13)
+           ngenmu_++;                                                                                                                                           
+         if(fabs(mcIter->pdgId()) == 15)
+           ngentau_++;                                                                                                                                          
        }
 
        edm::Handle<reco::GenJetCollection> genJet;
-       iEvent.getByLabel("slimmedGenJetsAK8",genJet);
-
+       //       iEvent.getByLabel("slimmedGenJetsAK8",genJet);
+       iEvent.getByLabel("ak8GenJets",genJet);
+       
        TLorentzVector genjet1, genjet2, genjj;
-
+       
        for (reco::GenJetCollection::const_iterator genJetIter=genJet->begin(); genJetIter != genJet->end(); genJetIter++ ) {
 	 (*gen_jet_pt_).push_back(genJetIter->pt());
 	 (*gen_jet_phi_).push_back(genJetIter->phi());
@@ -835,13 +848,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 }
      }
 
-   
    /*
    std::cout << "JH: Filling tree!" << std::endl;
    std::cout << "\tJH: pps_track_rpid_.size() = " << pps_track_rpid_->size() << std::endl
 	     << "\tJH: jet_pt_.size() = " << jet_pt_->size() << std::endl
 	     << "\tJH: dijet_phi_.size() = " << dijet_phi_->size() << std::endl;
    */
+
 
    if(nhighptjets_ >= 2)
      tree_->Fill();
