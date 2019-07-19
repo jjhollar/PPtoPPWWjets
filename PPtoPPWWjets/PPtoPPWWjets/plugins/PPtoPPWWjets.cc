@@ -214,6 +214,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 
   bool isMC;
   bool doMCTheorySystematics;
+  bool useMCProtons;
   int year;
   std::string era;
 };
@@ -268,6 +269,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    year = iConfig.getParameter<int>("year");
    era = iConfig.getParameter<std::string>("era");
    doMCTheorySystematics = iConfig.getParameter<bool>("doMCTheorySystematics");
+   useMCProtons = iConfig.getParameter<bool>("useMCProtons");
 
    if(isMC == true)
      {
@@ -551,9 +553,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
 
    // Proton lite tracks
-   //   if((isMC==false) || (year!=2016))
-   //   if(isMC==false)
-   if(1)
+   if((isMC==false) || (useMCProtons==true))
      {
        edm::Handle<std::vector<CTPPSLocalTrackLite> > ppsTracks;
        iEvent.getByToken( pps_token_, ppsTracks );
@@ -776,22 +776,22 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     (*gen_proton_px_).push_back(thepx);
 	   }
 	 
-	 /*
 	 if(fabs(mcIter->pdgId()) == 11 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngene_++;
          if(fabs(mcIter->pdgId()) == 13 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngenmu_++;
          if(fabs(mcIter->pdgId()) == 15 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngentau_++;
-	 */
 	 // Fall17 central production signal MC - crash when retrieving lepton mother. 
-	 // Instead for now just count all GEN leptons...
+	 // This workaround will count all leptons...
+	 /*
 	 if(fabs(mcIter->pdgId()) == 11)
            ngene_++;                                                                                                                                            
          if(fabs(mcIter->pdgId()) == 13)
            ngenmu_++;                                                                                                                                           
          if(fabs(mcIter->pdgId()) == 15)
            ngentau_++;                                                                                                                                          
+	 */
        }
 
        edm::Handle<reco::GenJetCollection> genJet;
@@ -822,7 +822,9 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   iEvent.getByToken(geneventToken_, geneventInfo_);  
 	   genweight_ = geneventInfo_->weight();
 	   genqscale_ = geneventInfo_->qScale();
-	   
+
+	   /* Crashes on Pythia AODSIM	   
+		   
 	   const LHEEventProduct* Product = lheEventProduct_.product();
 	   
 	   if(Product->weights().size() >= 9) {
@@ -845,6 +847,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     double sq_sum = std::inner_product(pdfWeights.begin(), pdfWeights.end(), pdfWeights.begin(), 0.0);
 	     genpdfRMS_ = std::sqrt(sq_sum / pdfWeights.size() - mean * mean);
 	   }
+	   */
 	 }
      }
 

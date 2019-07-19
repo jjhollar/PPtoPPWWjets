@@ -1,6 +1,12 @@
 import FWCore.ParameterSet.Config as cms
 import re
 
+MC=False
+YEAR=2017
+ERA="C"
+MINIAOD=False
+DoTheorySystematics=False
+UseMCProtons=False
 
 process = cms.Process("Demo")
 
@@ -61,8 +67,8 @@ process.source = cms.Source("PoolSource",
 #'file:/tmp/jjhollar/927116EE-760F-E811-A4BB-484D7E8DF06B.root'
 
     )
-,
-duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
+#,
+#duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 )
 
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
@@ -74,14 +80,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 # Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                    
 # is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                  
 # and 94X_dataRun2_v6.                                                                                                                                                                              
-
          
-MC=False
-YEAR=2017
-ERA="C"
-MINIAOD=False
-DoTheorySystematics=False
-
 if MC:
     DOSMEARING=True
     if YEAR==2016:
@@ -201,9 +200,13 @@ process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 if MC:
     process.demo.isMC = cms.bool(True)
     process.demo.doMCTheorySystematics = cms.bool(False)
+    process.demo.useMCProtons = cms.bool(False)
 
     if DoTheorySystematics:
         process.demo.doMCTheorySystematics = cms.bool(True)
+
+    if UseMCProtons:
+        process.demo.useMCProtons = cms.bool(True)
 
     if YEAR == 2016:
         process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
@@ -232,6 +235,7 @@ if MC:
 
 else:
     process.demo.isMC = cms.bool(False)
+    process.demo.useMCProtons = cms.bool(False)
     process.demo.doMCTheorySystematics = cms.bool(False)
 
     if YEAR == 2016:

@@ -5,8 +5,8 @@ MC=True
 YEAR=2017
 ERA="F"
 MINIAOD=False
-DoTheorySystematics=False
-
+DoTheorySystematics=True
+UseMCProtons=False
 
 process = cms.Process("Demo")
 
@@ -18,64 +18,14 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
+# Test file - QCD MC
+'/store/mc/RunIIFall17DRPremix/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/60000/E6ABA140-49B7-E811-A330-90E2BAD4912C.root'
 # Test file - signal MC
 #'file:/tmp/jjhollar/ctppsSimWWall_a0W2e-6_xangleall2017_divergence30_test1060.root'
-'/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/044E60C5-402A-E911-AB26-0CC47A4D7634.root'
-
-# Test file - 2017F file with crash reported by Ksenia
-#'file:/tmp/jjhollar/46B6D543-DAD5-E711-87B2-FA163E2DD369.root'
-#'file:/tmp/jjhollar/4C885C1B-D1DF-E711-89AF-02163E01470A.root'
-# Test file - 2017C 94X AOD
-#'/store/data/Run2017C/JetHT/AOD/17Nov2017-v1/30004/9A36D46F-01D8-E711-93DA-A4BF0112BE4C.root'
-#'file:/tmp/jjhollar//AA748FB2-AF0A-E811-9276-002590E7DFD6.root'
-#'/store/user/jjhollar/ExclWWHadronic2018/step3miniaod_gammagammaww_all_xi1pt5to25percent_a0W2pt5e-6_digi_withprotonsfix_20kevents_19jobs_job3.root'
-#'file:/tmp/jjhollar/50D30A02-FB08-E811-8D0B-44A842CFD5D8.root'
-
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_2.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_3.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_4.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_5.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_6.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_7.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_8.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_9.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_10.root'
-
-#'file:/tmp/jjhollar/7402ADA9-C609-E811-BCFE-C0BFC0E5686E.root'
-
-
-#        '/store/user/kshcheli/wwhad/FPMC_Fall17/step3_fpmc_MiniAOD.root'
-#'/store/data/Run2016B/JetHT/MINIAOD/07Aug17_ver2-v1/110000/5EF65117-437F-E711-AF5B-0025905A60A8.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/step3_fpmc_ZZ_MINIAODv2.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_1.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_2.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_3.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_4.root',
-##'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_5.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_6.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_7.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_8.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_9.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_10.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_11.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_12.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_13.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_14.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_15.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_16.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_17.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_18.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_19.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_20.root'
-#'file:/tmp/jjhollar/365A165C-0C39-E811-9EFB-984BE164D05E.root'
-#'/store/data/Run2017B/JetHT/MINIAOD/31Mar2018-v1/00000/80A71620-AF3A-E811-96AA-0CC47A7452D8.root'
-#'/store/mc/RunIISummer16MiniAODv2/QCD_Pt-600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_backup_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/8274BB36-3DB5-E611-816C-0025907DE266.root'
-#'file:/tmp/jjhollar/927116EE-760F-E811-A4BB-484D7E8DF06B.root'
-
+#'/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/044E60C5-402A-E911-AB26-0CC47A4D7634.root'
     )
-,
-duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
+#,
+#duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 #                            skipEvents=cms.untracked.uint32(15)
 )
 
@@ -97,8 +47,7 @@ if MC:
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
     if YEAR==2017:
-#        process.GlobalTag.globaltag ='94X_mc2017_realistic_v17'
-        process.GlobalTag.globaltag ='106X_mc2017_realistic_v6'
+        process.GlobalTag.globaltag ='94X_mc2017_realistic_v17'
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 else:
@@ -210,10 +159,15 @@ process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
 if MC:
     process.demo.isMC = cms.bool(True)
+    # Defaults - no theory systematics, no MC fastsim protons
     process.demo.doMCTheorySystematics = cms.bool(False)
+    process.demo.useMCProtons = cms.bool(False)
 
     if DoTheorySystematics:
         process.demo.doMCTheorySystematics = cms.bool(True)
+
+    if UseMCProtons:
+        process.demo.useMCProtons = cms.bool(True)
 
     if YEAR == 2016:
         process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
@@ -242,6 +196,7 @@ if MC:
 
 else:
     process.demo.isMC = cms.bool(False)
+    process.demo.useMCProtons = cms.bool(False)
     process.demo.doMCTheorySystematics = cms.bool(False)
 
     if YEAR == 2016:
@@ -261,12 +216,12 @@ process.demo.era = cms.string(ERA)
 
 
 if MC:
-    process.p = cms.Path(process.hltFilter *
-                         process.genParticlesForJetsNoNu * 
-                         process.goodOfflinePrimaryVertices *
-                         process.slimmedJetsAK8JetId *
-                         process.slimmedAK8JetsSmeared *
-                         process.demo)
+        process.p = cms.Path(process.hltFilter *
+                             process.genParticlesForJetsNoNu * 
+                             process.goodOfflinePrimaryVertices *
+                             process.slimmedJetsAK8JetId *
+                             process.slimmedAK8JetsSmeared *
+                             process.demo)
 else:
     process.p = cms.Path(process.hltFilter *           
                          # process.patJetCorrFactorsUpdatedJECAK8 *
