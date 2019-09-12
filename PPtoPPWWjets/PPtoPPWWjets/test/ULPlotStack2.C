@@ -370,21 +370,21 @@ void ULPlotStack2(Int_t var = 1)
 
 void PlotStackAll()
 {
-  TempStupidPlotStack2(1);
-  TempStupidPlotStack2(2);
-  TempStupidPlotStack2(3);
-  TempStupidPlotStack2(4);
-  TempStupidPlotStack2(5);
-  TempStupidPlotStack2(6);
-  TempStupidPlotStack2(7);
-  TempStupidPlotStack2(8);
-  TempStupidPlotStack2(9);
-  TempStupidPlotStack2(13);
-  TempStupidPlotStack2(14);
-  TempStupidPlotStack2(15);
-  TempStupidPlotStack2(16);
-  TempStupidPlotStack2(17);
-  TempStupidPlotStack2(18);
-  TempStupidPlotStack2(19);
-  TempStupidPlotStack2(20);
+  ULPlotStack2(1);
+  ULPlotStack2(2);
+  ULPlotStack2(3);
+  ULPlotStack2(4);
+  ULPlotStack2(5);
+  ULPlotStack2(6);
+  ULPlotStack2(7);
+  ULPlotStack2(8);
+  ULPlotStack2(9);
+  ULPlotStack2(13);
+  ULPlotStack2(14);
+  ULPlotStack2(15);
+  ULPlotStack2(16);
+  ULPlotStack2(17);
+  ULPlotStack2(18);
+  ULPlotStack2(19);
+  ULPlotStack2(20);
 }
