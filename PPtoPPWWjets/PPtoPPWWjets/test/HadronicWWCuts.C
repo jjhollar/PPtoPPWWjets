@@ -7,60 +7,6 @@
 #include <string.h>
 #include <TMath.h>
 
-Int_t HadronicWWCuts::getXangle(int run,int lumi, const char* filename)
-{
-
-  /*
-  TString runs; runs.Form("%d", run);
-  TString lumis; lumis.Form("%d", lumi);
-
-  TString drun;
-  TString dfill;
-  TString dlumi;
-  TString temp;
-  */
-
-  int runnum = -1;
-  int lsmin = -1;
-  int lsmax = -1;
-  int Xangle=-1;
-
-  ifstream F;
-  F.open((const char*)filename);
-
-
-  if(F){
-    while (!F.eof())
-      {
-	F>>runnum;
-	F>>lsmin;
-	F>>lsmax;
-	F>>Xangle;
-
-	if( (run == runnum) &&  (lumi>=lsmin) && (lumi<=lsmax) )
-	  {
-	    //	    cout << "Read: "<< run<<" " << lumi<<"    -----> "<<Xangle << endl;                                                                                                                    
-	    break;
-	  }
-      }
-  }//endif                                                                                                                                                                                      
-  else cout << "[!] getXangle(): Error reading from file." << endl;
-
-  if(F.eof())
-    {
-      cout << "[!] getXangle(): Warning: No crossing angle data for Run "<< run<<", LS " << lumi <<" !" <<endl;
-      F.close();
-      return -1;
-    }
-  
-  else
-    {
-      F.close();
-      return Xangle;
-    }
-}
-
-
 void HadronicWWCuts::Loop()
 {
 //   In a ROOT session, you can do:
@@ -115,6 +61,18 @@ void HadronicWWCuts::Loop()
    TH1F *hmjjdatpfjet = new TH1F("hmjjdatpfjet","hmjjdatpfjet",250,0,5000);
    TH1F *hmjjdatpfhttrim = new TH1F("hmjjdatpfhttrim","hmjjdatpfhttrim",250,0,5000);
    TH1F *hmjjdatpfjettrim = new TH1F("hmjjdatpfjettrim","hmjjdatpfjettrim",250,0,5000);
+   TH1F *hyjjdat = new TH1F("hyjjdat","hyjjdat",250,-5,5);
+
+   TH1F *hmppsingle = new TH1F("hmppsingle","hmppsingle",250,0,5000);
+   TH1F *hmppmulti = new TH1F("hmppmulti","hmppmulti",250,0,5000);
+   TH1F *hmppmixed = new TH1F("hmppmixed","hmppsmixed",250,0,5000);
+   TH1F *hyppsingle = new TH1F("hyppsingle","hyppsingle",250,-5,5);
+   TH1F *hyppmulti = new TH1F("hyppmulti","hyppmulti",250,-5,5);
+   TH1F *hyppmixed = new TH1F("hyppmixed","hyppmixed",250,-5,5);
+
+   TH2F *hmyppsingle = new TH2F("hmyppsingle","hmyppsingle",100,0,5000,100,-5,5);
+   TH2F *hmyjjdat = new TH2F("hmyjjdat","hmyjjdat",100,0,5000,100,-5,5);
+
 
 
    TH1F *hmjdat1 = new TH1F("hmjdat1","hmjdat1",250,0,1000);
@@ -142,37 +100,61 @@ void HadronicWWCuts::Loop()
    TH1F *hystrip45 = new TH1F("hystrip45","hystrip45",500,-50,50);
    TH1F *hxistrip56 = new TH1F("hxistrip56","hxistrip56",500,0,0.5);
    TH1F *hystrip56 = new TH1F("hystrip56","hystrip56",500,-50,50);
+   TH1F *hximult45 = new TH1F("hximult45","hximult45",500,0,0.5);
+   TH1F *hximult56 = new TH1F("hximult56","hximult56",500,0,0.5);
+
+   TH1F *hnpix45 = new TH1F("hnpix45","hnpix45",15,0,15);
+   TH1F *hnpix56 = new TH1F("hnpix56","hnpix56",15,0,15);
+
+
    TH1F *hdxi45 = new TH1F("hdxi45","hdxi45",500,-0.2,0.2);
    TH1F *hdy45 = new TH1F("hdy45","hdy45",500,-20,20);
    TH1F *hdxi56 = new TH1F("hdxi56","hdxi56",500,-0.2,0.2);
    TH1F *hdy56 = new TH1F("hdy56","hdy56",500,-20,20);
-   TH1F *hnpix45 = new TH1F("hnpix45","hnpix45",10,0,10);
-   TH1F *hnpix56 = new TH1F("hnpix56","hnpix56",10,0,10);
 
    TH1F *hmassmatchantiw = new TH1F("hmassmatchantiw","hmassmatchantiw",500,-2500,2500);
    TH1F *hymatchantiw = new TH1F("hymatchantiw","hymatchantiw",100,-5,5);
+   TH1F *hmassmatchratioantiw = new TH1F("hmassmatchratioantiw","hmassmatchratioantiw",100,-5,5);
+
    TH1F *hmassmatchantiacop = new TH1F("hmassmatchantiacop","hmassmatchantiacop",500,-2500,2500);
    TH1F *hymatchantiacop = new TH1F("hymatchantiacop","hymatchantiacop",100,-5,5);
+   TH1F *hmassmatchratioantiacop = new TH1F("hmassmatchratioantiacop","hmassmatchratioantiacop",100,-5,5);
+
    TH1F *hmassmatchantitau = new TH1F("hmassmatchantitau","hmassmatchantitau",500,-2500,2500);
    TH1F *hymatchantitau = new TH1F("hymatchantitau","hymatchantitau",100,-5,5);
+   TH1F *hmassmatchratioantitau = new TH1F("hmassmatchratioantitau","hmassmatchratioantitau",100,-5,5);
+
    TH1F *hmassmatchantiptbal = new TH1F("hmassmatchantiptbal","hmassmatchantiptbal",500,-2500,2500);
    TH1F *hymatchantiptbal = new TH1F("hymatchantiptbal","hymatchantiptbal",100,-5,5);
+   TH1F *hmassmatchratioantiptbal = new TH1F("hmassmatchratioantiptbal","hmassmatchratioantiptbal",100,-5,5);
+
    TH1F *hmassmatchsigmc = new TH1F("hmassmatchsigmc","hmassmatchsigmc",500,-2500,2500);
    TH1F *hymatchsigmc = new TH1F("hymatchsigmc","hymatchsigmc",100,-5,5);
+   TH1F *hmassmatchratiosigmc = new TH1F("hmassmatchratiosigmc","hmassmatchratiosigmc",500,-5,5);
 
    TH1F *hmasswwantitau = new TH1F("hmasswwantitau","hmasswwantitau",250,0,5000);
    TH1F *hmasswwantiacop = new TH1F("hmasswwantiacop","hmasswwantiacop",250,0,5000);
    TH1F *hmasswwantiptbal = new TH1F("hmasswwantiptbal","hmasswwantiptbal",250,0,5000);
    TH1F *hmasswwsignal = new TH1F("hmasswwsignal","hmasswwsignal",250,0,5000);
    TH1F *hywwsignal = new TH1F("hywwsignal","hywwsignal",250,-5,5);
+   TH1F *hcrossingangle = new TH1F("hcrossingangle","hcrossingangle",70,100,170);
 
+   TH1F *hmppres = new TH1F("hmppres","hmppres",100,0,2);
+   TH1F *hmjjres = new TH1F("hmjjres","hmjjres",100,0,2);
+   TH1F *hmassmatchratiosigmcmult = new TH1F("hmassmatchratiosigmcmult","hmassmatchratiosigmcmult",500,-5,5);
 
-   std::vector<float> *mpps = new std::vector<float>;
-   std::vector<float> *ypps = new std::vector<float>;
+   std::vector<float> *mppssingsing = new std::vector<float>;
+   std::vector<float> *yppssingsing = new std::vector<float>;
+   std::vector<float> *mppsmixed = new std::vector<float>;
+   std::vector<float> *yppsmixed = new std::vector<float>;
+   std::vector<float> *mppsmultmult = new std::vector<float>;
+   std::vector<float> *yppsmultmult = new std::vector<float>;
    std::vector<float> *xipix45s = new std::vector<float>;
    std::vector<float> *xipix56s = new std::vector<float>;
    std::vector<float> *ypix45s = new std::vector<float>;
    std::vector<float> *ypix56s = new std::vector<float>;
+   std::vector<float> *ximulti45s = new std::vector<float>;
+   std::vector<float> *ximulti56s = new std::vector<float>;
 
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) 
@@ -181,7 +163,7 @@ void HadronicWWCuts::Loop()
        if (ientry < 0) break;
        nb = fChain->GetEntry(jentry);   nbytes += nb;
        
-       if(jentry % 5000 == 0)
+       if(jentry % 20000 == 0)
 	 cout << "Entry " << jentry << "/" << nentries << endl;
 
        if(jet_pt->size() < 2)
@@ -217,12 +199,18 @@ void HadronicWWCuts::Loop()
 	   jet1.SetPtEtaPhiE(jet_pt->at(0),jet_eta->at(0),jet_phi->at(0),jet_energy->at(0));
 	   jet2.SetPtEtaPhiE(jet_pt->at(1),jet_eta->at(1),jet_phi->at(1),jet_energy->at(1));
 	   
-	   int indleading = -1;
-	   int indsecond = -1;
+	   int indleading = 0;
+	   int indsecond = 1;
 	   float C_JER1=-999.;
 	   float C_JER2=-999.;
-	   
-	   /* Applying JER smearing to MC before using jets */
+
+	   /* Applying JER smearing to MC before using jets
+	    * Note - as of the reprocessing of samples with UL proton RECO in September 2019, this 
+	    * is no longer necessary since JER is done in the analyzer step. 
+	    * It's left commented out for any comparisons with older plots
+	    */
+
+	   /*
 	   if(samplenumber > 0)
 	     {
 	       TLorentzVector recojtmp, genjtmp;
@@ -236,8 +224,11 @@ void HadronicWWCuts::Loop()
 	       //	       cout << "Starting checks on JER" << endl;
 	       for(int ir = 0; ir < jet_pt->size(); ir++)
 		 {
+		   if(TMath::IsNaN(jet_pt->at(ir)))
+		     continue;
+
 		   recojtmp.SetPtEtaPhiE(jet_pt->at(ir),jet_eta->at(ir),jet_phi->at(ir),jet_energy->at(ir));
-		   
+
 		   for(int ig=0; ig<gen_jet_pt->size(); ig++)
 		     { // loop over gen jets
 		       genjtmp.SetPtEtaPhiE(gen_jet_pt->at(ig),gen_jet_eta->at(ig),gen_jet_phi->at(ig),gen_jet_energy->at(ig));
@@ -312,6 +303,8 @@ void HadronicWWCuts::Loop()
 	       continue;
 	     }
 
+	   */
+
 	   mydijet = jet1+jet2;                                                                                                       
 	   
 	   if((indleading != 0) || (indsecond != 1))
@@ -324,7 +317,14 @@ void HadronicWWCuts::Loop()
 	     {
 	       if((fabs(jet_eta->at(indleading) - jet_eta->at(indsecond))<1.3))
 		 {
+		   //		   std::cout << "Filling histograms: " << std::endl
+		   //			     << "\tjet1 pT, eta, phi, E = " << jet1.Pt() << ", " << jet1.Eta() << ", " << jet1.Phi() << ", " << jet1.E() << std::endl
+		   //			     << "\tjet2 pT, eta, phi, E = " << jet2.Pt() << ", " << jet2.Eta() << ", " << jet2.Phi() << ", " << jet2.E() << std::endl
+		   //			     << "\tmjj = " << mydijet.M() << std::endl;
+
 		   hmjjdat->Fill(mydijet.M(),myweight);
+		   hyjjdat->Fill(mydijet.Rapidity(),myweight);
+		   hmyjjdat->Fill(mydijet.M(),mydijet.Rapidity());
 		   if(passpfjet == 1)
 		     hmjjdatpfjet->Fill(mydijet.M(),myweight);
 		   if(passpfhttrim == 1)
@@ -344,7 +344,7 @@ void HadronicWWCuts::Loop()
                            hmjdat1->Fill(jet_corrmass->at(indleading),myweight);
 			   rhoprime1 = TMath::Log(jet_corrmass->at(indleading)*jet_corrmass->at(indleading)/jet_pt->at(indleading));
 			   taut21ddt1 = (jet_tau2->at(indleading)/jet_tau1->at(indleading)) - (-0.082 * rhoprime1);
-			   htau21ddtdat1->Fill(taut21ddt1);
+			   htau21ddtdat1->Fill(taut21ddt1,myweight);
 			 }
 		       if(jet_corrmass->at(indsecond) >= 55 && jet_corrmass->at(indsecond) <= 215)
 			 {
@@ -352,7 +352,7 @@ void HadronicWWCuts::Loop()
 			   hmjdat2->Fill(jet_corrmass->at(indsecond),myweight);
                            rhoprime2 = TMath::Log(jet_corrmass->at(indsecond)*jet_corrmass->at(indsecond)/jet_pt->at(indsecond));
 			   taut21ddt2 = (jet_tau2->at(indsecond)/jet_tau1->at(indsecond)) - (-0.082 * rhoprime2);
-                           htau21ddtdat2->Fill(taut21ddt2);
+                           htau21ddtdat2->Fill(taut21ddt2,myweight);
 			 }
 		       hptdat1->Fill(jet_pt->at(indleading),myweight);
 		       hptdat2->Fill(jet_pt->at(indsecond),myweight);
@@ -362,6 +362,7 @@ void HadronicWWCuts::Loop()
 		       hphidat2->Fill(jet_phi->at(indsecond),myweight);
 		       hdeta->Fill(fabs(jet_eta->at(indleading) - jet_eta->at(indsecond)),myweight);
 		       hnvtx->Fill(nVertices,myweight);
+		       hcrossingangle->Fill(crossingangle,myweight);
 		       hptratio->Fill(jet1.Pt()/jet2.Pt(),myweight);
 		       
 		       float dphi = fabs(jet_phi->at(indleading) - jet_phi->at(indsecond));
@@ -378,310 +379,232 @@ void HadronicWWCuts::Loop()
 		       Float_t mwhicut = 105.0;
 		       Float_t tau21cut = 0.75;
 
-		       // Sideband control regions
-		       if(samplenumber > 0)
-			 {
-			   // Signal region, only for MC
-			   if((acop < acopcut) && 
-			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && 
-															jet_corrmass->at(indsecond) <= mwhicut) &&
-			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-			      (jet1.Pt()/jet2.Pt() < ptbalcut))
-			     {
-			       hmasswwsignal->Fill(mydijet.M());
-			       hywwsignal->Fill(mydijet.Rapidity());
-			     }
-			 }
-		       // Anti acoplanarity                                                                                                                                        
-		       if((acop > acopcut) &&
-			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-			  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-			  (jet1.Pt()/jet2.Pt() < ptbalcut))
-			 {
-			   hmasswwantiacop->Fill(mydijet.M());
-			 }
-		       // Anti pT balance                                                                                                                                          
-		       if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
-			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-			  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-			  (acop < 0.005))
-			 {
-                           hmasswwantiptbal->Fill(mydijet.M());
-			 }
-		       // Anti tau21                                                                                                                                               
-		       if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
-			  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-			  (acop < 0.005) &&
-			  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
-			 {
-			   hmasswwantitau->Fill(mydijet.M());
-			 }
-
 		       // Proton part
 		       float mpp = 0;
 		       float ypp = 0;
 
-		       if(pps_track_x->size() > 0)
+		       int ismultimulti = 0;
+		       int issinglesingle = 0;
+		       int ismixed = 0;
+		       int nSinglePixelTracks45 = 0;
+		       int nSinglePixelTracks56 = 0;
+		       int nMultiTracks45 = 0;
+		       int nMultiTracks56 = 0;
+
+		       if(proton_xi->size() > 1)
 			 {
-			   int nPixelTracks45 = 0;
-			   int nPixelTracks56 = 0;
-			   float pixelx45smallesty = 0.;
-			   float pixelx56smallesty = 0.;
-			   float pixely45smallesty = 9999.;
-			   float pixely56smallesty = 9999.;
-			   float stripx45 = 0;
-			   float stripy45 = 0;
-			   float stripx56 = 0;
-			   float stripy56 = 0;
+			   float thexi = 0;
 
-                           float pixelxi45smallesty = 0.;
-                           float pixelxi56smallesty = 0.;
-                           float stripxi45 = 0;
-                           float stripxi56 = 0;
-			   
-			   float dxpixstrip45 = 0;
-			   float dypixstrip45 = 0;
-			   float dxpixstrip56 = 0;
-			   float dypixstrip56 = 0;
-			   
-			   //			   int angle = getXangle(run,  lumiblock , "xangle_tillTS2_STABLEBEAMS_CLEANUP.csv");
-			   //			   int angle = getXangle(run, lumiblock, "xinganglerange_tillTS2.txt");
-			   int angle = 0;
-
-			   if(run < 303719)
-			     angle = getXangle(run, lumiblock, "xinganglerange_tillTS2.txt");
-			   else
-			     angle = getXangle(run, lumiblock, "xinganglerange_afterTS2.txt");                                               
-
-
-			   Float_t Dx45 = 0;
-			   Float_t Dx56 = 0;
-
-			   if(angle == 120)
+			   for(int p = 0; p < proton_xi->size(); p++)                                                                                                 
 			     {
-			       Dx45 = Dx45ref120;
-			       Dx56 = Dx56ref120;
+			       thexi = proton_xi->at(p);
+
+			       if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 23))                                                                       
+				 {
+				   if(proton_trackpixshift1->at(p) == 0)
+				     {
+				       xipix45s->push_back(thexi);
+				       hxipix45->Fill(thexi);
+				       //				       ypix45s->push_back(proton_tracky1->at(p));
+				       nSinglePixelTracks45++;
+				     }
+				 }
+                               if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 123))
+                                 {
+                                   if(proton_trackpixshift1->at(p) == 0)
+				     {
+				       xipix56s->push_back(thexi);
+                                       hxipix56->Fill(thexi);
+				       //				       ypix56s->push_back(proton_tracky1->at(p));
+                                       nSinglePixelTracks56++;
+				     }
+                                 }
+                               if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 0))
+                                 {
+				   if(proton_trackpixshift1->at(p) == 0)
+				     {
+				       ximulti45s->push_back(thexi);
+				       hximult45->Fill(thexi);
+				       nMultiTracks45++;
+				     }
+                                 }
+                               if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 1))
+                                 {
+				   if(proton_trackpixshift1->at(p) == 0)
+				     {
+				       ximulti56s->push_back(thexi);
+				       hximult56->Fill(thexi);
+				       nMultiTracks56++;
+				     }
+                                 }
 			     }
-			   else if(angle == 130)
+
+			   if(nMultiTracks45 >= 1 && nMultiTracks56 >= 1)
                              {
-                               Dx45 = Dx45ref130;
-                               Dx56 = Dx56ref130;
+                               for(int a = 0; a < nMultiTracks45; a++)
+                                 {
+                                   for(int b = 0; b < nMultiTracks56; b++)
+                                     {
+				       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*ximulti45s->at(a));
+				       ypp = 0.5*TMath::Log(ximulti56s->at(b)/ximulti45s->at(a));
+                                       mppsmultmult->push_back(mpp);
+                                       yppsmultmult->push_back(ypp);
+				       hmppmulti->Fill(mpp);
+				       hyppmulti->Fill(ypp);
+				       ismultimulti = 1;
+                                     }
+                                 }
                              }
-                           else if(angle == 140)
-                             {
-                               Dx45 = Dx45ref140;
-                               Dx56 = Dx56ref140;
-                             }
-			   else
+			   else if((nMultiTracks45 >= 1 && nSinglePixelTracks56 >= 1) || (nMultiTracks56 >= 1 && nSinglePixelTracks45 >= 1))
 			     {
-			       Dx45 = Dx45ref140 - 0.46*((angle-140.)/10.) ;
-                               Dx56 = Dx56ref140 - 0.46*((angle-140.)/10.) ;
+			       for(int a = 0; a < nSinglePixelTracks45; a++)
+                                 {
+                                   for(int b = 0; b < nMultiTracks56; b++)
+                                     {
+				       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*xipix45s->at(a));
+				       ypp = 0.5*TMath::Log(ximulti56s->at(b)/xipix45s->at(a));
+                                       mppsmixed->push_back(mpp);
+                                       yppsmixed->push_back(ypp);
+				       hmppmixed->Fill(mpp);
+				       hyppmixed->Fill(ypp);
+                                     }
+                                 }
+			       for(int a = 0; a < nSinglePixelTracks56; a++)
+                                 {
+                                   for(int b = 0; b < nMultiTracks45; b++)
+                                     {
+				       mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(a)*ximulti45s->at(b));
+				       ypp = 0.5*TMath::Log(xipix56s->at(a)/ximulti45s->at(b));
+                                       mppsmixed->push_back(mpp);
+                                       yppsmixed->push_back(ypp);
+				       hmppmixed->Fill(mpp);
+				       hyppmixed->Fill(ypp);
+                                     }
+                                 }
 			     }
-
-			   Dx45 *= -1.0;
-			   Dx56 *= -1.0;
-
-			   for(int p = 0; p < pps_track_x->size(); p++)                                                                                                                
+			   else if(nSinglePixelTracks45 >= 1 && nSinglePixelTracks56 >= 1)
 			     {
-			       if(pps_track_rpid->at(p) == 23)                                                                                                       
-			       //			       if(pps_track_rpid->at(p) == 3)
+			       for(int a = 0; a < nSinglePixelTracks45; a++)
 				 {
-				   float thexi = (pps_track_x->at(p)+ Aln45pixels)/(Dx45*10.0);
-				   xipix45s->push_back(thexi);
-				   ypix45s->push_back(pps_track_y->at(p));
-				   nPixelTracks45++;
-				 }  
-			       if(pps_track_rpid->at(p) == 123)                                                                                                       
-			       //			       if(pps_track_rpid->at(p) == 103)
-                                 {                                                                                                                                                     
-				   xipix56s->push_back((pps_track_x->at(p)+ Aln56pixels)/(Dx56*10.0));
-				   ypix56s->push_back(pps_track_y->at(p));
-				   nPixelTracks56++;
-				 }
-                               if(pps_track_rpid->at(p) == 3)                                                                                                                          
-                                 {                                                                                                                                                     
-                                   stripx45 = pps_track_x->at(p);                                                                                                                      
-                                   stripy45 = pps_track_y->at(p);                                                                                                                      
-                                   stripxi45 = (stripx45 + Aln45strips)/(Dx45*10.0);                                                                                                   
-                                 }                                                                                                                                                     
-                               if(pps_track_rpid->at(p) == 103)                                                                                                                        
-                                 {                                                                                                                                                     
-                                   stripx56 = pps_track_x->at(p);                                                                                                                      
-                                   stripy56 = pps_track_y->at(p);                                                                                                                      
-                                   stripxi56 = (stripx56 + Aln56strips)/(Dx56*10.0);                                                                                                   
-                                 }                                                                                                                                                     
-			     }
-
-			   if(nPixelTracks45 > 1 || nPixelTracks56 > 1)
-			     {
-			       for(int a = 0; a < nPixelTracks45; a++)
-				 {
-				   for(int b = 0; b < nPixelTracks56; b++)
+				   for(int b = 0; b < nSinglePixelTracks56; b++)
 				     {
-				       mpps->push_back(TMath::Sqrt(13000.0*13000.0*xipix56s->at(b)*xipix45s->at(a)));
-				       ypps->push_back(0.5*TMath::Log(xipix56s->at(b)/xipix45s->at(a)));
+				       mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(b)*xipix45s->at(a));
+				       ypp = 0.5*TMath::Log(xipix56s->at(b)/xipix45s->at(a));
+				       mppssingsing->push_back(mpp);
+				       yppssingsing->push_back(ypp);
+				       hmppsingle->Fill(mpp);
+				       hyppsingle->Fill(ypp);
+				       hmyppsingle->Fill(mpp,ypp);
 				     }
 				 }
 			     }
-			   else if(nPixelTracks45 == 1 && nPixelTracks56 == 1)
-			     {
-			       mpps->push_back(TMath::Sqrt(13000.0*13000.0*xipix56s->at(0)*xipix45s->at(0)));
-			       ypps->push_back(0.5*TMath::Log(xipix56s->at(0)/xipix45s->at(0)));
-			     }
-
-			   /*
-			   for(int p = 0; p < pps_track_x->size(); p++)
-			     {
-			       if(pps_track_rpid->at(p) == 23)
-				 {
-				   if(fabs(3.75-pps_track_y->at(p)) < pixely45smallesty)
-				     {
-				       pixely45smallesty = pps_track_y->at(p);
-				       pixelx45smallesty = pps_track_x->at(p);
-                                       pixelxi45smallesty = (pixelx45smallesty + Aln45pixels)/(Dx45*10.0);
-				     }
-				 }
-			       if(pps_track_rpid->at(p) == 123)
-				 {
-				   if(fabs(3.75-pps_track_y->at(p)) < pixely56smallesty)
-				     {
-				       pixely56smallesty = pps_track_y->at(p);
-				       pixelx56smallesty = pps_track_x->at(p);
-				       pixelxi56smallesty = (pixelx56smallesty + Aln56pixels)/(Dx56*10.0);
-				     }
-				 }
-			       if(pps_track_rpid->at(p) == 3)
-				 {
-				   stripx45 = pps_track_x->at(p);
-				   stripy45 = pps_track_y->at(p);
-				   stripxi45 = (stripx45 + Aln45strips)/(Dx45*10.0);
-				 }
-			       if(pps_track_rpid->at(p) == 103)
-				 {
-				   stripx56 = pps_track_x->at(p);
-				   stripy56 = pps_track_y->at(p);
-                                   stripxi56 = (stripx56 + Aln56strips)/(Dx56*10.0);
-				 }
-			     }
-			   if(pixelx45smallesty != 0)
-			     {
-			       hxipix45->Fill(pixelxi45smallesty);
-			       hypix45->Fill(pixely45smallesty);
-			     }
-			   if(pixelx56smallesty != 0)
-			     {
-			       hxipix56->Fill(pixelxi56smallesty);
-			       hypix56->Fill(pixely56smallesty);
-			     }
-			   if(stripx45 != 0)
-			     {
-			       hxistrip45->Fill(stripxi45);
-			       hystrip45->Fill(stripy45);
-			     }
-			   if(stripx56 != 0)
-			     {
-			       hxistrip56->Fill(stripxi56);
-			       hystrip56->Fill(stripy56);
-			     }
-			   if(stripx45 != 0)
-			     {
-			       hdxi45->Fill(pixelxi45smallesty-stripxi45);
-			       hdy45->Fill(pixely45smallesty-stripy45);
-			     }
-			   if(stripx56 != 0)
-			     {
-			       hdxi56->Fill(pixelxi56smallesty-stripxi56);
-			       hdy56->Fill(pixely56smallesty-stripy56);
-			     }
-			   if(hxipix56>0 && hxipix45>0)
-			     {
-			       mpp = TMath::Sqrt(13000.0*13000.0*pixelxi45smallesty*pixelxi56smallesty);
-			       ypp = 0.5*TMath::Log(pixelxi56smallesty/pixelxi45smallesty);
-			     }
-			   */
 			 }
-		   
+		       hnpix45->Fill(nSinglePixelTracks45);
+		       hnpix56->Fill(nSinglePixelTracks56);
+
+
+                       // Sideband control regions                                                                                                                                                                           
+                       if(samplenumber > 0)
+                         {
+                           // Signal region, only for MC                                                                                                                                                                     
+                           if((acop < acopcut) &&
+                              (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut &&
+                                                                                                                        jet_corrmass->at(indsecond) <= mwhicut) &&
+                              (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+                              (jet1.Pt()/jet2.Pt() < ptbalcut))
+                             {
+                               hmasswwsignal->Fill(mydijet.M());
+                               hywwsignal->Fill(mydijet.Rapidity());
+			       if(samplenumber >= 20 && mpp>0)
+				 {
+				   hmassmatchsigmc->Fill(mpp-mydijet.M());
+				   hymatchsigmc->Fill(ypp-mydijet.Rapidity());
+				   hmassmatchratiosigmc->Fill(1 - (mydijet.M()/mpp));
+				   if(ismultimulti == 1)
+				     hmassmatchratiosigmcmult->Fill(1 - (mydijet.M()/mpp));
+				   //				   hmppres->Fill(mpp/genmpp);
+				   //				   hmjjres->Fill(mydijet.M()/gen_dijet_mass->at(0));
+				 }
+                             }
+                         }
+
+
 		       // Control regions
-		       for(Int_t pr = 0; pr < mpps->size(); pr++)
-			 {
-			   if(mpps->at(pr)>0)
+                       // Anti acoplanarity                                                                                                                                                                
+                       if((acop > acopcut) &&
+                          (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+                          (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+                          (jet1.Pt()/jet2.Pt() < ptbalcut))
+                         {
+                           hmasswwantiacop->Fill(mydijet.M());
+			   if(samplenumber < 0 && mpp>0)
 			     {
-			       hmassmatchsigmc->Fill(mydijet.M()-mpps->at(pr));
-			       hymatchsigmc->Fill(mydijet.Rapidity()-ypps->at(pr));
-			       // Anti W-mass                                                                                                                                                          
-			       if((jet_corrmass->at(indleading) < 65 || jet_corrmass->at(indleading) > 105) && (jet_corrmass->at(indsecond) < 65 || jet_corrmass->at(indsecond) > 105) && 
-				  (jet_tau2->at(indsecond)/jet_tau1->at(indsecond) <= 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) <= 0.75) && 
-				  (acop < 0.005) && 
-				  (jet_pt->at(indleading)/jet_pt->at(indsecond) < 1.08))
-				 {
-				   hmassmatchantiw->Fill(mydijet.M()-mpps->at(pr));
-				   hymatchantiw->Fill(mydijet.Rapidity()-ypps->at(pr));
-				 }
-			       // Anti tau21
-			       if((jet_tau2->at(indsecond)/jet_tau1->at(indsecond) > 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) > 0.75) && 
-				  (jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105) && 
-                                  (acop < 0.005) &&
-                                  (jet_pt->at(indleading)/jet_pt->at(indsecond) < 1.08))
-				 {
-				   hmassmatchantitau->Fill(mydijet.M()-mpps->at(pr));
-				   hymatchantitau->Fill(mydijet.Rapidity()-ypps->at(pr));
-				 }
-			       // Debugging
-			       if((jet_tau2->at(indsecond)/jet_tau1->at(indsecond) > 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) > 0.75))
-				 {
-				   //				   cout << "Anti tau selection: " << endl;
-				   if((jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && 
-				      (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105))
-				     {
-				       //				       cout << "\tPassed jet mass cuts: " << jet_corrmass->at(indleading) << ", " << jet_corrmass->at(indsecond) << endl;
-				       if(acop < 0.005)
-					 {
-					   //					   cout << "\t\tPassed acop cuts: = " << acop << endl;
-					   //					   if(jet1.Pt()/jet2.Pt() < 1.08)
-					     //					     cout << "\t\t\tPassed pT balance cuts: " << jet_pt->at(indleading) << "/" << jet_pt->at(indsecond) << " = " << jet_pt->at(indleading)/jet_pt->at(indsecond) << endl;
-					 }
-				     }
-				 }
-			       // Anti acoplanarity
-			       if((acop > 0.01) && 
-				  (jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105) &&
-                                  (jet_tau2->at(indsecond)/jet_tau1->at(indsecond) <= 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) <= 0.75) &&
-                                  (jet_pt->at(indleading)/jet_pt->at(indsecond) < 1.08))
-				 {
-				   hmassmatchantiacop->Fill(mydijet.M()-mpps->at(pr));
-				   hymatchantiacop->Fill(mydijet.Rapidity()-ypps->at(pr));
-				 }
-			       // Anti pT balance
-			       if((jet_pt->at(indleading)/jet_pt->at(indsecond)) > 1.2 && 
-                                  (jet_corrmass->at(indleading) >= 65 && jet_corrmass->at(indleading) <= 105) && (jet_corrmass->at(indsecond) >= 65 && jet_corrmass->at(indsecond) <= 105) &&
-                                  (jet_tau2->at(indsecond)/jet_tau1->at(indsecond) <= 0.75) && (jet_tau2->at(indleading)/jet_tau1->at(indleading) <= 0.75) &&
-                                  (acop < 0.005))
-				 {
-				   hmassmatchantiptbal->Fill(mydijet.M()-mpps->at(pr));
-				   hymatchantiptbal->Fill(mydijet.Rapidity()-ypps->at(pr));
-				 }
+			       hmassmatchantiacop->Fill(mpp-mydijet.M());
+			       hymatchantiacop->Fill(ypp-mydijet.Rapidity());
+			       hmassmatchratioantiacop->Fill(1 - (mydijet.M()/mpp));
 			     }
-			 }
+                         }
+                       // Anti pT balance                                                                                                                                                                  
+                       if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
+                          (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+                          (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+                          (acop < 0.005))
+                         {
+                           hmasswwantiptbal->Fill(mydijet.M());
+                           if(samplenumber < 0 && mpp>0)
+                             {
+                               hmassmatchantiptbal->Fill(mpp-mydijet.M());
+                               hymatchantiptbal->Fill(ypp-mydijet.Rapidity());
+                               hmassmatchratioantiptbal->Fill(1 - (mydijet.M()/mpp));
+                             }
+                         }
+                       // Anti tau21                                                                                                                                                                       
+                       if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
+                          (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+                          (acop < 0.005) &&
+                          (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+                         {
+                           hmasswwantitau->Fill(mydijet.M());
+                           if(samplenumber < 0 && mpp>0)
+                             {
+                               hmassmatchantitau->Fill(mpp-mydijet.M());
+                               hymatchantitau->Fill(ypp-mydijet.Rapidity());
+                               hmassmatchratioantitau->Fill(1 - (mydijet.M()/mpp));
+
+                             }
+                         }
+
 		     }
 		 }
 	     }
 	 }
        
-       mpps->clear();
-       ypps->clear();
+       mppssingsing->clear();
+       yppssingsing->clear();
+       mppsmixed->clear();
+       yppsmixed->clear();
+       mppsmultmult->clear();
+       yppsmultmult->clear();
        xipix45s->clear();
        xipix56s->clear();
        ypix45s->clear();
        ypix56s->clear();
-       
+       ximulti45s->clear();
+       ximulti56s->clear();
      }
 
-   delete mpps;
-   delete ypps;
+   delete mppssingsing;
+   delete yppssingsing;
+   delete mppsmixed;
+   delete yppsmixed;
+   delete mppsmultmult;
+   delete yppsmultmult;
    delete xipix45s;
    delete xipix56s;
    delete ypix45s;
    delete ypix56s;
+   delete ximulti45s;
+   delete ximulti56s;
 
    // if (Cut(ientry) < 0) continue;
 
@@ -697,54 +620,59 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
    if(samplenumber == -7)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016C.root","RECREATE");
    if(samplenumber == -8)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016G.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016G.root","RECREATE");
    if(samplenumber == -9)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_datahist2016H.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016H.root","RECREATE");
 
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt300to470.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt470to600.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt800to1000.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_ttbarhadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_ttbarhadronic.root","RECREATE");
    if(samplenumber == 8)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_wjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_wjetshadronic.root","RECREATE");
    if(samplenumber == 9)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root","RECREATE");
 
    if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwSM.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwSM.root","RECREATE");
    if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point5.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point5.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0onlyPUprotons.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_testNoMassCut.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0withPUprotons.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons.root","RECREATE");
 
    if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntuplev2recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root","RECREATE");
 
    hmjjdat->Write();
+   hyjjdat->Write();
    hmjdat1->Write();
    htau21dat1->Write();
    hmjdat2->Write();
@@ -763,6 +691,7 @@ void HadronicWWCuts::Loop()
    hmjjdatpfhttrim->Write();
    hmjjdatpfjettrim->Write();
    hnvtx->Write();
+   hcrossingangle->Write();
    hptratio->Write();
 
    hxipix45->Write();
@@ -777,24 +706,44 @@ void HadronicWWCuts::Loop()
    hdy45->Write();
    hdxi56->Write();
    hdy56->Write();
+   hximult45->Write();
+   hximult56->Write();
+   hnpix45->Write();
+   hnpix56->Write();
+
+   hmppsingle->Write();
+   hmppmixed->Write();
+   hmppmulti->Write();
+   hyppsingle->Write();
+   hyppmixed->Write();
+   hyppmulti->Write();
 
    hmassmatchantiw->Write();
    hymatchantiw->Write();
+   hmassmatchratioantiw->Write();
    hmassmatchantitau->Write();
    hymatchantitau->Write();
+   hmassmatchratioantitau->Write();
    hmassmatchantiacop->Write();
    hymatchantiacop->Write();
+   hmassmatchratioantiacop->Write();
    hmassmatchantiptbal->Write();
    hymatchantiptbal->Write();
+   hmassmatchratioantiptbal->Write();
 
    hmassmatchsigmc->Write();
    hymatchsigmc->Write();
+   hmassmatchratiosigmc->Write();
+   hmassmatchratiosigmcmult->Write();
 
    hmasswwantitau->Write();
    hmasswwantiacop->Write();
    hmasswwantiptbal->Write();
    hmasswwsignal->Write();
    hywwsignal->Write();
+
+   hmyppsingle->Write();
+   hmyjjdat->Write();
 
    fx->Close();
 }

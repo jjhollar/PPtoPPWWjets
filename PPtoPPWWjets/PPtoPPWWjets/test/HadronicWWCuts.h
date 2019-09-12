@@ -46,6 +46,23 @@ public :
    vector<float>   *pps_track_x;
    vector<float>   *pps_track_y;
    vector<int>     *pps_track_rpid;
+   vector<float>   *pps_track_time;
+   vector<float>   *proton_xi;
+   vector<float>   *proton_thy;
+   vector<float>   *proton_thx;
+   vector<float>   *proton_t;
+   vector<int>     *proton_ismultirp;
+   vector<int>     *proton_rpid;
+   vector<int>     *proton_arm;
+   vector<float>   *proton_time;
+   vector<float>   *proton_trackx1;
+   vector<float>   *proton_tracky1;
+   vector<float>   *proton_trackx2;
+   vector<float>   *proton_tracky2;
+   vector<int>     *proton_trackpixshift1;
+   vector<int>     *proton_trackpixshift2;
+   vector<int>     *proton_rpid1;
+   vector<int>     *proton_rpid2;
    vector<float>   *gen_jet_pt;
    vector<float>   *gen_jet_energy;
    vector<float>   *gen_jet_phi;
@@ -54,9 +71,11 @@ public :
 
    UInt_t          nVertices;
    Float_t         pileupWeight;
+   UInt_t          mc_pu_trueinteractions_;
    Int_t           run;
    Long64_t        event;
    Int_t           lumiblock;
+   Float_t         crossingangle;
 
    // List of branches
    TBranch        *b_jet_pt;   //!
@@ -78,6 +97,23 @@ public :
    TBranch        *b_pps_track_x;   //!
    TBranch        *b_pps_track_y;   //!
    TBranch        *b_pps_track_rpid;   //!
+   TBranch        *b_pps_track_time;   //!                                                                                                 
+   TBranch        *b_proton_xi;   //!                                                                                                      
+   TBranch        *b_proton_thy;   //!                                                                                                     
+   TBranch        *b_proton_thx;   //!                                                                                                     
+   TBranch        *b_proton_t;   //!                                                                                                       
+   TBranch        *b_proton_ismultirp;   //!                                                                                               
+   TBranch        *b_proton_rpid;   //!                                                                                                    
+   TBranch        *b_proton_arm;   //!                                                                                                     
+   TBranch        *b_proton_time;   //!                                                                                                    
+   TBranch        *b_proton_trackx1;   //!                                                                                                 
+   TBranch        *b_proton_tracky1;   //!                                                                                                 
+   TBranch        *b_proton_trackx2;   //!                                                                                                 
+   TBranch        *b_proton_tracky2;   //!                                                                                                 
+   TBranch        *b_proton_trackpixshift1;   //!                                                                                          
+   TBranch        *b_proton_trackpixshift2;   //!                                                                                          
+   TBranch        *b_proton_rpid1;   //!                                                                                                   
+   TBranch        *b_proton_rpid2;   //!                                                                                                   
    TBranch        *b_gen_jet_pt;   //!                                                                                                         
    TBranch        *b_gen_jet_energy;   //!                                                                                                     
    TBranch        *b_gen_jet_phi;   //!                                                                                                        
@@ -85,9 +121,11 @@ public :
    TBranch        *b_hlt;   //!
    TBranch        *b_nVertices;   //!
    TBranch        *b_pileupWeight;   //!
+   TBranch        *b_mc_pu_trueinteractions;   //!                                                                                         
    TBranch        *b_run;   //!
    TBranch        *b_event;   //!
    TBranch        *b_lumiblock;   //!
+   TBranch        *b_crossingangle;   //!                                                                                                  
 
    HadronicWWCuts(Int_t mysample = 6, TTree *tree=0);
    virtual ~HadronicWWCuts();
@@ -95,7 +133,6 @@ public :
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
-   virtual Int_t    getXangle(int run,int lumi, const char* filename);
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
@@ -114,15 +151,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
   if (tree == 0) {
     TFile *f;
     if(samplenumber == -1)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Bv1_17Nov2017_LegacyFromAOD_merge.root");
     if(samplenumber == -2)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Cv1_17Nov2017_LegacyFromAOD_merge.root");
     if(samplenumber == -3)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Dv1_17Nov2017_LegacyFromAOD_merge.root");
     if(samplenumber == -4)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Ev1_17Nov2017_LegacyFromAOD_merge.root");
     if(samplenumber == -5)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Fv1_17Nov2017_LegacyFromAOD_merge.root");
 
     if(samplenumber == -6)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
@@ -135,43 +172,45 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
 
     if(samplenumber == 1)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
     if(samplenumber == 2)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_merge.root");
     if(samplenumber == 3)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root");   
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_merge.root");   
     if(samplenumber == 4)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_merge.root"); 
     if(samplenumber == 5)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_merge.root");
     if(samplenumber == 6)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_merge.root");
     if(samplenumber == 7)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/TTToHadronic_TuneCP5_13TeV-powheg-pythia8_merge.root");
     if(samplenumber == 8)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
     if(samplenumber == 9)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
 
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
     if(samplenumber == 21)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
-    
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
+
     if(samplenumber == 31)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
-        f = new TFile("ExclWWjets_Run2017B-31Mar2018-v1_all.root");
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Bv1_17Nov2017_LegacyFromAOD_merge.root");
       if(samplenumber == -2)
-	f = new TFile("ExclWWjets_Run2017C-31Mar2018-v1_all.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Cv1_17Nov2017_LegacyFromAOD_merge.root");
       if(samplenumber == -3)
-        f = new TFile("ExclWWjets_Run2017D-31Mar2018-v1_all.root");
+        f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Dv1_17Nov2017_LegacyFromAOD_merge.root");
       if(samplenumber == -4)
-        f = new TFile("ExclWWjets_Run2017E-31Mar2018-v1_all.root");
+        f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Ev1_17Nov2017_LegacyFromAOD_merge.root");
       if(samplenumber == -5)
-        f = new TFile("ExclWWjets_Run2017F-31Mar2018-v1_all.root");
+        f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Fv1_17Nov2017_LegacyFromAOD_merge.root");
 
       if(samplenumber == -6)
         f = new TFile("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
@@ -184,28 +223,31 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       
       if(samplenumber == 1)
-	f = new TFile("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 2)
-	f = new TFile("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 3)
-	f = new TFile("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 4)
-	f = new TFile("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 5)
-	f = new TFile("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 6)
-	f = new TFile("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_merge.root");
       if(samplenumber == 7)
-	f = new TFile("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/TTToHadronic_TuneCP5_13TeV-powheg-pythia8_merge.root");
       if(samplenumber == 8)
-	f = new TFile("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
       if(samplenumber == 9)
-        f = new TFile("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root");
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
 
       if(samplenumber == 20)
 	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
       if(samplenumber == 21)
-	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root");
+	//	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W2E-6_Fall2017_LegacyFromAOD_2017crossingangles_test14kevents.root");
+	//	f = new TFile("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root");
+	//	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
+	f = new TFile("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
 
       if(samplenumber == 31)
 	f = new TFile("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
@@ -213,15 +255,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     TDirectory * dir;
 
     if(samplenumber == -1)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017B-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Bv1_17Nov2017_LegacyFromAOD_merge.root:/demo");
     if(samplenumber == -2)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017C-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Cv1_17Nov2017_LegacyFromAOD_merge.root:/demo");
     if(samplenumber == -3)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017D-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Dv1_17Nov2017_LegacyFromAOD_merge.root:/demo");
     if(samplenumber == -4)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017E-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Ev1_17Nov2017_LegacyFromAOD_merge.root:/demo");
     if(samplenumber == -5)
-      dir = (TDirectory*)f->Get("ExclWWjets_Run2017F-31Mar2018-v1_all.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/WWhadronic_JetHT_2017Fv1_17Nov2017_LegacyFromAOD_merge.root:/demo");
 
     if(samplenumber == -6)
       dir = (TDirectory*)f->Get("ExclWWjets_Run2016B-07Aug2017-ver2-v1_all.root");
@@ -233,28 +275,31 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("ExclWWjets_Run2016H-07Aug2017-v1_all.root");
     
     if(samplenumber == 1)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt170to300_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 2)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt300to470_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 3)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt470to600_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 4)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt600to800_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 5)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt800to1000_Pythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 6)
-      dir = (TDirectory*)f->Get("WWhadronic_QCDPt1000to1400_Pythia8_merge_12Apr2018_ntuplesv3.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 7)
-      dir = (TDirectory*)f->Get("WWhadronic_TTbarHadronic_PowhegPythia8_merge_12Apr2018_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/TTToHadronic_TuneCP5_13TeV-powheg-pythia8_merge.root:/demo");
     if(samplenumber == 8)
-      dir = (TDirectory*)f->Get("WWhadronic_WJetsToQQ_MadgraphPythia8_merge_ntuplesv3.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root:/demo");
     if(samplenumber == 9)
-      dir = (TDirectory*)f->Get("WWhadronic_ZJetsToQQ_MadgraphPythia8_12Apr2018_merge_ntuplesv3.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root:/demo");
     
     if(samplenumber == 20)
       dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root:/demo");
     if(samplenumber == 21)
-      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
+      //      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W2E-6_Fall2017_LegacyFromAOD_2017crossingangles_test14kevents.root:/demo");
+      //      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root:/demo");
+      //      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root:/demo");
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root:/demo");
 
     if(samplenumber == 31)
       dir = (TDirectory*)f->Get("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
@@ -321,6 +366,23 @@ void HadronicWWCuts::Init(TTree *tree)
    pps_track_x = 0;
    pps_track_y = 0;
    pps_track_rpid = 0;
+   pps_track_time = 0;
+   proton_xi = 0;
+   proton_thy = 0;
+   proton_thx = 0;
+   proton_t = 0;
+   proton_ismultirp = 0;
+   proton_rpid = 0;
+   proton_arm = 0;
+   proton_time = 0;
+   proton_trackx1 = 0;
+   proton_tracky1 = 0;
+   proton_trackx2 = 0;
+   proton_tracky2 = 0;
+   proton_trackpixshift1 = 0;
+   proton_trackpixshift2 = 0;
+   proton_rpid1 = 0;
+   proton_rpid2 = 0;
    gen_jet_pt = 0;
    gen_jet_energy = 0;
    gen_jet_phi = 0;
@@ -351,6 +413,23 @@ void HadronicWWCuts::Init(TTree *tree)
    fChain->SetBranchAddress("pps_track_x", &pps_track_x, &b_pps_track_x);
    fChain->SetBranchAddress("pps_track_y", &pps_track_y, &b_pps_track_y);
    fChain->SetBranchAddress("pps_track_rpid", &pps_track_rpid, &b_pps_track_rpid);
+   fChain->SetBranchAddress("pps_track_time", &pps_track_time, &b_pps_track_time);
+   fChain->SetBranchAddress("proton_xi", &proton_xi, &b_proton_xi);
+   fChain->SetBranchAddress("proton_thy", &proton_thy, &b_proton_thy);
+   fChain->SetBranchAddress("proton_thx", &proton_thx, &b_proton_thx);
+   fChain->SetBranchAddress("proton_t", &proton_t, &b_proton_t);
+   fChain->SetBranchAddress("proton_ismultirp", &proton_ismultirp, &b_proton_ismultirp);
+   fChain->SetBranchAddress("proton_rpid", &proton_rpid, &b_proton_rpid);
+   fChain->SetBranchAddress("proton_arm", &proton_arm, &b_proton_arm);
+   fChain->SetBranchAddress("proton_time", &proton_time, &b_proton_time);
+   fChain->SetBranchAddress("proton_trackx1", &proton_trackx1, &b_proton_trackx1);
+   fChain->SetBranchAddress("proton_tracky1", &proton_tracky1, &b_proton_tracky1);
+   fChain->SetBranchAddress("proton_trackx2", &proton_trackx2, &b_proton_trackx2);
+   fChain->SetBranchAddress("proton_tracky2", &proton_tracky2, &b_proton_tracky2);
+   fChain->SetBranchAddress("proton_trackpixshift1", &proton_trackpixshift1, &b_proton_trackpixshift1);
+   fChain->SetBranchAddress("proton_trackpixshift2", &proton_trackpixshift2, &b_proton_trackpixshift2);
+   fChain->SetBranchAddress("proton_rpid1", &proton_rpid1, &b_proton_rpid1);
+   fChain->SetBranchAddress("proton_rpid2", &proton_rpid2, &b_proton_rpid2);
    fChain->SetBranchAddress("gen_jet_pt", &gen_jet_pt, &b_gen_jet_pt);
    fChain->SetBranchAddress("gen_jet_energy", &gen_jet_energy, &b_gen_jet_energy);
    fChain->SetBranchAddress("gen_jet_phi", &gen_jet_phi, &b_gen_jet_phi);
@@ -358,9 +437,11 @@ void HadronicWWCuts::Init(TTree *tree)
    fChain->SetBranchAddress("hlt", &hlt, &b_hlt);
    fChain->SetBranchAddress("nVertices", &nVertices, &b_nVertices);
    fChain->SetBranchAddress("pileupWeight", &pileupWeight, &b_pileupWeight);
+   fChain->SetBranchAddress("mc_pu_trueinteractions_", &mc_pu_trueinteractions_, &b_mc_pu_trueinteractions);
    fChain->SetBranchAddress("run", &run, &b_run);
    fChain->SetBranchAddress("event", &event, &b_event);
    fChain->SetBranchAddress("lumiblock", &lumiblock, &b_lumiblock);
+   fChain->SetBranchAddress("crossingangle", &crossingangle, &b_crossingangle);
    Notify();
 }
 

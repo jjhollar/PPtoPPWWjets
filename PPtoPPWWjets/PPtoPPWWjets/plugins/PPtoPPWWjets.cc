@@ -108,6 +108,7 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT<edm::TriggerResults> hlt_token_;
   edm::EDGetTokenT<std::vector< PileupSummaryInfo > > pu_token_;
   edm::EDGetTokenT<reco::GenParticleCollection> gen_part_token_;
+  edm::EDGetTokenT<reco::GenParticleCollection> gen_pupart_token_;
   edm::EDGetTokenT<reco::GenJetCollection> gen_jet_token_;
   edm::EDGetTokenT< GenEventInfoProduct > geneventToken_; 
   edm::EDGetTokenT<LHEEventProduct > lheEventProductToken_;
@@ -168,6 +169,11 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * gen_proton_pz_;
   std::vector<float> * gen_proton_xi_;
   std::vector<float> * gen_proton_t_;
+  std::vector<float> * gen_puproton_px_;
+  std::vector<float> * gen_puproton_py_;
+  std::vector<float> * gen_puproton_pz_;
+  std::vector<float> * gen_puproton_xi_;
+  std::vector<float> * gen_puproton_t_;
   std::vector<float> * gen_jet_pt_;
   std::vector<float> * gen_jet_eta_;
   std::vector<float> * gen_jet_phi_;
@@ -247,12 +253,14 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   recoProtonsSingleRPToken_   ( consumes<std::vector<reco::ForwardProton> >      ( iConfig.getParameter<edm::InputTag>( "ppsRecoProtonSingleRPTag" ) ) ),
   recoProtonsMultiRPToken_   ( consumes<std::vector<reco::ForwardProton> >      ( iConfig.getParameter<edm::InputTag>( "ppsRecoProtonMultiRPTag" ) ) ),
   vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlinePrimaryVertices"))),
+  //  vertex_token_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlineSlimmedPrimaryVertices"))),
   rho_token_(consumes<double>(edm::InputTag(("fixedGridRhoAll")))),
   hlt_token_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults","","HLT"))),
 //  pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("slimmedAddPileupInfo"))),
   pu_token_(consumes<std::vector< PileupSummaryInfo > >(edm::InputTag("addPileupInfo"))),
 //  gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("prunedGenParticles"))),
   gen_part_token_(consumes<reco::GenParticleCollection>(edm::InputTag("genParticles"))),
+  gen_pupart_token_(consumes<reco::GenParticleCollection>(edm::InputTag("genPUProtons","genPUProtons"))),
 //  gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJetsAK8"))),
   gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("ak8GenJets"))),
   geneventToken_            (consumes<GenEventInfoProduct>(edm::InputTag("generator"))),     
@@ -757,8 +765,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 
        edm::Handle<reco::GenParticleCollection> genP;
-       //       iEvent.getByLabel("prunedGenParticles",genP);
-       iEvent.getByLabel("genParticles",genP);                                                                                                     
+       iEvent.getByLabel("genParticles",genP);
+       //       iEvent.getByLabel("prunedGenParticles",genP);                                                                                                     
 
        for (reco::GenParticleCollection::const_iterator mcIter=genP->begin(); mcIter != genP->end(); mcIter++ ) {
 	 if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
@@ -775,23 +783,47 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     (*gen_proton_py_).push_back(thepy);
 	     (*gen_proton_px_).push_back(thepx);
 	   }
-	 
+
+	 /*	 
 	 if(fabs(mcIter->pdgId()) == 11 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngene_++;
          if(fabs(mcIter->pdgId()) == 13 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngenmu_++;
          if(fabs(mcIter->pdgId()) == 15 && fabs(mcIter->mother()->pdgId()) == 24)
 	   ngentau_++;
+	 */
 	 // Fall17 central production signal MC - crash when retrieving lepton mother. 
 	 // This workaround will count all leptons...
-	 /*
+
 	 if(fabs(mcIter->pdgId()) == 11)
            ngene_++;                                                                                                                                            
          if(fabs(mcIter->pdgId()) == 13)
            ngenmu_++;                                                                                                                                           
          if(fabs(mcIter->pdgId()) == 15)
            ngentau_++;                                                                                                                                          
-	 */
+
+       }
+
+       edm::Handle<reco::GenParticleCollection> genPUP;
+       iEvent.getByLabel(edm::InputTag("genPUProtons","genPUProtons"),genPUP);
+
+       for (reco::GenParticleCollection::const_iterator mcIter=genPUP->begin(); mcIter != genPUP->end(); mcIter++ ) {
+         if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
+           {
+             double thexi = 1 - ((mcIter->energy())/(13000.0/2.0));
+             double thet = -(std::pow(mcIter->pt(), 2));
+             double thepz = mcIter->pz();
+             double thepx = mcIter->px();
+             double thepy = mcIter->py();
+
+	     std::cout << "PU proton with xi = " << thexi << ", t = " << thet << std::endl;
+
+             (*gen_puproton_xi_).push_back(thexi);
+             (*gen_puproton_t_).push_back(thet);
+             (*gen_puproton_pz_).push_back(thepz);
+             (*gen_puproton_py_).push_back(thepy);
+             (*gen_puproton_px_).push_back(thepx);
+           }
        }
 
        edm::Handle<reco::GenJetCollection> genJet;
@@ -926,6 +958,11 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*gen_proton_pz_).clear();
        (*gen_proton_xi_).clear();
        (*gen_proton_t_).clear();
+       (*gen_puproton_px_).clear();
+       (*gen_puproton_py_).clear();
+       (*gen_puproton_pz_).clear();
+       (*gen_puproton_xi_).clear();
+       (*gen_puproton_t_).clear();
        (*gen_jet_pt_).clear();
        (*gen_jet_eta_).clear();
        (*gen_jet_phi_).clear();
@@ -1004,6 +1041,11 @@ PPtoPPWWjets::beginJob()
   gen_proton_pz_ = new std::vector<float>;
   gen_proton_xi_ = new std::vector<float>;
   gen_proton_t_ = new std::vector<float>;
+  gen_puproton_px_ = new std::vector<float>;
+  gen_puproton_py_ = new std::vector<float>;
+  gen_puproton_pz_ = new std::vector<float>;
+  gen_puproton_xi_ = new std::vector<float>;
+  gen_puproton_t_ = new std::vector<float>;
   gen_jet_pt_ = new std::vector<float>;
   gen_jet_eta_ = new std::vector<float>;
   gen_jet_phi_ = new std::vector<float>;
@@ -1077,6 +1119,11 @@ PPtoPPWWjets::beginJob()
       tree_->Branch("gen_proton_pz",&gen_proton_pz_);
       tree_->Branch("gen_proton_xi",&gen_proton_xi_);
       tree_->Branch("gen_proton_t",&gen_proton_t_);
+      tree_->Branch("gen_puproton_px",&gen_puproton_px_);
+      tree_->Branch("gen_puproton_py",&gen_puproton_py_);
+      tree_->Branch("gen_puproton_pz",&gen_puproton_pz_);
+      tree_->Branch("gen_puproton_xi",&gen_puproton_xi_);
+      tree_->Branch("gen_puproton_t",&gen_puproton_t_);
       tree_->Branch("gen_jet_pt",&gen_jet_pt_);
       tree_->Branch("gen_jet_eta",&gen_jet_eta_);
       tree_->Branch("gen_jet_phi",&gen_jet_phi_);
@@ -1168,6 +1215,11 @@ PPtoPPWWjets::endJob()
   delete gen_proton_pz_;
   delete gen_proton_xi_;
   delete gen_proton_t_;
+  delete gen_puproton_px_;
+  delete gen_puproton_py_;
+  delete gen_puproton_pz_;
+  delete gen_puproton_xi_;
+  delete gen_puproton_t_;
   delete gen_jet_pt_;
   delete gen_jet_eta_;
   delete gen_jet_phi_;

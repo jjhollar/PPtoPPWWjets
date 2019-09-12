@@ -6,7 +6,8 @@ YEAR=2017
 ERA="F"
 MINIAOD=False
 DoTheorySystematics=True
-UseMCProtons=False
+UseMCProtons=True
+
 
 process = cms.Process("Demo")
 
@@ -18,11 +19,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-# Test file - QCD MC
-'/store/mc/RunIIFall17DRPremix/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/AODSIM/PU2017_94X_mc2017_realistic_v11-v1/60000/E6ABA140-49B7-E811-A330-90E2BAD4912C.root'
-# Test file - signal MC
-#'file:/tmp/jjhollar/ctppsSimWWall_a0W2e-6_xangleall2017_divergence30_test1060.root'
-#'/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/044E60C5-402A-E911-AB26-0CC47A4D7634.root'
+        'file:/tmp/jjhollar/ctppsSimWWhadronic_a0W2E-6_xangleall2017postTS2_divergence30_10k_WithPUprot_New.root'
     )
 #,
 #duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
@@ -159,7 +156,6 @@ process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
 if MC:
     process.demo.isMC = cms.bool(True)
-    # Defaults - no theory systematics, no MC fastsim protons
     process.demo.doMCTheorySystematics = cms.bool(False)
     process.demo.useMCProtons = cms.bool(False)
 
@@ -196,8 +192,8 @@ if MC:
 
 else:
     process.demo.isMC = cms.bool(False)
-    process.demo.useMCProtons = cms.bool(False)
     process.demo.doMCTheorySystematics = cms.bool(False)
+    process.demo.useMCProtons = cms.bool(False)
 
     if YEAR == 2016:
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
