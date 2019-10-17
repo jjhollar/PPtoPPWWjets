@@ -67,6 +67,10 @@ public :
    vector<float>   *gen_jet_energy;
    vector<float>   *gen_jet_phi;
    vector<float>   *gen_jet_eta;
+   vector<float>   *gen_proton_xi;
+   vector<float>   *gen_proton_pz;
+   vector<float>   *gen_puproton_xi;
+   vector<float>   *gen_puproton_pz;
    vector<string>  *hlt;
 
    UInt_t          nVertices;
@@ -117,7 +121,11 @@ public :
    TBranch        *b_gen_jet_pt;   //!                                                                                                         
    TBranch        *b_gen_jet_energy;   //!                                                                                                     
    TBranch        *b_gen_jet_phi;   //!                                                                                                        
-   TBranch        *b_gen_jet_eta;   //!                                                                                                        
+   TBranch        *b_gen_jet_eta;   //!
+   TBranch        *b_gen_proton_xi;  //!
+   TBranch        *b_gen_proton_pz;  //!                                                                                                                              
+   TBranch        *b_gen_puproton_xi;  //!                                                                                                                                
+   TBranch        *b_gen_puproton_pz;  //!                                                                                                                                
    TBranch        *b_hlt;   //!
    TBranch        *b_nVertices;   //!
    TBranch        *b_pileupWeight;   //!
@@ -189,13 +197,22 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
     if(samplenumber == 9)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
+    if(samplenumber == 10)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_merge.root");
+    if(samplenumber == 11)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8_merge.root");
+    if(samplenumber == 12)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8_merge.root");
 
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
     if(samplenumber == 21)
       //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
       //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root");
+    if(samplenumber == 22)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
 
     if(samplenumber == 31)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
@@ -240,6 +257,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
       if(samplenumber == 9)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root");
+      if(samplenumber == 10)
+	f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_merge.root");
+      if(samplenumber == 11)
+        f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8_merge.root");
+      if(samplenumber == 12)
+        f = new TFile("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8_merge.root");
 
       if(samplenumber == 20)
 	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
@@ -247,7 +270,10 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	//	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W2E-6_Fall2017_LegacyFromAOD_2017crossingangles_test14kevents.root");
 	//	f = new TFile("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root");
 	//	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
-	f = new TFile("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
+	//	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root");
+      if(samplenumber == 22)
+	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
 
       if(samplenumber == 31)
 	f = new TFile("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
@@ -292,14 +318,24 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root:/demo");
     if(samplenumber == 9)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8_merge.root:/demo");
-    
+    if(samplenumber == 10)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_merge.root:/demo");
+    if(samplenumber == 11)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8_merge.root:/demo");
+    if(samplenumber == 12)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/PPtoPPWW_UL/QCD/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8_merge.root:/demo");
+
     if(samplenumber == 20)
       dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root:/demo");
     if(samplenumber == 21)
       //      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W2E-6_Fall2017_LegacyFromAOD_2017crossingangles_test14kevents.root:/demo");
       //      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root:/demo");
       //      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root:/demo");
-      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root:/demo");
+      //      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root:/demo");
+    if(samplenumber == 22)
+      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root:/demo");
+
 
     if(samplenumber == 31)
       dir = (TDirectory*)f->Get("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
@@ -387,6 +423,10 @@ void HadronicWWCuts::Init(TTree *tree)
    gen_jet_energy = 0;
    gen_jet_phi = 0;
    gen_jet_eta = 0;
+   gen_proton_xi = 0;
+   gen_proton_pz = 0;
+   gen_puproton_xi = 0;
+   gen_puproton_pz = 0;
    hlt = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
@@ -434,6 +474,10 @@ void HadronicWWCuts::Init(TTree *tree)
    fChain->SetBranchAddress("gen_jet_energy", &gen_jet_energy, &b_gen_jet_energy);
    fChain->SetBranchAddress("gen_jet_phi", &gen_jet_phi, &b_gen_jet_phi);
    fChain->SetBranchAddress("gen_jet_eta", &gen_jet_eta, &b_gen_jet_eta);
+   fChain->SetBranchAddress("gen_proton_xi", &gen_proton_xi, &b_gen_proton_xi);  
+   fChain->SetBranchAddress("gen_proton_pz", &gen_proton_pz, &b_gen_proton_pz);
+   fChain->SetBranchAddress("gen_puproton_xi", &gen_puproton_xi, &b_gen_puproton_xi);
+   fChain->SetBranchAddress("gen_puproton_pz", &gen_puproton_pz, &b_gen_puproton_pz);
    fChain->SetBranchAddress("hlt", &hlt, &b_hlt);
    fChain->SetBranchAddress("nVertices", &nVertices, &b_nVertices);
    fChain->SetBranchAddress("pileupWeight", &pileupWeight, &b_pileupWeight);

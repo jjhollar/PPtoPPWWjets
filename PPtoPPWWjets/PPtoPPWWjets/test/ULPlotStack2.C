@@ -23,6 +23,9 @@ void ULPlotStack2(Int_t var = 1)
   Float_t mc3xsec = 551.1*1.17619;
   Float_t mc2xsec = 6838*1.14405;
   Float_t mc1xsec = 103400.0*1.1342;
+  Float_t mc10xsec = 0.6481*1.30019;
+  Float_t mc11xsec = 0.08741*1.31499;
+  Float_t mc12xsec = 0.00522*1.30839;
 
   Float_t mc7xsec = 377.96;
   Float_t mc8xsec = 33.7;
@@ -30,8 +33,8 @@ void ULPlotStack2(Int_t var = 1)
 
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
+  Float_t mcbxsec = 0.0583; // pb, a0W=2E-6
   Float_t mbaaxsec = 0.1074; // pb 
-  Float_t mcbxsec = 0.0391; // pb
   
 
   Float_t rangelo = 0.0;
@@ -43,7 +46,8 @@ void ULPlotStack2(Int_t var = 1)
   TString thetitle = "";
   TString filetitle = "";
   if(var == 1)
-    {rangelo = 1000; rangehi = 2500; thetitle = "m(jj) [GeV]"; filetitle = "mjj";}
+    {rangelo = 1000; rangehi = 10000; thetitle = "m(jj) [GeV]"; filetitle = "mjj";}
+    //    {rangelo = 1000; rangehi = 2500; thetitle = "m(jj) [GeV]"; filetitle = "mjj";}
   if(var == 2)
     {hist = "hmjdat1"; rangelo = 55; rangehi = 215; thetitle = "m(j1) [GeV]"; filetitle = "mj1";}
   if(var == 3)
@@ -83,14 +87,16 @@ void ULPlotStack2(Int_t var = 1)
   if(var == 20)
     {hist = "htau21ddtdat2"; thetitle = "tau_{21, DDT}(j2)"; filetitle = "tau21ddtj2";}
   if(var == 21)
-    {hist = "hmasswwantitau"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mwwantitau";}
+    {hist = "hyjjdat"; thetitle = "y(jj)"; filetitle = "yjj";}
   if(var == 22)
-    {hist = "hmasswwantiacop"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mwwantiacop";}
+    {hist = "hmasswwantitau"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mwwantitau";}
   if(var == 23)
-    {hist = "hmasswwantiptbal"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mwwanttptbal";}
+    {hist = "hmasswwantiacop"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mwwantiacop";}
   if(var == 24)
-    {hist = "hmasswwsignal"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind";}
+    {hist = "hmasswwantiptbal"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mwwanttptbal";}
   if(var == 25)
+    {hist = "hmasswwsignal"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind";}
+  if(var == 26)
     {hist = "hywwsignal"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind";}
 
 
@@ -136,9 +142,21 @@ void ULPlotStack2(Int_t var = 1)
   TFile *f9 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root");
   TH1F *h9 = (TH1F *)f9->Get(hist);
 
+  TFile *f10 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1400to1800.root");
+  TH1F *h10 = (TH1F *)f10->Get(hist);
+
+  TFile *f11 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1800to2400.root");
+  TH1F *h11 = (TH1F *)f11->Get(hist);
+
+  TFile *f12 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt2400to3200.root");
+  TH1F *h12 = (TH1F *)f12->Get(hist);
+
   //  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0.root");
   TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0withPUprotons.root");
   TH1F *ha = (TH1F *)fa->Get(hist);
+
+  TFile *fb = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root");
+  TH1F *hb = (TH1F *)fb->Get(hist);
 
   h100->Sumw2(); h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -154,6 +172,8 @@ void ULPlotStack2(Int_t var = 1)
   if(var == 3 || var == 6 || var == 7 || var == 8 || var == 9 || var == 18 || var == 19 || var == 20 || var == 16 || var == 25 || (var > 20 && var < 25))
     {
       rebinfactor = 5;
+      if(var == 19 || var == 20)
+	rebinfactor = 10;
       if(var == 25) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
       if(var > 20 && var < 25) {rebinfactor = 10;}
@@ -161,7 +181,8 @@ void ULPlotStack2(Int_t var = 1)
       h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor);
       h6->Rebin(rebinfactor); h7->Rebin(rebinfactor);
       h8->Rebin(rebinfactor); h9->Rebin(rebinfactor);
-      ha->Rebin(rebinfactor); 
+      h10->Rebin(rebinfactor); h11->Rebin(rebinfactor); h12->Rebin(rebinfactor);
+      ha->Rebin(rebinfactor); hb->Rebin(rebinfactor);
       h100->Rebin(rebinfactor); h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
     }
@@ -206,6 +227,65 @@ void ULPlotStack2(Int_t var = 1)
   h9->Sumw2();
   h9->Scale((7014868.0/9501396.0)*mc9xsec*1000*lumi/(100000.0));
 
+  h10->Sumw2();
+  h10->Scale(mc10xsec*1000*lumi/14256.0);
+  h10->SetFillColor(kAzure+1);
+
+  h11->Sumw2();
+  h11->Scale((2709462.0/2710637.0)*mc11xsec*1000*lumi/(100000.0));
+  h11->SetFillColor(kAzure+1);
+
+  h12->Sumw2();
+  h12->Scale((1672283.0/1673178.0)*mc12xsec*1000*lumi/(100000.0));
+  h12->SetFillColor(kAzure+1);
+
+  h12->Add(h11);
+  h12->Add(h10);
+  h12->Add(h6);
+  h12->Add(h5);
+  h12->Add(h4);
+  h12->Add(h3);
+  h12->Add(h2);
+  h12->Add(h1);
+  h12->Add(h7);
+  h12->Add(h8);
+  h12->Add(h9);
+
+  h12->SetStats(0);
+  if(rangelo != 0 || rangehi != 1)
+    h12->GetXaxis()->SetRangeUser(rangelo,rangehi);
+  h12->SetMaximum(h100->GetMaximum()*1.5);
+  h12->SetTitle(thetitle);
+  h12->Draw("hist");
+
+  TH1F *h12err = (TH1F *)h12->Clone("h12err");
+  h12err->SetFillColor(1);
+  h12err->SetFillStyle(3001);
+  h12err->Draw("E2same");
+
+  h11->Add(h10);
+  h11->Add(h6);
+  h11->Add(h5);
+  h11->Add(h4);
+  h11->Add(h3);
+  h11->Add(h2);
+  h11->Add(h1);
+  h11->Add(h7);
+  h11->Add(h8);
+  h11->Add(h9);
+  h11->Draw("histsame");
+
+  h10->Add(h6);
+  h10->Add(h5);
+  h10->Add(h4);
+  h10->Add(h3);
+  h10->Add(h2);
+  h10->Add(h1);
+  h10->Add(h7);
+  h10->Add(h8);
+  h10->Add(h9);
+  h10->Draw("histsame");
+
   h6->Add(h5);
   h6->Add(h4);
   h6->Add(h3);
@@ -214,18 +294,7 @@ void ULPlotStack2(Int_t var = 1)
   h6->Add(h7);
   h6->Add(h8);
   h6->Add(h9);
-
-  h6->SetStats(0);
-  if(rangelo != 0 || rangehi != 1)
-    h6->GetXaxis()->SetRangeUser(rangelo,rangehi);
-  h6->SetMaximum(h100->GetMaximum()*1.5);
-  h6->SetTitle(thetitle);
-  h6->Draw("hist");
-
-  TH1F *h6err = (TH1F *)h6->Clone("h6err");
-  h6err->SetFillColor(1);
-  h6err->SetFillStyle(3001);
-  h6err->Draw("E2same");
+  h6->Draw("histsame");
 
   h5->Add(h4);
   h5->Add(h3);
@@ -278,23 +347,29 @@ void ULPlotStack2(Int_t var = 1)
   h100->SetMarkerStyle(20); h100->SetLineWidth(3);
   h100->Draw("esame");
 
-  ha->SetLineWidth(3); ha->SetLineColor(kCyan); ha->Scale(mcaxsec*1000.0*lumi/8900.0); ha->Draw("histsame");
+  ha->SetLineWidth(3); ha->SetLineColor(kCyan); ha->Scale(mcaxsec*1000.0*lumi/20000.0); ha->Draw("histsame");
+  hb->SetLineWidth(3); hb->SetLineColor(kCyan); hb->SetLineStyle(2); hb->Scale(mcbxsec*1000.0*lumi/20000.0); hb->Draw("histsame");
+
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
-  lg1->AddEntry(h6,"Pythia8 QCD (bins)");
+  lg1->AddEntry(h12,"Pythia8 QCD (bins)");
   lg1->AddEntry(h8,"Madgraph W+jets");
   lg1->AddEntry(h9,"Madgraph Z+jets");
   lg1->AddEntry(h7,"Powheg ttbar");
   //  lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6), arb. normalization");
   lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6)");
+  lg1->AddEntry(hb,"Excl. WW signal (a0W = 2.0E-6)");
   lg1->AddEntry(h100,"2017BCDEF Data");
   lg1->Draw("same");
   
   c1->cd(2);
-  h6->SetStats(0);
-  h6->SetMinimum(0.01);
-  h6->Draw("hist");
-  h6err->Draw("e2same");
+  h12->SetStats(0);
+  h12->SetMinimum(0.01);
+  h12->Draw("hist");
+  h12err->Draw("e2same");
+  h11->Draw("histsame");
+  h10->Draw("histsame");
+  h6->Draw("histsame");
   h5->Draw("histsame");
   h4->Draw("histsame");
   h3->Draw("histsame");
@@ -306,21 +381,24 @@ void ULPlotStack2(Int_t var = 1)
   gPad->SetLogy();
   h100->Draw("esame");
 
+  hb->Draw("histsame");
   ha->Draw("histsame");
+  
 
   c1->cd(3);
-  TH1F *h1000err = (TH1F *)h6err->Clone("h1000err");
-  h1000err->Divide(h6);
+  TH1F *h1000err = (TH1F *)h12err->Clone("h1000err");
+  h1000err->Divide(h12);
   h1000err->SetMinimum(0); h1000err->SetMaximum(2.0);
   h1000err->Draw("E2");
 
 
   h1000->SetMarkerStyle(20); h1000->SetLineWidth(3);
   h1000->Sumw2();
-  cout << "MC = " << h6->GetSumOfWeights() << ", data = " << h1000->GetSumOfWeights() << ", ratio = " << h1000->GetSumOfWeights()/h6->GetSumOfWeights() << endl;
-  cout << "Signal MC = " << ha->GetSumOfWeights() << ", S/B(MC) = " << ha->GetSumOfWeights()/h6->GetSumOfWeights() << std::endl;
+  cout << "MC = " << h12->GetSumOfWeights() << ", data = " << h1000->GetSumOfWeights() << ", ratio = " << h1000->GetSumOfWeights()/h12->GetSumOfWeights() << endl;
+  cout << "Signal MC (a0W=1E-6) " << ha->GetSumOfWeights() << ", S/B(MC) = " << ha->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
+  cout << "Signal MC (a0W=2E-6) " << hb->GetSumOfWeights() << ", S/B(MC) = " << hb->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
 
-  h1000->Divide(h6);
+  h1000->Divide(h12);
   h1000->SetMaximum(2.0);
   h1000->SetMinimum(0.0);
   if(rangelo != 0 || rangehi != 1)
