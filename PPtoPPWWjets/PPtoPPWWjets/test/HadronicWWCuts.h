@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 // This class has been automatically generated on
 // Wed Aug 15 11:22:53 2018 by ROOT version 6.10/09
 // from TTree ntp1/ntp1
@@ -142,6 +142,8 @@ public :
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop();
+   virtual Float_t  Aperture(Float_t xangle, Int_t arm, TString era);
+   virtual Bool_t   PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, Int_t thesample);
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
@@ -215,7 +217,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
 
     if(samplenumber == 31)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
@@ -276,7 +278,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
 
       if(samplenumber == 31)
-	f = new TFile("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
+
     }
     TDirectory * dir;
 
@@ -338,7 +341,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
 
     if(samplenumber == 31)
-      dir = (TDirectory*)f->Get("ZZhadronic_ExclusiveZZ_AllDecays_a0Z2point5e-6_xi1to30percent_ntuplesv2.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root:/demo");
     
     dir->GetObject("ntp1",tree);
 

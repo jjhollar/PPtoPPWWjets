@@ -35,7 +35,8 @@ void ULPlotStack2(Int_t var = 1)
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
   Float_t mcbxsec = 0.0583; // pb, a0W=2E-6
   Float_t mbaaxsec = 0.1074; // pb 
-  
+  Float_t mcaaxsec = 0.00264; // pb, a0Z=5E-5
+
 
   Float_t rangelo = 0.0;
   Float_t rangehi = 1.0;
@@ -98,8 +99,13 @@ void ULPlotStack2(Int_t var = 1)
     {hist = "hmasswwsignal"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind";}
   if(var == 26)
     {hist = "hywwsignal"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind";}
+  if(var == 27)
+    {hist = "xijets45"; thetitle = "#xi(jets), 45"; filetitle = "xijets45";}
+  if(var == 28)
+    {hist = "xijets56"; thetitle = "#xi(jets), 56"; filetitle = "xijets56";}
 
 
+  /*
   TFile *f100 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017C.root");
   TH1F *h100 = (TH1F *)f100->Get(hist);
 
@@ -114,7 +120,10 @@ void ULPlotStack2(Int_t var = 1)
 
   TFile *f104 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017F.root");
   TH1F *h104 = (TH1F *)f104->Get(hist);
-  
+  */
+  TFile *f100 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017BCDEF.root");
+  TH1F *h100 = (TH1F *)f100->Get(hist);
+
   TFile *f1 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root");
   TH1F *h1 = (TH1F *)f1->Get(hist);
 
@@ -152,14 +161,17 @@ void ULPlotStack2(Int_t var = 1)
   TH1F *h12 = (TH1F *)f12->Get(hist);
 
   //  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0.root");
-  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0withPUprotons.root");
+  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons.root");
   TH1F *ha = (TH1F *)fa->Get(hist);
 
-  TFile *fb = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root");
-  TH1F *hb = (TH1F *)fb->Get(hist);
+  //  TFile *fb = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root");
+  //  TH1F *hb = (TH1F *)fb->Get(hist);
 
-  h100->Sumw2(); h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
-  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
+  TFile *faa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z5point0.root");
+  TH1F *haa = (TH1F *)faa->Get(hist);
+
+  h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
+  //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
   TH1F *h1000 = (TH1F *)h100->Clone("h1000");
 
   TCanvas *c1 = new TCanvas("c1","c1");
@@ -182,8 +194,9 @@ void ULPlotStack2(Int_t var = 1)
       h6->Rebin(rebinfactor); h7->Rebin(rebinfactor);
       h8->Rebin(rebinfactor); h9->Rebin(rebinfactor);
       h10->Rebin(rebinfactor); h11->Rebin(rebinfactor); h12->Rebin(rebinfactor);
-      ha->Rebin(rebinfactor); hb->Rebin(rebinfactor);
-      h100->Rebin(rebinfactor); h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
+      ha->Rebin(rebinfactor); //hb->Rebin(rebinfactor);
+      haa->Rebin(rebinfactor);
+      h100->Rebin(rebinfactor); //h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
     }
 
@@ -348,7 +361,8 @@ void ULPlotStack2(Int_t var = 1)
   h100->Draw("esame");
 
   ha->SetLineWidth(3); ha->SetLineColor(kCyan); ha->Scale(mcaxsec*1000.0*lumi/20000.0); ha->Draw("histsame");
-  hb->SetLineWidth(3); hb->SetLineColor(kCyan); hb->SetLineStyle(2); hb->Scale(mcbxsec*1000.0*lumi/20000.0); hb->Draw("histsame");
+  //  hb->SetLineWidth(3); hb->SetLineColor(kCyan); hb->SetLineStyle(2); hb->Scale(mcbxsec*1000.0*lumi/20000.0); hb->Draw("histsame");
+  haa->SetLineWidth(3); haa->SetLineColor(kMagenta); haa->Scale(mcaaxsec*1000.0*lumi/10000.0); haa->Draw("histsame");
 
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
@@ -358,7 +372,8 @@ void ULPlotStack2(Int_t var = 1)
   lg1->AddEntry(h7,"Powheg ttbar");
   //  lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6), arb. normalization");
   lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6)");
-  lg1->AddEntry(hb,"Excl. WW signal (a0W = 2.0E-6)");
+  lg1->AddEntry(haa,"Excl. ZZ signal (a0Z = 5.0E-5)");
+  //  lg1->AddEntry(hb,"Excl. WW signal (a0W = 2.0E-6)");
   lg1->AddEntry(h100,"2017BCDEF Data");
   lg1->Draw("same");
   
@@ -381,9 +396,10 @@ void ULPlotStack2(Int_t var = 1)
   gPad->SetLogy();
   h100->Draw("esame");
 
-  hb->Draw("histsame");
+  //  hb->Draw("histsame");
   ha->Draw("histsame");
   
+  haa->Draw("histsame");
 
   c1->cd(3);
   TH1F *h1000err = (TH1F *)h12err->Clone("h1000err");
@@ -396,7 +412,9 @@ void ULPlotStack2(Int_t var = 1)
   h1000->Sumw2();
   cout << "MC = " << h12->GetSumOfWeights() << ", data = " << h1000->GetSumOfWeights() << ", ratio = " << h1000->GetSumOfWeights()/h12->GetSumOfWeights() << endl;
   cout << "Signal MC (a0W=1E-6) " << ha->GetSumOfWeights() << ", S/B(MC) = " << ha->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
-  cout << "Signal MC (a0W=2E-6) " << hb->GetSumOfWeights() << ", S/B(MC) = " << hb->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
+  //  cout << "Signal MC (a0W=2E-6) " << hb->GetSumOfWeights() << ", S/B(MC) = " << hb->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
+  cout << "Signal MC (a0Z=5E-5) " << haa->GetSumOfWeights() << ", S/B(MC) = " << haa->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
+
 
   h1000->Divide(h12);
   h1000->SetMaximum(2.0);
@@ -437,7 +455,7 @@ void ULPlotStack2(Int_t var = 1)
   l3->SetLineWidth(3);
   //  l3->Draw("same");
 
-  TString outplotname = "validationplots2017BCDEF_ntuplesv2recalcmjcutjerallhltfixptetacuts_preselection_" + filetitle + ".png";
+  TString outplotname = "validationplots2017BCDEF_ntuplesv2recalcmjcutjerallhltfixptetacuts_preselection_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
 
   // Signal MC only
@@ -465,4 +483,7 @@ void PlotStackAll()
   ULPlotStack2(18);
   ULPlotStack2(19);
   ULPlotStack2(20);
+  ULPlotStack2(27);
+  ULPlotStack2(28);
+
 }

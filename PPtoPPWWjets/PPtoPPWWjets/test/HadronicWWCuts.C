@@ -7,6 +7,98 @@
 #include <string.h>
 #include <TMath.h>
 
+bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, Int_t thesample)
+{
+  bool passesfiducial = false; 
+
+  float pixacceptxmin = -999.;
+  float pixacceptxmax = 999.;
+  float pixacceptymin = -999.;
+  float pixacceptymax = 999.;
+
+  if(thesample < 0 && thesample > -4) // preTS2 2017
+    {
+      if(arm == 0)
+	{
+	  pixacceptxmin = 1.995;
+	  pixacceptxmax = 24.334;
+	  pixacceptymin = -11.098;
+	  pixacceptymax = 4.298;
+	}
+      if(arm == 1)
+	{
+          pixacceptxmin = 2.137;
+          pixacceptxmax = 24.620;
+          pixacceptymin = -10.698;
+          pixacceptymax = 4.698;
+	}
+    }
+  if(thesample < -3 && thesample > -6) // postTS2 2017
+    {
+      if(arm == 0)
+        {
+          pixacceptxmin = 1.995;
+          pixacceptxmax = 24.497;
+          pixacceptymin = -10.098;
+          pixacceptymax = 4.998;
+        }
+      if(arm == 1)
+        {
+          pixacceptxmin = 2.422;
+          pixacceptxmax = 24.620;
+          pixacceptymin = -9.698;
+          pixacceptymax = 5.398;
+        }
+    }
+  if((trackx > pixacceptxmin) && (trackx < pixacceptxmax) && (tracky > pixacceptymin) && (tracky < pixacceptymax))
+    passesfiducial = true;
+
+  return passesfiducial;
+}
+
+float HadronicWWCuts::Aperture(Float_t xangle, Int_t arm, TString era)
+{
+  float aperturelimit = 0.0;
+  if(era == "2016preTS2")
+    {
+      if(arm == 0)
+	aperturelimit = 0.111;
+      if(arm == 1)
+	aperturelimit = 0.138;
+    }
+  if(era == "2016postTS2")
+    {
+      if(arm == 0)
+        aperturelimit = 0.104;
+      if(arm == 1)
+        aperturelimit = 999.9;
+    }
+  if(era == "2017preTS2")
+    {
+      if(arm == 0)
+	aperturelimit = 0.066 + (3.54E-4 * xangle);
+      if(arm == 1)
+        aperturelimit = 0.062 + (5.96E-4 * xangle);
+    }
+  if(era == "2017postTS2")
+    {
+      if(arm == 0)
+        aperturelimit = 0.073 + (4.11E-4 * xangle);
+      if(arm == 1)
+        aperturelimit = 0.067 + (6.87E-4 * xangle);
+    }
+  if(era == "2018")
+    {
+      if(arm == 0)
+        aperturelimit = 0.079 + (4.21E-4 * xangle);
+      if(arm == 1)
+        aperturelimit = 0.074 + (6.6E-4 * xangle);
+    }
+
+  return aperturelimit;
+}
+
+
 void HadronicWWCuts::Loop()
 {
 //   In a ROOT session, you can do:
@@ -177,6 +269,10 @@ void HadronicWWCuts::Loop()
    TH1F *hmjjres = new TH1F("hmjjres","hmjjres",100,0,2);
    TH1F *hmassmatchratiosigmcmult = new TH1F("hmassmatchratiosigmcmult","hmassmatchratiosigmcmult",500,-5,5);
 
+   TH1F *xijets45= new TH1F("xijets45","xijets45",250,0,0.25);
+   TH1F *xijets56= new TH1F("xijets56","xijets56",250,0,0.25);
+
+
    std::vector<float> *mppssingsing = new std::vector<float>;
    std::vector<float> *yppssingsing = new std::vector<float>;
    std::vector<float> *mppsmixed = new std::vector<float>;
@@ -225,16 +321,64 @@ void HadronicWWCuts::Loop()
 
        if((passht == 1) || (passpfjet == 1) || (passpfhttrim == 1) || (passpfjettrim == 1))
 	 {
-	   if(samplenumber > 0)
-	     myweight = pileupWeight;
+	   Float_t ptjet1 = 0.0; Float_t ptjet2 = 0.0;
+           Float_t etajet1 = 0.0; Float_t etajet2 = 0.0;
+           Float_t phijet1 = 0.0; Float_t phijet2 = 0.0;
+           Float_t ejet1 = 0.0; Float_t ejet2 = 0.0;
+           int indleading = 0;
+           int indsecond = 1;
 
+	   if(samplenumber > 0)
+	     {
+	       myweight = pileupWeight;
+
+	       /* Here we resort the jets for MC, to account for any "NaN" values created by the JER */
+	       for(Int_t j = 0; j < jet_pt->size(); j++)
+		 {
+		   if(TMath::IsNaN(jet_pt->at(j)))
+		     continue;
+		   if(jet_pt->at(j) > ptjet1)
+		     {
+		       ptjet1 = jet_pt->at(j);
+		       etajet1 = jet_eta->at(j);
+		       phijet1 = jet_phi->at(j);
+		       ejet1 = jet_energy->at(j);
+		       indleading = j;
+		     }
+		   if((jet_pt->at(j) > ptjet2) && (jet_pt->at(j) < ptjet1))
+		     {
+		       ptjet2 = jet_pt->at(j);
+		       etajet2 = jet_eta->at(j);
+		       phijet2 = jet_phi->at(j);
+		       ejet2 = jet_energy->at(j);
+		       indsecond = j;
+		     }
+		 }
+	     }
+	   else
+	     {
+	       ptjet1 = jet_pt->at(0);
+	       etajet1 =jet_eta->at(0);
+	       phijet1 =jet_phi->at(0);
+	       ejet1 =jet_energy->at(0);
+	       ptjet2 =jet_pt->at(1);
+	       etajet2 =jet_eta->at(1);
+               phijet2 =jet_phi->at(1);
+               ejet2 =jet_energy->at(1);
+	       indleading = 0;
+	       indsecond = 1;
+	     }
+	   // We don't have 2 jets - skip this event                                                                                                                                        
+	   if(ptjet1 == 0 || ptjet2 == 0)
+	     continue;
+
+	   Float_t xijets1 = (1.0/13000.0)*(ptjet1*TMath::Exp(etajet1) + ptjet2*TMath::Exp(etajet2));
+	   Float_t xijets2 = (1.0/13000.0)*(ptjet1*TMath::Exp(-1*etajet1) + ptjet2*TMath::Exp(-1*etajet2));
 
 	   TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
-	   jet1.SetPtEtaPhiE(jet_pt->at(0),jet_eta->at(0),jet_phi->at(0),jet_energy->at(0));
-	   jet2.SetPtEtaPhiE(jet_pt->at(1),jet_eta->at(1),jet_phi->at(1),jet_energy->at(1));
+	   jet1.SetPtEtaPhiE(ptjet1,etajet1,phijet1,ejet1);
+	   jet2.SetPtEtaPhiE(ptjet2,etajet2,phijet2,ejet2);
 	   
-	   int indleading = 0;
-	   int indsecond = 1;
 	   float C_JER1=-999.;
 	   float C_JER2=-999.;
 
@@ -289,6 +433,8 @@ void HadronicWWCuts::Loop()
 		       hetadat2->Fill(jet_eta->at(indsecond),myweight);
 		       hphidat1->Fill(jet_phi->at(indleading),myweight);
 		       hphidat2->Fill(jet_phi->at(indsecond),myweight);
+		       xijets45->Fill(xijets1);
+		       xijets56->Fill(xijets2);
 		       hdeta->Fill(fabs(jet_eta->at(indleading) - jet_eta->at(indsecond)),myweight);
 		       hnvtx->Fill(nVertices,myweight);
 		       hcrossingangle->Fill(crossingangle,myweight);
@@ -329,6 +475,21 @@ void HadronicWWCuts::Loop()
 		       float ximulti45 = 0;
 		       float ximulti56 = 0;
 
+		       float aperture45 = 999.0; 
+		       float aperture56 = 999.0;
+		       // Include aperture cutoffs for data
+		       if(samplenumber < 0 && samplenumber > -4)
+			 {
+			   aperture45 = Aperture(crossingangle,0,"2017preTS2");
+			   aperture56 = Aperture(crossingangle,1,"2017preTS2");
+			 }
+		       if(samplenumber < -3 && samplenumber > -6)
+			 {
+			   aperture45 = Aperture(crossingangle,0,"2017postTS2");
+                           aperture56 = Aperture(crossingangle,1,"2017postTS2");
+			 }
+
+
 		       if(proton_xi->size() > 1)
 			 {
 			   float thexi = 0;
@@ -336,10 +497,12 @@ void HadronicWWCuts::Loop()
 			   for(int p = 0; p < proton_xi->size(); p++)                                                                                                 
 			     {
 			       thexi = proton_xi->at(p);
+			       bool passfiducialcuts = false;
 
 			       if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 23))                                                                       
 				 {
-				   if(proton_trackpixshift1->at(p) == 0)
+				   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
+				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true))
 				     {
 				       xipix45s->push_back(thexi);
 				       hxipix45->Fill(thexi);
@@ -349,7 +512,9 @@ void HadronicWWCuts::Loop()
 				 }
                                if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 123))
                                  {
-                                   if(proton_trackpixshift1->at(p) == 0)
+                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
+
+                                   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true))
 				     {
 				       xipix56s->push_back(thexi);
                                        hxipix56->Fill(thexi);
@@ -359,7 +524,9 @@ void HadronicWWCuts::Loop()
                                  }
                                if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 0))
                                  {
-				   if(proton_trackpixshift1->at(p) == 0)
+                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
+
+				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true))
 				     {
 				       ximulti45s->push_back(thexi);
 				       hximult45->Fill(thexi);
@@ -369,7 +536,9 @@ void HadronicWWCuts::Loop()
                                  }
                                if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 1))
                                  {
-				   if(proton_trackpixshift1->at(p) == 0)
+                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
+
+				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true))
 				     {
 				       ximulti56s->push_back(thexi);
 				       hximult56->Fill(thexi);
@@ -785,7 +954,7 @@ void HadronicWWCuts::Loop()
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root","RECREATE");
 
    if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z2point5.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z5point0.root","RECREATE");
 
    hmjjdat->Write();
    hyjjdat->Write();
@@ -893,6 +1062,7 @@ void HadronicWWCuts::Loop()
 
    hmyppsingle->Write();
    hmyjjdat->Write();
-
+   xijets45->Write();
+   xijets56->Write();
    fx->Close();
 }
