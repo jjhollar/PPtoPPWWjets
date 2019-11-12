@@ -7,7 +7,119 @@
 #include <string.h>
 #include <TMath.h>
 
-bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, Int_t thesample)
+/*                                                                                                                                                                          
+ * This function applies the 2017 pixel radiation damage efficiencies to signal MC, using the 2-d x,y maps. 
+ * The efficiencies are averaged over all currently available tables for pre-TS2 and post-TS2. 
+ * Currently it throws a random number to accept-reject the proton, rather than weighting the event (could be changed). 
+ *
+ * This should be used for single-RP pixel protons.                                                                                                                         
+ * Requires the following files to be present in the working directory: pixelEfficiencies.root, PreliminaryEfficiencies_October92019_1D2DMultiTrack.root 
+ * Ref: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf                                                   
+ */
+bool HadronicWWCuts::SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample)
+{
+  float effcorr = 1.0;
+  bool passes = true;
+
+  // Apply to signal MC - here for 2017 pre-TS2
+  if(thesample == 21 || thesample == 31)
+    {
+      if(arm == 0)
+	effcorr = hpixeff2017PreTS245->GetBinContent(hpixeff2017PreTS245->FindBin(trackx220,tracky220));
+      if(arm == 1)
+	effcorr = hpixeff2017PreTS256->GetBinContent(hpixeff2017PreTS256->FindBin(trackx220,tracky220));
+    }
+  // 2017 post-TS2
+  if(thesample == 41)
+    {
+      if(arm == 0)
+        effcorr = hpixeff2017PostTS245->GetBinContent(hpixeff2017PostTS245->FindBin(trackx220,tracky220));
+      if(arm == 1)
+        effcorr = hpixeff2017PostTS256->GetBinContent(hpixeff2017PostTS256->FindBin(trackx220,tracky220));
+    }
+
+  float therand = rnd->Uniform();
+  if(therand <= effcorr)
+    passes = true;
+  else
+    {
+      passes = false;
+    }
+
+  return passes;
+}
+
+/*                                                                                                                                                                          
+ * This function applies the 2017 pixel radiation damage and strip radiation damage, plus the strip multi-track efficiencies, to signal MC.
+ * The total efficiency is taken as the product of those 3 terms. The 2-d x,y maps are used for the radiation damage efficiency.                                            
+ * The efficiencies are averaged over all currently available tables for pre-TS2 and post-TS2.                                                                              
+ * Currently it throws a random number to accept-reject the proton, rather than weighting the event (could be changed).                                                     
+ *                                                                                                                                                                          
+ * This should be used for multi-RP protons.                                                                                                                         
+ * Requires the following files to be present in the working directory: pixelEfficiencies.root, PreliminaryEfficiencies_October92019_1D2DMultiTrack.root                    
+ * Refs: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf                                                   
+ * https://indico.cern.ch/event/853567/contributions/3591200/attachments/1922308/3180339/StripsEffPOG_08102019.pdf
+ */
+bool HadronicWWCuts::MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample)
+{
+  float effcorrpixrad = 1.0;
+  float effcorrstrrad = 1.0;
+  float effcorrstrmultitrk = 1.0;
+
+  bool passes = true;
+
+  // Apply to signal MC - here for 2017 pre-TS2 rad damage                                                                                                                         
+  if(thesample == 21 || thesample == 31)
+    {
+      if(arm == 0)
+	{
+	  effcorrpixrad = hpixeff2017PreTS245->GetBinContent(hpixeff2017PreTS245->FindBin(trackx220,tracky220));
+	  effcorrstrrad = hstreff2017PreTS245->GetBinContent(hstreff2017PreTS245->FindBin(trackx210,tracky210));
+	  effcorrstrmultitrk = hmultistreff2017PreTS245->GetBinContent(1);
+	}
+      if(arm == 1)
+	{
+	  effcorrpixrad = hpixeff2017PreTS256->GetBinContent(hpixeff2017PreTS256->FindBin(trackx220,tracky220));
+          effcorrstrrad = hstreff2017PreTS256->GetBinContent(hstreff2017PreTS256->FindBin(trackx210,tracky210));
+          effcorrstrmultitrk = hmultistreff2017PreTS256->GetBinContent(1);
+	}
+    }
+  // 2017 post-TS2 rad damage
+  if(thesample == 41)
+    {
+      if(arm == 0)
+        {
+          effcorrpixrad = hpixeff2017PostTS245->GetBinContent(hpixeff2017PostTS245->FindBin(trackx220,tracky220));
+          effcorrstrrad = hstreff2017PostTS245->GetBinContent(hstreff2017PostTS245->FindBin(trackx210,tracky210));
+          effcorrstrmultitrk = hmultistreff2017PostTS245->GetBinContent(1);
+        }
+      if(arm == 1)
+        {
+          effcorrpixrad = hpixeff2017PostTS256->GetBinContent(hpixeff2017PostTS256->FindBin(trackx220,tracky220));
+          effcorrstrrad = hstreff2017PostTS256->GetBinContent(hstreff2017PostTS256->FindBin(trackx210,tracky210));
+          effcorrstrmultitrk = hmultistreff2017PostTS256->GetBinContent(1);
+        }
+    }
+
+  float therand = rnd->Uniform();
+  if(therand <= (effcorrpixrad*effcorrstrrad*effcorrstrmultitrk))
+    passes = true;
+  else
+    {
+      passes = false;
+    }
+
+  return passes;
+
+}
+
+/*
+ * This function applies the 2017 pixel fiducial cuts on data or signal MC. Depending on the sample 2 different sets of cuts are used 
+ * for pre-TS2 and post-TS2. In case the fiducial cuts are given for finer time periods, the most strict set is used.
+ *
+ * Ref: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf
+ */
+bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, Int_t thesample)
 {
   bool passesfiducial = false; 
 
@@ -16,7 +128,7 @@ bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, 
   float pixacceptymin = -999.;
   float pixacceptymax = 999.;
 
-  if(thesample < 0 && thesample > -4) // preTS2 2017
+  if((thesample < 0 && thesample > -4) || (thesample == 21 || thesample == 31)) // preTS2 2017
     {
       if(arm == 0)
 	{
@@ -50,12 +162,18 @@ bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, 
           pixacceptymax = 5.398;
         }
     }
+
   if((trackx > pixacceptxmin) && (trackx < pixacceptxmax) && (tracky > pixacceptymin) && (tracky < pixacceptymax))
     passesfiducial = true;
 
   return passesfiducial;
 }
 
+/*                                                                                                                                                                          
+ * This function applies the collimator aperture cuts on data or signal MC, based on the crossing angle, arm, and era. 
+ *                                                                                                                                                                          
+ * Ref: https://indico.cern.ch/event/849095/contributions/3568020/attachments/1913799/3163250/j_kaspar_apertures.pdf
+ */
 float HadronicWWCuts::Aperture(Float_t xangle, Int_t arm, TString era)
 {
   float aperturelimit = 0.0;
@@ -70,7 +188,7 @@ float HadronicWWCuts::Aperture(Float_t xangle, Int_t arm, TString era)
     {
       if(arm == 0)
         aperturelimit = 0.104;
-      if(arm == 1)
+      if(arm == 1) // Note - 1 strip RP was not in, so no aperture cuts derived
         aperturelimit = 999.9;
     }
   if(era == "2017preTS2")
@@ -465,6 +583,17 @@ void HadronicWWCuts::Loop()
 		       float mppmix = 0;
 		       float yppmix = 0;
 
+		       float multisubtrackx21045 = 0.0;
+		       float multisubtrackx22045 = 0.0;
+		       float multisubtrackx21056 = 0.0;
+		       float multisubtrackx22056 = 0.0;
+		       float multisubtracky21045 = 0.0;
+		       float multisubtracky22045 = 0.0;
+                       float multisubtracky21056 = 0.0;
+		       float multisubtracky22056 = 0.0;
+		       int multisubtrackshift45 = 0;
+		       int multisubtrackshift56 = 0;
+		       
 		       int ismultimulti = 0;
 		       int issinglesingle = 0;
 		       int ismixed = 0;
@@ -475,9 +604,9 @@ void HadronicWWCuts::Loop()
 		       float ximulti45 = 0;
 		       float ximulti56 = 0;
 
+                       // Include aperture cutoffs for data                                                                                                                       
 		       float aperture45 = 999.0; 
 		       float aperture56 = 999.0;
-		       // Include aperture cutoffs for data
 		       if(samplenumber < 0 && samplenumber > -4)
 			 {
 			   aperture45 = Aperture(crossingangle,0,"2017preTS2");
@@ -488,7 +617,18 @@ void HadronicWWCuts::Loop()
 			   aperture45 = Aperture(crossingangle,0,"2017postTS2");
                            aperture56 = Aperture(crossingangle,1,"2017postTS2");
 			 }
-
+		       // Include aperture cutoffs for signal MC - for now using a hard-coded crossing angle, 
+		       // until figuring out how to retrieve this for MC
+		       if(samplenumber == 21 || samplenumber == 31)
+			 {
+			   aperture45 = Aperture(130,0,"2017preTS2");
+                           aperture56 = Aperture(130,1,"2017preTS2");
+			 }
+		       if(samplenumber == 41)
+			 {
+			   aperture45 = Aperture(130,0,"2017postTS2");
+                           aperture56 = Aperture(130,1,"2017postTS2");
+			 }
 
 		       if(proton_xi->size() > 1)
 			 {
@@ -498,35 +638,86 @@ void HadronicWWCuts::Loop()
 			     {
 			       thexi = proton_xi->at(p);
 			       bool passfiducialcuts = false;
+			       bool passpixraddam = true;
+			       bool passmultirpfull = true;
 
 			       if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 23))                                                                       
 				 {
 				   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
-				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true))
+				   passpixraddam = SingleRPEffCorr(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
+
+				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true) && (passpixraddam == true))
 				     {
 				       xipix45s->push_back(thexi);
 				       hxipix45->Fill(thexi);
 				       //				       ypix45s->push_back(proton_tracky1->at(p));
 				       nSinglePixelTracks45++;
 				     }
+
+				   // Due to stupidity, the pixel ROC shift info is not saved correctly for the pixel 
+				   // sub-tracks of a multi-RP proton. So here we use the info of the single-RP proton 
+				   // and associate it to the x,y of the multi-RP pixel track
+				   if(proton_trackpixshift1->at(p) == 1)
+				     {
+				       if(proton_rpid2->size() > 0)
+					 if((proton_rpid2->at(0) == 23) && (proton_trackx2->at(0) == proton_trackx1->at(p)) && (proton_tracky2->at(0) == proton_tracky1->at(p)))
+					   multisubtrackshift45 = 1;					   
+                                       if(proton_rpid2->size() > 1)
+                                         if((proton_rpid2->at(1) == 23) && (proton_trackx2->at(1) == proton_trackx1->at(p)) && (proton_tracky2->at(1) == proton_tracky1->at(p)))
+					   multisubtrackshift45 = 1;
+				     }
 				 }
                                if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 123))
                                  {
-                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
+				   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
+				   passpixraddam = SingleRPEffCorr(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
 
-                                   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true))
+				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true) && (passpixraddam == true))
 				     {
 				       xipix56s->push_back(thexi);
                                        hxipix56->Fill(thexi);
 				       //				       ypix56s->push_back(proton_tracky1->at(p));
                                        nSinglePixelTracks56++;
 				     }
+
+                                   // Due to stupidity, the pixel ROC shift info is not saved correctly for the pixel                                                             
+                                   // sub-tracks of a multi-RP proton. So here we use the info of the single-RP proton                                                            
+                                   // and associate it to the x,y of the multi-RP pixel track                                                                                     
+                                   if(proton_trackpixshift1->at(p) == 1)
+                                     {
+                                       if(proton_rpid2->size() > 0)
+                                         if((proton_rpid2->at(0) == 123) && (proton_trackx2->at(0) == proton_trackx1->at(p)) && (proton_tracky2->at(0) == proton_tracky1->at(p)))
+					   multisubtrackshift56 = 1;
+                                       if(proton_rpid2->size() > 1)
+                                         if((proton_rpid2->at(1) == 123) && (proton_trackx2->at(1) == proton_trackx1->at(p)) && (proton_tracky2->at(1) == proton_tracky1->at(p)))
+                                           multisubtrackshift56 = 1;
+                                     }
                                  }
                                if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 0))
                                  {
-                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
+				   // Fix for mis-alignment of storing multi-RP sub-tracks in the ntuples
+				   // Here for 2017 - track1 is always(?) strips, find pixels track2
+				   multisubtrackx21045 = proton_trackx1->at(p);
+				   multisubtracky21045 = proton_tracky1->at(p);
+				   if(proton_rpid2->at(0) == 23) 
+				     {
+				       multisubtrackx22045 = proton_trackx2->at(0); 
+				       multisubtracky22045 = proton_tracky2->at(0);
+				     }
+				   else if(proton_rpid2->size() > 1)
+				     {
+				       if(proton_rpid2->at(1) == 23) 
+					 {
+					   multisubtrackx22045 = proton_trackx2->at(1); 
+					   multisubtracky22045 = proton_tracky2->at(1);
+					 }
+				     }
+				   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
 
-				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true))
+				   passfiducialcuts = PixelFiducial(multisubtrackx21045, multisubtracky21045, 0, samplenumber);
+				   passmultirpfull = MultiRPEffCorr(multisubtrackx21045, multisubtracky21045, multisubtrackx22045, multisubtracky22045, 0, samplenumber);
+
+				   if((multisubtrackshift45 == 0) && (thexi <= aperture45) && (passfiducialcuts == true) && (passmultirpfull == true))
 				     {
 				       ximulti45s->push_back(thexi);
 				       hximult45->Fill(thexi);
@@ -536,9 +727,29 @@ void HadronicWWCuts::Loop()
                                  }
                                if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 1))
                                  {
-                                   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
+                                   // Fix for mis-alignment of storing multi-RP sub-tracks in the ntuples                                                                         
+                                   // Here for 2017 - track1 is always(?) strips, find pixels track2                                                                              
+                                   multisubtrackx21056 = proton_trackx1->at(p);
+                                   multisubtracky21056 = proton_tracky1->at(p);
+                                   if(proton_rpid2->at(0) == 123)
+                                     {
+                                       multisubtrackx22056 = proton_trackx2->at(0);
+                                       multisubtracky22056 = proton_tracky2->at(0);
+                                     }
+                                   else if(proton_rpid2->size() > 1)
+                                     {
+                                       if(proton_rpid2->at(1) == 123)
+                                         {
+                                           multisubtrackx22056 = proton_trackx2->at(1);
+                                           multisubtracky22056 = proton_tracky2->at(1);
+                                         }
+                                     }
+                                   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
 
-				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true))
+				   passfiducialcuts = PixelFiducial(multisubtrackx22056, multisubtracky22056, 1, samplenumber);
+                                   passmultirpfull = MultiRPEffCorr(multisubtrackx21056, multisubtracky21056, multisubtrackx22056, multisubtracky22056, 1, samplenumber);
+
+				   if((multisubtrackshift56 == 0) && (thexi <= aperture56) && (passfiducialcuts == true) && (passmultirpfull == true))
 				     {
 				       ximulti56s->push_back(thexi);
 				       hximult56->Fill(thexi);
@@ -949,12 +1160,16 @@ void HadronicWWCuts::Loop()
      //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0onlyPUprotons.root","RECREATE");
      //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_testNoMassCut.root","RECREATE");
      //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0withPUprotons.root","RECREATE");
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0withPUprotons.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
    if(samplenumber == 22)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root","RECREATE");
 
    if(samplenumber == 31)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z5point0.root","RECREATE");
+
+   if(samplenumber == 41)
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root");
 
    hmjjdat->Write();
    hyjjdat->Write();

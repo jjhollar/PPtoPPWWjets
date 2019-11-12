@@ -135,6 +135,25 @@ public :
    TBranch        *b_lumiblock;   //!
    TBranch        *b_crossingangle;   //!                                                                                                  
 
+   // Efficiency correction histograms
+   TH2F *hpixeffB45, *hpixeffC145, *hpixeffE45, *hpixeffF145;
+   TH2F *hpixeffB56, *hpixeffC156, *hpixeffE56, *hpixeffF156;
+   TH2F *hpixeff2017PreTS245, *hpixeff2017PostTS245;
+   TH2F *hpixeff2017PreTS256, *hpixeff2017PostTS256;
+
+   TH2F *hstreffB45, *hstreffC45, *hstreffD45, *hstreffE45, *hstreffF45;
+   TH2F *hstreffB56, *hstreffC56, *hstreffD56, *hstreffE56, *hstreffF56;
+   TH2F *hstreff2017PreTS245, *hstreff2017PostTS245;
+   TH2F *hstreff2017PreTS256, *hstreff2017PostTS256;
+
+   TH1F *hmultistreffB45, *hmultistreffC45, *hmultistreffD45, *hmultistreffE45, *hmultistreffF45;
+   TH1F *hmultistreffB56, *hmultistreffC56, *hmultistreffD56, *hmultistreffE56, *hmultistreffF56;
+   TH1F *hmultistreff2017PreTS245, *hmultistreff2017PostTS245;
+   TH1F *hmultistreff2017PreTS256, *hmultistreff2017PostTS256;
+
+   TRandom *rnd;
+
+
    HadronicWWCuts(Int_t mysample = 6, TTree *tree=0);
    virtual ~HadronicWWCuts();
    virtual Int_t    Cut(Long64_t entry);
@@ -143,7 +162,9 @@ public :
    virtual void     Init(TTree *tree);
    virtual void     Loop();
    virtual Float_t  Aperture(Float_t xangle, Int_t arm, TString era);
-   virtual Bool_t   PixelFiducial(Float_t trackx, Float_t tracky, Float_t arm, Int_t thesample);
+   virtual Bool_t   PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, Int_t thesample);
+   virtual Bool_t  SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample);
+   virtual Bool_t  MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample);
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
@@ -219,6 +240,9 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == 31)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
 
+    if(samplenumber == 41)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root");
+
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_JetHT_2017Bv1_17Nov2017_LegacyFromAOD_merge.root");
@@ -279,6 +303,9 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 31)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
+
+      if(samplenumber == 41)
+	f = new TFile("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root");
 
     }
     TDirectory * dir;
@@ -342,11 +369,120 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 31)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root:/demo");
+
+    if(samplenumber == 41)
+      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root:/demo");
     
     dir->GetObject("ntp1",tree);
 
   }
   Init(tree);
+
+  // Setup for efficiency corrections ("killing")
+  rnd = new TRandom();
+  rnd->SetSeed(123456);
+
+  Float_t lumiB = 2.361; 
+  Float_t lumiC1 = 5.3;
+  Float_t lumiC = 8.577;
+  Float_t lumiD = 4.075;
+  Float_t lumiE = 8.959;
+  Float_t lumiF1 = 1.7;
+  Float_t lumiF = 13.214;
+
+  // Pixels - lumi-weighted averages for pre- and post-TS2
+  TFile *fpixeff = TFile::Open("pixelEfficiencies.root");
+  hpixeffB45 = (TH2F *)fpixeff->Get("Pixel/2017/2017B/h45_220_2017B_all_2D"); // 2.4fb
+  hpixeffB56 = (TH2F *)fpixeff->Get("Pixel/2017/2017B/h56_220_2017B_all_2D");
+  hpixeffC145 = (TH2F *)fpixeff->Get("Pixel/2017/2017C1/h45_220_2017C1_all_2D"); // 5.3fb
+  hpixeffC156 = (TH2F *)fpixeff->Get("Pixel/2017/2017C1/h56_220_2017C1_all_2D");
+  hpixeffE45 = (TH2F *)fpixeff->Get("Pixel/2017/2017E/h45_220_2017E_all_2D"); // 9fb
+  hpixeffE56 = (TH2F *)fpixeff->Get("Pixel/2017/2017E/h56_220_2017E_all_2D");
+  hpixeffF145 = (TH2F *)fpixeff->Get("Pixel/2017/2017F1/h45_220_2017F1_all_2D"); // 1.7fb
+  hpixeffF156 = (TH2F *)fpixeff->Get("Pixel/2017/2017F1/h56_220_2017F1_all_2D");
+
+  hpixeffB45->Scale(lumiB/(lumiB+lumiC1));
+  hpixeffB56->Scale(lumiB/(lumiB+lumiC1));
+  hpixeffC145->Scale(lumiC1/(lumiB+lumiC1));
+  hpixeffC156->Scale(lumiC1/(lumiB+lumiC1));
+  hpixeff2017PreTS245 = (TH2F *)hpixeffB45->Clone("hpixeff2017PreTS245");
+  hpixeff2017PreTS256 = (TH2F *)hpixeffB56->Clone("hpixeff2017PreTS256");
+  hpixeff2017PreTS245->Add(hpixeffC145);
+  hpixeff2017PreTS256->Add(hpixeffC156);
+
+  hpixeffE45->Scale(lumiE/(lumiE+lumiF1));
+  hpixeffE56->Scale(lumiE/(lumiE+lumiF1));
+  hpixeffF145->Scale(lumiF1/(lumiE+lumiF1));
+  hpixeffF156->Scale(lumiF1/(lumiE+lumiF1));
+  hpixeff2017PostTS245 = (TH2F *)hpixeffE45->Clone("hpixeff2017PostTS245");
+  hpixeff2017PostTS256 = (TH2F *)hpixeffE56->Clone("hpixeff2017PostTS256");
+  hpixeff2017PostTS245->Add(hpixeffF145);
+  hpixeff2017PostTS256->Add(hpixeffF156);
+
+  // Strips - lumi-weighted averages for pre- and post-TS2                                                                                                                                                                     
+  TFile *fstripeff = TFile::Open("PreliminaryEfficiencies_October92019_1D2DMultiTrack.root");
+  hstreffB45 = (TH2F *)fstripeff->Get("Strips/2017/2017B/h45_2017B_all_2D");
+  hstreffC45 = (TH2F *)fstripeff->Get("Strips/2017/2017C/h45_2017C_all_2D");
+  hstreffD45 = (TH2F *)fstripeff->Get("Strips/2017/2017D/h45_2017D_all_2D");
+  hstreffE45 = (TH2F *)fstripeff->Get("Strips/2017/2017E/h45_2017E_all_2D");
+  hstreffF45 = (TH2F *)fstripeff->Get("Strips/2017/2017F/h45_2017F_all_2D");
+  hstreffB56 = (TH2F *)fstripeff->Get("Strips/2017/2017B/h56_2017B_all_2D");
+  hstreffC56 = (TH2F *)fstripeff->Get("Strips/2017/2017C/h56_2017C_all_2D");
+  hstreffD56 = (TH2F *)fstripeff->Get("Strips/2017/2017D/h56_2017D_all_2D");
+  hstreffE56 = (TH2F *)fstripeff->Get("Strips/2017/2017E/h56_2017E_all_2D");
+  hstreffF56 = (TH2F *)fstripeff->Get("Strips/2017/2017F/h56_2017F_all_2D");
+
+  hstreffB45->Scale(lumiB/(lumiB+lumiC+lumiD));
+  hstreffB56->Scale(lumiB/(lumiB+lumiC+lumiD));
+  hstreffC45->Scale(lumiC/(lumiB+lumiC+lumiD));
+  hstreffC56->Scale(lumiC/(lumiB+lumiC+lumiD));
+  hstreffD45->Scale(lumiD/(lumiB+lumiC+lumiD));
+  hstreffD56->Scale(lumiD/(lumiB+lumiC+lumiD));
+  hstreff2017PreTS245 = (TH2F *)hstreffB45->Clone("hstreff2017PreTS245");
+  hstreff2017PreTS256 = (TH2F *)hstreffB56->Clone("hstreff2017PreTS256");
+  hstreff2017PreTS245->Add(hstreffC45); hstreff2017PreTS245->Add(hstreffD45);
+  hstreff2017PreTS256->Add(hstreffC56); hstreff2017PreTS256->Add(hstreffD56);
+
+  hstreffE45->Scale(lumiE/(lumiE+lumiF));
+  hstreffE56->Scale(lumiE/(lumiE+lumiF));
+  hstreffF45->Scale(lumiF/(lumiE+lumiF));
+  hstreffF56->Scale(lumiF/(lumiE+lumiF));
+  hstreff2017PostTS245 = (TH2F *)hstreffE45->Clone("hstreff2017PostTS245");
+  hstreff2017PostTS256 = (TH2F *)hstreffE56->Clone("hstreff2017PostTS256");
+  hstreff2017PostTS245->Add(hstreffF45);
+  hstreff2017PostTS256->Add(hstreffF56);
+
+  // Multi-track for strips
+  hmultistreffB45 = (TH1F *)fstripeff->Get("Strips/2017/2017B/h45multitrackeff_2017B_avg_RP3");
+  hmultistreffC45 = (TH1F *)fstripeff->Get("Strips/2017/2017C/h45multitrackeff_2017C_avg_RP3");
+  hmultistreffD45 = (TH1F *)fstripeff->Get("Strips/2017/2017D/h45multitrackeff_2017D_avg_RP3");
+  hmultistreffE45 = (TH1F *)fstripeff->Get("Strips/2017/2017E/h45multitrackeff_2017E_avg_RP3");
+  hmultistreffF45 = (TH1F *)fstripeff->Get("Strips/2017/2017F/h45multitrackeff_2017F_avg_RP3");
+  hmultistreffB56 = (TH1F *)fstripeff->Get("Strips/2017/2017B/h56multitrackeff_2017B_avg_RP103");
+  hmultistreffC56 = (TH1F *)fstripeff->Get("Strips/2017/2017C/h56multitrackeff_2017C_avg_RP103");
+  hmultistreffD56 = (TH1F *)fstripeff->Get("Strips/2017/2017D/h56multitrackeff_2017D_avg_RP103");
+  hmultistreffE56 = (TH1F *)fstripeff->Get("Strips/2017/2017E/h56multitrackeff_2017E_avg_RP103");
+  hmultistreffF56 = (TH1F *)fstripeff->Get("Strips/2017/2017F/h56multitrackeff_2017F_avg_RP103");
+
+  hmultistreffB45->Scale(lumiB/(lumiB+lumiC+lumiD));
+  hmultistreffB56->Scale(lumiB/(lumiB+lumiC+lumiD));
+  hmultistreffC45->Scale(lumiC/(lumiB+lumiC+lumiD));
+  hmultistreffC56->Scale(lumiC/(lumiB+lumiC+lumiD));
+  hmultistreffD45->Scale(lumiD/(lumiB+lumiC+lumiD));
+  hmultistreffD56->Scale(lumiD/(lumiB+lumiC+lumiD));
+  hmultistreff2017PreTS245 = (TH1F *)hmultistreffB45->Clone("hmultistreff2017PreTS245");
+  hmultistreff2017PreTS256 = (TH1F *)hmultistreffB56->Clone("hmultistreff2017PreTS256");
+  hmultistreff2017PreTS245->Add(hmultistreffC45); hmultistreff2017PreTS245->Add(hmultistreffD45);
+  hmultistreff2017PreTS256->Add(hmultistreffC56); hmultistreff2017PreTS256->Add(hmultistreffD56);
+
+  hmultistreffE45->Scale(lumiE/(lumiE+lumiF));
+  hmultistreffE56->Scale(lumiE/(lumiE+lumiF));
+  hmultistreffF45->Scale(lumiF/(lumiE+lumiF));
+  hmultistreffF56->Scale(lumiF/(lumiE+lumiF));
+  hmultistreff2017PostTS245 = (TH1F *)hmultistreffE45->Clone("hmultistreff2017PostTS245");
+  hmultistreff2017PostTS256 = (TH1F *)hmultistreffE56->Clone("hmultistreff2017PostTS256");
+  hmultistreff2017PostTS245->Add(hmultistreffF45);
+  hmultistreff2017PostTS256->Add(hmultistreffF56);
 
 }
 
