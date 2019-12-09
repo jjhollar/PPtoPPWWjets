@@ -230,12 +230,11 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_SM_xi1to30percent_ntuplesv2.root");
     if(samplenumber == 21)
-      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test8900events_WithPU.root");
-      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
-      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root");
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root"); 
     if(samplenumber == 22)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
+    if(samplenumber == 24)
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
 
     if(samplenumber == 31)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
@@ -297,9 +296,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	//	f = new TFile("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root");
 	//	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root");
 	//	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
-	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root"); 
       if(samplenumber == 22)
-	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGTo\
+WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
+      if(samplenumber == 24)
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
 
       if(samplenumber == 31)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root");
@@ -362,10 +364,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       //      dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_WithPU.root:/demo");
       //      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_FPMC_a0W1E-6_Fall2017_LegacyFromAOD_2017crossingangles_test10kevents_NoPU_new.root:/demo");
       //      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root:/demo");
-      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017preTS2_NoPUprotons_job2.root:/demo");
-    if(samplenumber == 22)
-      dir = (TDirectory*)f->Get("WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root:/demo");
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root:/demo");
 
+    if(samplenumber == 22)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGTo\
+WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root:/demo");
+    if(samplenumber == 24)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root:/demo");
 
     if(samplenumber == 31)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/ZZhadronic_FPMC_a0Z5E-5_Fall2017_LegacyFromAOD_10kevents2017preTS2_NoPUprotons_job1.root:/demo");

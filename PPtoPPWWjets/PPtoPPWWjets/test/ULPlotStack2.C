@@ -34,6 +34,7 @@ void ULPlotStack2(Int_t var = 1)
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
   Float_t mcbxsec = 0.0583; // pb, a0W=2E-6
+  Float_t mcdxsec = 0.1648; // pb, aCW=2E-5
   Float_t mbaaxsec = 0.1074; // pb 
   Float_t mcaaxsec = 0.00264; // pb, a0Z=5E-5
 
@@ -161,11 +162,15 @@ void ULPlotStack2(Int_t var = 1)
   TH1F *h12 = (TH1F *)f12->Get(hist);
 
   //  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0.root");
-  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons.root");
+  //  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons.root");
+  TFile *fa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root");
   TH1F *ha = (TH1F *)fa->Get(hist);
 
   //  TFile *fb = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0withPUprotons.root");
   //  TH1F *hb = (TH1F *)fb->Get(hist);
+
+  TFile *fd = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root");
+  TH1F *hd = (TH1F *)fd->Get(hist);
 
   TFile *faa = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z5point0.root");
   TH1F *haa = (TH1F *)faa->Get(hist);
@@ -195,6 +200,7 @@ void ULPlotStack2(Int_t var = 1)
       h8->Rebin(rebinfactor); h9->Rebin(rebinfactor);
       h10->Rebin(rebinfactor); h11->Rebin(rebinfactor); h12->Rebin(rebinfactor);
       ha->Rebin(rebinfactor); //hb->Rebin(rebinfactor);
+      hd->Rebin(rebinfactor);
       haa->Rebin(rebinfactor);
       h100->Rebin(rebinfactor); //h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
@@ -362,6 +368,8 @@ void ULPlotStack2(Int_t var = 1)
 
   ha->SetLineWidth(3); ha->SetLineColor(kCyan); ha->Scale(mcaxsec*1000.0*lumi/20000.0); ha->Draw("histsame");
   //  hb->SetLineWidth(3); hb->SetLineColor(kCyan); hb->SetLineStyle(2); hb->Scale(mcbxsec*1000.0*lumi/20000.0); hb->Draw("histsame");
+  hd->SetLineWidth(3); hd->SetLineColor(kCyan); hd->Scale(mcdxsec*1000.0*lumi/107700.0); hd->SetLineStyle(2); hd->Draw("histsame");
+
   haa->SetLineWidth(3); haa->SetLineColor(kMagenta); haa->Scale(mcaaxsec*1000.0*lumi/10000.0); haa->Draw("histsame");
 
 
@@ -372,6 +380,7 @@ void ULPlotStack2(Int_t var = 1)
   lg1->AddEntry(h7,"Powheg ttbar");
   //  lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6), arb. normalization");
   lg1->AddEntry(ha,"Excl. WW signal (a0W = 1.0E-6)");
+  lg1->AddEntry(hd,"Excl. WW signal (aCW = 2.0E-5)");
   lg1->AddEntry(haa,"Excl. ZZ signal (a0Z = 5.0E-5)");
   //  lg1->AddEntry(hb,"Excl. WW signal (a0W = 2.0E-6)");
   lg1->AddEntry(h100,"2017BCDEF Data");
@@ -398,6 +407,7 @@ void ULPlotStack2(Int_t var = 1)
 
   //  hb->Draw("histsame");
   ha->Draw("histsame");
+  hd->Draw("histsame");
   
   haa->Draw("histsame");
 
@@ -413,6 +423,7 @@ void ULPlotStack2(Int_t var = 1)
   cout << "MC = " << h12->GetSumOfWeights() << ", data = " << h1000->GetSumOfWeights() << ", ratio = " << h1000->GetSumOfWeights()/h12->GetSumOfWeights() << endl;
   cout << "Signal MC (a0W=1E-6) " << ha->GetSumOfWeights() << ", S/B(MC) = " << ha->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
   //  cout << "Signal MC (a0W=2E-6) " << hb->GetSumOfWeights() << ", S/B(MC) = " << hb->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
+  cout << "Signal MC (aCW=2E-5) " << hd->GetSumOfWeights() << ", S/B(MC) = " << hd->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
   cout << "Signal MC (a0Z=5E-5) " << haa->GetSumOfWeights() << ", S/B(MC) = " << haa->GetSumOfWeights()/h12->GetSumOfWeights() << std::endl;
 
 
