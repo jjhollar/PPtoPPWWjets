@@ -22,7 +22,7 @@ bool HadronicWWCuts::SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t
   bool passes = true;
 
   // Apply to signal MC - here for 2017 pre-TS2
-  if(thesample == 21 || thesample == 22 || thesample == 24 || thesample == 31)
+  if(thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)
     {
       if(arm == 0)
 	effcorr = hpixeff2017PreTS245->GetBinContent(hpixeff2017PreTS245->FindBin(trackx220,tracky220));
@@ -30,7 +30,7 @@ bool HadronicWWCuts::SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t
 	effcorr = hpixeff2017PreTS256->GetBinContent(hpixeff2017PreTS256->FindBin(trackx220,tracky220));
     }
   // 2017 post-TS2
-  if(thesample == 41)
+  if(thesample == 24 || thesample == 25 || thesample == 41)
     {
       if(arm == 0)
         effcorr = hpixeff2017PostTS245->GetBinContent(hpixeff2017PostTS245->FindBin(trackx220,tracky220));
@@ -69,7 +69,7 @@ bool HadronicWWCuts::MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_
   bool passes = true;
 
   // Apply to signal MC - here for 2017 pre-TS2 rad damage                                                                                                                         
-  if(thesample == 21 || thesample == 22 || thesample == 24 || thesample == 31)
+  if(thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)
     {
       if(arm == 0)
 	{
@@ -85,7 +85,7 @@ bool HadronicWWCuts::MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_
 	}
     }
   // 2017 post-TS2 rad damage
-  if(thesample == 41)
+  if(thesample == 24 || thesample == 25 || thesample == 41)
     {
       if(arm == 0)
         {
@@ -127,7 +127,7 @@ bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, In
   float pixacceptymin = -999.;
   float pixacceptymax = 999.;
 
-  if((thesample < 0 && thesample > -4) || (thesample == 21 || thesample == 22 || thesample == 24 || thesample == 31)) // preTS2 2017
+  if((thesample < 0 && thesample > -4) || (thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)) // preTS2 2017
     {
       if(arm == 0)
 	{
@@ -144,7 +144,7 @@ bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, In
           pixacceptymax = 4.698;
 	}
     }
-  if(thesample < -3 && thesample > -6) // postTS2 2017
+  if((thesample < -3 && thesample > -6) || (thesample == 24 || thesample == 25))// postTS2 2017
     {
       if(arm == 0)
         {
@@ -361,7 +361,7 @@ void HadronicWWCuts::Loop()
 
 
    TH1F *hmassmatchsigmcmm = new TH1F("hmassmatchsigmcmm","hmassmatchsigmcmm",500,-2500,2500);
-   TH1F *hymatchsigmcmm = new TH1F("hymatchsigmcmm","hymatchsigmcmm",100,-5,5);
+   TH1F *hymatchsigmcmm = new TH1F("hymatchsigmcmm","hymatchsigmcmm",500,-5,5);
    TH1F *hmassmatchratiosigmcmm = new TH1F("hmassmatchratiosigmcmm","hmassmatchratiosigmcmm",500,-5,5);
    TH1F *hmassmatchsigmcmix = new TH1F("hmassmatchsigmcmix","hmassmatchsigmcmix",500,-2500,2500);
    TH1F *hymatchsigmcmix = new TH1F("hymatchsigmcmix","hymatchsigmcmix",100,-5,5);
@@ -376,7 +376,7 @@ void HadronicWWCuts::Loop()
    TH2F *hmassrapiditymatchantiptbalmm = new TH2F("hmassrapiditymatchantiptbalmm","hmassrapiditymatchantiptbalmm",500,-5,5,500,-5,5);
 
 
-   TH1F *hymatchsigmcmult = new TH1F("hymatchsigmcmult","hymatchsigmcmult",100,-5,5);
+   TH1F *hymatchsigmcmult = new TH1F("hymatchsigmcmult","hymatchsigmcmult",500,-5,5);
    TH2F *hmasscorrsigmcmult = new TH2F("hmasscorrsigmcmult","hmasscorrsigmcmult",250,0,2500,250,0,2500);
    TH2F *hycorrsigmcmult = new TH2F("hycorrsigmcmult","hycorrsigmcmult",100,-5,5,100,-5,5);
    TH2F *hmasscorrsigmcmulttruthmatched = new TH2F("hmasscorrsigmcmulttruthmatched","hmasscorrsigmcmulttruthmatched",250,0,2500,250,0,2500);
@@ -398,6 +398,10 @@ void HadronicWWCuts::Loop()
 
    TH1F *xijets45= new TH1F("xijets45","xijets45",250,0,0.25);
    TH1F *xijets56= new TH1F("xijets56","xijets56",250,0,0.25);
+   TH1F *resxijets45= new TH1F("resxijets45","resxijets45",100,0,2);
+   TH1F *resxijets56= new TH1F("resxijets56","resxijets56",100,0,2);
+   TH2F *resxijetscorr45= new TH2F("resxijetscorr45","resxijetscorr45",300,0,0.3,300,0,0.3);
+   TH2F *resxijetscorr56= new TH2F("resxijetscorr56","resxijetscorr56",300,0,0.3,300,0,0.3);
 
 
    std::vector<float> *mppssingsing = new std::vector<float>;
@@ -419,6 +423,7 @@ void HadronicWWCuts::Loop()
    Int_t npassjetsubstr = 0;
    Int_t npassjetxi = 0;
    Int_t npasspps = 0;
+   Int_t npassppsmatchksenia = 0;
 
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) 
@@ -509,6 +514,10 @@ void HadronicWWCuts::Loop()
 	   Float_t xijets1 = (1.0/13000.0)*(ptjet1*TMath::Exp(etajet1) + ptjet2*TMath::Exp(etajet2));
 	   Float_t xijets2 = (1.0/13000.0)*(ptjet1*TMath::Exp(-1*etajet1) + ptjet2*TMath::Exp(-1*etajet2));
 
+	   //	   Float_t genxijets1 = (1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(gen_jet_eta->at(0)) + gen_jet_pt->at(1)*TMath::Exp(gen_jet_eta->at(1)));
+	   //	   Float_t genxijets2 = (1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(-1*gen_jet_eta->at(0)) + gen_jet_pt->at(1)*TMath::Exp(-1*gen_jet_eta->at(1)));
+
+
 	   TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
 	   jet1.SetPtEtaPhiE(ptjet1,etajet1,phijet1,ejet1);
 	   jet2.SetPtEtaPhiE(ptjet2,etajet2,phijet2,ejet2);
@@ -571,6 +580,10 @@ void HadronicWWCuts::Loop()
 		       hphidat2->Fill(jet_phi->at(indsecond),myweight);
 		       xijets45->Fill(xijets1);
 		       xijets56->Fill(xijets2);
+		       //		       resxijets45->Fill(xijets1/genxijets1);
+		       //		       resxijets56->Fill(xijets2/genxijets2);
+		       //		       resxijetscorr45->Fill(xijets1,genxijets1);
+		       //		       resxijetscorr56->Fill(xijets2,genxijets2);
 		       hdeta->Fill(fabs(jet_eta->at(indleading) - jet_eta->at(indsecond)),myweight);
 		       hnvtx->Fill(nVertices,myweight);
 		       hcrossingangle->Fill(crossingangle,myweight);
@@ -932,10 +945,10 @@ void HadronicWWCuts::Loop()
 				   hywwsignal->Fill(mydijet.Rapidity());
 
 				   // Just counting, no cut yet
-				   if(xijets1 > 0.03 && xijets1 < 0.18 && xijets2 > 0.03 && xijets2 < 0.18)
+				   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
 				     npassjetxi++;
 
-				   if(samplenumber >= 20 && mpp>0)
+				   if(samplenumber >= 20 && mpp>0 && (xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205))
 				     {
 				       for(Int_t s = 0; s < mppsmultmult->size(); s++)
 					 {
@@ -977,6 +990,9 @@ void HadronicWWCuts::Loop()
 					   hymatchsigmcmult->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
 					   hmasscorrsigmcmult->Fill(mydijet.M(),mppsmultmult->at(0));
 					   hycorrsigmcmult->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= 0.11506000) && 
+					      (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= 0.057220000))
+					     npassppsmatchksenia++;
 					   if(match45 == 1 && match56 == 1)
 					     hmasscorrsigmcmulttruthmatched->Fill(mydijet.M(),mppsmultmult->at(0));
 					 }
@@ -988,7 +1004,7 @@ void HadronicWWCuts::Loop()
 			 }
 		       
 		       // Control regions
-		       if(samplenumber < 0 && mpp>0)
+		       if(samplenumber < 0 && mpp>0 && (xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205))
 			 {
 			   for(Int_t s = 0; s < mppsmultmult->size(); s++)
 			     {
@@ -1170,15 +1186,15 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
@@ -1224,6 +1240,12 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 22)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
    if(samplenumber == 24)
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+   if(samplenumber == 25)
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+
+
+   if(samplenumber == 27)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
 
    if(samplenumber == 31)
@@ -1231,6 +1253,9 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 41)
      fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+
+   if(samplenumber == 99)
+     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
 
    hmjjdat->Write();
    hyjjdat->Write();
@@ -1343,6 +1368,10 @@ void HadronicWWCuts::Loop()
    hmyjjdat->Write();
    xijets45->Write();
    xijets56->Write();
+   resxijets45->Write();
+   resxijets56->Write();
+   resxijetscorr45->Write();
+   resxijetscorr56->Write();
 
    hmasscorrpreseldatmult->Write();
    hycorrpreseldatmult->Write();
@@ -1363,6 +1392,10 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 22)
      {normxsec = 58.3; nevgen = 124400.0;}
    if(samplenumber == 24)
+     {normxsec = 58.3; nevgen = 110100.0;}
+   if(samplenumber == 25)
+     {normxsec = 148.13; nevgen = 243900.0;}
+   if(samplenumber == 27)
      {normxsec = 164.8; nevgen = 107700.0;}
    if(samplenumber == 31)
      {normxsec = 2.64; nevgen = 10000.0;}
@@ -1372,6 +1405,7 @@ void HadronicWWCuts::Loop()
 	     << "Passing dijet kinematics = " << normxsec*npassdijetkine/nevgen << std::endl
 	     << "Passing jet substructure = " << normxsec*npassjetsubstr/nevgen << std::endl
 	     << "Passing xi(jets) = " << normxsec*npassjetxi/nevgen << std::endl
-	     << "Passing 2 PPS multi-RP protons = " << normxsec*npasspps/nevgen << std::endl;
+	     << "Passing 2 PPS multi-RP protons = " << normxsec*npasspps/nevgen << std::endl
+	     << "Passing pp-WW matching = " << normxsec*npassppsmatchksenia/nevgen << std::endl;
 
 }

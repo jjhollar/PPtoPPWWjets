@@ -234,6 +234,10 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == 22)
       f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
     if(samplenumber == 24)
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root");
+    if(samplenumber == 25)
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W5E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6//WWhadronic_ExclusiveWW_AllDecays_a0W5point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root");
+    if(samplenumber == 27)
       f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
 
     if(samplenumber == 31)
@@ -241,6 +245,9 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 41)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root");
+
+    if(samplenumber == 99)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("WWhadronic_aCW2E-5_PileupProtonsOnly.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
@@ -298,9 +305,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	//	f = new TFile("WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_20kevents2017postTS2_SignalPlusPU_new.root");
 	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/WWa0W1E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root"); 
       if(samplenumber == 22)
-	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGTo\
-WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
       if(samplenumber == 24)
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root");
+      if(samplenumber == 25)
+	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W5E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6//WWhadronic_ExclusiveWW_AllDecays_a0W5point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root");
+      if(samplenumber == 27)
 	f = new TFile("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root");
 
       if(samplenumber == 31)
@@ -309,6 +319,8 @@ WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProton
       if(samplenumber == 41)
 	f = new TFile("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root");
 
+      if(samplenumber == 99)
+	f = new TFile("WWhadronic_aCW2E-5_PileupProtonsOnly.root");
     }
     TDirectory * dir;
 
@@ -370,6 +382,10 @@ WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProton
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGTo\
 WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root:/demo");
     if(samplenumber == 24)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W2E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/WWhadronic_ExclusiveWW_AllDecays_a0W2point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root:/demo");
+    if(samplenumber == 25)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWa0W5E6_2017postTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6//WWhadronic_ExclusiveWW_AllDecays_a0W5point0e-6_ntuplesULv2_2017postTS2_OnlySignalprotons_merge.root:/demo");
+    if(samplenumber == 27)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/WWhadronic/WWaCW2E5_2017preTS2_LegacyFromAOD_SingalProtons_Only/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/WWhadronic_ExclusiveWW_AllDecays_aCW2point2e-5_ntuplesULv2_2017preTS2_OnlySignalprotons_merge.root:/demo");
 
     if(samplenumber == 31)
@@ -378,6 +394,9 @@ WW_bSM-A0W2e-6_13TeV-fpmc-herwig6/WWa0W2E6_2017preTS2_LegacyFromAOD_SingalProton
     if(samplenumber == 41)
       dir = (TDirectory*)f->Get("/tmp/jjhollar/WWhadronic_ExclusiveWW_AllDecays_a0W1point0e-6_ntuplesULv1_50kevents2017postTS2_NoPUprotons_job1.root:/demo");
     
+    if(samplenumber == 99)
+      dir = (TDirectory*)f->Get("WWhadronic_aCW2E-5_PileupProtonsOnly.root:/demo");
+
     dir->GetObject("ntp1",tree);
 
   }
