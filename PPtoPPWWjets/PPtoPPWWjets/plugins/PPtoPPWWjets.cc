@@ -148,6 +148,8 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * proton_xi_;
   std::vector<float> * proton_thy_;
   std::vector<float> * proton_thx_;
+  std::vector<float> * proton_y_;
+  std::vector<float> * proton_x_;
   std::vector<float> * proton_t_;
   std::vector<int> * proton_ismultirp_;
   std::vector<int> * proton_rpid_;
@@ -590,6 +592,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        unsigned int armId = -999;
        float th_y = -999;
        float th_x = -999;
+       float x_star = -999;
+       float y_star = -999;
        float t = -999;
        float xi = -999;
        float trackx1 = -999.;
@@ -609,6 +613,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     {
 	       th_y = proton.thetaY();
 	       th_x = proton.thetaX();
+	       x_star = proton.vx();
+	       y_star = proton.vy();
 	       xi = proton.xi();
 	       t = proton.t();
 	       time = proton.time(); 
@@ -630,6 +636,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	       (*proton_xi_).push_back(xi);
 	       (*proton_thy_).push_back(th_y);
 	       (*proton_thx_).push_back(th_x);
+               (*proton_y_).push_back(y_star);
+               (*proton_x_).push_back(x_star);
 	       (*proton_t_).push_back(t);
 	       (*proton_ismultirp_).push_back(ismultirp);
 	       (*proton_rpid_).push_back(decRPId);
@@ -649,6 +657,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     {
 	       th_y = proton.thetaY();
 	       th_x = proton.thetaX();
+               x_star = proton.vx();
+               y_star = proton.vy();
 	       xi = proton.xi();
 	       t = proton.t();
 	       time = proton.time();
@@ -692,6 +702,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                (*proton_xi_).push_back(xi);
                (*proton_thy_).push_back(th_y);
                (*proton_thx_).push_back(th_x);
+               (*proton_y_).push_back(y_star);
+               (*proton_x_).push_back(x_star);
                (*proton_t_).push_back(t);
                (*proton_ismultirp_).push_back(ismultirp);
                (*proton_rpid_).push_back(decRPId);
@@ -936,6 +948,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*proton_xi_).clear();
    (*proton_thy_).clear();
    (*proton_thx_).clear();
+   (*proton_y_).clear();
+   (*proton_x_).clear();
    (*proton_t_).clear();
    (*proton_ismultirp_).clear();
    (*proton_rpid_).clear();
@@ -1021,6 +1035,8 @@ PPtoPPWWjets::beginJob()
   proton_xi_ = new std::vector<float>;
   proton_thy_ = new std::vector<float>;
   proton_thx_ = new std::vector<float>;
+  proton_y_ = new std::vector<float>;
+  proton_x_ = new std::vector<float>;
   proton_t_ = new std::vector<float>;
   proton_ismultirp_ = new std::vector<int>;
   proton_rpid_ = new std::vector<int>;
@@ -1095,6 +1111,8 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("proton_xi",&proton_xi_);
   tree_->Branch("proton_thy",&proton_thy_);
   tree_->Branch("proton_thx",&proton_thx_);
+  tree_->Branch("proton_y",&proton_y_);
+  tree_->Branch("proton_x",&proton_x_);
   tree_->Branch("proton_t",&proton_t_);
   tree_->Branch("proton_ismultirp",&proton_ismultirp_);
   tree_->Branch("proton_rpid",&proton_rpid_);
@@ -1194,6 +1212,8 @@ PPtoPPWWjets::endJob()
   delete proton_xi_;
   delete proton_thy_;
   delete proton_thx_;
+  delete proton_y_;
+  delete proton_x_;
   delete proton_t_;
   delete proton_ismultirp_;
   delete proton_rpid_;
