@@ -125,6 +125,15 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   std::vector<float> * jet_uncorr_phi_;
   std::vector<float> * jet_uncorr_eta_;
 
+  std::vector<float> * jet_ch_had_fraction_;
+  std::vector<float> * jet_neut_had_fraction_;
+  std::vector<int> * jet_ch_had_mult_;
+  std::vector<int> * jet_neut_had_mult_;
+  std::vector<float> * jet_ch_em_fraction_;
+  std::vector<float> * jet_neut_em_fraction_;
+  std::vector<int> * jet_ch_mult_;
+  std::vector<int> * jet_neut_mult_;
+
   std::vector<float> * jet_mass_;
   std::vector<float> * jet_tau1_;
   std::vector<float> * jet_tau2_;
@@ -480,6 +489,15 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*jet_tau1_).push_back(tau1);
        (*jet_tau2_).push_back(tau2);
        (*jet_vertexz_).push_back(jet.vz());
+
+       (*jet_ch_had_fraction_).push_back(jet.chargedHadronEnergyFraction());
+       (*jet_neut_had_fraction_).push_back(jet.neutralHadronEnergyFraction());
+       (*jet_ch_had_mult_).push_back(jet.chargedHadronMultiplicity());
+       (*jet_neut_had_mult_).push_back(jet.neutralHadronMultiplicity());
+       (*jet_ch_em_fraction_).push_back(jet.chargedEmEnergyFraction());
+       (*jet_neut_em_fraction_).push_back(jet.neutralEmEnergyFraction());
+       (*jet_ch_mult_).push_back(jet.chargedMultiplicity());
+       (*jet_neut_mult_).push_back(jet.neutralMultiplicity());
 
        // Now apply pruned mass corrections to the uncorrected jets!
        //       const LorentzVector uncorrJet = (*jets)[ijet].correctedP4(0);
@@ -931,6 +949,15 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    (*jet_corrmass_).clear();
    (*jet_vertexz_).clear();
 
+   (*jet_ch_had_fraction_).clear();
+   (*jet_neut_had_fraction_).clear();
+   (*jet_ch_had_mult_).clear();
+   (*jet_neut_had_mult_).clear();
+   (*jet_ch_em_fraction_).clear();
+   (*jet_neut_em_fraction_).clear();
+   (*jet_ch_mult_).clear();
+   (*jet_neut_mult_).clear();
+
    (*subjet_ptratio_).clear();
    (*subjet_deltaR_).clear();
 
@@ -1018,6 +1045,15 @@ PPtoPPWWjets::beginJob()
   jet_uncorr_phi_ = new std::vector<float>;
   jet_uncorr_eta_ = new std::vector<float>;
 
+  jet_ch_had_fraction_ = new std::vector<float>;
+  jet_neut_had_fraction_ = new std::vector<float>;
+  jet_ch_had_mult_ = new std::vector<int>;
+  jet_neut_had_mult_ = new std::vector<int>;
+  jet_ch_em_fraction_ = new std::vector<float>;
+  jet_neut_em_fraction_ = new std::vector<float>;
+  jet_ch_mult_ = new std::vector<int>;
+  jet_neut_mult_ = new std::vector<int>;
+
   subjet_ptratio_ = new std::vector<float>;
   subjet_deltaR_ = new std::vector<float>;
 
@@ -1097,6 +1133,14 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("jet_tau2",&jet_tau2_);
   tree_->Branch("jet_corrmass",&jet_corrmass_);
   tree_->Branch("jet_vertexz",&jet_vertexz_);
+  tree_->Branch("jet_ch_had_fraction",&jet_ch_had_fraction_);
+  tree_->Branch("jet_neut_had_fraction",&jet_neut_had_fraction_);
+  tree_->Branch("jet_ch_had_mult",&jet_ch_had_mult_);
+  tree_->Branch("jet_neut_had_mult",&jet_neut_had_mult_);
+  tree_->Branch("jet_ch_em_fraction",&jet_ch_em_fraction_);
+  tree_->Branch("jet_neut_em_fraction",&jet_neut_em_fraction_);
+  tree_->Branch("jet_ch_mult",&jet_ch_mult_);
+  tree_->Branch("jet_neut_mult",&jet_neut_mult_);
   tree_->Branch("subjet_ptratio",&subjet_ptratio_);
   tree_->Branch("subjet_deltaR",&subjet_deltaR_);
   tree_->Branch("dijet_mass",&dijet_mass_);
@@ -1200,6 +1244,14 @@ PPtoPPWWjets::endJob()
   delete jet_vertexz_;
   delete subjet_ptratio_;
   delete subjet_deltaR_;
+  delete jet_ch_had_fraction_;
+  delete jet_neut_had_fraction_;
+  delete jet_ch_had_mult_;
+  delete jet_neut_had_mult_;
+  delete jet_ch_em_fraction_;
+  delete jet_neut_em_fraction_;
+  delete jet_ch_mult_;
+  delete jet_neut_mult_;
   delete dijet_mass_;
   delete dijet_pt_;
   delete dijet_y_;
