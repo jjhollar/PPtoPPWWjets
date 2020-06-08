@@ -8,11 +8,20 @@ MINIAOD=False
 DoTheorySystematics=False
 UseMCProtons=False
 
-process = cms.Process("Demo")
+from Configuration.StandardSequences.Eras import eras
+if YEAR == 2016:
+    process = cms.Process('Demo', eras.Run2_2016, eras.run2_miniAOD_devel)
+if YEAR == 2017:
+    process = cms.Process('Demo', eras.Run2_2017, eras.run2_miniAOD_devel)
+if YEAR == 2018:
+    process = cms.Process('Demo', eras.Run2_2018, eras.run2_miniAOD_devel)
+
+
+#process = cms.Process("Demo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = ''
-process.MessageLogger.cerr.FwkReport.reportEvery = 1
+process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 
@@ -20,66 +29,21 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 # Test file - 2017C 94X AOD
 '/store/data/Run2017C/JetHT/AOD/17Nov2017-v1/30004/9A36D46F-01D8-E711-93DA-A4BF0112BE4C.root'
-#'file:/tmp/jjhollar//AA748FB2-AF0A-E811-9276-002590E7DFD6.root'
-#'/store/user/jjhollar/ExclWWHadronic2018/step3miniaod_gammagammaww_all_xi1pt5to25percent_a0W2pt5e-6_digi_withprotonsfix_20kevents_19jobs_job3.root'
-#'file:/tmp/jjhollar/50D30A02-FB08-E811-8D0B-44A842CFD5D8.root'
-
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_1.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_2.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_3.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_4.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_5.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_6.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_7.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_8.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_9.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/fpmc_exclww/step3_fpmc_exclww_a0W2point5e-6_alldecays_xi1to30pct_miniaodv2_10.root'
-
-#'file:/tmp/jjhollar/7402ADA9-C609-E811-BCFE-C0BFC0E5686E.root'
-
-
-#        '/store/user/kshcheli/wwhad/FPMC_Fall17/step3_fpmc_MiniAOD.root'
-#'/store/data/Run2016B/JetHT/MINIAOD/07Aug17_ver2-v1/110000/5EF65117-437F-E711-AF5B-0025905A60A8.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/step3_fpmc_ZZ_MINIAODv2.root'
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_1.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_2.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_3.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_4.root',
-##'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_5.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_6.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_7.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_8.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_9.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_10.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_11.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_12.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_13.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_14.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_15.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_16.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_17.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_18.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_19.root',
-#'/store/user/kshcheli/ExclWWHadronic2017Analysis/MCv2/hepmcSM/step3_fpmc_SMWW_miniaodv2_20.root'
-#'file:/tmp/jjhollar/365A165C-0C39-E811-9EFB-984BE164D05E.root'
-#'/store/data/Run2017B/JetHT/MINIAOD/31Mar2018-v1/00000/80A71620-AF3A-E811-96AA-0CC47A7452D8.root'
-#'/store/mc/RunIISummer16MiniAODv2/QCD_Pt-600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_backup_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/8274BB36-3DB5-E611-816C-0025907DE266.root'
-#'file:/tmp/jjhollar/927116EE-760F-E811-A4BB-484D7E8DF06B.root'
-
     )
-#,
-#duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
+                            #,
+                            #duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 )
 
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
+from CondCore.CondDB.CondDB_cfi import *
 
-# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                                                             
-# Currently the only year+era options are 2017 for MC, and 2017BCDEF for data. It also controls which global tag                                                                                    
-# is used, which determines the standard set of jet corrections. Currently the options are 94X_mc2017_realistic_v8                                                                                  
-# and 94X_dataRun2_v6.                                                                                                                                                                              
+# Select data or MC - this controls which jet mass corrections are used and whether PU reweighting + GEN info is filled                                          
+# It also controls which global tag is used, which determines the standard set of jet corrections. 
+
+                                   
          
 if MC:
     DOSMEARING=True
@@ -99,10 +63,40 @@ else:
     if YEAR == 2017:
         process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
         process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
-    if YEAR == 2016 or YEAR == 2017:
+    if YEAR == 2018:
+        process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2018_cfi")
+        process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+    if YEAR == 2016 or YEAR == 2017 or YEAR == 2018:
         # For legacy re-reco, for now using standard GT for 2016 or 2017                                                                                     
-        process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v15")
+        #        process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v15")
+        process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v26')
 
+        # Begin overrides for 2020 re-MiniAOD conditions                                                                                                          
+        # Alignment                                                                                                                                              
+        process.CondDBAlignment = CondDB.clone( connect = "frontier://FrontierProd/CMS_CONDITIONS" )
+        process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+                                                       process.CondDBAlignment,
+                                                       toGet = cms.VPSet(cms.PSet(
+                                                           record = cms.string('RPRealAlignmentRecord'),
+                                                           tag = cms.string("CTPPSRPAlignment_real_offline_v8")
+                                                       ))
+                                                   )
+
+        process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+        
+        # Optics                                                                                                                                                 
+        process.CondDBOptics = CondDB.clone( connect = "frontier://FrontierProd/CMS_CONDITIONS" )
+        process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
+                                                    process.CondDBOptics,
+                                                    DumpStat = cms.untracked.bool(False),
+                                                    toGet = cms.VPSet(cms.PSet(
+                                                        record = cms.string('CTPPSOpticsRcd'),
+                                                        tag = cms.string("PPSOpticalFunctions_offline_v7")
+                                                    )),
+                                                )
+        
+        process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
+        # End of overrides for testing 2020 re-MiniAOD conditions                                                                                                 
 
 ### ADD SOME NEW JET COLLECTIONS                                                                                                              
 # New (March 8, 2019) - to recover ak8 CHS jets with 2017 MiniAOD
@@ -118,7 +112,9 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
             addTrimming=False, addFiltering=False,
             addPrunedSubjets=True, addSoftDropSubjets=False,
             addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                      
-            miniAOD = MINIAOD, runOnMC=MC, 
+            #miniAOD = MINIAOD, 
+            dataTier = 'AOD',
+            runOnMC=MC, 
             bTagDiscriminators = None,  # blank means default list of discriminators, None means none
             bTagInfos = None,
             subjetBTagDiscriminators = None,
@@ -193,7 +189,7 @@ process.ctppsProtons.doSingleRPReconstruction = cms.bool(True)
 process.ctppsProtons.doMultiRPReconstruction = cms.bool(True)
 
 # If running on AOD, remake goodOfflinePrimaryVertices for jet stuff
-process.load('CommonTools.ParticleFlow.goodOfflinePrimaryVertices_cfi')
+#process.load('CommonTools.ParticleFlow.goodOfflinePrimaryVertices_cfi')
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
@@ -213,8 +209,8 @@ if MC:
         process.demo.mcPileupFile = cms.string("PUHistos_mc_2016.root")
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
 
-        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP", "Demo")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP", "Demo")
 
     if YEAR == 2017:
         process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
@@ -230,8 +226,8 @@ if MC:
         #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
         #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
 
-        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP", "Demo")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP", "Demo")
 
 else:
     process.demo.isMC = cms.bool(False)
@@ -240,14 +236,18 @@ else:
 
     if YEAR == 2016:
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
-        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP", "Demo")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP", "Demo")
     if YEAR == 2017:
 #        process.demo.jetAK8CHSCollection = cms.InputTag("selectedPatJetsAK8PFCHS")
 #        process.demo.jetAK8CHSCollection = cms.InputTag("slimmedAK8JetsSmearedJetID")
         process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
-        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP", "Demo")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP", "Demo")
+    if YEAR == 2018:
+        process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
+        process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP", "Demo")
+        process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP", "Demo")
 
 
 process.demo.year = cms.int32(YEAR)
@@ -258,7 +258,7 @@ process.demo.era = cms.string(ERA)
 process.p = cms.Path(process.hltFilter *           
                     # process.patJetCorrFactorsUpdatedJECAK8 *
                     # process.updatedPatJetsUpdatedJECAK8 * 
-                     process.goodOfflinePrimaryVertices * 
+#                     process.goodOfflinePrimaryVertices * 
                      process.slimmedJetsAK8JetId *
                      process.slimmedAK8JetsSmeared *
                      # Legacy re-reco from AOD sequence

@@ -373,7 +373,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    // Make the FactorizedJetCorrector                                                                                                                            
    jecAK8_ = boost::shared_ptr<FactorizedJetCorrector> ( new FactorizedJetCorrector(vPar) );
 
-   // Get JER smearing                                                                                                                                               
+   // Get JER smearing                                                                                                                                           
    if(isMC==true && year==2017) // Note - here we're using Summer16 for 2017 MC, until the 2017 version is ready
      {                                     
        jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
@@ -541,6 +541,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 }
 
        // Now access subjet variables for this jet
+       /* JH - for re-MiniAOD workflow
        int nsj = 0;  
        TLorentzVector sja,sjb;
        
@@ -558,7 +559,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     }
 	   nsj++;
 	 }
-
+       */
      }
 
    // If at least 2 jets, make dijet pairs of the leading 2
@@ -846,7 +847,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
              double thepx = mcIter->px();
              double thepy = mcIter->py();
 
-	     std::cout << "PU proton with xi = " << thexi << ", t = " << thet << std::endl;
+	     //	     std::cout << "PU proton with xi = " << thexi << ", t = " << thet << std::endl;
 
              (*gen_puproton_xi_).push_back(thexi);
              (*gen_puproton_t_).push_back(thet);
