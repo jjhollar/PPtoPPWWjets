@@ -12,7 +12,15 @@ from direct_simu_reco_cff import *
 process = cms.Process('CTPPSTestAcceptance', era)
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag.globaltag ='94X_mc2017_realistic_v17'
+
+##KS added GT splitting by year
+if MC == True and YEAR == 2016:
+   process.GlobalTag.globaltag ='94X_mcRun2_asymptotic_v3,' # This one is for Summer16 MC campaign
+if MC == True and YEAR == 2017:
+   process.GlobalTag.globaltag ='94X_mc2017_realistic_v17' # this one for 94X MC
+if MC == True and YEAR == 2018:
+   process.GlobalTag.globaltag ='102X_upgrade2018_realistic_v20' # this one is for Autumn18 MC campaign
+
 
 if MC == True and YEAR == 2016 and (ERA == "B" or ERA == "C" or ERA == "G"):
     process.load("direct_simu_reco_2016preTS2_cff")
@@ -75,6 +83,18 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
             JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual']
 )
 
+
+##KS Added pt filtering to avoid problems with JER formula evaluation
+#################################
+###  PT CUT 
+#################################
+process.goodJets = cms.EDFilter("CandViewSelector",
+    src = cms.InputTag("selectedPatJetsAK8PFCHS"),
+    cut = cms.string("pt > 30.0"),
+    filter = cms.bool(True)
+  )
+
+
 #################################                                                                                                                                                   
 ###  JER SMEARING ###                                                                                                                                                          
 #################################                                                                                                                                                    
@@ -105,7 +125,9 @@ process.slimmedAK8JetsSmeared = cms.EDProducer('SmearedPATJetProducer',
 from PhysicsTools.SelectorUtils.pfJetIDSelector_cfi import pfJetIDSelector
 process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                                            filterParams = pfJetIDSelector.clone(),
+                                           # JH - testing filter
                                            src = cms.InputTag("selectedPatJetsAK8PFCHS"),
+#                                           src = cms.InputTag("goodJets"), 
                                            filter = cms.bool(True)
                                            )
 
@@ -179,6 +201,10 @@ if YEAR == 2016:
 if YEAR==2017:
     process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
     process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+##KS needed also for 2018?
+if YEAR==2018:
+    process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
+    process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
 
 if MC == True and YEAR == 2016:
@@ -211,7 +237,8 @@ process.p = cms.Path(
     * process.reco_local
     * process.ctppsProtons
     * process.genParticlesForJetsNoNu 
-    * process.goodOfflinePrimaryVertices                                                                                                                                      
+    * process.goodOfflinePrimaryVertices  
+    * process.goodJets ##KS added, I hope it works this way... could you check please that it indeed filters?                                                                                                                                    
     * process.slimmedJetsAK8JetId 
     * process.slimmedAK8JetsSmeared 
     * process.demo

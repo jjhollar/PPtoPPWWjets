@@ -361,6 +361,42 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
        jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L2L3Residual_AK8PFchs.txt");
      }
 
+
+    //##KS
+   /* 2018 */
+   if(isMC==true && year==2018)
+     {
+       jecAK8PayloadNames_.push_back("Autumn18_V19_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_V19_MC_L3Absolute_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2018 && era == "A")
+     {
+       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2018 && era == "B")
+     {
+       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2018 && era == "C")
+     {
+       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+   if(isMC==false && year==2018 && era == "D")
+     {
+       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L2L3Residual_AK8PFchs.txt");
+     }
+
+
+
+
    std::vector<JetCorrectorParameters> vPar;
    for ( std::vector<std::string>::const_iterator payloadBegin = jecAK8PayloadNames_.begin(),
 	   payloadEnd = jecAK8PayloadNames_.end(),
@@ -437,12 +473,13 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    TLorentzVector jet1, jet2, jj;
    nhighptjets_ = 0;
 
+//##KS I turn off saving of smearing factor since we do it in python config
    JME::JetResolution resolution_ak8;
-   JME::JetResolutionScaleFactor resolution_ak8_sf;
+  JME::JetResolutionScaleFactor resolution_ak8_sf;
    if(isMC == true)
-     {
-       resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
-       resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
+     { 
+//       resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
+ //      resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
      }
 
    for (unsigned int ijet=0; ijet<collSize; ijet++) 
@@ -463,6 +500,19 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        double pruned_mass = 0.0;
        double tau1 = 0.0;
        double tau2 = 0.0;
+
+        //##KS extended with 2018
+       if(year == 2018)
+	 {
+	   // V8 JEC, V32?
+	   //	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
+	   //	   tau1         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
+	   //	   tau2         = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
+	   // March 8, 2019 - From jet toolbox
+	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
+	   tau1              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau1");
+	   tau2              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau2");
+	 }
        if(year == 2017)
 	 {
 	   // V8 JEC, V32?
@@ -522,6 +572,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*jet_corrmass_).push_back(pruned_masscorr);
 
        // JER
+       /* If JES is applied in the python config, not needed here
        if(isMC == true)
 	 {
 	   JME::JetParameters parameters_ak8;
@@ -539,6 +590,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   (*jet_jer_sfup_).push_back(jer_sf_up);
            (*jet_jer_sfdown_).push_back(jer_sf_down);
 	 }
+       */
 
        // Now access subjet variables for this jet
        /* JH - for re-MiniAOD workflow
