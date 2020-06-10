@@ -90,8 +90,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
 #################################
 process.goodJets = cms.EDFilter("CandViewSelector",
     src = cms.InputTag("selectedPatJetsAK8PFCHS"),
-    cut = cms.string("pt > 30.0"),
-    filter = cms.bool(True)
+    cut = cms.string("pt > 30.0")
   )
 
 
@@ -125,9 +124,7 @@ process.slimmedAK8JetsSmeared = cms.EDProducer('SmearedPATJetProducer',
 from PhysicsTools.SelectorUtils.pfJetIDSelector_cfi import pfJetIDSelector
 process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                                            filterParams = pfJetIDSelector.clone(),
-                                           # JH - testing filter
                                            src = cms.InputTag("selectedPatJetsAK8PFCHS"),
-#                                           src = cms.InputTag("goodJets"), 
                                            filter = cms.bool(True)
                                            )
 
