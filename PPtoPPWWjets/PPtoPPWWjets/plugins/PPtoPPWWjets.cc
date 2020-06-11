@@ -202,7 +202,11 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   int  ngene_;
   int  ngentau_;
   int  nhighptjets_;
-
+  double leadingjetpt_;
+  double secondjetpt_;
+  int leadingjetindex_;
+  int secondjetindex_;
+  
   double genweightFacUp_; 
   double genweightFacDown_;
   double genweightRenUp_; 
@@ -472,6 +476,10 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    unsigned int collSize=jets->size();
    TLorentzVector jet1, jet2, jj;
    nhighptjets_ = 0;
+   leadingjetpt_ = 0.0;
+   secondjetpt_ = 0.0;
+   leadingjetindex_ = -999;
+   secondjetindex_ = -999;
 
 //##KS I turn off saving of smearing factor since we do it in python config
    JME::JetResolution resolution_ak8;
@@ -486,8 +494,25 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      {
        pat::Jet jet = (*jets)[ijet];;
 
+       // JH                                                                                                                                                                  
+       if(isnan(jet.pt()) == true)
+         continue;
+
        if(jet.pt() < 180)
 	 continue;
+
+       if(jet.pt() > leadingjetpt_)
+	 {
+	   secondjetindex_ = leadingjetindex_;
+	   secondjetpt_ = leadingjetpt_;
+	   leadingjetindex_ = nhighptjets_;
+	   leadingjetpt_ = jet.pt();
+	 }
+       if((jet.pt() > secondjetpt_) && (jet.pt() < leadingjetpt_))
+	 {
+	   secondjetindex_ = nhighptjets_;
+	   secondjetpt_ = jet.pt();
+	 }
 
        nhighptjets_++;
 
@@ -617,8 +642,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    // If at least 2 jets, make dijet pairs of the leading 2
    if(nhighptjets_ >= 2)
      {
-       jet1.SetPtEtaPhiM((*jet_pt_)[0],(*jet_eta_)[0],(*jet_phi_)[0],(*jet_corrmass_)[0]);
-       jet2.SetPtEtaPhiM((*jet_pt_)[1],(*jet_eta_)[1],(*jet_phi_)[1],(*jet_corrmass_)[1]);
+       jet1.SetPtEtaPhiM((*jet_pt_)[leadingjetindex_],(*jet_eta_)[leadingjetindex_],(*jet_phi_)[leadingjetindex_],(*jet_corrmass_)[leadingjetindex_]);
+       jet2.SetPtEtaPhiM((*jet_pt_)[secondjetindex_],(*jet_eta_)[secondjetindex_],(*jet_phi_)[secondjetindex_],(*jet_corrmass_)[secondjetindex_]);
        jj = jet1+jet2;
 
 
@@ -626,7 +651,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*dijet_y_).push_back(jj.Rapidity());
        (*dijet_pt_).push_back(jj.Pt());
        (*dijet_phi_).push_back(jj.Phi());
-       float dphi = (*dijet_phi_)[0]-(*dijet_phi_)[1];
+       float dphi = (*dijet_phi_)[leadingjetindex_]-(*dijet_phi_)[secondjetindex_];
        if(dphi < 3.14159)
 	 (*dijet_dphi_).push_back(dphi);
        else
@@ -1201,6 +1226,8 @@ PPtoPPWWjets::beginJob()
   tree_->Branch("dijet_y",&dijet_y_);
   tree_->Branch("dijet_phi",&dijet_phi_);
   tree_->Branch("dijet_dphi",&dijet_dphi_);
+  tree_->Branch("leading_jet_index",&leadingjetindex_);
+  tree_->Branch("second_jet_index",&secondjetindex_);
   tree_->Branch("pps_track_x",&pps_track_x_);
   tree_->Branch("pps_track_y",&pps_track_y_);
   tree_->Branch("pps_track_rpid",&pps_track_rpid_);
