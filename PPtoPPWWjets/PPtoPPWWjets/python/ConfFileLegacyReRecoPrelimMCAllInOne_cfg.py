@@ -219,6 +219,12 @@ if MC == True and YEAR == 2016:
 if MC == True and YEAR == 2017:
     process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
     process.demo.mcPileupFile = cms.string("PUHistos_mc_2017.root")
+    # Special cases for buggy datasets in 2017 MC                                                                                                
+   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt300to470.root")
+   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt600to800.root")
+   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt1000to1400.root")                                                         
+   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
+   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
 if MC == True and YEAR == 2018:
     process.demo.dataPileupFile = cms.string("PUHistos_data_2018.root")
     process.demo.mcPileupFile = cms.string("PUHistos_mc_2018.root")
