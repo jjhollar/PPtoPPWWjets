@@ -414,10 +414,15 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    jecAK8_ = boost::shared_ptr<FactorizedJetCorrector> ( new FactorizedJetCorrector(vPar) );
 
    // Get JER smearing                                                                                                                                           
-   if(isMC==true && year==2017) // Note - here we're using Summer16 for 2017 MC, until the 2017 version is ready
+   if(isMC==true && year==2018)
+     {
+       jerAK8chsName_res_ = "Autumn18_V7b_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "Autumn18_V7b_MC_SF_AK8PFchs.txt";
+     }
+   if(isMC==true && year==2017)
      {                                     
-       jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
-       jerAK8chsName_sf_ = "Summer16_25nsV1_MC_SF_AK8PFchs.txt";
+       jerAK8chsName_res_ = "Fall17_V3b_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "Fall17_V3b_MC_SF_AK8PFchs.txt";
      }
    if(isMC==true && year==2016)
      {
@@ -481,15 +486,15 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    leadingjetindex_ = -999;
    secondjetindex_ = -999;
 
-//##KS I turn off saving of smearing factor since we do it in python config
+
    JME::JetResolution resolution_ak8;
-  JME::JetResolutionScaleFactor resolution_ak8_sf;
+   JME::JetResolutionScaleFactor resolution_ak8_sf;
    if(isMC == true)
      { 
-//       resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
- //      resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
+       resolution_ak8 = JME::JetResolution(jerAK8chsName_res_);
+       resolution_ak8_sf = JME::JetResolutionScaleFactor(jerAK8chsName_sf_);
      }
-
+   
    for (unsigned int ijet=0; ijet<collSize; ijet++) 
      {
        pat::Jet jet = (*jets)[ijet];;
@@ -597,7 +602,6 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        (*jet_corrmass_).push_back(pruned_masscorr);
 
        // JER
-       /* If JES is applied in the python config, not needed here
        if(isMC == true)
 	 {
 	   JME::JetParameters parameters_ak8;
@@ -615,7 +619,6 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   (*jet_jer_sfup_).push_back(jer_sf_up);
            (*jet_jer_sfdown_).push_back(jer_sf_down);
 	 }
-       */
 
        // Now access subjet variables for this jet
        /* JH - for re-MiniAOD workflow

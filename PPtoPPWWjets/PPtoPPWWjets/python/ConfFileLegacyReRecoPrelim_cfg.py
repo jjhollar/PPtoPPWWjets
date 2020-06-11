@@ -260,7 +260,6 @@ process.p = cms.Path(process.hltFilter *
                     # process.updatedPatJetsUpdatedJECAK8 * 
 #                     process.goodOfflinePrimaryVertices * 
                      process.slimmedJetsAK8JetId *
-                     process.slimmedAK8JetsSmeared *
                      # Legacy re-reco from AOD sequence
                      process.totemRPUVPatternFinder *
                      process.totemRPLocalTrackFitter *
