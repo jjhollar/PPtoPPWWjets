@@ -206,7 +206,8 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   double secondjetpt_;
   int leadingjetindex_;
   int secondjetindex_;
-  
+  double leadingdijetrapidity_;
+
   double genweightFacUp_; 
   double genweightFacDown_;
   double genweightRenUp_; 
@@ -485,7 +486,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    secondjetpt_ = 0.0;
    leadingjetindex_ = -999;
    secondjetindex_ = -999;
-
+   leadingdijetrapidity_ = 999;
 
    JME::JetResolution resolution_ak8;
    JME::JetResolutionScaleFactor resolution_ak8_sf;
@@ -649,6 +650,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        jet2.SetPtEtaPhiM((*jet_pt_)[secondjetindex_],(*jet_eta_)[secondjetindex_],(*jet_phi_)[secondjetindex_],(*jet_corrmass_)[secondjetindex_]);
        jj = jet1+jet2;
 
+       leadingdijetrapidity_ = jj.Rapidity();
 
        (*dijet_mass_).push_back(jj.M());
        (*dijet_y_).push_back(jj.Rapidity());
@@ -1002,9 +1004,12 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    */
 
 
+   // Fill tree if there are at least 2 high pT jets, and the rapidity of the leading pair is |y|<2
    if(nhighptjets_ >= 2)
-     tree_->Fill();
-
+     {
+       if(fabs(leadingdijetrapidity_) <= 2.0)
+	 tree_->Fill();
+     }
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
