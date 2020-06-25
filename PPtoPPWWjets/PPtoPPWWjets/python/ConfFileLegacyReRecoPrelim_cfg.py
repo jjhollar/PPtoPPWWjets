@@ -187,6 +187,10 @@ process.ctppsLocalTrackLiteProducer.includeStrips = cms.bool(True)
 process.ctppsLocalTrackLiteProducer.includeDiamonds = cms.bool(True)
 process.ctppsProtons.doSingleRPReconstruction = cms.bool(True)
 process.ctppsProtons.doMultiRPReconstruction = cms.bool(True)
+if YEAR == 2016:
+    process.ctppsLocalTrackLiteProducer.includePixels = cms.bool(False)
+if YEAR == 2018:
+    process.ctppsLocalTrackLiteProducer.includeStrips = cms.bool(False)
 
 # If running on AOD, remake goodOfflinePrimaryVertices for jet stuff
 #process.load('CommonTools.ParticleFlow.goodOfflinePrimaryVertices_cfi')
@@ -253,23 +257,53 @@ else:
 process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
+if YEAR == 2016:
+    process.p = cms.Path(process.hltFilter *
+                         # process.patJetCorrFactorsUpdatedJECAK8 *                                                                                                     
+                         # process.updatedPatJetsUpdatedJECAK8 *                                                                                                        
+                         #                     process.goodOfflinePrimaryVertices *                                                                                     
+                         process.slimmedJetsAK8JetId *
+                         # Legacy re-reco from AOD sequence                                                                                                             
+                         process.totemRPUVPatternFinder *
+                         process.totemRPLocalTrackFitter *
+                         process.ctppsDiamondRecHits *
+                         process.ctppsDiamondLocalTracks *
+                         process.ctppsLocalTrackLiteProducer *
+                         process.ctppsProtons *
+                         # Analyzer                                                                                                                                     
+                         process.demo)
 
+if YEAR == 2017:
+    process.p = cms.Path(process.hltFilter *           
+                         # process.patJetCorrFactorsUpdatedJECAK8 *
+                         # process.updatedPatJetsUpdatedJECAK8 * 
+                         #                     process.goodOfflinePrimaryVertices * 
+                         process.slimmedJetsAK8JetId *
+                         # Legacy re-reco from AOD sequence
+                        process.totemRPUVPatternFinder *
+                         process.totemRPLocalTrackFitter *
+                         process.ctppsDiamondRecHits *
+                         process.ctppsDiamondLocalTracks *
+                         process.ctppsPixelLocalTracks *
+                         process.ctppsLocalTrackLiteProducer *
+                         process.ctppsProtons *
+                         # Analyzer
+                         process.demo)
 
-process.p = cms.Path(process.hltFilter *           
-                    # process.patJetCorrFactorsUpdatedJECAK8 *
-                    # process.updatedPatJetsUpdatedJECAK8 * 
-#                     process.goodOfflinePrimaryVertices * 
-                     process.slimmedJetsAK8JetId *
-                     # Legacy re-reco from AOD sequence
-                     process.totemRPUVPatternFinder *
-                     process.totemRPLocalTrackFitter *
-                     process.ctppsDiamondRecHits *
-                     process.ctppsDiamondLocalTracks *
-                     process.ctppsPixelLocalTracks *
-                     process.ctppsLocalTrackLiteProducer *
-                     process.ctppsProtons *
-                     # Analyzer
-                     process.demo)
+if YEAR == 2018:
+    process.p = cms.Path(process.hltFilter *
+                        # process.patJetCorrFactorsUpdatedJECAK8 *                                                                                                       
+                        # process.updatedPatJetsUpdatedJECAK8 *                                                                                                          
+                         #                     process.goodOfflinePrimaryVertices *                                                                                     
+                         process.slimmedJetsAK8JetId *
+                         # Legacy re-reco from AOD sequence                                                                                                             
+                         process.ctppsDiamondRecHits *
+                         process.ctppsDiamondLocalTracks *
+                         process.ctppsPixelLocalTracks *
+                         process.ctppsLocalTrackLiteProducer *
+                         process.ctppsProtons *
+                         # Analyzer                                                                                                                                     
+                         process.demo)
 
 print process.dumpPython()
 

@@ -544,7 +544,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   tau1              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau1");
 	   tau2              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau2");
 	 }
-       if(year == 2017)
+       if(year == 2017 || year == 2016)
 	 {
 	   // V8 JEC, V32?
 	   //	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
@@ -555,12 +555,12 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   tau1              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau1");
 	   tau2              = (*jets)[ijet].userFloat("NjettinessAK8CHS:tau2");
 	 }
-       if(year == 2016)
-	 {
-	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
-	   tau1         = (*jets)[ijet].userFloat("NjettinessAK8:tau1");
-	   tau2         = (*jets)[ijet].userFloat("NjettinessAK8:tau2");
-	 }
+       //       if(year == 2016)
+       //	 {
+       //	   pruned_mass       = (*jets)[ijet].userFloat("ak8PFJetsCHSPrunedMass");
+       //	   tau1         = (*jets)[ijet].userFloat("NjettinessAK8:tau1");
+       //	   tau2         = (*jets)[ijet].userFloat("NjettinessAK8:tau2");
+       //	 }
 
        (*jet_pt_).push_back(jet.pt());
        (*jet_phi_).push_back(jet.phi());
@@ -916,28 +916,31 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
            ngentau_++;                                                                                                                                          
 
        }
-
-       edm::Handle<reco::GenParticleCollection> genPUP;
-       iEvent.getByLabel(edm::InputTag("genPUProtons","genPUProtons"),genPUP);
-
-       for (reco::GenParticleCollection::const_iterator mcIter=genPUP->begin(); mcIter != genPUP->end(); mcIter++ ) {
-         if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
-           {
-             double thexi = 1 - ((mcIter->energy())/(13000.0/2.0));
-             double thet = -(std::pow(mcIter->pt(), 2));
-             double thepz = mcIter->pz();
-             double thepx = mcIter->px();
-             double thepy = mcIter->py();
-
-	     //	     std::cout << "PU proton with xi = " << thexi << ", t = " << thet << std::endl;
-
-             (*gen_puproton_xi_).push_back(thexi);
-             (*gen_puproton_t_).push_back(thet);
-             (*gen_puproton_pz_).push_back(thepz);
-             (*gen_puproton_py_).push_back(thepy);
-             (*gen_puproton_px_).push_back(thepx);
-           }
-       }
+       
+       if(year != 2016)
+	 {
+	   edm::Handle<reco::GenParticleCollection> genPUP;
+	   iEvent.getByLabel(edm::InputTag("genPUProtons","genPUProtons"),genPUP);
+	   
+	   for (reco::GenParticleCollection::const_iterator mcIter=genPUP->begin(); mcIter != genPUP->end(); mcIter++ ) {
+	     if((mcIter->pdgId() == 2212) && (fabs(mcIter->pz()) > 3000) && (mcIter->status() == 1))
+	       {
+		 double thexi = 1 - ((mcIter->energy())/(13000.0/2.0));
+		 double thet = -(std::pow(mcIter->pt(), 2));
+		 double thepz = mcIter->pz();
+		 double thepx = mcIter->px();
+		 double thepy = mcIter->py();
+		 
+		 //	     std::cout << "PU proton with xi = " << thexi << ", t = " << thet << std::endl;
+		 
+		 (*gen_puproton_xi_).push_back(thexi);
+		 (*gen_puproton_t_).push_back(thet);
+		 (*gen_puproton_pz_).push_back(thepz);
+		 (*gen_puproton_py_).push_back(thepy);
+		 (*gen_puproton_px_).push_back(thepx);
+	       }
+	   }
+	 }
 
        edm::Handle<reco::GenJetCollection> genJet;
        //       iEvent.getByLabel("slimmedGenJetsAK8",genJet);

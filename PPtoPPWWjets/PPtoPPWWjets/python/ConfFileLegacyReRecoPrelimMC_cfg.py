@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 MC=True
-YEAR=2017
+YEAR=2016
 ERA="B"
 MINIAOD=False
 DoTheorySystematics=True
@@ -30,7 +30,9 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 
 ##KS added GT splitting by year
 if MC == True and YEAR == 2016:
-   process.GlobalTag.globaltag ='94X_mcRun2_asymptotic_v3,' # This one is for Summer16 MC campaign
+   # JH - change this for AOD instead of MiniAOD, according to PDMV twiki
+   process.GlobalTag.globaltag ='80X_mcRun2_asymptotic_2016_TrancheIV_v8'
+   #   process.GlobalTag.globaltag ='94X_mcRun2_asymptotic_v3,' # This one is for Summer16 MC campaign
 if MC == True and YEAR == 2017:
    process.GlobalTag.globaltag ='94X_mc2017_realistic_v17' # this one for 94X MC
 if MC == True and YEAR == 2018:
