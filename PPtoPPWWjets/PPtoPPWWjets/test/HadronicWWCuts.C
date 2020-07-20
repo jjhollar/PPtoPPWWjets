@@ -250,8 +250,8 @@ void HadronicWWCuts::Loop()
    // 123 pixels sector 56  +z, right
 
    Int_t nentries = fChain->GetEntries();
-   if(samplenumber > 1 && samplenumber < 20)
-     nentries = 100000;
+   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120))
+     nentries = 1000000;
    Float_t myweight = 1.0;
 
    Float_t Dx45ref140 = -8.226;
@@ -651,6 +651,16 @@ void HadronicWWCuts::Loop()
 			   aperture45 = Aperture(crossingangle,0,"2017postTS2");
                            aperture56 = Aperture(crossingangle,1,"2017postTS2");
 			 }
+		       if(samplenumber < -5 && samplenumber > -9)
+			 {
+			   aperture45 = Aperture(crossingangle,0,"2016preTS2");
+                           aperture56 = Aperture(crossingangle,1,"2016preTS2");
+			 }
+		       if(samplenumber == -9)
+			 {
+			   aperture45 = Aperture(crossingangle,0,"2016postTS2");
+                           aperture56 = Aperture(crossingangle,1,"2016postTS2");
+			 }
 		       // Include aperture cutoffs for signal MC - for now using a hard-coded crossing angle, 
 		       // until figuring out how to retrieve this for MC
 		       if(samplenumber == 21 || samplenumber == 22 || samplenumber == 31)
@@ -746,7 +756,7 @@ void HadronicWWCuts::Loop()
 					   multisubtracky22045 = proton_tracky2->at(1);
 					 }
 				     }
-				   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
+				   //				   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
 
 				   passfiducialcuts = PixelFiducial(multisubtrackx21045, multisubtracky21045, 0, samplenumber);
 				   passmultirpfull = MultiRPEffCorr(multisubtrackx21045, multisubtracky21045, multisubtrackx22045, multisubtracky22045, 0, samplenumber);
@@ -778,7 +788,7 @@ void HadronicWWCuts::Loop()
                                            multisubtracky22056 = proton_tracky2->at(1);
                                          }
                                      }
-                                   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
+				   //                                   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
 
 				   passfiducialcuts = PixelFiducial(multisubtrackx22056, multisubtracky22056, 1, samplenumber);
                                    passmultirpfull = MultiRPEffCorr(multisubtrackx21056, multisubtracky21056, multisubtrackx22056, multisubtracky22056, 1, samplenumber);
@@ -1186,76 +1196,103 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacutsjetxicuts_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016B.root","RECREATE");
    if(samplenumber == -7)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016C.root","RECREATE");
    if(samplenumber == -8)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016G.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016G.root","RECREATE");
    if(samplenumber == -9)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2016H.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016H.root","RECREATE");
 
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt170to300.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt300to470.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt470to600.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt800to1000.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_ttbarhadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_ttbarhadronic.root","RECREATE");
    if(samplenumber == 8)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_wjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_wjetshadronic.root","RECREATE");
    if(samplenumber == 9)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_zjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_zjetshadronic.root","RECREATE");
    if(samplenumber == 10)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1400to1800.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1400to1800.root","RECREATE");
    if(samplenumber == 11)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt1800to2400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1800to2400.root","RECREATE");
    if(samplenumber == 12)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_qcdpt2400to3200.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt2400to3200.root","RECREATE");
 
 
    if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwSM.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwSM.root","RECREATE");
    if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
-     //     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
    if(samplenumber == 22)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
    if(samplenumber == 24)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
    if(samplenumber == 25)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
 
 
    if(samplenumber == 27)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
 
    if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclzza0z5point0.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclzza0z5point0.root","RECREATE");
 
    if(samplenumber == 41)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
 
    if(samplenumber == 99)
-     fx = new TFile("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+
+   // 2016
+   if(samplenumber == 101)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt170to300_2016.root","RECREATE");
+   if(samplenumber == 102)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt300to470_2016.root","RECREATE");
+   if(samplenumber == 103)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt470to600_2016.root","RECREATE");
+   if(samplenumber == 104)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt600to800_2016.root","RECREATE");
+   if(samplenumber == 105)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt800to1000_2016.root","RECREATE");
+   if(samplenumber == 106)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1000to1400_2016.root","RECREATE");
+   if(samplenumber == 107)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_ttbarhadronic_2016.root","RECREATE");
+   if(samplenumber == 108)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_wjetshadronic_2016.root","RECREATE");
+   if(samplenumber == 109)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_zjetshadronic_2016.root","RECREATE");
+   if(samplenumber == 110)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1400to1800_2016.root","RECREATE");
+   if(samplenumber == 111)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1800to2400_2016.root","RECREATE");
+   if(samplenumber == 112)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt2400to3200_2016.root","RECREATE");
+
 
    hmjjdat->Write();
    hyjjdat->Write();
