@@ -201,6 +201,10 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == -9)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016H_v1_07Aug17_merge.root");
 
+    if(samplenumber == -10)
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root");
+    if(samplenumber == -11)
+      f = (TFile *)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root");
 
     if(samplenumber == 1)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
@@ -297,6 +301,11 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 	f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016G_v1_07Aug17_merge.root");
       if(samplenumber == -9)
 	f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016H_v1_07Aug17_merge.root");
+
+      if(samplenumber == -10)
+	f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root");
+      if(samplenumber == -11)
+	f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root");
 
       
       if(samplenumber == 1)
@@ -400,6 +409,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == -9)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016H_v1_07Aug17_merge.root:/demo");
     
+    if(samplenumber == -10)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root:/demo");
+    if(samplenumber == -11)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root:/demo");
+
+
     if(samplenumber == 1)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
     if(samplenumber == 2)

@@ -467,32 +467,86 @@ void HadronicWWCuts::Loop()
            int indleading = 0;
            int indsecond = 1;
 
+           TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
+           float C_JER1=-999.;
+           float C_JER2=-999.;
+
 	   if(samplenumber > 0)
 	     {
 	       myweight = pileupWeight;
 
-	       /* Here we resort the jets for MC, to account for any "NaN" values created by the JER */
-	       for(Int_t j = 0; j < jet_pt->size(); j++)
+	       /* Apply JER smearing */
+	       TLorentzVector recojtmp, genjtmp;
+	       TRandom3 randomSrc;
+	       int matchedgen=0;
+	       int indmatchedgen=-1;
+	       float ptleading = 0;
+	       float ptsecond = 0;
+	       float C_JER=-999;
+
+	       //       cout << "Starting checks on JER" << endl;
+	       for(int ir = 0; ir < jet_pt->size(); ir++)
 		 {
-		   if(TMath::IsNaN(jet_pt->at(j)))
-		     continue;
-		   if(jet_pt->at(j) > ptjet1)
-		     {
-		       ptjet1 = jet_pt->at(j);
-		       etajet1 = jet_eta->at(j);
-		       phijet1 = jet_phi->at(j);
-		       ejet1 = jet_energy->at(j);
-		       indleading = j;
+		   recojtmp.SetPtEtaPhiE(jet_pt->at(ir),jet_eta->at(ir),jet_phi->at(ir),jet_energy->at(ir));
+		      
+		   for(int ig=0; ig<gen_jet_pt->size(); ig++)
+		     { // loop over gen jets
+		       genjtmp.SetPtEtaPhiE(gen_jet_pt->at(ig),gen_jet_eta->at(ig),gen_jet_phi->at(ig),gen_jet_energy->at(ig));
+		       if( (recojtmp.DeltaR(genjtmp) < (0.8/2.)) && 
+			   (fabs(recojtmp.Pt() - genjtmp.Pt())<(3*jet_jer_res->at(ir)*recojtmp.Pt()) ) )
+			 {
+			   matchedgen=1; 
+			   indmatchedgen=ig;
+			 } 
+		       // 0.8 is cone radius
 		     }
-		   if((jet_pt->at(j) > ptjet2) && (jet_pt->at(j) < ptjet1))
+		   if(matchedgen == 1)
 		     {
-		       ptjet2 = jet_pt->at(j);
-		       etajet2 = jet_eta->at(j);
-		       phijet2 = jet_phi->at(j);
-		       ejet2 = jet_energy->at(j);
-		       indsecond = j;
+		       C_JER = 1 + (jet_jer_sf->at(ir) -1 )*( (recojtmp.Pt() - gen_jet_pt->at(indmatchedgen)) / recojtmp.Pt() );
+		       if(C_JER < 0) {C_JER = 0;}
 		     }
+		   else       
+		     {
+		       C_JER = 1 + randomSrc.Gaus(0, jet_jer_res->at(ir))*(sqrt(max(jet_jer_sf->at(ir)*jet_jer_sf->at(ir) - 1., 0.)));
+		     }
+		      
+		   // Re-check for the leading and second leading jets after JER correction
+		   //   cout << "\tChecking " << C_JER*recojtmp.Pt() << " against leading pT = " << ptleading << ", second leading pT = " << ptsecond << endl;
+		   if(C_JER*recojtmp.Pt() > ptleading) 
+		     {
+		       // If we already found 1 jet with lower pT, make that the second leading jet
+		       if(ptleading > 0)
+			 {
+			   ptsecond = ptleading;
+			   indsecond = indleading;
+			   C_JER2 = C_JER1;
+			 }
+		       ptleading = C_JER*recojtmp.Pt();
+		       C_JER1 = C_JER;
+		       indleading = ir;
+		       //       cout << "\t\tSetting new leading to pT = " << ptleading << ", index = " << indleading << endl;
+		     }
+		   if((C_JER*recojtmp.Pt() > ptsecond) && (C_JER*recojtmp.Pt() < ptleading) && (ir != indleading))
+		     {
+		       //       cout << "\t\t" << C_JER*recojtmp.Pt() << " is greater than " << ptsecond << " and less than " << ptleading << endl;
+		       ptsecond = C_JER*recojtmp.Pt();
+		       C_JER2 = C_JER;
+		       indsecond = ir;
+		       //       cout << "\t\tSetting new second leading to pT = " << ptsecond << ", index = " << indsecond << endl;
+		     }
+		   //   cout << "\tjet size = " << jet_pt->size() << ", leading index = " << indleading << ", second leading index = " << indsecond << endl;
 		 }
+
+	       ptjet1 = ptleading;
+	       etajet1 = jet_eta->at(indleading);
+	       phijet1 = jet_phi->at(indleading);
+	       ejet1 = jet_energy->at(indleading);
+
+	       ptjet2 = ptsecond;
+	       etajet2 = jet_eta->at(indsecond);
+	       phijet2 = jet_phi->at(indsecond);
+	       ejet2 = jet_energy->at(indsecond);
+	       /* End JER smearing */
 	     }
 	   else
 	     {
@@ -517,14 +571,9 @@ void HadronicWWCuts::Loop()
 	   //	   Float_t genxijets1 = (1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(gen_jet_eta->at(0)) + gen_jet_pt->at(1)*TMath::Exp(gen_jet_eta->at(1)));
 	   //	   Float_t genxijets2 = (1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(-1*gen_jet_eta->at(0)) + gen_jet_pt->at(1)*TMath::Exp(-1*gen_jet_eta->at(1)));
 
-
-	   TLorentzVector jet1; TLorentzVector jet2; TLorentzVector mydijet;
 	   jet1.SetPtEtaPhiE(ptjet1,etajet1,phijet1,ejet1);
 	   jet2.SetPtEtaPhiE(ptjet2,etajet2,phijet2,ejet2);
 	   
-	   float C_JER1=-999.;
-	   float C_JER2=-999.;
-
 	   mydijet = jet1+jet2;                                                                                                       
 	   
 	   if(jet1.Pt()>200 && jet2.Pt()>200 && fabs(jet_eta->at(indleading))<2.5 && fabs(jet_eta->at(indsecond))<2.5)
@@ -660,6 +709,11 @@ void HadronicWWCuts::Loop()
 			 {
 			   aperture45 = Aperture(crossingangle,0,"2016postTS2");
                            aperture56 = Aperture(crossingangle,1,"2016postTS2");
+			 }
+		       if(samplenumber < -9)
+			 {
+                           aperture45 = Aperture(crossingangle,0,"2018");
+                           aperture56 = Aperture(crossingangle,1,"2018");
 			 }
 		       // Include aperture cutoffs for signal MC - for now using a hard-coded crossing angle, 
 		       // until figuring out how to retrieve this for MC
@@ -1196,102 +1250,105 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016B.root","RECREATE");
    if(samplenumber == -7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016C.root","RECREATE");
    if(samplenumber == -8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016G.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016G.root","RECREATE");
    if(samplenumber == -9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_datahist2016H.root","RECREATE");
-
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016H.root","RECREATE");
+   if(samplenumber == -10)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2018A.root","RECREATE");
+   if(samplenumber == -11)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2018B.root","RECREATE");
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt170to300.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt300to470.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt470to600.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt800to1000.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_ttbarhadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic.root","RECREATE");
    if(samplenumber == 8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_wjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic.root","RECREATE");
    if(samplenumber == 9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_zjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic.root","RECREATE");
    if(samplenumber == 10)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1400to1800.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800.root","RECREATE");
    if(samplenumber == 11)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1800to2400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1800to2400.root","RECREATE");
    if(samplenumber == 12)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt2400to3200.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt2400to3200.root","RECREATE");
 
 
    if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwSM.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwSM.root","RECREATE");
    if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
-     //     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
    if(samplenumber == 22)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
    if(samplenumber == 24)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
    if(samplenumber == 25)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
 
 
    if(samplenumber == 27)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
 
    if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclzza0z5point0.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclzza0z5point0.root","RECREATE");
 
    if(samplenumber == 41)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
 
    if(samplenumber == 99)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
 
    // 2016
    if(samplenumber == 101)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt170to300_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt170to300_2016.root","RECREATE");
    if(samplenumber == 102)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt300to470_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470_2016.root","RECREATE");
    if(samplenumber == 103)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt470to600_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600_2016.root","RECREATE");
    if(samplenumber == 104)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt600to800_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800_2016.root","RECREATE");
    if(samplenumber == 105)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt800to1000_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000_2016.root","RECREATE");
    if(samplenumber == 106)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1000to1400_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400_2016.root","RECREATE");
    if(samplenumber == 107)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_ttbarhadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic_2016.root","RECREATE");
    if(samplenumber == 108)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_wjetshadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic_2016.root","RECREATE");
    if(samplenumber == 109)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_zjetshadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic_2016.root","RECREATE");
    if(samplenumber == 110)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1400to1800_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800_2016.root","RECREATE");
    if(samplenumber == 111)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt1800to2400_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1800to2400_2016.root","RECREATE");
    if(samplenumber == 112)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4final_qcdpt2400to3200_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt2400to3200_2016.root","RECREATE");
 
 
    hmjjdat->Write();
