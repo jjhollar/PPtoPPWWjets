@@ -250,7 +250,8 @@ void HadronicWWCuts::Loop()
    // 123 pixels sector 56  +z, right
 
    Int_t nentries = fChain->GetEntries();
-   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120))
+   // Limit bkg MC samples to 1M events for quick tests
+   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120) || (samplenumber > 200 && samplenumber < 220))
      nentries = 1000000;
    Float_t myweight = 1.0;
 
@@ -272,12 +273,8 @@ void HadronicWWCuts::Loop()
    TH1F *hmjjdatpfjettrim = new TH1F("hmjjdatpfjettrim","hmjjdatpfjettrim",250,0,5000);
    TH1F *hyjjdat = new TH1F("hyjjdat","hyjjdat",250,-5,5);
 
-   TH1F *hmppsingle = new TH1F("hmppsingle","hmppsingle",250,0,5000);
    TH1F *hmppmulti = new TH1F("hmppmulti","hmppmulti",250,0,5000);
-   TH1F *hmppmixed = new TH1F("hmppmixed","hmppsmixed",250,0,5000);
-   TH1F *hyppsingle = new TH1F("hyppsingle","hyppsingle",250,-5,5);
    TH1F *hyppmulti = new TH1F("hyppmulti","hyppmulti",250,-5,5);
-   TH1F *hyppmixed = new TH1F("hyppmixed","hyppmixed",250,-5,5);
 
    TH2F *hmyppsingle = new TH2F("hmyppsingle","hmyppsingle",100,0,5000,100,-5,5);
    TH2F *hmyppmulti = new TH2F("hmyppmulti","hmyppmulti",100,0,5000,100,-5,5);
@@ -315,10 +312,14 @@ void HadronicWWCuts::Loop()
    TH1F *hystrip56 = new TH1F("hystrip56","hystrip56",500,-50,50);
    TH1F *hximult45 = new TH1F("hximult45","hximult45",500,0,0.5);
    TH1F *hximult56 = new TH1F("hximult56","hximult56",500,0,0.5);
+   TH1F *hthystmult45 = new TH1F("hthystmult45","hthystmult45",500,-0.001,0.001);
+   TH1F *hthystmult56 = new TH1F("hthystmult56","hthystmult56",500,-0.001,0.001);
+   TH1F *htmult45 = new TH1F("htmult45","htmult45",500,0,10);
+   TH1F *htmult56 = new TH1F("htmult56","htmult56",500,0,10);
+   TH1F *hdtmulti = new TH1F("hdtmulti","hdtmulti",500,-25,25);
 
-   TH1F *hnpix45 = new TH1F("hnpix45","hnpix45",15,0,15);
-   TH1F *hnpix56 = new TH1F("hnpix56","hnpix56",15,0,15);
-
+   TH1F *hnmult45 = new TH1F("hnmult45","hnmult45",15,0,15);
+   TH1F *hnmult56 = new TH1F("hnmult56","hnmult56",15,0,15);
 
    TH1F *hdxi45 = new TH1F("hdxi45","hdxi45",500,-0.2,0.2);
    TH1F *hdy45 = new TH1F("hdy45","hdy45",500,-20,20);
@@ -339,36 +340,9 @@ void HadronicWWCuts::Loop()
    TH1F *hymatchantiptbalmm = new TH1F("hymatchantiptbalmm","hymatchantiptbalmm",100,-5,5);
    TH1F *hmassmatchratioantiptbalmm = new TH1F("hmassmatchratioantiptbalmm","hmassmatchratioantiptbalmm",100,-5,5);
 
-   TH1F *hmassmatchantiacopmix = new TH1F("hmassmatchantiacopmix","hmassmatchantiacopmix",500,-2500,2500);
-   TH1F *hymatchantiacopmix = new TH1F("hymatchantiacopmix","hymatchantiacopmix",100,-5,5);
-   TH1F *hmassmatchratioantiacopmix = new TH1F("hmassmatchratioantiacopmix","hmassmatchratioantiacopmix",100,-5,5);
-   TH1F *hmassmatchantitaumix = new TH1F("hmassmatchantitaumix","hmassmatchantitaumix",500,-2500,2500);
-   TH1F *hymatchantitaumix = new TH1F("hymatchantitaumix","hymatchantitaumix",100,-5,5);
-   TH1F *hmassmatchratioantitaumix = new TH1F("hmassmatchratioantitaumix","hmassmatchratioantitaumix",100,-5,5);
-   TH1F *hmassmatchantiptbalmix = new TH1F("hmassmatchantiptbalmix","hmassmatchantiptbalmix",500,-2500,2500);
-   TH1F *hymatchantiptbalmix = new TH1F("hymatchantiptbalmix","hymatchantiptbalmix",100,-5,5);
-   TH1F *hmassmatchratioantiptbalmix = new TH1F("hmassmatchratioantiptbalmix","hmassmatchratioantiptbalmix",100,-5,5);
-
-   TH1F *hmassmatchantiacopss = new TH1F("hmassmatchantiacopss","hmassmatchantiacopss",500,-2500,2500);
-   TH1F *hymatchantiacopss = new TH1F("hymatchantiacopss","hymatchantiacopss",100,-5,5);
-   TH1F *hmassmatchratioantiacopss = new TH1F("hmassmatchratioantiacopss","hmassmatchratioantiacopss",100,-5,5);
-   TH1F *hmassmatchantitauss = new TH1F("hmassmatchantitauss","hmassmatchantitauss",500,-2500,2500);
-   TH1F *hymatchantitauss = new TH1F("hymatchantitauss","hymatchantitauss",100,-5,5);
-   TH1F *hmassmatchratioantitauss = new TH1F("hmassmatchratioantitauss","hmassmatchratioantitauss",100,-5,5);
-   TH1F *hmassmatchantiptbalss = new TH1F("hmassmatchantiptbalss","hmassmatchantiptbalss",500,-2500,2500);
-   TH1F *hymatchantiptbalss = new TH1F("hymatchantiptbalss","hymatchantiptbalss",100,-5,5);
-   TH1F *hmassmatchratioantiptbalss = new TH1F("hmassmatchratioantiptbalss","hmassmatchratioantiptbalss",100,-5,5);
-
-
    TH1F *hmassmatchsigmcmm = new TH1F("hmassmatchsigmcmm","hmassmatchsigmcmm",500,-2500,2500);
    TH1F *hymatchsigmcmm = new TH1F("hymatchsigmcmm","hymatchsigmcmm",500,-5,5);
    TH1F *hmassmatchratiosigmcmm = new TH1F("hmassmatchratiosigmcmm","hmassmatchratiosigmcmm",500,-5,5);
-   TH1F *hmassmatchsigmcmix = new TH1F("hmassmatchsigmcmix","hmassmatchsigmcmix",500,-2500,2500);
-   TH1F *hymatchsigmcmix = new TH1F("hymatchsigmcmix","hymatchsigmcmix",100,-5,5);
-   TH1F *hmassmatchratiosigmcmix = new TH1F("hmassmatchratiosigmcmix","hmassmatchratiosigmcmix",500,-5,5);
-   TH1F *hmassmatchsigmcss = new TH1F("hmassmatchsigmcss","hmassmatchsigmcss",500,-2500,2500);
-   TH1F *hymatchsigmcss = new TH1F("hymatchsigmcss","hymatchsigmcss",100,-5,5);
-   TH1F *hmassmatchratiosigmcss = new TH1F("hmassmatchratiosigmcss","hmassmatchratiosigmcss",500,-5,5);
 
    TH2F *hmassrapiditymatchvetosignalregion = new TH2F("hmassrapiditymatchvetosignalregion","hmassrapiditymatchvetosignalregion",500,-5,5,500,-5,5);
    TH2F *hmassrapiditymatchantitaumm = new TH2F("hmassrapiditymatchantitaumm","hmassrapiditymatchantitaumm",500,-5,5,500,-5,5);
@@ -404,10 +378,6 @@ void HadronicWWCuts::Loop()
    TH2F *resxijetscorr56= new TH2F("resxijetscorr56","resxijetscorr56",300,0,0.3,300,0,0.3);
 
 
-   std::vector<float> *mppssingsing = new std::vector<float>;
-   std::vector<float> *yppssingsing = new std::vector<float>;
-   std::vector<float> *mppsmixed = new std::vector<float>;
-   std::vector<float> *yppsmixed = new std::vector<float>;
    std::vector<float> *mppsmultmult = new std::vector<float>;
    std::vector<float> *yppsmultmult = new std::vector<float>;
    std::vector<float> *xipix45s = new std::vector<float>;
@@ -416,6 +386,13 @@ void HadronicWWCuts::Loop()
    std::vector<float> *ypix56s = new std::vector<float>;
    std::vector<float> *ximulti45s = new std::vector<float>;
    std::vector<float> *ximulti56s = new std::vector<float>;
+   std::vector<float> *thystmulti45s = new std::vector<float>;
+   std::vector<float> *thystmulti56s = new std::vector<float>;
+   std::vector<float> *tmulti45s = new std::vector<float>;
+   std::vector<float> *tmulti56s = new std::vector<float>;
+   std::vector<float> *timemulti45s = new std::vector<float>;
+   std::vector<float> *timemulti56s = new std::vector<float>;
+
 
    // Counters for # of MC events passing cuts
    Int_t npasspresel = 0;
@@ -424,6 +401,39 @@ void HadronicWWCuts::Loop()
    Int_t npassjetxi = 0;
    Int_t npasspps = 0;
    Int_t npassppsmatchksenia = 0;
+
+   // Mapping of sample number to era for data
+   if(samplenumber < 0 && samplenumber > -4)
+     {
+       erastring = "2017preTS2";
+     }
+   if(samplenumber < -3 && samplenumber > -6)
+     {
+       erastring = "2017postTS2";
+     }
+   if(samplenumber < -5 && samplenumber > -9)
+     {
+       erastring = "2016preTS2";
+     }
+   if(samplenumber == -9)
+     {
+       erastring = "2016postTS2";
+     }
+   if(samplenumber < -9)
+     {
+       erastring = "2018";
+     }
+   // Mapping of sample number to era for signal MC
+   if(samplenumber == 20)
+     {
+       erastring = "2017preTS2";
+     }
+   if(samplenumber == 41)
+     {
+       erastring = "2017postTS2";
+     }
+
+   PPSProtonEfficiency eff;
 
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) 
@@ -575,16 +585,14 @@ void HadronicWWCuts::Loop()
 	   jet2.SetPtEtaPhiE(ptjet2,etajet2,phijet2,ejet2);
 	   
 	   mydijet = jet1+jet2;                                                                                                       
-	   
+
+	   /* 
+	    * Now start preselection cuts
+	    */
 	   if(jet1.Pt()>200 && jet2.Pt()>200 && fabs(jet_eta->at(indleading))<2.5 && fabs(jet_eta->at(indsecond))<2.5)
 	     {
 	       if((fabs(jet_eta->at(indleading) - jet_eta->at(indsecond))<1.3))
 		 {
-		   //		   std::cout << "Filling histograms: " << std::endl
-		   //			     << "\tjet1 pT, eta, phi, E = " << jet1.Pt() << ", " << jet1.Eta() << ", " << jet1.Phi() << ", " << jet1.E() << std::endl
-		   //			     << "\tjet2 pT, eta, phi, E = " << jet2.Pt() << ", " << jet2.Eta() << ", " << jet2.Phi() << ", " << jet2.E() << std::endl
-		   //			     << "\tmjj = " << mydijet.M() << std::endl;
-
 		   hmjjdat->Fill(mydijet.M(),myweight);
 		   hyjjdat->Fill(mydijet.Rapidity(),myweight);
 		   hmyjjdat->Fill(mydijet.M(),mydijet.Rapidity());
@@ -656,346 +664,191 @@ void HadronicWWCuts::Loop()
 		       float mpp = 0;
 		       float ypp = 0;
 
-		       float mppss = 0;
-		       float yppss = 0;
 		       float mppmm = 0;
 		       float yppmm = 0;
-		       float mppmix = 0;
-		       float yppmix = 0;
 
-		       float multisubtrackx21045 = 0.0;
-		       float multisubtrackx22045 = 0.0;
-		       float multisubtrackx21056 = 0.0;
-		       float multisubtrackx22056 = 0.0;
-		       float multisubtracky21045 = 0.0;
-		       float multisubtracky22045 = 0.0;
-                       float multisubtracky21056 = 0.0;
-		       float multisubtracky22056 = 0.0;
-		       int multisubtrackshift45 = 0;
-		       int multisubtrackshift56 = 0;
-		       
 		       int ismultimulti = 0;
-		       int issinglesingle = 0;
-		       int ismixed = 0;
 		       int nSinglePixelTracks45 = 0;
 		       int nSinglePixelTracks56 = 0;
 		       int nMultiTracks45 = 0;
 		       int nMultiTracks56 = 0;
-		       float ximulti45 = 0;
-		       float ximulti56 = 0;
+		       int nMultiRP = 0;
 		       float xigen45 = 0;
 		       float xigen56 = 0;
 		       float mppgen = 0;
 
-                       // Include aperture cutoffs for data                                                                                                                       
-		       float aperture45 = 999.0; 
-		       float aperture56 = 999.0;
-		       if(samplenumber < 0 && samplenumber > -4)
-			 {
-			   aperture45 = Aperture(crossingangle,0,"2017preTS2");
-			   aperture56 = Aperture(crossingangle,1,"2017preTS2");
-			 }
-		       if(samplenumber < -3 && samplenumber > -6)
-			 {
-			   aperture45 = Aperture(crossingangle,0,"2017postTS2");
-                           aperture56 = Aperture(crossingangle,1,"2017postTS2");
-			 }
-		       if(samplenumber < -5 && samplenumber > -9)
-			 {
-			   aperture45 = Aperture(crossingangle,0,"2016preTS2");
-                           aperture56 = Aperture(crossingangle,1,"2016preTS2");
-			 }
-		       if(samplenumber == -9)
-			 {
-			   aperture45 = Aperture(crossingangle,0,"2016postTS2");
-                           aperture56 = Aperture(crossingangle,1,"2016postTS2");
-			 }
-		       if(samplenumber < -9)
-			 {
-                           aperture45 = Aperture(crossingangle,0,"2018");
-                           aperture56 = Aperture(crossingangle,1,"2018");
-			 }
-		       // Include aperture cutoffs for signal MC - for now using a hard-coded crossing angle, 
-		       // until figuring out how to retrieve this for MC
-		       if(samplenumber == 21 || samplenumber == 22 || samplenumber == 31)
-			 {
-			   aperture45 = Aperture(130,0,"2017preTS2");
-			   aperture56 = Aperture(130,1,"2017preTS2");
-			 }
-		       if(samplenumber == 41)
-			 {
-			   aperture45 = Aperture(130,0,"2017postTS2");
-                           aperture56 = Aperture(130,1,"2017postTS2");
-			 }
+		       // Multiple candidate selection for 2018. Record and select the highest xi protons                                                                                           
+		       float ximaxmulti45 = -999;
+		       float ximaxmulti56 = -999;
+		       int indexmaxmulti45 = -1;
+		       int indexmaxmulti56 = -1;
 
 		       if(proton_xi->size() > 1)
 			 {
 			   float thexi = 0;
-
-			   for(int p = 0; p < proton_xi->size(); p++)                                                                                                 
+			   float thethetasty = 0;
+			   float thet = 0;
+			   float thetime = -999;
+			   float thetax1 = 0;
+			   float thetay1 = 0;
+			   float thetax2 = 0;
+			   float thetay2 = 0;
+			   int rpid1 = 0;
+			   int rpid2 = 0;
+			   int thex1 = 0;
+			   int thex2 = 0;
+			   int they1 = 0;
+			   int they2 = 0;
+			   int theshift1 = -1;
+			   int theshift2 = -1;
+			   int thearm = -1;
+			   
+			   /*
+			    * First loop over all protons to get good multi-RP candidates and apply eff. corrections to MC
+			    */
+			   for(int p = 0; p < proton_xi->size(); p++)                                                           
 			     {
-			       thexi = proton_xi->at(p);
-			       bool passfiducialcuts = false;
-			       bool passpixraddam = true;
-			       bool passmultirpfull = true;
-
-			       if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 23))                                                                       
+			       if(proton_ismultirp->at(p) == 1)
 				 {
-				   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
-				   passpixraddam = SingleRPEffCorr(proton_trackx1->at(p), proton_tracky1->at(p), 0, samplenumber);
-
-				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture45) && (passfiducialcuts == true) && (passpixraddam == true))
+				   thexi = proton_xi->at(p);
+				   thethetasty = proton_thy->at(p);
+				   thet = -1.0 * proton_t->at(p);
+				   thetime = proton_time->at(p);
+				   rpid1 = proton_rpid1->at(p);
+				   rpid2 = proton_rpid2->at(nMultiRP);
+				   thex1 = proton_trackx1->at(p);
+				   thex2 = proton_trackx2->at(nMultiRP);
+				   they1 = proton_tracky1->at(p);
+				   they2 = proton_tracky2->at(nMultiRP);
+				   theshift1 = proton_trackpixshift1->at(p);
+				   theshift2 = proton_trackpixshift2->at(nMultiRP);
+				   thearm = proton_arm->at(p);
+				   nMultiRP++;
+				   
+				   // Apply all good proton cuts
+				   bool passesselector = false;
+				   bool passesprotonefficiency = true;
+				   if(samplenumber < 0)
 				     {
-				       xipix45s->push_back(thexi);
-				       hxipix45->Fill(thexi);
-				       //				       ypix45s->push_back(proton_tracky1->at(p));
-				       nSinglePixelTracks45++;
+				       passesselector = TightMultiRPProton(thex1, they1, thex2, they2,
+									   thetax1, thetay1, thetax2, thetay2,
+									   thearm, rpid1, rpid2, 
+									   crossingangle, erastring, thexi, 						      
+									   theshift1, theshift2);
 				     }
 
-				   // Due to stupidity, the pixel ROC shift info is not saved correctly for the pixel 
-				   // sub-tracks of a multi-RP proton. So here we use the info of the single-RP proton 
-				   // and associate it to the x,y of the multi-RP pixel track
-				   if(proton_trackpixshift1->at(p) == 1)
+				   if(samplenumber > 0)
 				     {
-				       if(proton_rpid2->size() > 0)
-					 if((proton_rpid2->at(0) == 23) && (proton_trackx2->at(0) == proton_trackx1->at(p)) && (proton_tracky2->at(0) == proton_tracky1->at(p)))
-					   multisubtrackshift45 = 1;					   
-                                       if(proton_rpid2->size() > 1)
-                                         if((proton_rpid2->at(1) == 23) && (proton_trackx2->at(1) == proton_trackx1->at(p)) && (proton_tracky2->at(1) == proton_tracky1->at(p)))
-					   multisubtrackshift45 = 1;
-				     }
-				 }
-                               if((proton_ismultirp->at(p) == 0) && (proton_rpid->at(p) == 123))
-                                 {
-				   passfiducialcuts = PixelFiducial(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
-				   passpixraddam = SingleRPEffCorr(proton_trackx1->at(p), proton_tracky1->at(p), 1, samplenumber);
-
-				   if((proton_trackpixshift1->at(p) == 0) && (thexi <= aperture56) && (passfiducialcuts == true) && (passpixraddam == true))
-				     {
-				       xipix56s->push_back(thexi);
-                                       hxipix56->Fill(thexi);
-				       //				       ypix56s->push_back(proton_tracky1->at(p));
-                                       nSinglePixelTracks56++;
+                                       passesselector = TightMultiRPProton(thex1, they1, thex2, they2,
+                                                                           thetax1, thetay1, thetax2, thetay2,
+                                                                           thearm, rpid1, rpid2,
+                                                                           130, erastring, thexi,
+                                                                           theshift1, theshift2);
+				       
+				       passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
 				     }
 
-                                   // Due to stupidity, the pixel ROC shift info is not saved correctly for the pixel                                                             
-                                   // sub-tracks of a multi-RP proton. So here we use the info of the single-RP proton                                                            
-                                   // and associate it to the x,y of the multi-RP pixel track                                                                                     
-                                   if(proton_trackpixshift1->at(p) == 1)
-                                     {
-                                       if(proton_rpid2->size() > 0)
-                                         if((proton_rpid2->at(0) == 123) && (proton_trackx2->at(0) == proton_trackx1->at(p)) && (proton_tracky2->at(0) == proton_tracky1->at(p)))
-					   multisubtrackshift56 = 1;
-                                       if(proton_rpid2->size() > 1)
-                                         if((proton_rpid2->at(1) == 123) && (proton_trackx2->at(1) == proton_trackx1->at(p)) && (proton_tracky2->at(1) == proton_tracky1->at(p)))
-                                           multisubtrackshift56 = 1;
-                                     }
-                                 }
-                               if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 0))
-                                 {
-				   // Fix for mis-alignment of storing multi-RP sub-tracks in the ntuples
-				   // Here for 2017 - track1 is always(?) strips, find pixels track2
-				   multisubtrackx21045 = proton_trackx1->at(p);
-				   multisubtracky21045 = proton_tracky1->at(p);
-				   if(proton_rpid2->at(0) == 23) 
+				   if((passesselector == true) && (passesprotonefficiency == true))
 				     {
-				       multisubtrackx22045 = proton_trackx2->at(0); 
-				       multisubtracky22045 = proton_tracky2->at(0);
-				     }
-				   else if(proton_rpid2->size() > 1)
-				     {
-				       if(proton_rpid2->at(1) == 23) 
+				       if(thearm==0)
 					 {
-					   multisubtrackx22045 = proton_trackx2->at(1); 
-					   multisubtracky22045 = proton_tracky2->at(1);
+					   if(thexi > ximaxmulti45)
+					     {
+					       ximaxmulti45 = thexi;
+					       indexmaxmulti45 = nMultiTracks45;
+					     }					       
+
+					   ximulti45s->push_back(thexi);
+					   thystmulti45s->push_back(thethetasty);
+					   tmulti45s->push_back(thet);
+					   timemulti45s->push_back(thetime);
+
+					   nMultiTracks45++;
+					 }
+				       if(thearm==1)
+					 {
+                                           if(thexi > ximaxmulti56)
+                                             {
+                                               ximaxmulti56 = thexi;
+                                               indexmaxmulti56 = nMultiTracks56;
+                                             }
+
+					   ximulti56s->push_back(thexi);
+                                           thystmulti56s->push_back(thethetasty);
+                                           tmulti56s->push_back(thet);
+					   timemulti56s->push_back(thetime);
+
+					   nMultiTracks56++;
 					 }
 				     }
-				   //				   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
+				 }
+			     }
+			   
+			   /*
+			    * Now select 2-arm events
+			    */
+			   if(nMultiTracks45 > 0 && nMultiTracks56 > 0)
+			     {
+			       // single-arm distributions
+			       hximult45->Fill(ximulti45s->at(indexmaxmulti45));
+			       hthystmult45->Fill(thystmulti45s->at(indexmaxmulti45));
+			       htmult45->Fill(tmulti45s->at(indexmaxmulti45));
 
-				   passfiducialcuts = PixelFiducial(multisubtrackx21045, multisubtracky21045, 0, samplenumber);
-				   passmultirpfull = MultiRPEffCorr(multisubtrackx21045, multisubtracky21045, multisubtrackx22045, multisubtracky22045, 0, samplenumber);
+			       hximult56->Fill(ximulti56s->at(indexmaxmulti56));
+                               hthystmult56->Fill(thystmulti56s->at(indexmaxmulti56));
+                               htmult56->Fill(tmulti56s->at(indexmaxmulti56));
 
-				   if((multisubtrackshift45 == 0) && (thexi <= aperture45) && (passfiducialcuts == true) && (passmultirpfull == true))
-				     {
-				       ximulti45s->push_back(thexi);
-				       hximult45->Fill(thexi);
-				       ximulti45 = thexi;
-				       nMultiTracks45++;
-				     }
-                                 }
-                               if((proton_ismultirp->at(p) == 1) && (proton_arm->at(p) == 1))
-                                 {
-                                   // Fix for mis-alignment of storing multi-RP sub-tracks in the ntuples                                                                         
-                                   // Here for 2017 - track1 is always(?) strips, find pixels track2                                                                              
-                                   multisubtrackx21056 = proton_trackx1->at(p);
-                                   multisubtracky21056 = proton_tracky1->at(p);
-                                   if(proton_rpid2->at(0) == 123)
-                                     {
-                                       multisubtrackx22056 = proton_trackx2->at(0);
-                                       multisubtracky22056 = proton_tracky2->at(0);
-                                     }
-                                   else if(proton_rpid2->size() > 1)
-                                     {
-                                       if(proton_rpid2->at(1) == 123)
-                                         {
-                                           multisubtrackx22056 = proton_trackx2->at(1);
-                                           multisubtracky22056 = proton_tracky2->at(1);
-                                         }
-                                     }
-				   //                                   else std::cout << "ERROR - could not find 220 sub-track of multi-RP candidate" << std::endl;
+			       // 2-arm combinations: mass, rapidity, and timing
+			       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(indexmaxmulti56)*ximulti45s->at(indexmaxmulti45));
+			       ypp = -0.5*TMath::Log(ximulti56s->at(indexmaxmulti56)/ximulti45s->at(indexmaxmulti45));
 
-				   passfiducialcuts = PixelFiducial(multisubtrackx22056, multisubtracky22056, 1, samplenumber);
-                                   passmultirpfull = MultiRPEffCorr(multisubtrackx21056, multisubtracky21056, multisubtrackx22056, multisubtracky22056, 1, samplenumber);
-
-				   if((multisubtrackshift56 == 0) && (thexi <= aperture56) && (passfiducialcuts == true) && (passmultirpfull == true))
-				     {
-				       ximulti56s->push_back(thexi);
-				       hximult56->Fill(thexi);
-				       ximulti56 = thexi;
-				       nMultiTracks56++;
-				     }
-                                 }
+			       mppmm = mpp;
+			       yppmm = ypp;
+			       mppsmultmult->push_back(mpp);
+			       yppsmultmult->push_back(ypp);
+			       hmppmulti->Fill(mpp);
+			       hyppmulti->Fill(ypp);
+			       hmyppmulti->Fill(mpp,ypp);
+			       hmasscorrpreseldatmult->Fill(mpp,mydijet.M());
+			       hycorrpreseldatmult->Fill(ypp,mydijet.Rapidity());
+			       dymassratiocorrpreseldatmult->Fill(1-mydijet.M()/mpp,mydijet.Rapidity()-ypp);
+			       hdtmulti->Fill(timemulti45s->at(indexmaxmulti45) - timemulti56s->at(indexmaxmulti56));
+			       ismultimulti = 1;
 			     }
 
-			   // Multi-multi
-			   for(int a = 0; a < nMultiTracks45; a++)                                                                                                                           
-			     {                                                                                                                                                               
-			       for(int b = 0; b < nMultiTracks56; b++)                                                                                                                       
-				 {                                                                                                                                                           
-				   mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*ximulti45s->at(a));                                                                                   
-				   ypp = -0.5*TMath::Log(ximulti56s->at(b)/ximulti45s->at(a));                                                                                                
+			   // Old - all combinations
+			   /*
+			   for(int a = 0; a < nMultiTracks45; a++)                                                                                                                    
+			     {                                                                                                                                                            
+			       for(int b = 0; b < nMultiTracks56; b++)                                                                                                                    
+				 {                                                                                                                                                        
+				   mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*ximulti45s->at(a));                                                                                
+				   ypp = -0.5*TMath::Log(ximulti56s->at(b)/ximulti45s->at(a));                                                                                            
+    
 				   mppmm = mpp;
 				   yppmm = ypp;
-				   mppsmultmult->push_back(mpp);                                                                                                                             
-				   yppsmultmult->push_back(ypp);                                                                                                                             
-				   hmppmulti->Fill(mpp);                                                                                                                                     
+				   mppsmultmult->push_back(mpp);                                                                                                                          
+				   yppsmultmult->push_back(ypp);                                                                                                                          
+				   hmppmulti->Fill(mpp);                                                                                                                                  
 				   hyppmulti->Fill(ypp);                                                                                                                     
 				   hmyppmulti->Fill(mpp,ypp);
 				   hmasscorrpreseldatmult->Fill(mpp,mydijet.M());
 				   hycorrpreseldatmult->Fill(ypp,mydijet.Rapidity());
 				   dymassratiocorrpreseldatmult->Fill(1-mydijet.M()/mpp,mydijet.Rapidity()-ypp);
-				   ismultimulti = 1;                                                                                                                                         
-				 }                                                                                                                                                           
-			     }                                                                                                                                                               
-			   // Mixed
-			   for(int a = 0; a < nSinglePixelTracks45; a++)                                                                                                                     
-			     {                                                                                                                                                               
-			       for(int b = 0; b < nMultiTracks56; b++)                                                                                                                       
-				 {                                                                                                                                                           
-				   mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*xipix45s->at(a));                                                                                     
-				   ypp = -0.5*TMath::Log(ximulti56s->at(b)/xipix45s->at(a));                                                                                                  
-				   mppmix = mpp;
-				   yppmix = ypp;
-				   mppsmixed->push_back(mpp);                                                                                                                                
-				   yppsmixed->push_back(ypp);                                                                                                                                
-				   hmppmixed->Fill(mpp);                                                                                                                                     
-				   hyppmixed->Fill(ypp);                                                                                                                                     
-				   ismixed = 1;
-				 }                                                                                                                                                           
- 			     }                                                                                                                                                               
- 			   for(int a = 0; a < nSinglePixelTracks56; a++)                                                                                                                     
- 			     {                                                                                                                                                               
-			       for(int b = 0; b < nMultiTracks45; b++)                                                                                                                       
-				 {                                                                                                                                                           
-				   mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(a)*ximulti45s->at(b));                                                                                     
-				   ypp = -0.5*TMath::Log(xipix56s->at(a)/ximulti45s->at(b));                                                                                                  
-                                   mppmix = mpp;
-                                   yppmix = ypp;
-				   mppsmixed->push_back(mpp);                                                                                                                                
-				   yppsmixed->push_back(ypp);                                                                                                                                
-				   hmppmixed->Fill(mpp);                                                                                                                                     
-				   hyppmixed->Fill(ypp);                                                                                                                                     
-				   ismixed = 1;
-				 }                                                                                                                                                           
-			     }                                                                                                                                                               
-			   // Single-single
-			   for(int a = 0; a < nSinglePixelTracks45; a++)                                                                                                                     
-			     {                                                                                                                                                               
-			       for(int b = 0; b < nSinglePixelTracks56; b++)                                                                                                                 
-				 {                                                                                                                                                           
-				   mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(b)*xipix45s->at(a));                                                                                       
-				   ypp = -0.5*TMath::Log(xipix56s->at(b)/xipix45s->at(a));                                                                                                    
-				   mppss = mpp;
-				   yppss = ypp;
-				   mppssingsing->push_back(mpp);                                                                                                                             
-				   yppssingsing->push_back(ypp);                                                                                                                             
-				   hmppsingle->Fill(mpp);                                                                                                                                    
-				   hyppsingle->Fill(ypp);                                                                                                                                    
-				   hmyppsingle->Fill(mpp,ypp);                                                                                                                               
-				   issinglesingle = 1;
-				 }                                                                                                                                                           
-			     }                                                                                                                                                               
-
-			   /* Splitting by best category - no overlaps
-			   if(nMultiTracks45 >= 1 && nMultiTracks56 >= 1)
-                             {
-                               for(int a = 0; a < nMultiTracks45; a++)
-                                 {
-                                   for(int b = 0; b < nMultiTracks56; b++)
-                                     {
-				       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*ximulti45s->at(a));
-				       ypp = 0.5*TMath::Log(ximulti56s->at(b)/ximulti45s->at(a));
-                                       mppsmultmult->push_back(mpp);
-                                       yppsmultmult->push_back(ypp);
-				       hmppmulti->Fill(mpp);
-				       hyppmulti->Fill(ypp);
-				       ismultimulti = 1;
-                                     }
-                                 }
-                             }
-			   else if((nMultiTracks45 >= 1 && nSinglePixelTracks56 >= 1) || (nMultiTracks56 >= 1 && nSinglePixelTracks45 >= 1))
-			     {
-			       for(int a = 0; a < nSinglePixelTracks45; a++)
-                                 {
-                                   for(int b = 0; b < nMultiTracks56; b++)
-                                     {
-				       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(b)*xipix45s->at(a));
-				       ypp = 0.5*TMath::Log(ximulti56s->at(b)/xipix45s->at(a));
-                                       mppsmixed->push_back(mpp);
-                                       yppsmixed->push_back(ypp);
-				       hmppmixed->Fill(mpp);
-				       hyppmixed->Fill(ypp);
-                                     }
-                                 }
-			       for(int a = 0; a < nSinglePixelTracks56; a++)
-                                 {
-                                   for(int b = 0; b < nMultiTracks45; b++)
-                                     {
-				       mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(a)*ximulti45s->at(b));
-				       ypp = 0.5*TMath::Log(xipix56s->at(a)/ximulti45s->at(b));
-                                       mppsmixed->push_back(mpp);
-                                       yppsmixed->push_back(ypp);
-				       hmppmixed->Fill(mpp);
-				       hyppmixed->Fill(ypp);
-                                     }
-                                 }
+				   hdtmulti->Fill(timemulti45s->at(a) - timemulti56s->at(b));
+				   ismultimulti = 1;                                                                                                                                      
+ 				 } 
 			     }
-			   else if(nSinglePixelTracks45 >= 1 && nSinglePixelTracks56 >= 1)
-			     {
-			       for(int a = 0; a < nSinglePixelTracks45; a++)
-				 {
-				   for(int b = 0; b < nSinglePixelTracks56; b++)
-				     {
-				       mpp = TMath::Sqrt(13000.0*13000.0*xipix56s->at(b)*xipix45s->at(a));
-				       ypp = 0.5*TMath::Log(xipix56s->at(b)/xipix45s->at(a));
-				       mppssingsing->push_back(mpp);
-				       yppssingsing->push_back(ypp);
-				       hmppsingle->Fill(mpp);
-				       hyppsingle->Fill(ypp);
-				       hmyppsingle->Fill(mpp,ypp);
-				     }
-				 }
-			     }
-			   */
+			   */     
 			 }
-		       hnpix45->Fill(nSinglePixelTracks45);
-		       hnpix56->Fill(nSinglePixelTracks56);
 
+		       hnmult45->Fill(nMultiTracks45);
+		       hnmult56->Fill(nMultiTracks56);
 
-                       // Sideband control regions                                                                                                                                                                           
+                       // Sideband control regions                                                                                                                                        
                        if(samplenumber > 0)
                          {
-                           // Signal region, only for MC                                                                                                                                                                     
+                           // Signal region, only for MC                                                                                                                                  
                            if((acop < acopcut) && (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
 			       npassdijetkine++;
@@ -1020,27 +873,15 @@ void HadronicWWCuts::Loop()
 					   hymatchsigmcmm->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
 					   hmassmatchratiosigmcmm->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
 					 }
-				       for(Int_t s = 0; s < mppsmixed->size(); s++)
-					 {
-					   hmassmatchsigmcmix->Fill(mppsmixed->at(s)-mydijet.M());
-					   hymatchsigmcmix->Fill(yppsmixed->at(s)-mydijet.Rapidity());
-					   hmassmatchratiosigmcmix->Fill(1 - (mydijet.M()/mppsmixed->at(s)));
-					 }
-				       for(Int_t s = 0; s < mppssingsing->size(); s++)
-					 {
-					   hmassmatchsigmcss->Fill(mppssingsing->at(s)-mydijet.M());
-					   hymatchsigmcss->Fill(yppssingsing->at(s)-mydijet.Rapidity());
-					   hmassmatchratiosigmcss->Fill(1 - (mydijet.M()/mppssingsing->at(s)));
-					 }
 
                                        if(ismultimulti == 1)
 					 {				       
 					   int match45 = 0; int match56 = 0;
 					   for(Int_t gp = 0; gp < gen_proton_xi->size(); gp++)
 					     {
-					       if(fabs(ximulti45 - gen_proton_xi->at(gp)) < 0.01 && gen_proton_pz->at(gp) > 0)
+					       if(fabs(ximaxmulti45 - gen_proton_xi->at(gp)) < 0.01 && gen_proton_pz->at(gp) > 0)
 						 match45 = 1;
-					       if(fabs(ximulti56 - gen_proton_xi->at(gp)) < 0.01 && gen_proton_pz->at(gp) < 0)
+					       if(fabs(ximaxmulti56 - gen_proton_xi->at(gp)) < 0.01 && gen_proton_pz->at(gp) < 0)
 						 match56 = 1;
 					       if(gen_proton_pz->at(gp) > 0)
 						 xigen45 = gen_proton_xi->at(gp);
@@ -1127,81 +968,8 @@ void HadronicWWCuts::Loop()
 					 }
 				     }
 				 }
-
+			       
 			     }
-			   for(Int_t s = 0; s < mppsmixed->size(); s++)
-			     {
-                               // Anti acoplanarity                                                                                                                                            
-                               if((acop > acopcut) &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-                                  (jet1.Pt()/jet2.Pt() < ptbalcut))
-                                 {
-                                   hmassmatchantiacopmix->Fill(mppmix-mydijet.M());
-                                   hymatchantiacopmix->Fill(yppmix-mydijet.Rapidity());
-                                   hmassmatchratioantiacopmix->Fill(1 - (mydijet.M()/mppmix));
-                                 }
-                               // Anti pT balance                                                                                                                                              
-                               if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-                                  (acop < acopcut))
-                                 {
-                                   hmassmatchantiptbalmix->Fill(mppmix-mydijet.M());
-                                   hymatchantiptbalmix->Fill(yppmix-mydijet.Rapidity());
-                                   hmassmatchratioantiptbalmix->Fill(1 - (mydijet.M()/mppmix));
-                                 }
-                               // Anti tau21                                                                                                                                                   
-                               if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (acop < acopcut) &&
-                                  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
-                                 {
-                                   hmassmatchantitaumix->Fill(mppmix-mydijet.M());
-                                   hymatchantitaumix->Fill(yppmix-mydijet.Rapidity());
-                                   hmassmatchratioantitaumix->Fill(1 - (mydijet.M()/mppmix));
-                                 }
-			     }
-			   for(Int_t s = 0; s < mppssingsing->size(); s++)
-			     {
-                               // Anti acoplanarity                                                                                                                                            
-                               if((acop > acopcut) &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-                                  (jet1.Pt()/jet2.Pt() < ptbalcut))
-                                 {
-                                   hmassmatchantiacopss->Fill(mppss-mydijet.M());
-                                   hymatchantiacopss->Fill(yppss-mydijet.Rapidity());
-                                   hmassmatchratioantiacopss->Fill(1 - (mydijet.M()/mppss));
-                                 }
-                               // Anti pT balance                                                                                                                                              
-                               if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-                                  (acop < acopcut))
-                                 {
-                                   hmassmatchantiptbalss->Fill(mppss-mydijet.M());
-                                   hymatchantiptbalss->Fill(yppss-mydijet.Rapidity());
-                                   hmassmatchratioantiptbalss->Fill(1 - (mydijet.M()/mppss));
-                                 }
-                               // Anti tau21                                                                                                                                                   
-                               if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (acop < acopcut) &&
-                                  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
-                                 {
-                                   hmassmatchantitauss->Fill(mppss-mydijet.M());
-                                   hymatchantitauss->Fill(yppss-mydijet.Rapidity());
-                                   hmassmatchratioantitauss->Fill(1 - (mydijet.M()/mppss));
-                                 }
-			     }
-
                          }
 		       
 		     }
@@ -1209,10 +977,6 @@ void HadronicWWCuts::Loop()
 	     }
 	 }
        
-       mppssingsing->clear();
-       yppssingsing->clear();
-       mppsmixed->clear();
-       yppsmixed->clear();
        mppsmultmult->clear();
        yppsmultmult->clear();
        xipix45s->clear();
@@ -1221,12 +985,14 @@ void HadronicWWCuts::Loop()
        ypix56s->clear();
        ximulti45s->clear();
        ximulti56s->clear();
+       thystmulti45s->clear();
+       thystmulti56s->clear();
+       tmulti45s->clear();
+       tmulti56s->clear();
+       timemulti45s->clear();
+       timemulti56s->clear();
      }
 
-   delete mppssingsing;
-   delete yppssingsing;
-   delete mppsmixed;
-   delete yppsmixed;
    delete mppsmultmult;
    delete yppsmultmult;
    delete xipix45s;
@@ -1235,6 +1001,12 @@ void HadronicWWCuts::Loop()
    delete ypix56s;
    delete ximulti45s;
    delete ximulti56s;
+   delete thystmulti45s;
+   delete thystmulti56s;
+   delete tmulti45s;
+   delete tmulti56s;
+   delete timemulti45s;
+   delete timemulti56s;
 
    // if (Cut(ientry) < 0) continue;
 
@@ -1250,105 +1022,108 @@ void HadronicWWCuts::Loop()
    //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017D.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017E.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017F.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016B.root","RECREATE");
    if(samplenumber == -7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016C.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016C.root","RECREATE");
    if(samplenumber == -8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016G.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016G.root","RECREATE");
    if(samplenumber == -9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016H.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016H.root","RECREATE");
+
    if(samplenumber == -10)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2018A.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018A.root","RECREATE");
    if(samplenumber == -11)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2018B.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018B.root","RECREATE");
+   if(samplenumber == -12)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018C.root","RECREATE");
+   if(samplenumber == -13)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018D.root","RECREATE");
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt170to300.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic.root","RECREATE");
    if(samplenumber == 8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic.root","RECREATE");
    if(samplenumber == 9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic.root","RECREATE");
    if(samplenumber == 10)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800.root","RECREATE");
    if(samplenumber == 11)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1800to2400.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1800to2400.root","RECREATE");
    if(samplenumber == 12)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt2400to3200.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt2400to3200.root","RECREATE");
 
 
    if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwSM.root","RECREATE");
-   if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons_withFiducialAndKilling.root","RECREATE");
-     //     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons_noFiducial.root","RECREATE");
-   if(samplenumber == 22)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w2point0noPUprotons_withFiducialAndKilling.root","RECREATE");
-   if(samplenumber == 24)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w2point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
-   if(samplenumber == 25)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w5point0noPUprotons_withFiducialAndKillingPostTS2.root","RECREATE");
-
-
-   if(samplenumber == 27)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwaCw2point0E5noPUprotons_withFiducialAndKilling.root","RECREATE");
-
-   if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclzza0z5point0.root","RECREATE");
-
-   if(samplenumber == 41)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwa0w1point0noPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
-
-   if(samplenumber == 99)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_exclwwaCWOnlyPUprotons2017postTS2_withFiducialAndKilling.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z_0E0_ACZ_5E-5_2017preTS2.root","RECREATE");
 
    // 2016
    if(samplenumber == 101)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt170to300_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2016.root","RECREATE");
    if(samplenumber == 102)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2016.root","RECREATE");
    if(samplenumber == 103)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2016.root","RECREATE");
    if(samplenumber == 104)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2016.root","RECREATE");
    if(samplenumber == 105)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2016.root","RECREATE");
    if(samplenumber == 106)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2016.root","RECREATE");
    if(samplenumber == 107)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic1000inf_2016.root","RECREATE");
    if(samplenumber == 108)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2016.root","RECREATE");
    if(samplenumber == 109)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2016.root","RECREATE");
    if(samplenumber == 110)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2016.root","RECREATE");
    if(samplenumber == 111)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1800to2400_2016.root","RECREATE");
-   if(samplenumber == 112)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt2400to3200_2016.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic700ot1000_2016.root","RECREATE");
+
+   // 2018
+   if(samplenumber == 201)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2018.root","RECREATE");
+   if(samplenumber == 202)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2018.root","RECREATE");
+   if(samplenumber == 203)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2018.root","RECREATE");
+   if(samplenumber == 204)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2018.root","RECREATE");
+   if(samplenumber == 205)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2018.root","RECREATE");
+   if(samplenumber == 206)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2018.root","RECREATE");
+   if(samplenumber == 207)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic_2018.root","RECREATE");
+   if(samplenumber == 208)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2018.root","RECREATE");
+   if(samplenumber == 209)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root","RECREATE");
+   if(samplenumber == 210)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root","RECREATE");
 
 
    hmjjdat->Write();
@@ -1389,15 +1164,16 @@ void HadronicWWCuts::Loop()
    hdy56->Write();
    hximult45->Write();
    hximult56->Write();
-   hnpix45->Write();
-   hnpix56->Write();
+   hthystmult45->Write();
+   hthystmult56->Write();
+   htmult45->Write();
+   htmult56->Write();
+   hnmult45->Write();
+   hnmult56->Write();
 
-   hmppsingle->Write();
-   hmppmixed->Write();
    hmppmulti->Write();
-   hyppsingle->Write();
-   hyppmixed->Write();
    hyppmulti->Write();
+   hdtmulti->Write(); 
 
    hmassmatchantiw->Write();
    hymatchantiw->Write();
@@ -1413,35 +1189,9 @@ void HadronicWWCuts::Loop()
    hymatchantiptbalmm->Write();
    hmassmatchratioantiptbalmm->Write();
 
-   hmassmatchantitaumix->Write();
-   hymatchantitaumix->Write();
-   hmassmatchratioantitaumix->Write();
-   hmassmatchantiacopmix->Write();
-   hymatchantiacopmix->Write();
-   hmassmatchratioantiacopmix->Write();
-   hmassmatchantiptbalmix->Write();
-   hymatchantiptbalmix->Write();
-   hmassmatchratioantiptbalmix->Write();
-
-   hmassmatchantitauss->Write();
-   hymatchantitauss->Write();
-   hmassmatchratioantitauss->Write();
-   hmassmatchantiacopss->Write();
-   hymatchantiacopss->Write();
-   hmassmatchratioantiacopss->Write();
-   hmassmatchantiptbalss->Write();
-   hymatchantiptbalss->Write();
-   hmassmatchratioantiptbalss->Write();
-
    hmassmatchsigmcmm->Write();
    hymatchsigmcmm->Write();
    hmassmatchratiosigmcmm->Write();
-   hmassmatchsigmcmix->Write();
-   hymatchsigmcmix->Write();
-   hmassmatchratiosigmcmix->Write();
-   hmassmatchsigmcss->Write();
-   hymatchsigmcss->Write();
-   hmassmatchratiosigmcss->Write();
 
    hmassmatchratiosigmcmult->Write();
    hymatchsigmcmult->Write();

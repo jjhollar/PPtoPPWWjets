@@ -3,12 +3,12 @@
  *
  */
 
-void ULPlotStackTest2016(Int_t var = 1)
+void ULPlotStackTest2017(Int_t var = 1)
 {
+  //  Float_t lumi = 2.367+8.681+4.143+9.062+13.242;
   // pre-TS2
-  Float_t lumi = 4.718+1.631+3.667+5.095;
-
-
+  //  Float_t lumi = 2.361+8.577+4.075; // +8.959+13.214;
+  Float_t lumi = 2.361+8.577+4.075+8.948+13.214;
   // QCD xsections from xsecDB
   /*
   Float_t mc6xsec = 7.47;
@@ -18,19 +18,20 @@ void ULPlotStackTest2016(Int_t var = 1)
   Float_t mc2xsec = 6830.0;
   Float_t mc1xsec = 103500.0;
   */
-
   // QCD xsections from B2G-18-002, including corr factors
-  Float_t mc6xsec = 9.4183;
+  Float_t mc6xsec = 7.466*1.26149;
   Float_t mc5xsec = 32.293;
-  Float_t mc4xsec = 185.9;
-  Float_t mc3xsec = 642.1;
-  Float_t mc2xsec = 6830.0;
-  Float_t mc1xsec = 103500.0;
-  Float_t mc10xsec = 0.84265;
-  Float_t mc11xsec = 66.85;
-  Float_t mc7xsec = 21.3;
-  Float_t mc8xsec = 41.3;
-  Float_t mc9xsec = 21.3;
+  Float_t mc4xsec = 156.4*1.19501;
+  Float_t mc3xsec = 551.1*1.17619;
+  Float_t mc2xsec = 6838*1.14405;
+  Float_t mc1xsec = 103400.0*1.1342;
+  Float_t mc10xsec = 0.6481*1.30019;
+  Float_t mc11xsec = 0.08741*1.31499;
+  Float_t mc12xsec = 0.00522*1.30839;
+
+  Float_t mc7xsec = 377.96;
+  Float_t mc8xsec = 33.7;
+  Float_t mc9xsec = 14.6;
 
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
@@ -123,40 +124,36 @@ void ULPlotStackTest2016(Int_t var = 1)
   TFile *f104 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017F.root");
   TH1F *h104 = (TH1F *)f104->Get(hist);
   */
-  //  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017BCD.root");
-  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2016BCGH.root");
+  //  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4final_datahist2017BCD.root");
+  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4final_datahist2017BCDEF.root");
   TH1F *h100 = (TH1F *)f100->Get(hist);
 
-  TFile *f2 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470_2016.root");
+  TFile *f2 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt300to470.root");
   TH1F *h2 = (TH1F *)f2->Get(hist);
 
-  TFile *f3 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600_2016.root");
+  TFile *f3 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt470to600.root");
   TH1F *h3 = (TH1F *)f3->Get(hist);
 
-  TFile *f4 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800_2016.root");
+  TFile *f4 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt600to800.root");
   TH1F *h4 = (TH1F *)f4->Get(hist);
   
-  TFile *f5 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000_2016.root");
+  TFile *f5 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt800to1000.root");
   TH1F *h5 = (TH1F *)f5->Get(hist);
   
-  TFile *f6 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400_2016.root");
+  TFile *f6 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1000to1400.root");
   TH1F *h6 = (TH1F *)f6->Get(hist);
 
-  TFile *f7 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic1000inf_2016.root");
+  TFile *f7 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic.root");
   TH1F *h7 = (TH1F *)f7->Get(hist);
 
-  TFile *f8 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic_2016.root");
+  TFile *f8 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_wjetshadronic.root");
   TH1F *h8 = (TH1F *)f8->Get(hist);
 
-  TFile *f9 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic_2016.root");
+  TFile *f9 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_zjetshadronic.root");
   TH1F *h9 = (TH1F *)f9->Get(hist);
 
-  TFile *f10 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800_2016.root");
+  TFile *f10 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_qcdpt1400to1800.root");
   TH1F *h10 = (TH1F *)f10->Get(hist);
-
-  TFile *f11 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_ttbarhadronic700ot1000_2016.root");
-  TH1F *h11 = (TH1F *)f11->Get(hist);
-
 
   h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -182,53 +179,49 @@ void ULPlotStackTest2016(Int_t var = 1)
       h6->Rebin(rebinfactor); h7->Rebin(rebinfactor);
       h8->Rebin(rebinfactor);  h9->Rebin(rebinfactor);
       h10->Rebin(rebinfactor); 
-      h11->Rebin(rebinfactor);
       h100->Rebin(rebinfactor); //h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
     }
 
   // For MC in higher QCD pT bins, only running on 100k events from the ntuple per bin, so renormalize to that                                               
   
-  h2->Sumw2(); // 300-470, higher-stats extension
-  h2->Scale((2578238.0/18319816.0)*mc2xsec*1000*lumi/(1000000.0));
+  h2->Sumw2(); // 300-470
+  h2->Scale((3335454.0/11896906.0)*mc2xsec*1000*lumi/(1000000.0));
   h2->SetFillColor(kAzure+1);
   //  h2->SetFillColor(2);
 
   h3->Sumw2(); // 470-600
-  h3->Scale((3691791.0/3959986.0)*mc3xsec*1000*lumi/(1000000.0));
+  h3->Scale((25083178.0/27705084.0)*mc3xsec*1000*lumi/(1000000.0));
   h3->SetFillColor(kAzure+1);
   //  h3->SetFillColor(3);
 
   h4->Sumw2(); // 600-800
-  h4->Scale((3866084.0/3896412.0)*mc4xsec*1000*lumi/(1000000.0));
+  h4->Scale((5309553.0/5329382.0)*mc4xsec*1000*lumi/(1000000.0));
   h4->SetFillColor(kAzure+1);
   //  h4->SetFillColor(4);
 
   h5->Sumw2(); // 800-1000
-  h5->Scale((15679031.0/15704980.0)*mc5xsec*1000*lumi/(1000000.0));
+  h5->Scale((39469588.0/39525104.0)*mc5xsec*1000*lumi/(1000000.0));
   h5->SetFillColor(kAzure+1);
   //  h5->SetFillColor(5);
 
   h6->Sumw2(); // 1000-1400
-  h6->Scale((2999069.0/2995724.0)*mc6xsec*1000*lumi/(1000000.0));
+  h6->Scale((14598037.0/14619206.0)*mc6xsec*1000*lumi/(1000000.0));
   h6->SetFillColor(kAzure+1);
   //  h6->Scale((5316947.0/27905480.0)*mc6xsec*1000*lumi/(1000000.0));
 
-  h7->Sumw2(); // ttbar 1000-inf
-  h7->Scale((3732532.0/24577608.0)*mc7xsec*1000*lumi/(1000000.0));
+  h7->Sumw2(); // ttbar
+  h7->Scale((824317.0/35540872.0)*mc7xsec*1000*lumi/(1000000.0));
 
   h8->Sumw2(); // wjets
-  h8->Scale((139514.0/1026587.0)*mc8xsec*1000*lumi/(1000000.0));
+  h8->Scale((5647835.0/8081153.0)*mc8xsec*1000*lumi/(1000000.0));
 
   h9->Sumw2(); // zjets 
-  h9->Scale((192621.0/1000000.0)*mc9xsec*1000*lumi/(1000000.0));
+  h9->Scale((7153915.0/9783887.0)*mc9xsec*1000*lumi/(1000000.0));
 
   h10->Sumw2(); // 1400-1800
-  h10->Scale((335704.0/395902.0)*mc10xsec*1000*lumi/1000000.0);
+  h10->Scale(mc10xsec*1000*lumi/14286.0);
   h10->SetFillColor(kAzure+1);
-
-  h11->Sumw2(); // ttbar 700-1000                                                                                                                                        
-  h11->Scale((913088.0/38426513.0)*mc11xsec*1000*lumi/(1000000.0));
 
   /*
   h12->Add(h11);
@@ -276,7 +269,6 @@ void ULPlotStackTest2016(Int_t var = 1)
   h10->Add(h7);
   h10->Add(h8);
   h10->Add(h9);
-  h10->Add(h11);
   h10->Draw("histsame");
 
   h10->SetStats(0);     
@@ -297,7 +289,6 @@ void ULPlotStackTest2016(Int_t var = 1)
   h6->Add(h3);
   h6->Add(h2);
   h6->Add(h7);
-  h6->Add(h11);
   h6->Add(h8);
   h6->Add(h9);
   h6->Draw("histsame");
@@ -306,7 +297,6 @@ void ULPlotStackTest2016(Int_t var = 1)
   h5->Add(h3);
   h5->Add(h2);
   h5->Add(h7);
-  h5->Add(h11);
   h5->Add(h8);
   h5->Add(h9);
   h5->Draw("histsame");
@@ -315,41 +305,32 @@ void ULPlotStackTest2016(Int_t var = 1)
   h4->Add(h3);
   h4->Add(h2);
   h4->Add(h7);
-  h4->Add(h11);
   h4->Add(h8);
   h4->Add(h9);
   h4->Draw("histsame");
 
   h3->Add(h2);
   h3->Add(h7);
-  h3->Add(h11);
   h3->Add(h8);
   h3->Add(h9);
   h3->Draw("histsame");
 
   h2->Add(h7);
-  h2->Add(h11);
   h2->Add(h8);
   h2->Add(h9);
   h2->Draw("histsame");
 
   h8->SetFillColor(kGreen+1);
   h8->Add(h7);
-  h8->Add(h11);
   h8->Add(h9);
   h8->Draw("histsame");
 
   h9->SetFillColor(kYellow+1);
   h9->Add(h7);
-  h9->Add(h11);
   h9->Draw("histsame");
 
   h7->SetFillColor(kOrange+1);
-  h7->Add(h11);
   h7->Draw("histsame");
-
-  h11->SetFillColor(kOrange+1);
-  h11->Draw("histsame");
 
   h100->SetMarkerStyle(20); h100->SetLineWidth(3);
   h100->Draw("esame");
@@ -358,9 +339,9 @@ void ULPlotStackTest2016(Int_t var = 1)
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
   lg1->AddEntry(h10,"Pythia8 QCD (bins)");
   lg1->AddEntry(h8,"Madgraph W+jets");
-  lg1->AddEntry(h7,"Powheg ttbar (1000-inf)");
+  lg1->AddEntry(h7,"Powheg ttbar");
   lg1->AddEntry(h9,"Madgraph Z+jets");
-  lg1->AddEntry(h100,"201GBCGH Data");
+  lg1->AddEntry(h100,"2017BCDEF Data");
   lg1->Draw("same");
   
   c1->cd(2);
@@ -385,9 +366,9 @@ void ULPlotStackTest2016(Int_t var = 1)
   h8->Draw("histsame");
   h9->Draw("histsame");
   h7->Draw("histsame");
-  h11->Draw("histsame");
   gPad->SetLogy();
   h100->Draw("esame");
+
 
   c1->cd(3);
   /*
@@ -444,7 +425,7 @@ void ULPlotStackTest2016(Int_t var = 1)
   l3->SetLineWidth(3);
   //  l3->Draw("same");
 
-  TString outplotname = "validationplots2016BCGH_ntupleULReMiniv4final_" + filetitle + ".pdf";
+  TString outplotname = "validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
 
   // Signal MC only
@@ -455,24 +436,24 @@ void ULPlotStackTest2016(Int_t var = 1)
 
 void PlotStackAll()
 {
-  ULPlotStackTest2016(1);
-  ULPlotStackTest2016(2);
-  ULPlotStackTest2016(3);
-  ULPlotStackTest2016(4);
-  ULPlotStackTest2016(5);
-  ULPlotStackTest2016(6);
-  ULPlotStackTest2016(7);
-  ULPlotStackTest2016(8);
-  ULPlotStackTest2016(9);
-  ULPlotStackTest2016(13);
-  ULPlotStackTest2016(14);
-  ULPlotStackTest2016(15);
-  ULPlotStackTest2016(16);
-  ULPlotStackTest2016(17);
-  ULPlotStackTest2016(18);
-  ULPlotStackTest2016(19);
-  ULPlotStackTest2016(20);
-  ULPlotStackTest2016(27);
-  ULPlotStackTest2016(28);
+  ULPlotStackTest2017(1);
+  ULPlotStackTest2017(2);
+  ULPlotStackTest2017(3);
+  ULPlotStackTest2017(4);
+  ULPlotStackTest2017(5);
+  ULPlotStackTest2017(6);
+  ULPlotStackTest2017(7);
+  ULPlotStackTest2017(8);
+  ULPlotStackTest2017(9);
+  ULPlotStackTest2017(13);
+  ULPlotStackTest2017(14);
+  ULPlotStackTest2017(15);
+  ULPlotStackTest2017(16);
+  ULPlotStackTest2017(17);
+  ULPlotStackTest2017(18);
+  ULPlotStackTest2017(19);
+  ULPlotStackTest2017(20);
+  ULPlotStackTest2017(27);
+  ULPlotStackTest2017(28);
 
 }
