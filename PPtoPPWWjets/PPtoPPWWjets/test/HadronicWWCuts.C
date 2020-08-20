@@ -251,8 +251,8 @@ void HadronicWWCuts::Loop()
 
    Int_t nentries = fChain->GetEntries();
    // Limit bkg MC samples to 1M events for quick tests
-   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120) || (samplenumber > 200 && samplenumber < 220))
-     nentries = 1000000;
+   //   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120) || (samplenumber > 200 && samplenumber < 220))
+   //     nentries = 1000000;
    Float_t myweight = 1.0;
 
    Float_t Dx45ref140 = -8.226;
@@ -345,6 +345,8 @@ void HadronicWWCuts::Loop()
    TH1F *hmassmatchratiosigmcmm = new TH1F("hmassmatchratiosigmcmm","hmassmatchratiosigmcmm",500,-5,5);
 
    TH2F *hmassrapiditymatchvetosignalregion = new TH2F("hmassrapiditymatchvetosignalregion","hmassrapiditymatchvetosignalregion",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchvetoorsignalregion = new TH2F("hmassrapiditymatchvetoorsignalregion","hmassrapiditymatchvetoorsignalregion",500,-5,5,500,-5,5);
+
    TH2F *hmassrapiditymatchantitaumm = new TH2F("hmassrapiditymatchantitaumm","hmassrapiditymatchantitaumm",500,-5,5,500,-5,5);
    TH2F *hmassrapiditymatchantiacopmm = new TH2F("hmassrapiditymatchantiacopmm","hmassrapiditymatchantiacopmm",500,-5,5,500,-5,5);
    TH2F *hmassrapiditymatchantiptbalmm = new TH2F("hmassrapiditymatchantiptbalmm","hmassrapiditymatchantiptbalmm",500,-5,5,500,-5,5);
@@ -359,9 +361,22 @@ void HadronicWWCuts::Loop()
    TH2F *hmasscorrpreseldatmult = new TH2F("hmasscorrpreseldatmult","hmasscorrpreseldatmult",250,0,2500,250,0,2500);
    TH2F *dymassratiocorrpreseldatmult = new TH2F("dymassratiocorrpreseldatmult","dymassratiocorrpreseldatmult",500,-5,5,500,-5,5);
 
-   TH1F *hmasswwantitau = new TH1F("hmasswwantitau","hmasswwantitau",250,0,5000);
-   TH1F *hmasswwantiacop = new TH1F("hmasswwantiacop","hmasswwantiacop",250,0,5000);
    TH1F *hmasswwantiptbal = new TH1F("hmasswwantiptbal","hmasswwantiptbal",250,0,5000);
+
+   // Anti-acoplanarity control plots
+   TH1F *hmasswwantiacop = new TH1F("hmasswwantiacop","hmasswwantiacop",250,0,5000);
+   TH1F *hmj1antiacop = new TH1F("hmj1antiacop","hmj1antiacop",250,0,1000);
+   TH1F *htau211antiacop = new TH1F("htau211antiacop","htau211antiacop",250,0,1);
+   TH1F *hmj2antiacop = new TH1F("hmj2antiacop","hmj2antiacop",250,0,1000);
+   TH1F *htau212antiacop = new TH1F("htau212antiacop","htau212antiacop",250,0,1);
+
+   // Anti-tau21 control plots
+   TH1F *hmasswwantitau = new TH1F("hmasswwantitau","hmasswwantitau",250,0,5000);
+   TH1F *hmj1antitau = new TH1F("hmj1antitau","hmj1antitau",250,0,1000);
+   TH1F *htau211antitau = new TH1F("htau211antitau","htau211antitau",250,0,1);
+   TH1F *hmj2antitau = new TH1F("hmj2antitau","hmj2antitau",250,0,1000);
+   TH1F *htau212antitau = new TH1F("htau212antitau","htau212antitau",250,0,1);
+
    TH1F *hmasswwsignal = new TH1F("hmasswwsignal","hmasswwsignal",250,0,5000);
    TH1F *hywwsignal = new TH1F("hywwsignal","hywwsignal",250,-5,5);
    TH1F *hcrossingangle = new TH1F("hcrossingangle","hcrossingangle",70,100,170);
@@ -401,6 +416,71 @@ void HadronicWWCuts::Loop()
    Int_t npassjetxi = 0;
    Int_t npasspps = 0;
    Int_t npassppsmatchksenia = 0;
+
+   TString outtextfile = "MC_EventsForMixing.txt";
+
+   if(samplenumber == 2)
+     outtextfile = "MC_EventsForMixing_QCD300to470_2017.txt";
+   if(samplenumber == 3)
+     outtextfile = "MC_EventsForMixing_QCD470to600_2017.txt";
+   if(samplenumber == 4)
+     outtextfile = "MC_EventsForMixing_QCD600to800_2017.txt";
+   if(samplenumber == 5)
+     outtextfile = "MC_EventsForMixing_QCD800to1000_2017.txt";
+   if(samplenumber == 6)
+     outtextfile = "MC_EventsForMixing_QCD1000to1400_2017.txt";
+   if(samplenumber == 10)
+     outtextfile = "MC_EventsForMixing_QCD1400to1800_2017.txt";
+   if(samplenumber == 7)
+     outtextfile = "MC_EventsForMixing_ttbar_2017.txt";
+   if(samplenumber == 8)
+     outtextfile = "MC_EventsForMixing_wjets_2017.txt";
+   if(samplenumber == 9)
+     outtextfile = "MC_EventsForMixing_zjets_2017.txt";
+
+   if(samplenumber == 102)
+     outtextfile = "MC_EventsForMixing_QCD300to470_2016.txt";
+   if(samplenumber == 103)
+     outtextfile = "MC_EventsForMixing_QCD470to600_2016.txt";
+   if(samplenumber == 104)
+     outtextfile = "MC_EventsForMixing_QCD600to800_2016.txt";
+   if(samplenumber == 105)
+     outtextfile = "MC_EventsForMixing_QCD800to1000_2016.txt";
+   if(samplenumber == 106)
+     outtextfile = "MC_EventsForMixing_QCD1000to1400_2016.txt";
+   if(samplenumber == 110)
+     outtextfile = "MC_EventsForMixing_QCD1400to1800_2016.txt";
+   if(samplenumber == 107)
+     outtextfile = "MC_EventsForMixing_ttbar1000inf_2016.txt";
+   if(samplenumber == 108)
+     outtextfile = "MC_EventsForMixing_wjets_2016.txt";
+   if(samplenumber == 109)
+     outtextfile = "MC_EventsForMixing_zjets_2016.txt";
+   if(samplenumber == 111)
+     outtextfile = "MC_EventsForMixing_ttbar700to1000_2016.txt";
+
+   if(samplenumber == 202)
+     outtextfile = "MC_EventsForMixing_QCD300to470_2018.txt";
+   if(samplenumber == 203)
+     outtextfile = "MC_EventsForMixing_QCD470to600_2018.txt";
+   if(samplenumber == 204)
+     outtextfile = "MC_EventsForMixing_QCD600to800_2018.txt";
+   if(samplenumber == 205)
+     outtextfile = "MC_EventsForMixing_QCD800to1000_2018.txt";
+   if(samplenumber == 206)
+     outtextfile = "MC_EventsForMixing_QCD1000to1400_2018.txt";
+   if(samplenumber == 210)
+     outtextfile = "MC_EventsForMixing_QCD1400to1800_2018.txt";
+   if(samplenumber == 207)
+     outtextfile = "MC_EventsForMixing_ttbar_2018.txt";
+   if(samplenumber == 208)
+     outtextfile = "MC_EventsForMixing_wjets_2018.txt";
+   if(samplenumber == 209)
+     outtextfile = "MC_EventsForMixing_zjets_2018.txt";
+
+
+   ofstream ofs(outtextfile);
+
 
    // Mapping of sample number to era for data
    if(samplenumber < 0 && samplenumber > -4)
@@ -453,6 +533,7 @@ void HadronicWWCuts::Loop()
        Int_t passpfjettrim = 0;
        Int_t passpfhttrim = 0;
 
+       /* Now filtering on HLT at ntuple-making level!
        for(Int_t j = 0; j < hlt->size(); j++)
 	 {
 	   TString myhlt = hlt->at(j);
@@ -469,6 +550,8 @@ void HadronicWWCuts::Loop()
 	 }
 
        if((passht == 1) || (passpfjet == 1) || (passpfhttrim == 1) || (passpfjettrim == 1))
+       */
+       if(1)
 	 {
 	   Float_t ptjet1 = 0.0; Float_t ptjet2 = 0.0;
            Float_t etajet1 = 0.0; Float_t etajet2 = 0.0;
@@ -748,7 +831,7 @@ void HadronicWWCuts::Loop()
 				       passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
 				     }
 
-				   if((passesselector == true) && (passesprotonefficiency == true))
+				   if((passesselector == true) && (passesprotonefficiency == true) && (thexi >= 0.05))
 				     {
 				       if(thearm==0)
 					 {
@@ -785,9 +868,9 @@ void HadronicWWCuts::Loop()
 			     }
 			   
 			   /*
-			    * Now select 2-arm events
+			    * Now select 2-arm events. Exclude events with >3 tracks/arm in 2018, to reduce showers. 
 			    */
-			   if(nMultiTracks45 > 0 && nMultiTracks56 > 0)
+			   if(nMultiTracks45 > 0 && nMultiTracks56 > 0 && nMultiTracks45 < 4 && nMultiTracks56 < 4)
 			     {
 			       // single-arm distributions
 			       hximult45->Fill(ximulti45s->at(indexmaxmulti45));
@@ -845,10 +928,24 @@ void HadronicWWCuts::Loop()
 		       hnmult45->Fill(nMultiTracks45);
 		       hnmult56->Fill(nMultiTracks56);
 
-                       // Sideband control regions                                                                                                                                        
+                       // Signal region, only for MC
                        if(samplenumber > 0)
                          {
-                           // Signal region, only for MC                                                                                                                                  
+			   // Output txt files for mixing. Apply xi_jets, pruned mass, and pT balance cuts
+			   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205 && 
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
+			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (jet1.Pt()/jet2.Pt() < ptbalcut))
+			     {			   
+			       ofs << samplenumber << " "
+				   << mc_pu_trueinteractions_ << " " << pileupWeight << " "
+				   << mydijet.M() << " " << mydijet.Rapidity() << " "
+				   << acop << " " << (jet1.Pt()/jet2.Pt()) << " "
+				   << jet_corrmass->at(indleading) << " " << jet_corrmass->at(indsecond) << " "
+				   << taut21ddt1 << " " << taut21ddt2 << " "
+				   << xijets1 << " " << xijets2 << " "
+				   << run << " " << lumiblock << " " << event << std::endl;
+			     }
                            if((acop < acopcut) && (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
 			       npassdijetkine++;
@@ -858,25 +955,26 @@ void HadronicWWCuts::Loop()
 				 {
 				   npassjetsubstr++;
 
-				   hmasswwsignal->Fill(mydijet.M());
-				   hywwsignal->Fill(mydijet.Rapidity());
-
-				   // Just counting, no cut yet
+				   // Just counting
 				   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
 				     npassjetxi++;
 
-				   if(samplenumber >= 20 && mpp>0 && (xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205))
+				   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
 				     {
-				       for(Int_t s = 0; s < mppsmultmult->size(); s++)
-					 {
-					   hmassmatchsigmcmm->Fill(mppsmultmult->at(s)-mydijet.M());
-					   hymatchsigmcmm->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
-					   hmassmatchratiosigmcmm->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
-					 }
+				       hmasswwsignal->Fill(mydijet.M());
+				       hywwsignal->Fill(mydijet.Rapidity());
 
-                                       if(ismultimulti == 1)
-					 {				       
+				       if(mpp>0) // MC events with protons - e.g. signal MC
+					 {
+					   for(Int_t s = 0; s < mppsmultmult->size(); s++)
+					     {
+					       hmassmatchsigmcmm->Fill(mppsmultmult->at(s)-mydijet.M());
+					       hymatchsigmcmm->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
+					       hmassmatchratiosigmcmm->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
+					     }
+					   
 					   int match45 = 0; int match56 = 0;
+					   // GEN-level proton quantities for signal MC
 					   for(Int_t gp = 0; gp < gen_proton_xi->size(); gp++)
 					     {
 					       if(fabs(ximaxmulti45 - gen_proton_xi->at(gp)) < 0.01 && gen_proton_pz->at(gp) > 0)
@@ -901,80 +999,100 @@ void HadronicWWCuts::Loop()
 					   if(match45 == 1 && match56 == 1)
 					     hmasscorrsigmcmulttruthmatched->Fill(mydijet.M(),mppsmultmult->at(0));
 					 }
-				       //				       hmppres->Fill(mpp/mppgen);
-				       //				   hmjjres->Fill(mydijet.M()/gen_dijet_mass->at(0));
-				       }
+				     }
 				 }
 			     }
 			 }
 		       
-		       // Control regions
-		       if(samplenumber < 0 && mpp>0 && (xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205))
+		       // Control regions in data and background MC
+		       if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
 			 {
-			   for(Int_t s = 0; s < mppsmultmult->size(); s++)
+			   // Anti acoplanarity                                                                                                                                          
+			   if((acop > acopcut) &&
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
+			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+			      (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
-			       // Anti acoplanarity                                                                                                                                          
-			       if((acop > acopcut) &&
-				  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
-				  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-				  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-				  (jet1.Pt()/jet2.Pt() < ptbalcut))
+			       hmasswwantiacop->Fill(mydijet.M());
+			       hmj1antiacop->Fill(jet_corrmass->at(indleading));
+			       hmj2antiacop->Fill(jet_corrmass->at(indsecond));
+			       htau211antiacop->Fill(taut21ddt1);
+			       htau212antiacop->Fill(taut21ddt2);
+
+			       if(mpp>0)
 				 {
-                                   hmassmatchantiacopmm->Fill(mppmm-mydijet.M());
-                                   hymatchantiacopmm->Fill(yppmm-mydijet.Rapidity());
-                                   hmassmatchratioantiacopmm->Fill(1 - (mydijet.M()/mppmm));
+				   hmassmatchantiacopmm->Fill(mppmm-mydijet.M());
+				   hymatchantiacopmm->Fill(yppmm-mydijet.Rapidity());
+				   hmassmatchratioantiacopmm->Fill(1 - (mydijet.M()/mppmm));
 				   hmassrapiditymatchantiacopmm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
 				 }
-			       // Anti pT balance                                                                                                                                            
-			       if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
-				  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
-				  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-				  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-				  (acop < acopcut))
+			     } // anti-acoplanarity
+			   // Anti pT balance                                                                                                                     
+			   if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
+			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+			      (acop < acopcut))
+			     {
+			       hmasswwantiptbal->Fill(mydijet.M());
+
+			       if(mpp>0)
 				 {
-                                   hmassmatchantiptbalmm->Fill(mppmm-mydijet.M());
+				   hmassmatchantiptbalmm->Fill(mppmm-mydijet.M());
                                    hymatchantiptbalmm->Fill(yppmm-mydijet.Rapidity());
                                    hmassmatchratioantiptbalmm->Fill(1 - (mydijet.M()/mppmm));
                                    hmassrapiditymatchantiptbalmm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
 				 }
-			       // Anti tau21                                                                                                                                                 
-			       if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
-				  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
-				  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-				  (acop < acopcut) &&
-				  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+			     } // anti-pT balance
+			   // Anti tau21                                                                                                                          
+			   if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
+			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (acop < acopcut) &&
+			      (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+			     {
+			       hmasswwantitau->Fill(mydijet.M());
+                               hmj1antitau->Fill(jet_corrmass->at(indleading));
+                               hmj2antitau->Fill(jet_corrmass->at(indsecond));
+                               htau211antitau->Fill(taut21ddt1);
+                               htau212antitau->Fill(taut21ddt2);
+
+			       if(mpp>0)
 				 {
-                                   hmassmatchantitaumm->Fill(mppmm-mydijet.M());
-                                   hymatchantitaumm->Fill(yppmm-mydijet.Rapidity());
-                                   hmassmatchratioantitaumm->Fill(1 - (mydijet.M()/mppmm));
+				   hmassmatchantitaumm->Fill(mppmm-mydijet.M());
+				   hymatchantitaumm->Fill(yppmm-mydijet.Rapidity());
+				   hmassmatchratioantitaumm->Fill(1 - (mydijet.M()/mppmm));
 				   hmassrapiditymatchantitaumm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
 				 }
-			       // All cuts, but with signal region in matching blinded
-			       if((taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
-                                  (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
-                                  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
-                                  (acop < acopcut) &&
-                                  (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+			     } // anti-tau21
+			   // All cuts, but with signal region in matching blinded
+			   if((taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
+			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
+			      (acop < acopcut) &&
+			      (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+			     {
+			       if(mpp>0)
 				 {
 				   Float_t massmatch = 0.0;
 				   Float_t ymatch = 0.0;
 				   massmatch = 1 - (mydijet.M()/mppmm);
 				   ymatch = yppmm-mydijet.Rapidity();
-				   if(fabs(ymatch) > 0.5)
+				   if(fabs(ymatch) > 0.5 || fabs(massmatch) > 1.0)
 				     {
-				       if(fabs(massmatch) > 1.0)
+				       hmassrapiditymatchvetoorsignalregion->Fill(massmatch,ymatch);
+				       if(fabs(massmatch) > 1.0 && fabs(massmatch) > 1.0)
 					 {
 					   hmassrapiditymatchvetosignalregion->Fill(massmatch,ymatch);
 					 }
 				     }
 				 }
-			       
-			     }
-                         }
-		       
-		     }
-		 }
-	     }
+			     } // blinded signal region
+			 } // xi(jets)
+		     } // Dijet mass
+		 } // Delta-eta
+	     } // Single jet pT & eta
 	 }
        
        mppsmultmult->clear();
@@ -1125,6 +1243,7 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 210)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root","RECREATE");
 
+   ofs.close();
 
    hmjjdat->Write();
    hyjjdat->Write();
@@ -1204,6 +1323,16 @@ void HadronicWWCuts::Loop()
    hmasswwantitau->Write();
    hmasswwantiacop->Write();
    hmasswwantiptbal->Write();
+   hmj1antiacop->Write();
+   hmj2antiacop->Write();
+   htau211antiacop->Write();
+   htau212antiacop->Write();
+   hmj1antitau->Write();
+   hmj2antitau->Write();
+   htau211antitau->Write();
+   htau212antitau->Write();
+
+
    hmasswwsignal->Write();
    hywwsignal->Write();
 
@@ -1225,7 +1354,7 @@ void HadronicWWCuts::Loop()
    hmassrapiditymatchantiptbalmm->Write();
    hmassrapiditymatchantitaumm->Write();
    hmassrapiditymatchvetosignalregion->Write();
-
+   hmassrapiditymatchvetoorsignalregion->Write();
 
    fx->Close();
 
