@@ -504,13 +504,21 @@ void HadronicWWCuts::Loop()
        erastring = "2018";
      }
    // Mapping of sample number to era for signal MC
-   if(samplenumber == 20)
+   if(samplenumber >= 20 && samplenumber < 40)
      {
        erastring = "2017preTS2";
      }
-   if(samplenumber == 41)
+   if(samplenumber >= 40 && samplenumber <= 60)
      {
        erastring = "2017postTS2";
+     }
+   if(samplenumber >= 120 && samplenumber < 200)
+     {
+       erastring = "2016preTS2";
+     }
+   if(samplenumber >= 220 && samplenumber < 300)
+     {
+       erastring = "2018";
      }
 
    PPSProtonEfficiency eff;
@@ -522,7 +530,8 @@ void HadronicWWCuts::Loop()
        if (ientry < 0) break;
        nb = fChain->GetEntry(jentry);   nbytes += nb;
        
-       if(jentry % 20000 == 0)
+       //       if(jentry % 20000 == 0)
+       if(jentry % 200 == 0)
 	 cout << "Entry " << jentry << "/" << nentries << endl;
 
        if(jet_pt->size() < 2)
@@ -829,6 +838,11 @@ void HadronicWWCuts::Loop()
                                                                            theshift1, theshift2);
 				       
 				       passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
+
+				       if(samplenumber > 200)
+					 {
+					   passesprotonefficiency = true; // JH - for 2018 set eff = 100% until final values available
+					 }
 				     }
 
 				   if((passesselector == true) && (passesprotonefficiency == true) && (thexi >= 0.05))
@@ -1195,7 +1209,10 @@ void HadronicWWCuts::Loop()
 
 
    if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z_0E0_ACZ_5E-5_2017preTS2.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+
+   if(samplenumber == 40)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017postTS2.root","RECREATE");
 
    // 2016
    if(samplenumber == 101)
@@ -1221,6 +1238,9 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 111)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic700ot1000_2016.root","RECREATE");
 
+   if(samplenumber == 120)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2016preTS2.root","RECREATE");
+
    // 2018
    if(samplenumber == 201)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2018.root","RECREATE");
@@ -1242,6 +1262,9 @@ void HadronicWWCuts::Loop()
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root","RECREATE");
    if(samplenumber == 210)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root","RECREATE");
+
+   if(samplenumber == 220)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018.root","RECREATE");
 
    ofs.close();
 

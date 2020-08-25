@@ -174,6 +174,9 @@ void ULPlotStackTest2016(Int_t var = 1)
   TFile *f11 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic700ot1000_2016.root");
   TH1F *h11 = (TH1F *)f11->Get(hist);
 
+  TFile *fa1 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2016preTS2.root");
+  TH1F *ha1 = (TH1F *)fa1->Get(hist);
+
 
   h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -204,6 +207,8 @@ void ULPlotStackTest2016(Int_t var = 1)
       h11->Rebin(rebinfactor);
       h100->Rebin(rebinfactor); //h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
+
+      ha1->Rebin(rebinfactor);
     }
 
   // For MC in higher QCD pT bins, only running on 100k events from the ntuple per bin, so renormalize to that                                               
@@ -258,6 +263,11 @@ void ULPlotStackTest2016(Int_t var = 1)
   h11->Sumw2(); // ttbar 700-1000                                                                                                                                        
   //  h11->Scale((913088.0/38426513.0)*mc11xsec*1000*lumi/(1000000.0));
   h11->Scale(mc11xsec*1000*lumi/(38426513.0));
+
+  ha1->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
+  ha1->Scale(mcaxsec*1000*lumi/69500.0);
+  ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
+
 
   /*
   h12->Add(h11);
@@ -385,6 +395,8 @@ void ULPlotStackTest2016(Int_t var = 1)
   h100->SetMarkerStyle(20); h100->SetLineWidth(3);
   h100->Draw("esame");
 
+  // Signal MC                                                                                                                                                                                               
+  ha1->Draw("histsame");
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
   h10->SetMarkerStyle(0); 
@@ -395,6 +407,7 @@ void ULPlotStackTest2016(Int_t var = 1)
   lg1->AddEntry(h8,"Madgraph W+jets");
   lg1->AddEntry(h7,"Powheg ttbar (bins)");
   lg1->AddEntry(h9,"Madgraph Z+jets");
+  lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
   lg1->AddEntry(h100,"201GBCG Data");
   lg1->Draw("same");
   
@@ -423,6 +436,9 @@ void ULPlotStackTest2016(Int_t var = 1)
   h11->Draw("histsame");
   gPad->SetLogy();
   h100->Draw("esame");
+
+  // Signal MC                                                                                                                                                                                               
+  ha1->Draw("histsame");
 
   c1->cd(3);
   /*

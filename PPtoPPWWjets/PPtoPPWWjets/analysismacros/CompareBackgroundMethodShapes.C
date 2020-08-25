@@ -1,12 +1,26 @@
 void CompareBackgroundMethodShapes(int var = 1, int sigcuts = 0, int year = 2017)
 {
-  TFile *f1 = TFile::Open("../datamcplots/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017BCDEF.root");
-  TFile *f2 = TFile::Open("../eventmixing/EventMixingOutputHistos.root");
+  TFile *f1;
+  if(year == 2016)
+    f1 = TFile::Open("../datamcplots/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016BCG.root");
+  if(year == 2017)
+     f1 = TFile::Open("../datamcplots/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017BCDEF.root");
+  if(year == 2018)
+    f1 = TFile::Open("../datamcplots/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018ABCD.root");
+
+  TFile *f2 = TFile::Open("../eventmixing/EventMixingOutputHistosNew.root");
 
   TH2F *h1 = (TH2F *)f1->Get("hmassrapiditymatchantiacopmm");
   TH2F *h2 = (TH2F *)f1->Get("hmassrapiditymatchantitaumm");
-  TH2F *h3 = (TH2F *)f2->Get("hmresdysum");
+  TH2F *h3; 
+  if(year == 2016)
+    h3 = (TH2F *)f2->Get("hmresdysum2016");
+  if(year == 2017)
+    h3 = (TH2F *)f2->Get("hmresdysum2017");
+  if(year == 2018)
+    h3 = (TH2F *)f2->Get("hmresdysum2018");
 
+  
   float acopscale = 0.0; float tauscale = 0.0;
   if(year == 2016) {acopscale = 0.448276; tauscale = 1.0;}
   if(year == 2017) {acopscale = 0.43871; tauscale = 0.596491;}
@@ -52,11 +66,20 @@ void CompareBackgroundMethodShapes(int var = 1, int sigcuts = 0, int year = 2017
   htaum->Rebin(5);
   hmixm->Rebin(5);
 
+  /*
+  if(var == 2)
+    {
+      hacopm->Rebin(2);
+      htaum->Rebin(2);
+      hmixm->Rebin(2);
+    }
+  */
+
   hacopm->Sumw2(); hacopm->Scale(acopscale); hacopm->SetFillColor(2); hacopm->SetFillStyle(3001); hacopm->SetMarkerStyle(0);
   htaum->Sumw2(); htaum->Scale(tauscale); htaum->SetFillColor(4); htaum->SetFillStyle(3001); htaum->SetMarkerStyle(0); 
   hmixm->SetFillColor(1);  hmixm->SetMarkerStyle(0);
 
-  htaum->GetXaxis()->SetRangeUser(-2,1);
+  htaum->GetXaxis()->SetRangeUser(-2,2);
   htaum->SetMaximum(50);
 
   htaum->SetXTitle("1 - m(W_{j} W_{j})/m(pp)");

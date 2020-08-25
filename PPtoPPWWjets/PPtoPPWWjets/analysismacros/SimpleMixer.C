@@ -60,8 +60,9 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
   ifstream ifs(centralfile);
 
   TFile *f;
-  f = TFile::Open("DistrForMixing2017FIX.root"); 
-  
+  //  f = TFile::Open("NewMixingDistributions2017.root"); 
+  f = TFile::Open("NewMixingDistributions2016.root");
+
   TH1D *hn45 = (TH1D *)f->Get("mtpl_multi_S45");
   TH1D *hn56 = (TH1D *)f->Get("mtpl_multi_S56");
   TH1D *hxi45 = (TH1D *)f->Get("xi_multi_S45");
@@ -157,7 +158,7 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
   std::cout << "N(bkg in signal region) = " << scaledsignalbox << " for lumi=" << lumi2017 << std::endl;
 }
 
-void AllSimpleMixer(Int_t remix = 1)
+void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 {
   Float_t lumi2017 = 37.175;
   Float_t eqlumi02017 = 11896906.0/(6838*1.14405*1000.0);
@@ -170,8 +171,32 @@ void AllSimpleMixer(Int_t remix = 1)
   Float_t eqlumi72017 = 8081153.0/(33.7*1000.0);
   Float_t eqlumi82017 = 9783887.0/(14.6*1000.0);
 
+  Float_t lumi2016 = 10.016;
+  Float_t eqlumi02016 = 18319816.0/(6830.0*1000.0);
+  Float_t eqlumi12016 = 3959986.0/(642.1*1000.0);
+  Float_t eqlumi22016 = 3896412.0/(185.9*1000.0);
+  Float_t eqlumi32016 = 15704980.0/(32.293*1000.0);
+  Float_t eqlumi42016 = 2999069.0/(9.4183*1000.0);
+  Float_t eqlumi52016 = 335704.0/(0.84265*1000.0);
+  Float_t eqlumi62016 = 38426513.0/(66.85*1000.0);
+  Float_t eqlumi72016 = 1026587.0/(98.4*1000.0);
+  Float_t eqlumi82016 = 1000000.0/(41.3*1000.0);
+  Float_t eqlumi92016 = 24577608.0/(21.3*1000.0);
 
-  TString centralfile0 = "MC_EventsForMixing_QCD300to470_2017.txt";
+  Float_t lumi2018 = 52.871;
+  Float_t eqlumi02018 = 10828000.0/(6838.0*1.14405*1000.0);
+  Float_t eqlumi12018 = 14952000.0/(551.1*1.17619*1000.0);
+  Float_t eqlumi22018 = 40367000.0/(156.4*1.19501*1000.0);
+  Float_t eqlumi32018 = 23097000.0/(32.293*1000.0);
+  Float_t eqlumi42018 = 8121000.0/(7.466*1.26149*1000.0);
+  Float_t eqlumi52018 = 1944000.0/(0.6481*1.30019*1000.0);
+  Float_t eqlumi62018 = 134160000.0/(377.96*1000.0);
+  Float_t eqlumi72018 = 9828980.0/(33.7*1000.0);
+  Float_t eqlumi82018 = 7857468.0/(14.6*1000.0);
+
+
+
+  TString centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
   Float_t eqlumi0 = eqlumi02017;
   TString centralfile1 = "MC_EventsForMixing_QCD470to600_2017.txt";
   Float_t eqlumi1 = eqlumi12017;
@@ -189,6 +214,60 @@ void AllSimpleMixer(Int_t remix = 1)
   Float_t eqlumi7 = eqlumi72017;
   TString centralfile8 = "MC_EventsForMixing_zjets_2017.txt";
   Float_t eqlumi8 = eqlumi82017;
+  TString centralfile9 = "";
+  Float_t eqlumi9 = 0;
+
+  Float_t lumi = lumi2017;
+
+  if(year == 2016)
+    {
+      centralfile0 = "MC_EventsForMixing_QCD300to470_2016.txt";
+      eqlumi0 = eqlumi02016;
+      centralfile1 = "MC_EventsForMixing_QCD470to600_2016.txt";
+      eqlumi1 = eqlumi12016;
+      centralfile2 = "MC_EventsForMixing_QCD600to800_2016.txt";
+      eqlumi2 = eqlumi22016;
+      centralfile3 = "MC_EventsForMixing_QCD800to1000_2016.txt";
+      eqlumi3 = eqlumi32016;
+      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2016.txt";
+      eqlumi4 = eqlumi42016;
+      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2016.txt";
+      eqlumi5 = eqlumi52016;
+      centralfile6 = "MC_EventsForMixing_ttbar700to1000_2016.txt";
+      eqlumi6 = eqlumi62016;
+      centralfile7 = "MC_EventsForMixing_wjets_2016.txt";
+      eqlumi7 = eqlumi72016;
+      centralfile8 = "MC_EventsForMixing_zjets_2016.txt";
+      eqlumi8 = eqlumi82016;
+      centralfile9 = "MC_EventsForMixing_ttbar1000inf_2016.txt";
+      eqlumi9 = eqlumi92016;
+
+      lumi = lumi2016;
+    }
+  if(year == 2018)
+    {
+      centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
+      eqlumi0 = eqlumi02018;
+      centralfile1 = "MC_EventsForMixing_QCD470to600_2018.txt";
+      eqlumi1 = eqlumi12018;
+      centralfile2 = "MC_EventsForMixing_QCD600to800_2018.txt";
+      eqlumi2 = eqlumi22018;
+      centralfile3 = "MC_EventsForMixing_QCD800to1000_2018.txt";
+      eqlumi3 = eqlumi32018;
+      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2018.txt";
+      eqlumi4 = eqlumi42018;
+      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2018.txt";
+      eqlumi5 = eqlumi52018;
+      centralfile6 = "MC_EventsForMixing_ttbar_2018.txt";
+      eqlumi6 = eqlumi62018;
+      centralfile7 = "MC_EventsForMixing_wjets_2018.txt";
+      eqlumi7 = eqlumi72018;
+      centralfile8 = "MC_EventsForMixing_zjets_2018.txt";
+      eqlumi8 = eqlumi82018;
+
+      lumi = lumi2018;
+    }
+
 
   Float_t nbkg0;
   Float_t nbkg1;
@@ -199,9 +278,16 @@ void AllSimpleMixer(Int_t remix = 1)
   Float_t nbkg6;
   Float_t nbkg7;
   Float_t nbkg8;
+  Float_t nbkg9;
 
   TFile *f;
-  f = TFile::Open("DistrForMixing2017FIX.root");
+
+  f = TFile::Open("NewMixingDistributions2017.root");
+  if(year == 2016)
+    f = TFile::Open("NewMixingDistributions2016.root");
+  if(year == 2018)
+    f = TFile::Open("NewMixingDistributions2018.root");
+
 
   TH1D *hn45 = (TH1D *)f->Get("mtpl_multi_S45");
   TH1D *hn56 = (TH1D *)f->Get("mtpl_multi_S56");
@@ -244,6 +330,8 @@ void AllSimpleMixer(Int_t remix = 1)
   TH2F *hmresdy6 = new TH2F("hmresdy6","hmresdy6",500,-5,5,500,-5,5);
   TH2F *hmresdy7 = new TH2F("hmresdy7","hmresdy7",500,-5,5,500,-5,5);
   TH2F *hmresdy8 = new TH2F("hmresdy8","hmresdy8",500,-5,5,500,-5,5);
+  TH2F *hmresdy9 = new TH2F("hmresdy9","hmresdy9",500,-5,5,500,-5,5);
+
 
   TH1F *hmjjsum = new TH1F("hmjjsum","hmjjsum",250,0,5000);
   TH1F *hmjj0 = new TH1F("hmjj0","hmjj0",250,0,5000);
@@ -255,6 +343,7 @@ void AllSimpleMixer(Int_t remix = 1)
   TH1F *hmjj6 = new TH1F("hmjj6","hmjj6",250,0,5000);
   TH1F *hmjj7 = new TH1F("hmjj7","hmjj7",250,0,5000);
   TH1F *hmjj8 = new TH1F("hmjj8","hmjj8",250,0,5000);
+  TH1F *hmjj9 = new TH1F("hmjj9","hmjj9",250,0,5000);
 
   TH1F *hmjjsumstack = new TH1F("hmjjsumstack","hmjjsumstack",250,0,5000);
   TH1F *hmjjqcd = new TH1F("hmjjqcd","hmjjqcd",250,0,5000);
@@ -274,6 +363,7 @@ void AllSimpleMixer(Int_t remix = 1)
   TH1F *hmjjanyprotons6 = new TH1F("hmjjanyprotons6","hmjjanyprotons6",250,0,5000);
   TH1F *hmjjanyprotons7 = new TH1F("hmjjanyprotons7","hmjjanyprotons7",250,0,5000);
   TH1F *hmjjanyprotons8 = new TH1F("hmjjanyprotons8","hmjjanyprotons8",250,0,5000);
+  TH1F *hmjjanyprotons9 = new TH1F("hmjjanyprotons9","hmjjanyprotons9",250,0,5000);
 
 
   TH1F *hmjjcentralsum = new TH1F("hmjjcentralsum","hmjjcentralsum",250,0,5000);
@@ -286,6 +376,7 @@ void AllSimpleMixer(Int_t remix = 1)
   TH1F *hmjjcentral6 = new TH1F("hmjjcentral6","hmjjcentral6",250,0,5000);
   TH1F *hmjjcentral7 = new TH1F("hmjjcentral7","hmjjcentral7",250,0,5000);
   TH1F *hmjjcentral8 = new TH1F("hmjjcentral8","hmjjcentral8",250,0,5000);
+  TH1F *hmjjcentral9 = new TH1F("hmjjcentral9","hmjjcentral9",250,0,5000);
 
   TH2F *hmyjjcentralsum = new TH2F("hmyjjcentralsum","hmyjjcentralsum",250,0,5000,250,-5,5);
   TH2F *hmyjjcentral0 = new TH2F("hmyjjcentral0","hmyjjcentral0",250,0,5000,250,-5,5);
@@ -297,17 +388,19 @@ void AllSimpleMixer(Int_t remix = 1)
   TH2F *hmyjjcentral6 = new TH2F("hmyjjcentral6","hmyjjcentral6",250,0,5000,250,-5,5);
   TH2F *hmyjjcentral7 = new TH2F("hmyjjcentral7","hmyjjcentral7",250,0,5000,250,-5,5);
   TH2F *hmyjjcentral8 = new TH2F("hmyjjcentral8","hmyjjcentral8",250,0,5000,250,-5,5);
+  TH2F *hmyjjcentral9 = new TH2F("hmyjjcentral9","hmyjjcentral9",250,0,5000,250,-5,5);
 
-  TH1F *nbkgbyexperiment = new TH1F("nbkgbyexperiment","nbkgbyexperiment",25,0,25);
+  TH1F *nbkgbyexperiment = new TH1F("nbkgbyexperiment","nbkgbyexperiment",100,0,100);
 
   Float_t xicut = 0.05;
   Int_t ntotal = 0;
   Int_t ntwoarms = 0;
   Int_t ntwoarmsxi5 = 0;
 
+  Float_t nbkgaveragetotal = 0.0;
+
   Int_t subremix = 1;
 
-  // QCD
   for(Int_t i = 0; i < remix; i++)
     {
       ifstream ifs0(centralfile0);
@@ -319,20 +412,22 @@ void AllSimpleMixer(Int_t remix = 1)
       ifstream ifs6(centralfile6);
       ifstream ifs7(centralfile7);
       ifstream ifs8(centralfile8);
+      ifstream ifs9(centralfile9);
 
-      nbkg0 = 0;
-      nbkg1 = 0;
-      nbkg2 = 0;
-      nbkg3 = 0;
-      nbkg4 = 0;
-      nbkg5 = 0;
-      nbkg6 = 0;
-      nbkg7 = 0;
-      nbkg8 = 0;
-
+      nbkg0 = 0.0;
+      nbkg1 = 0.0;
+      nbkg2 = 0.0;
+      nbkg3 = 0.0;
+      nbkg4 = 0.0;
+      nbkg5 = 0.0;
+      nbkg6 = 0.0;
+      nbkg7 = 0.0;
+      nbkg8 = 0.0;
+      nbkg9 = 0.0;
 
       cout << "Experiment #" << i << endl;
 
+      // QCD                                                                                                                                                                                  
       cout << "\tRunning QCD" << endl;
       while(!ifs0.eof())
 	{
@@ -371,7 +466,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj0->Fill(mww,PUweight);
-			  nbkg0 = PUweight;
+			  nbkg0 += PUweight;
 			}
 		    }
 		}
@@ -416,7 +511,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj1->Fill(mww,PUweight);
-                          nbkg1 = PUweight;
+                          nbkg1 += PUweight;
 			}
 		    }
 		}
@@ -470,7 +565,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj2->Fill(mww,PUweight);
-                          nbkg2 = PUweight;
+                          nbkg2 += PUweight;
 			}
 		    }
 		}
@@ -515,7 +610,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj3->Fill(mww,PUweight);
-			  nbkg3 = PUweight;
+			  nbkg3 += PUweight;
 			}
 		    }
 		}
@@ -559,7 +654,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj4->Fill(mww,PUweight);
-                          nbkg4 = PUweight;
+                          nbkg4 += PUweight;
 			}
 		    }
 		}
@@ -603,7 +698,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj5->Fill(mww,PUweight);
-                          nbkg5 = PUweight;
+                          nbkg5 += PUweight;
 			}
 		    }
 		}
@@ -651,12 +746,63 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj6->Fill(mww,PUweight);
-                          nbkg6 = PUweight;
+                          nbkg6 += PUweight;
 			}
 		    }
 		}
 	    }
 	}
+
+      // For 2016 only we have 2 ttbar bins
+      if(year == 2016)
+	{
+	  while(!ifs9.eof())
+	    {
+	      Float_t xi45 = 0;
+	      Float_t xi56 = 0;
+
+	      ifs9 >> channel >> PU >> PUweight >> mww >> yww
+		   >> acop >> jetptbal
+		   >> jetmass1  >> jetmass2
+		   >> taut21ddt1 >> taut21ddt2
+		   >> xijets1 >> xijets2
+		   >> run >> ls  >> event;
+
+
+	      //          if( ifs6.eof() ) break;                                                                                                                                             
+
+	      if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+		{
+		  hmjjcentral9->Fill(mww,PUweight);
+		  hmyjjcentral9->Fill(mww,yww,PUweight);
+
+		  for(Int_t j = 0; j < subremix; j++)
+		    {
+		      int passes = 0;
+
+		      Double_t n45 = hn45->GetRandom();
+		      if(n45 > 0.5) {xi45 = hxi45->GetRandom();}
+		      Double_t n56 = hn56->GetRandom();
+		      if(n56 > 0.5) {xi56 = hxi56->GetRandom();}
+		      if(n45 > 0.5 && n56 > 0.5 && xi45 >= xicut && xi56 >= xicut)
+			{
+			  Float_t mpp = 13000.0*TMath::Sqrt(xi45*xi56);
+			  Float_t ypp = 0.5*TMath::Log(xi45/xi56);
+			  //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;                                                      
+
+			  hmjjanyprotons9->Fill(mww);
+			  hmresdy9->Fill(1-(mww/mpp),ypp-yww,PUweight);
+			  if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+			    {
+			      hmjj9->Fill(mww,PUweight);
+			      nbkg9 += PUweight;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+
       // wjets
       cout << "\tRunning W+jets" << endl;
       
@@ -698,7 +844,7 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj7->Fill(mww,PUweight);
-                          nbkg7 = PUweight;
+                          nbkg7 += PUweight;
 			}
 		    }
 		}
@@ -745,13 +891,34 @@ void AllSimpleMixer(Int_t remix = 1)
 		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
 			{
 			  hmjj8->Fill(mww,PUweight);
-                          nbkg8 = PUweight;
+                          nbkg8 += PUweight;
 			}
 		    }
 		}
 	    }
 	}
-      Float_t nbkgtotal = nbkg0+nbkg1+nbkg2+nbkg3+nbkg4+nbkg5+nbkg6+nbkg7+nbkg8;
+      
+      Float_t nbkgtotal = (nbkg0*lumi/eqlumi0)
+	+(nbkg1*lumi/eqlumi1)
+	+(nbkg2*lumi/eqlumi2)
+	+(nbkg3*lumi/eqlumi3)
+	+(nbkg4*lumi/eqlumi4)
+	+(nbkg5*lumi/eqlumi5)
+	+(nbkg6*lumi/eqlumi6)
+	+(nbkg7*lumi/eqlumi7)
+	+(nbkg8*lumi/eqlumi8);
+      if(year == 2016)
+	{
+	  nbkgtotal += (nbkg9*lumi/eqlumi9);
+	}
+      
+      std::cout << "\tExperiment N(bkg) = " << nbkgtotal << std::endl;
+      std::cout << "\t\tQCD = " << (nbkg0*lumi/eqlumi0) << " + " << (nbkg1*lumi/eqlumi1) << " + " 
+		<< (nbkg2*lumi/eqlumi2) << " + " << (nbkg3*lumi/eqlumi3) << " + " << (nbkg4*lumi/eqlumi4)
+		<< " + " << (nbkg5*lumi/eqlumi5) << std::endl;
+
+      
+      nbkgaveragetotal += nbkgtotal;
       nbkgbyexperiment->Fill(nbkgtotal);
     }
 
@@ -762,29 +929,36 @@ void AllSimpleMixer(Int_t remix = 1)
 
 
   hmresdy0->Sumw2(); hmresdy1->Sumw2(); hmresdy2->Sumw2(); hmresdy3->Sumw2(); hmresdy4->Sumw2(); hmresdy5->Sumw2();
-  hmresdy6->Sumw2(); hmresdy7->Sumw2(); hmresdy8->Sumw2(); 
+  hmresdy6->Sumw2(); hmresdy7->Sumw2(); hmresdy8->Sumw2(); hmresdy9->Sumw2();
 
-  hmresdy0->Scale(lumi2017/eqlumi0/remix);
+  hmresdy0->Scale(lumi/eqlumi0/remix/subremix);
   hmresdy0->SetMarkerStyle(20);
-  hmresdy1->Scale(lumi2017/eqlumi1/remix);
+  hmresdy1->Scale(lumi/eqlumi1/remix/subremix);
   hmresdy1->SetMarkerStyle(20);
-  hmresdy2->Scale(lumi2017/eqlumi2/remix);
+  hmresdy2->Scale(lumi/eqlumi2/remix/subremix);
   hmresdy2->SetMarkerStyle(20);
-  hmresdy3->Scale(lumi2017/eqlumi3/remix);
+  hmresdy3->Scale(lumi/eqlumi3/remix/subremix);
   hmresdy3->SetMarkerStyle(20);
-  hmresdy4->Scale(lumi2017/eqlumi4/remix);
+  hmresdy4->Scale(lumi/eqlumi4/remix/subremix);
   hmresdy4->SetMarkerStyle(20);
-  hmresdy5->Scale(lumi2017/eqlumi5/remix);
+  hmresdy5->Scale(lumi/eqlumi5/remix/subremix);
   hmresdy5->SetMarkerStyle(20);
-  hmresdy6->Scale(lumi2017/eqlumi6/remix);
+  hmresdy6->Scale(lumi/eqlumi6/remix/subremix);
   hmresdy6->SetMarkerStyle(20);
-  hmresdy7->Scale(lumi2017/eqlumi7/remix);
+  hmresdy7->Scale(lumi/eqlumi7/remix/subremix);
   hmresdy7->SetMarkerStyle(20);
-  hmresdy8->Scale(lumi2017/eqlumi8/remix);
+  hmresdy8->Scale(lumi/eqlumi8/remix/subremix);
   hmresdy8->SetMarkerStyle(20);
+  if(year == 2016)
+    {
+      hmresdy9->Scale(lumi/eqlumi9/remix/subremix);
+      hmresdy9->SetMarkerStyle(20);
+    }
 
   hmresdysum->Add(hmresdy0); hmresdysum->Add(hmresdy1); hmresdysum->Add(hmresdy2); hmresdysum->Add(hmresdy3); hmresdysum->Add(hmresdy4); hmresdysum->Add(hmresdy5);
-  hmresdysum->Add(hmresdy6); hmresdysum->Add(hmresdy7); hmresdysum->Add(hmresdy8);
+  hmresdysum->Add(hmresdy6); hmresdysum->Add(hmresdy7); hmresdysum->Add(hmresdy8); 
+  if(year == 2016)
+    hmresdysum->Add(hmresdy9);
 
   TCanvas *c1 = new TCanvas("c1","c1");
   //  hmresdysum->Rebin2D(4,4);
@@ -799,7 +973,13 @@ void AllSimpleMixer(Int_t remix = 1)
   hmresdysum->SetTitle("Event mixing background, L=37.2fb^{-1}");
   hmresdysum->Draw("colz");
 
-  CMS_lumi2016(c1,0,0,"2017, L = 37.2 fb^{-1}");
+  if(year == 2017)
+    CMS_lumi2016(c1,0,0,"2017, L = 37.2 fb^{-1}");
+  if(year == 2016)
+    CMS_lumi2016(c1,0,0,"2016, L = 10.2 fb^{-1}");
+  if(year == 2018)
+    CMS_lumi2016(c1,0,0,"2018, L = 52.9 fb^{-1}");
+
 
   TBox *b1 = new TBox(-0.10,-0.06,0.10,0.06);
   b1->SetLineWidth(3); b1->SetFillStyle(0); b1->Draw("same");
@@ -819,19 +999,22 @@ void AllSimpleMixer(Int_t remix = 1)
 
 
 
-  std::cout << "N(bkg in signal region) = " << scaledsignalbox << " for lumi=" << lumi2017 << std::endl;
-  std::cout << "N(unblinded normalization region = " << unblindnormregion << " for lumi=" << lumi2017 << std::endl;
+  std::cout << "N(bkg in signal region, mean for L=" << lumi << ") = " << nbkgaveragetotal/remix << std::endl;
+  std::cout << "N(bkg in signal region from 2D histogram) = " << scaledsignalbox << std::endl;
+  std::cout << "N(unblinded normalization region = " << unblindnormregion << " for lumi=" << lumi << std::endl;
 
 
-  hmjj0->Scale(lumi2017/eqlumi0/remix);
-  hmjj1->Scale(lumi2017/eqlumi1/remix);
-  hmjj2->Scale(lumi2017/eqlumi2/remix);
-  hmjj3->Scale(lumi2017/eqlumi3/remix);
-  hmjj4->Scale(lumi2017/eqlumi4/remix);
-  hmjj5->Scale(lumi2017/eqlumi5/remix);
-  hmjj6->Scale(lumi2017/eqlumi6/remix);
-  hmjj7->Scale(lumi2017/eqlumi7/remix);
-  hmjj8->Scale(lumi2017/eqlumi8/remix);
+  hmjj0->Scale(lumi/eqlumi0/remix/subremix);
+  hmjj1->Scale(lumi/eqlumi1/remix/subremix);
+  hmjj2->Scale(lumi/eqlumi2/remix/subremix);
+  hmjj3->Scale(lumi/eqlumi3/remix/subremix);
+  hmjj4->Scale(lumi/eqlumi4/remix/subremix);
+  hmjj5->Scale(lumi/eqlumi5/remix/subremix);
+  hmjj6->Scale(lumi/eqlumi6/remix/subremix);
+  hmjj7->Scale(lumi/eqlumi7/remix/subremix);
+  hmjj8->Scale(lumi/eqlumi8/remix/subremix);
+  if(year == 2016)
+    hmjj9->Scale(lumi/eqlumi9/remix/subremix);
 
   hmjjsum->Add(hmjj0);
   hmjjsum->Add(hmjj1);
@@ -842,6 +1025,8 @@ void AllSimpleMixer(Int_t remix = 1)
   hmjjsum->Add(hmjj6);
   hmjjsum->Add(hmjj7);
   hmjjsum->Add(hmjj8);
+  if(year == 2016)
+    hmjjsum->Add(hmjj9);
 
   hmjjqcd->Add(hmjj0); 
   hmjjqcd->Add(hmjj1);
@@ -852,15 +1037,23 @@ void AllSimpleMixer(Int_t remix = 1)
   hmjjqcd->Add(hmjj6);
   hmjjqcd->Add(hmjj7);
   hmjjqcd->Add(hmjj8);
+  if(year == 2016)
+    hmjjqcd->Add(hmjj9);
 
   hmjjwjets->Add(hmjj7);
   hmjjwjets->Add(hmjj8);
   hmjjwjets->Add(hmjj6);
+  if(year == 2016)
+    hmjjwjets->Add(hmjj9);
 
   hmjjzjets->Add(hmjj8);
   hmjjzjets->Add(hmjj7);
+  if(year == 2016)
+    hmjjzjets->Add(hmjj9);
 
   hmjjttbar->Add(hmjj7);
+  if(year == 2016)
+    hmjjttbar->Add(hmjj9);
 
   hmjjqcd->Rebin(10);
   hmjjwjets->Rebin(10);
@@ -899,45 +1092,56 @@ void AllSimpleMixer(Int_t remix = 1)
 
   lg1->AddEntry(hmjjqcd,"Pythia8 QCD (bins) + mixed protons");
   lg1->AddEntry(hmjjwjets,"Madgraph W+jets + mixed protons");
-  lg1->AddEntry(hmjjzjets,"Powheg ttbar + mixed protons");
-  lg1->AddEntry(hmjjttbar,"Madgraph Z+jets + mixed protons");
+  lg1->AddEntry(hmjjzjets,"Madgraph Z+jets + mixed protons");
+  lg1->AddEntry(hmjjttbar,"Powheg ttbar + mixed protons");
   lg1->Draw("same");
 
-  CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
+  if(year == 2017)
+    CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
+  if(year == 2016)
+    CMS_lumi2016(c2,0,0,"2016, L = 10.2 fb^{-1}");
+  if(year == 2018)
+    CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
 
 
   //  hmjjsum->Draw("hist");
 
-  hmjjcentral0->Scale(lumi2017/eqlumi0);
-  hmjjcentral1->Scale(lumi2017/eqlumi1);
-  hmjjcentral2->Scale(lumi2017/eqlumi2);
-  hmjjcentral3->Scale(lumi2017/eqlumi3);
-  hmjjcentral4->Scale(lumi2017/eqlumi4);
-  hmjjcentral5->Scale(lumi2017/eqlumi5);
-  hmjjcentral5->Scale(lumi2017/eqlumi6);
-  hmjjcentral5->Scale(lumi2017/eqlumi7);
-  hmjjcentral8->Scale(lumi2017/eqlumi8);
+  hmjjcentral0->Scale(lumi/eqlumi0);
+  hmjjcentral1->Scale(lumi/eqlumi1);
+  hmjjcentral2->Scale(lumi/eqlumi2);
+  hmjjcentral3->Scale(lumi/eqlumi3);
+  hmjjcentral4->Scale(lumi/eqlumi4);
+  hmjjcentral5->Scale(lumi/eqlumi5);
+  hmjjcentral5->Scale(lumi/eqlumi6);
+  hmjjcentral5->Scale(lumi/eqlumi7);
+  hmjjcentral8->Scale(lumi/eqlumi8);
+  if(year == 2016)
+    hmjjcentral9->Scale(lumi/eqlumi9);
 
-  hmyjjcentral0->Scale(lumi2017/eqlumi0);
-  hmyjjcentral1->Scale(lumi2017/eqlumi1);
-  hmyjjcentral2->Scale(lumi2017/eqlumi2);
-  hmyjjcentral3->Scale(lumi2017/eqlumi3);
-  hmyjjcentral4->Scale(lumi2017/eqlumi4);
-  hmyjjcentral5->Scale(lumi2017/eqlumi5);
-  hmyjjcentral5->Scale(lumi2017/eqlumi6);
-  hmyjjcentral5->Scale(lumi2017/eqlumi7);
-  hmyjjcentral8->Scale(lumi2017/eqlumi8);
+  hmyjjcentral0->Scale(lumi/eqlumi0);
+  hmyjjcentral1->Scale(lumi/eqlumi1);
+  hmyjjcentral2->Scale(lumi/eqlumi2);
+  hmyjjcentral3->Scale(lumi/eqlumi3);
+  hmyjjcentral4->Scale(lumi/eqlumi4);
+  hmyjjcentral5->Scale(lumi/eqlumi5);
+  hmyjjcentral5->Scale(lumi/eqlumi6);
+  hmyjjcentral5->Scale(lumi/eqlumi7);
+  hmyjjcentral8->Scale(lumi/eqlumi8);
+  if(year == 2016)
+    hmyjjcentral9->Scale(lumi/eqlumi9);
 
 
-  hmjjanyprotons0->Scale(lumi2017/eqlumi0/remix);
-  hmjjanyprotons1->Scale(lumi2017/eqlumi1/remix);
-  hmjjanyprotons2->Scale(lumi2017/eqlumi2/remix);
-  hmjjanyprotons3->Scale(lumi2017/eqlumi3/remix);
-  hmjjanyprotons4->Scale(lumi2017/eqlumi4/remix);
-  hmjjanyprotons5->Scale(lumi2017/eqlumi5/remix);
-  hmjjanyprotons5->Scale(lumi2017/eqlumi6/remix);
-  hmjjanyprotons5->Scale(lumi2017/eqlumi7/remix);
-  hmjjanyprotons8->Scale(lumi2017/eqlumi8/remix);
+  hmjjanyprotons0->Scale(lumi/eqlumi0/remix/subremix);
+  hmjjanyprotons1->Scale(lumi/eqlumi1/remix/subremix);
+  hmjjanyprotons2->Scale(lumi/eqlumi2/remix/subremix);
+  hmjjanyprotons3->Scale(lumi/eqlumi3/remix/subremix);
+  hmjjanyprotons4->Scale(lumi/eqlumi4/remix/subremix);
+  hmjjanyprotons5->Scale(lumi/eqlumi5/remix/subremix);
+  hmjjanyprotons5->Scale(lumi/eqlumi6/remix/subremix);
+  hmjjanyprotons5->Scale(lumi/eqlumi7/remix/subremix);
+  hmjjanyprotons8->Scale(lumi/eqlumi8/remix/subremix);
+  if(year == 2016)
+    hmjjanyprotons9->Scale(lumi/eqlumi9/remix/subremix);
 
   hmjjcentralsum->Add(hmjjcentral0);
   hmjjcentralsum->Add(hmjjcentral1);
@@ -948,6 +1152,8 @@ void AllSimpleMixer(Int_t remix = 1)
   hmjjcentralsum->Add(hmjjcentral6);
   hmjjcentralsum->Add(hmjjcentral7);
   hmjjcentralsum->Add(hmjjcentral8);
+  if(year == 2016)
+    hmjjcentralsum->Add(hmjjcentral9);
   hmjjcentralsum->Sumw2(); hmjjcentralsum->SetLineWidth(3); hmjjcentralsum->SetLineColor(9); hmjjcentralsum->SetFillColor(9); 
 
   hmyjjcentralsum->Add(hmyjjcentral0);
@@ -959,6 +1165,8 @@ void AllSimpleMixer(Int_t remix = 1)
   hmyjjcentralsum->Add(hmyjjcentral6);
   hmyjjcentralsum->Add(hmyjjcentral7);
   hmyjjcentralsum->Add(hmyjjcentral8);
+  if(year == 2016)
+    hmyjjcentralsum->Add(hmyjjcentral9);
   hmyjjcentralsum->Sumw2(); hmyjjcentralsum->SetLineWidth(3); hmyjjcentralsum->SetLineColor(9); hmyjjcentralsum->SetFillColor(9);
 
 
@@ -971,6 +1179,8 @@ void AllSimpleMixer(Int_t remix = 1)
   hmjjanyprotonssum->Add(hmjjanyprotons6);
   hmjjanyprotonssum->Add(hmjjanyprotons7);
   hmjjanyprotonssum->Add(hmjjanyprotons8);
+  if(year == 2016)
+    hmjjanyprotonssum->Add(hmjjanyprotons9);
   hmjjanyprotonssum->Sumw2(); hmjjanyprotonssum->SetLineWidth(3); hmjjanyprotonssum->SetLineColor(7); hmjjanyprotonssum->SetFillColor(7); 
   //  hmjjanyprotonssum->SetMaximum(5);
 
@@ -989,6 +1199,13 @@ void AllSimpleMixer(Int_t remix = 1)
 
   nbkgbyexperiment->Draw("hist");
 
-  CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
+  cout << "Distribution of experiments: mean = " << nbkgbyexperiment->GetMean() << ", RMS = " << nbkgbyexperiment->GetRMS() << endl;
+
+  if(year == 2017)
+    CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
+  if(year == 2016)
+    CMS_lumi2016(c3,0,0,"2016, L = 10.2 fb^{-1}");
+  if(year == 2018)
+    CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
 
 }
