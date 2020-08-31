@@ -179,6 +179,11 @@ void ULPlotStackTest2017(Int_t var = 1)
   TFile *fa2 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017postTS2.root");
   TH1F *ha2 = (TH1F *)fa2->Get(hist);
 
+  TFile *fd1 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017preTS2.root");
+  TH1F *hd1 = (TH1F *)fd1->Get(hist);
+
+  TFile *fd2 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017postTS2.root");
+  TH1F *hd2 = (TH1F *)fd2->Get(hist);
 
   h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -210,6 +215,7 @@ void ULPlotStackTest2017(Int_t var = 1)
       h1000->Rebin(rebinfactor);
 
       ha1->Rebin(rebinfactor); ha2->Rebin(rebinfactor);
+      hd1->Rebin(rebinfactor); hd2->Rebin(rebinfactor);
     }
 
   // For MC in higher QCD pT bins, only running on 100k events from the ntuple per bin, so renormalize to that                                               
@@ -268,6 +274,15 @@ void ULPlotStackTest2017(Int_t var = 1)
   ha2->Sumw2(); // Signal, a0W=1E-6, postTS2                                                                                       
   ha2->Scale(mcaxsec*1000*lumipostTS2/48600.0);
   ha2->SetLineWidth(3); ha2->SetLineColor(kCyan); ha2->SetMarkerStyle(0); ha2->SetMarkerColor(kCyan);
+
+  hd1->Sumw2(); // Signal, aCW=2E-5, preTS2                                                                                                                                               
+  hd1->Scale(mcdxsec*1000*lumipreTS2/54300.0);
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
+
+  hd2->Sumw2(); // Signal, aCW=2E-5, postTS2                                                                                                                                                            
+  hd2->Scale(mcdxsec*1000*lumipreTS2/48900.0);
+  hd2->SetLineWidth(3); hd2->SetLineColor(kCyan); hd2->SetMarkerStyle(0); hd2->SetMarkerColor(kCyan); hd2->SetLineStyle(2);
+
 
   /*
   h12->Add(h11);
@@ -387,6 +402,9 @@ void ULPlotStackTest2017(Int_t var = 1)
   ha1->Add(ha2);
   ha1->Draw("histsame");
 
+  hd1->Add(hd2);
+  hd1->Draw("histsame");
+
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
   h10->SetMarkerStyle(0); 
   h7->SetMarkerStyle(0); h7->SetLineWidth(0);
@@ -397,6 +415,7 @@ void ULPlotStackTest2017(Int_t var = 1)
   lg1->AddEntry(h7,"Powheg ttbar");
   lg1->AddEntry(h9,"Madgraph Z+jets");
   lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+  lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
   lg1->AddEntry(h100,"2017BCDEF Data");
   lg1->Draw("same");
   
@@ -427,6 +446,8 @@ void ULPlotStackTest2017(Int_t var = 1)
 
   // Signal MC                                                                                                                    
   ha1->Draw("histsame");
+
+  hd1->Draw("histsame");
 
   c1->cd(3);
   /*

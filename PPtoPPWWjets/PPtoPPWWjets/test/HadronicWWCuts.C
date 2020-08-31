@@ -415,6 +415,7 @@ void HadronicWWCuts::Loop()
    Int_t npassjetsubstr = 0;
    Int_t npassjetxi = 0;
    Int_t npasspps = 0;
+   Int_t npassppsbeforecuts = 0;
    Int_t npassppsmatchksenia = 0;
 
    TString outtextfile = "MC_EventsForMixing.txt";
@@ -438,6 +439,17 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 9)
      outtextfile = "MC_EventsForMixing_zjets_2017.txt";
 
+   if(samplenumber == 20)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017.txt";
+   if(samplenumber == 23)
+     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017.txt";
+
+   if(samplenumber == 40)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017.txt";
+   if(samplenumber == 43)
+     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017.txt";
+
+
    if(samplenumber == 102)
      outtextfile = "MC_EventsForMixing_QCD300to470_2016.txt";
    if(samplenumber == 103)
@@ -459,6 +471,11 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 111)
      outtextfile = "MC_EventsForMixing_ttbar700to1000_2016.txt";
 
+   if(samplenumber == 120)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016.txt";
+   if(samplenumber == 123)
+     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016.txt";
+
    if(samplenumber == 202)
      outtextfile = "MC_EventsForMixing_QCD300to470_2018.txt";
    if(samplenumber == 203)
@@ -477,6 +494,11 @@ void HadronicWWCuts::Loop()
      outtextfile = "MC_EventsForMixing_wjets_2018.txt";
    if(samplenumber == 209)
      outtextfile = "MC_EventsForMixing_zjets_2018.txt";
+
+   if(samplenumber == 220)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018.txt";
+   if(samplenumber == 223)
+     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018.txt";
 
 
    ofstream ofs(outtextfile);
@@ -839,8 +861,10 @@ void HadronicWWCuts::Loop()
 				       
 				       passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
 
+				       //				       if(samplenumber > 200)
 				       if(samplenumber > 200)
 					 {
+					   //					   passesprotonefficiency = true; // JH testing effect of efficiencies
 					   passesprotonefficiency = true; // JH - for 2018 set eff = 100% until final values available
 					 }
 				     }
@@ -911,6 +935,7 @@ void HadronicWWCuts::Loop()
 			       dymassratiocorrpreseldatmult->Fill(1-mydijet.M()/mpp,mydijet.Rapidity()-ypp);
 			       hdtmulti->Fill(timemulti45s->at(indexmaxmulti45) - timemulti56s->at(indexmaxmulti56));
 			       ismultimulti = 1;
+			       npassppsbeforecuts++;
 			     }
 
 			   // Old - all combinations
@@ -958,7 +983,8 @@ void HadronicWWCuts::Loop()
 				   << jet_corrmass->at(indleading) << " " << jet_corrmass->at(indsecond) << " "
 				   << taut21ddt1 << " " << taut21ddt2 << " "
 				   << xijets1 << " " << xijets2 << " "
-				   << run << " " << lumiblock << " " << event << std::endl;
+				   << run << " " << lumiblock << " " << event << " " 
+				   << ximaxmulti45 << " " << ximaxmulti56 << std::endl;
 			     }
                            if((acop < acopcut) && (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
@@ -1210,9 +1236,14 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 20)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+   if(samplenumber == 23)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017preTS2.root","RECREATE");
+
 
    if(samplenumber == 40)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017postTS2.root","RECREATE");
+   if(samplenumber == 43)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017postTS2.root","RECREATE");
 
    // 2016
    if(samplenumber == 101)
@@ -1240,6 +1271,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 120)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2016preTS2.root","RECREATE");
+   if(samplenumber == 123)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2016preTS2.root","RECREATE");
 
    // 2018
    if(samplenumber == 201)
@@ -1265,6 +1298,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 220)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018.root","RECREATE");
+   if(samplenumber == 223)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018.root","RECREATE");
 
    ofs.close();
 
@@ -1397,11 +1432,12 @@ void HadronicWWCuts::Loop()
      {normxsec = 2.64; nevgen = 10000.0;}
 
    std::cout << "Ran over " << nentries << " events " << std::endl;
-   std::cout << "Passing preselection = " << normxsec*npasspresel/nevgen << std::endl
-	     << "Passing dijet kinematics = " << normxsec*npassdijetkine/nevgen << std::endl
-	     << "Passing jet substructure = " << normxsec*npassjetsubstr/nevgen << std::endl
-	     << "Passing xi(jets) = " << normxsec*npassjetxi/nevgen << std::endl
-	     << "Passing 2 PPS multi-RP protons = " << normxsec*npasspps/nevgen << std::endl
-	     << "Passing pp-WW matching = " << normxsec*npassppsmatchksenia/nevgen << std::endl;
+   std::cout << "Passing preselection = " << npasspresel << std::endl
+	     << "Passing dijet kinematics = " << npassdijetkine << std::endl
+	     << "Passing jet substructure = " << npassjetsubstr << std::endl
+	     << "Passing xi(jets) = " << npassjetxi << std::endl
+	     << "Passing 2 PPS multi-RP protons = " << npasspps << std::endl
+	     << "\t(After preselection and before other central cuts = " << npassppsbeforecuts << std::endl
+	     << "Passing pp-WW matching = " << npassppsmatchksenia << std::endl;
 
 }
