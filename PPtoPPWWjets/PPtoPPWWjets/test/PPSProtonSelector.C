@@ -163,13 +163,10 @@ bool PixelFiducialCuts(Float_t trackx=0.0, Float_t tracky=0.0, Float_t trackthet
      x < fiducialXLow_[std::pair<int, int>(arm, station)] ||
      x > fiducialXHigh_[std::pair<int, int>(arm, station)]
      )
-    {
-      return false;
-    }
+    return false;
+  
   else
-    {
-      return true;
-    }
+    return true;
   
 }
 
@@ -306,3 +303,4 @@ bool TightMultiRPProton(Float_t trackx1=0.0, Float_t tracky1=0.0, Float_t trackx
 
   return passesall;
 }
+

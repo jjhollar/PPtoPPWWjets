@@ -262,7 +262,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   ha1->Scale(mcaxsec*1000*lumi/93000.0);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
-  hd1->Sumw2(); // Signal, a0W=2E-5, 2018                                                                                                                                           
+  hd1->Sumw2(); // Signal, aCW=2E-5, 2018                                                                                                                                           
   hd1->Scale(mcdxsec*1000*lumi/123000.0);
   hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
 

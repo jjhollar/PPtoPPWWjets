@@ -344,6 +344,12 @@ void HadronicWWCuts::Loop()
    TH1F *hymatchsigmcmm = new TH1F("hymatchsigmcmm","hymatchsigmcmm",500,-5,5);
    TH1F *hmassmatchratiosigmcmm = new TH1F("hmassmatchratiosigmcmm","hmassmatchratiosigmcmm",500,-5,5);
 
+   TH1F *hmassmatchratiosigmcmmshiftup = new TH1F("hmassmatchratiosigmcmmshiftup","hmassmatchratiosigmcmmshiftup",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmshiftdown = new TH1F("hmassmatchratiosigmcmmshiftdown","hmassmatchratiosigmcmmshiftdown",500,-5,5);
+   TH1F *hymatchsigmcmmshiftup = new TH1F("hymatchsigmcmmshiftup","hymatchsigmcmmshiftup",500,-5,5);
+   TH1F *hymatchsigmcmmshiftdown = new TH1F("hymatchsigmcmmshiftdown","hymatchsigmcmmshiftdown",500,-5,5);
+
+
    TH2F *hmassrapiditymatchvetosignalregion = new TH2F("hmassrapiditymatchvetosignalregion","hmassrapiditymatchvetosignalregion",500,-5,5,500,-5,5);
    TH2F *hmassrapiditymatchvetoorsignalregion = new TH2F("hmassrapiditymatchvetoorsignalregion","hmassrapiditymatchvetoorsignalregion",500,-5,5,500,-5,5);
 
@@ -407,6 +413,12 @@ void HadronicWWCuts::Loop()
    std::vector<float> *tmulti56s = new std::vector<float>;
    std::vector<float> *timemulti45s = new std::vector<float>;
    std::vector<float> *timemulti56s = new std::vector<float>;
+   std::vector<float> *xishiftmultis45 = new std::vector<float>;
+   std::vector<float> *xishiftmultis56 = new std::vector<float>;
+   std::vector<float> *mppsmultmultshiftup = new std::vector<float>;
+   std::vector<float> *mppsmultmultshiftdown = new std::vector<float>;
+   std::vector<float> *yppsmultmultshiftup = new std::vector<float>;
+   std::vector<float> *yppsmultmultshiftdown = new std::vector<float>;
 
 
    // Counters for # of MC events passing cuts
@@ -441,11 +453,15 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 20)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017.txt";
+   if(samplenumber == 22)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017.txt";
    if(samplenumber == 23)
      outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017.txt";
 
    if(samplenumber == 40)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017.txt";
+   if(samplenumber == 42)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017.txt";
    if(samplenumber == 43)
      outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017.txt";
 
@@ -473,6 +489,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 120)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016.txt";
+   if(samplenumber == 122)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016.txt";
    if(samplenumber == 123)
      outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016.txt";
 
@@ -497,6 +515,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 220)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018.txt";
+   if(samplenumber == 222)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_2018.txt";
    if(samplenumber == 223)
      outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018.txt";
 
@@ -781,6 +801,11 @@ void HadronicWWCuts::Loop()
 		       float mppmm = 0;
 		       float yppmm = 0;
 
+		       float mppshiftup = 0;
+		       float mppshiftdown = 0;
+		       float yppshiftup  = 0;
+		       float yppshiftdown = 0;
+		       
 		       int ismultimulti = 0;
 		       int nSinglePixelTracks45 = 0;
 		       int nSinglePixelTracks56 = 0;
@@ -816,7 +841,10 @@ void HadronicWWCuts::Loop()
 			   int theshift1 = -1;
 			   int theshift2 = -1;
 			   int thearm = -1;
-			   
+
+			   float xishiftmag56 = 0;
+			   float xishiftmag45 = 0;
+
 			   /*
 			    * First loop over all protons to get good multi-RP candidates and apply eff. corrections to MC
 			    */
@@ -885,6 +913,16 @@ void HadronicWWCuts::Loop()
 					   timemulti45s->push_back(thetime);
 
 					   nMultiTracks45++;
+
+					   // Apply xi scale systematic shifts for MC                                                                                  
+					   // For now comment this out, until systematics ROOT file is officially released
+					   /*
+					   if(samplenumber > 0)
+					     {
+					       xishiftmag45 = eff.GetMultiRPXiScaleUncertainty(thearm, thexi, erastring);
+					       xishiftmultis45->push_back(xishiftmag45);
+					     }
+					   */
 					 }
 				       if(thearm==1)
 					 {
@@ -900,6 +938,16 @@ void HadronicWWCuts::Loop()
 					   timemulti56s->push_back(thetime);
 
 					   nMultiTracks56++;
+
+                                           // Apply xi scale systematic shifts for MC                                                                                  
+					   // For now comment this out, until systematics ROOT file is officially released             
+					   /*
+                                           if(samplenumber > 0)
+                                             {
+                                               xishiftmag56 = eff.GetMultiRPXiScaleUncertainty(thearm, thexi, erastring);
+                                               xishiftmultis56->push_back(xishiftmag56);
+                                             }
+					   */
 					 }
 				     }
 				 }
@@ -923,10 +971,29 @@ void HadronicWWCuts::Loop()
 			       mpp = TMath::Sqrt(13000.0*13000.0*ximulti56s->at(indexmaxmulti56)*ximulti45s->at(indexmaxmulti45));
 			       ypp = -0.5*TMath::Log(ximulti56s->at(indexmaxmulti56)/ximulti45s->at(indexmaxmulti45));
 
+			       // For now comment systematic scale shifts, until official release
+			       /*
+			       mppshiftup = TMath::Sqrt(13000.0*13000.0*
+							(ximulti56s->at(indexmaxmulti56)+xishiftmultis56->at(indexmaxmulti56))*
+							(ximulti45s->at(indexmaxmulti45)+xishiftmultis45->at(indexmaxmulti45)));
+			       yppshiftup = -0.5*TMath::Log((ximulti56s->at(indexmaxmulti56)+xishiftmultis56->at(indexmaxmulti56))/
+							    (ximulti45s->at(indexmaxmulti45)+xishiftmultis45->at(indexmaxmulti45)));
+                               mppshiftdown = TMath::Sqrt(13000.0*13000.0*
+                                                        (ximulti56s->at(indexmaxmulti56)-xishiftmultis56->at(indexmaxmulti56))*
+							  (ximulti45s->at(indexmaxmulti45)-xishiftmultis45->at(indexmaxmulti45)));
+                               yppshiftdown = -0.5*TMath::Log((ximulti56s->at(indexmaxmulti56)-xishiftmultis56->at(indexmaxmulti56))/
+                                                            (ximulti45s->at(indexmaxmulti45)-xishiftmultis45->at(indexmaxmulti45)));
+			       */
+
 			       mppmm = mpp;
 			       yppmm = ypp;
 			       mppsmultmult->push_back(mpp);
 			       yppsmultmult->push_back(ypp);
+			       mppsmultmultshiftup->push_back(mppshiftup);
+                               mppsmultmultshiftdown->push_back(mppshiftdown);
+                               yppsmultmultshiftup->push_back(yppshiftup);
+                               yppsmultmultshiftdown->push_back(yppshiftdown);
+
 			       hmppmulti->Fill(mpp);
 			       hyppmulti->Fill(ypp);
 			       hmyppmulti->Fill(mpp,ypp);
@@ -1011,6 +1078,10 @@ void HadronicWWCuts::Loop()
 					       hmassmatchsigmcmm->Fill(mppsmultmult->at(s)-mydijet.M());
 					       hymatchsigmcmm->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
 					       hmassmatchratiosigmcmm->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
+					       hmassmatchratiosigmcmmshiftup->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
+                                               hmassmatchratiosigmcmmshiftdown->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
+					       hymatchsigmcmmshiftup->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
+					       hymatchsigmcmmshiftdown->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
 					     }
 					   
 					   int match45 = 0; int match56 = 0;
@@ -1149,6 +1220,12 @@ void HadronicWWCuts::Loop()
        tmulti56s->clear();
        timemulti45s->clear();
        timemulti56s->clear();
+       xishiftmultis45->clear();
+       xishiftmultis56->clear();
+       mppsmultmultshiftup->clear();
+       mppsmultmultshiftdown->clear();
+       yppsmultmultshiftup->clear();
+       yppsmultmultshiftdown->clear();
      }
 
    delete mppsmultmult;
@@ -1165,6 +1242,12 @@ void HadronicWWCuts::Loop()
    delete tmulti56s;
    delete timemulti45s;
    delete timemulti56s;
+   delete xishiftmultis45;
+   delete xishiftmultis56;
+   delete mppsmultmultshiftup;
+   delete mppsmultmultshiftdown;
+   delete yppsmultmultshiftup;
+   delete yppsmultmultshiftdown;
 
    // if (Cut(ientry) < 0) continue;
 
@@ -1236,12 +1319,16 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 20)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+   if(samplenumber == 22)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2017preTS2.root","RECREATE");
    if(samplenumber == 23)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017preTS2.root","RECREATE");
 
 
    if(samplenumber == 40)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017postTS2.root","RECREATE");
+   if(samplenumber == 42)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2017postTS2.root","RECREATE");
    if(samplenumber == 43)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2017postTS2.root","RECREATE");
 
@@ -1271,6 +1358,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 120)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2016preTS2.root","RECREATE");
+   if(samplenumber == 122)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2016preTS2.root","RECREATE");
    if(samplenumber == 123)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2016preTS2.root","RECREATE");
 
@@ -1298,6 +1387,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 220)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018.root","RECREATE");
+   if(samplenumber == 222)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018.root","RECREATE");
    if(samplenumber == 223)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018.root","RECREATE");
 
@@ -1369,6 +1460,12 @@ void HadronicWWCuts::Loop()
    hmassmatchsigmcmm->Write();
    hymatchsigmcmm->Write();
    hmassmatchratiosigmcmm->Write();
+
+   hmassmatchratiosigmcmmshiftup->Write();
+   hmassmatchratiosigmcmmshiftdown->Write();
+   hymatchsigmcmmshiftup->Write();
+   hymatchsigmcmmshiftdown->Write();
+
 
    hmassmatchratiosigmcmult->Write();
    hymatchsigmcmult->Write();

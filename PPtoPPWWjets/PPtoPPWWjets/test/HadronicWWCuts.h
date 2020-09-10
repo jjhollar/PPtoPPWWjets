@@ -238,11 +238,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root");
+    if(samplenumber == 22)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root");
     if(samplenumber == 23)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_preTS2_NoPUProtons_Fall17.root");
 
     if(samplenumber == 40)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_postTS2_NoPUProtons_Fall17.root");
+    if(samplenumber == 42)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_postTS2_NoPUProtons_Fall17.root");
     if(samplenumber == 43)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_postTS2_NoPUProtons_Fall17.root");
 
@@ -271,6 +275,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 120)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W1e-6_2016_preTS2_NoPUProtons_Fall17.root");
+    if(samplenumber == 122)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W5e-6_2016preTS2_NoPUProtons_Fall17.root");
     if(samplenumber == 123)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2016_preTS2_NoPUProtons_Fall17.root");
 
@@ -298,6 +304,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 220)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2018_NoPUProtons_Fall17.root");
+    if(samplenumber == 222)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root");
     if(samplenumber == 223)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root");
 
@@ -355,11 +363,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 20)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root");
+      if(samplenumber == 22)
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root");
       if(samplenumber == 23)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_preTS2_NoPUProtons_Fall17.root");
 
       if(samplenumber == 40)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_postTS2_NoPUProtons_Fall17.root");
+      if(samplenumber == 42)
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_postTS2_NoPUProtons_Fall17.root");
       if(samplenumber == 43)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_postTS2_NoPUProtons_Fall17.root");
 
@@ -388,6 +400,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 120)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W1e-6_2016_preTS2_NoPUProtons_Fall17.root");
+      if(samplenumber == 122)
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W5e-6_2016preTS2_NoPUProtons_Fall17.root");
       if(samplenumber == 123)
 	f  = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2016_preTS2_NoPUProtons_Fall17.root");
 
@@ -415,6 +429,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 220)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2018_NoPUProtons_Fall17.root");
+      if(samplenumber == 222)
+        f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root");
       if(samplenumber == 223)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root");
 
@@ -474,11 +490,15 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 20)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 22)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 23)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_preTS2_NoPUProtons_Fall17.root:/demo");
 
     if(samplenumber == 40)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 42)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 43)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_postTS2_NoPUProtons_Fall17.root:/demo");
 
@@ -507,6 +527,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 120)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W1e-6_2016_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 122)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W5e-6_2016preTS2_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 123)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2016_preTS2_NoPUProtons_Fall17.root:/demo");
 
@@ -533,6 +555,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 220)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2018_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 222)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 223)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root:/demo");
 

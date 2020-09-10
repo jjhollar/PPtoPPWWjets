@@ -47,6 +47,11 @@ class PPSProtonEfficiency {
   
   TString erastring;
 
+  // xi systematics shifts
+  TGraph *xisyst452016preTS2, *xisyst562016preTS2;
+  TGraph *xisyst452017preTS2, *xisyst562017preTS2, *xisyst452017postTS2, *xisyst562017postTS2;
+  TGraph *xisyst452018postTS2, *xisyst562018postTS2;
+
   // Lumis for weighting
   Float_t lumi2016B = 4.718;
   Float_t lumi2016C = 1.631;
@@ -71,6 +76,7 @@ class PPSProtonEfficiency {
 				       Int_t trackrpid1, Int_t trackrpid2, TString era);
   virtual bool GetMultiRPAcceptRejectDecision(Float_t trackx1, Float_t tracky1, Float_t trackx2, Float_t tracky2, 
 					      Int_t trackrpid1, Int_t trackrpid2, TString era);
+  //  virtual Float_t GetMultiRPXiScaleUncertainty(Int_t arm, Float_t xi, TString era);
 };
 
 #endif
@@ -276,6 +282,20 @@ PPSProtonEfficiency::PPSProtonEfficiency ()
   hmultistreff2017PostTS256->Add(hmultistreff2017F56);
 
   std::cout << "PPSProtonEfficiency: Finished loading all available efficiency tables" << std::endl;
+
+  // xi systematic shifts
+  // Uncomment when officially released
+  /*
+  TFile *fxisyst = TFile::Open("xi_uncertainty.root");
+  xisyst452016preTS2 = (TGraph *)fxisyst->Get("2016_preTS2/multi rp-0/g_xi_unc_vs_xi");
+  xisyst562016preTS2 = (TGraph *)fxisyst->Get("2016_preTS2/multi rp-1/g_xi_unc_vs_xi");
+  xisyst452017preTS2 = (TGraph *)fxisyst->Get("2017_preTS2/multi rp-0/g_xi_unc_vs_xi");
+  xisyst562017preTS2 = (TGraph *)fxisyst->Get("2017_preTS2/multi rp-1/g_xi_unc_vs_xi");
+  xisyst452017postTS2 = (TGraph *)fxisyst->Get("2017_postTS2/multi rp-0/g_xi_unc_vs_xi");
+  xisyst562017postTS2 = (TGraph *)fxisyst->Get("2017_postTS2/multi rp-1/g_xi_unc_vs_xi");
+  xisyst452018postTS2 = (TGraph *)fxisyst->Get("2018_postTS2/multi rp-0/g_xi_unc_vs_xi");
+  xisyst562018postTS2 = (TGraph *)fxisyst->Get("2018_postTS2/multi rp-1/g_xi_unc_vs_xi");
+  */
 }
 
 PPSProtonEfficiency::~PPSProtonEfficiency()

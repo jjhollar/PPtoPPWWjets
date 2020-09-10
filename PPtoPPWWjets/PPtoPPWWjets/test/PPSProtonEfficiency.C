@@ -216,3 +216,34 @@ bool PPSProtonEfficiency::GetMultiRPAcceptRejectDecision(Float_t trackx1, Float_
 
   return passes;
 }
+
+/*
+ * Get xi scale systematics and return the shifted xi value (commented until ROOT file officially released)
+ */
+/*
+float PPSProtonEfficiency::GetMultiRPXiScaleUncertainty(Int_t arm, Float_t xi, TString era)
+{
+  float xishifted = 0.0;
+
+  if(arm == 0 && era == "2016preTS2")
+    xishifted = xisyst452016preTS2->Eval(xi);
+  if(arm == 1 && era == "2016preTS2")
+    xishifted = xisyst562016preTS2->Eval(xi);
+
+  if(arm == 0 && era == "2017preTS2")
+    xishifted = xisyst452017preTS2->Eval(xi);
+  if(arm == 1 && era == "2017preTS2")
+    xishifted = xisyst562017preTS2->Eval(xi);
+  if(arm == 0 && era == "2017postTS2")
+    xishifted = xisyst452017postTS2->Eval(xi);
+  if(arm == 1 && era == "2017postTS2")
+    xishifted = xisyst562017postTS2->Eval(xi);
+
+  if(arm == 0 && era == "2018")
+    xishifted = xisyst452018postTS2->Eval(xi);
+  if(arm == 1 && era == "2018")
+    xishifted = xisyst562018postTS2->Eval(xi);
+
+  return xishifted;
+}
+*/
