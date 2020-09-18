@@ -5,6 +5,7 @@ This version is tested in CMSSW_10_6_12, for the workflow:
      - Running the proton direct simulation + reconstruction on signal MC
 
 Step-by-step instructions to setup a working environment, including the proton direct simulation for signal MC
+
 	     cmsrel CMSSW_10_6_12
 	     cd CMSSW_10_6_12/src
 	     cmsenv
