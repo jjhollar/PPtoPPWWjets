@@ -18,7 +18,6 @@ Step-by-step instructions to setup a working environment, including the proton d
 	     git clone https://github.com/jan-kaspar/proton_simulation_validation.git
 
 	     git clone https://github.com/jjhollar/PPtoPPWWjets.git
-	     	 (move PPtoPPWWjets/PPtoPPWWjets/PPtoPPWWjets up one level...)
 
 	     git clone git@github.com:cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_102X_v3
 	     cp /afs/cern.ch/work/k/kshcheli/public/jonathan/toolboxstuff JMEAnalysis/JetToolbox/python/jetToolbox_cff.py
