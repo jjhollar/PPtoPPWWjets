@@ -28,7 +28,6 @@
 
 
 // user include files
-#include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/one/EDAnalyzer.h"
 
 #include "FWCore/Framework/interface/Event.h"
@@ -49,6 +48,7 @@
 #include "DataFormats/CTPPSDetId/interface/CTPPSDetId.h"
 #include "DataFormats/ProtonReco/interface/ForwardProton.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/Common/interface/TriggerNames.h"
@@ -879,6 +879,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
        edm::Handle<reco::GenParticleCollection> genP;
        iEvent.getByLabel("genParticles",genP);
+
+       
        //       iEvent.getByLabel("prunedGenParticles",genP);                                                                                                     
 
        for (reco::GenParticleCollection::const_iterator mcIter=genP->begin(); mcIter != genP->end(); mcIter++ ) {

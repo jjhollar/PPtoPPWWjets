@@ -1,8 +1,8 @@
 import FWCore.ParameterSet.Config as cms
 
 MC=True
-YEAR=2016
-ERA="B"
+YEAR=2018
+ERA="A"
 MINIAOD=False
 DoTheorySystematics=True
 UseMCProtons=True
@@ -34,6 +34,39 @@ if MC == True and YEAR == 2017 and (ERA == "E" or ERA == "F"):
 if MC == True and YEAR == 2018:
    process.load("Validation.CTPPS.simu_config.year_2018_cff")
 
+#JH - debugging small shift                                                                                                                                                           
+process.load("CalibPPS.ESProducers.ctppsBeamParametersFromLHCInfoESSource_cfi")
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivX45 = process.ctppsBeamParametersESSource.beamDivX45
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivX56 = process.ctppsBeamParametersESSource.beamDivX56
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivY45 = process.ctppsBeamParametersESSource.beamDivY45
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivY56 = process.ctppsBeamParametersESSource.beamDivY56
+
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX45 = process.ctppsBeamParametersESSource.vtxOffsetX45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX56 = process.ctppsBeamParametersESSource.vtxOffsetX56
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY45 = process.ctppsBeamParametersESSource.vtxOffsetY45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY56 = process.ctppsBeamParametersESSource.vtxOffsetY56
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ45 = process.ctppsBeamParametersESSource.vtxOffsetZ45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ56 = process.ctppsBeamParametersESSource.vtxOffsetZ56
+
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevX = process.ctppsBeamParametersESSource.vtxStddevX
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevY = process.ctppsBeamParametersESSource.vtxStddevY
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevZ = process.ctppsBeamParametersESSource.vtxStddevZ
+
+# do not apply vertex smearing again
+process.ctppsBeamParametersESSource.vtxStddevX = 0
+process.ctppsBeamParametersESSource.vtxStddevY = 0
+process.ctppsBeamParametersESSource.vtxStddevZ = 0
+
+# undo CMS vertex shift
+#process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.2475 * 1E-1
+#process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.6924 * 1E-1
+#process.ctppsBeamParametersESSource.vtxOffsetZ45 = -8.1100 * 1E-1
+# These should be the vtx shift values for 2017...
+process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.024793
+process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.0692861
+process.ctppsBeamParametersESSource.vtxOffsetZ45 = -7.89895
+# end JH
+
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 
@@ -52,9 +85,18 @@ SetDefaults(process)
 
 # add pre-mixing of recHits
 
-
 process.load("protonPreMix.protonPreMix.CTPPSPreMixProducer_cfi")
-process.CTPPSPreMixProducer.PUFilesList = cms.vstring()
+process.CTPPSPreMixProducer.PUFilesList = cms.vstring(
+  # 2017
+  # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2017ReMiniAODSkimForEff_SingleEle_2017E/SingleElectron/ReMiniAODSkimForEff_SingleEle_2017E/200928_074338/0000/ReMiniAOD_SkimForEfficiency_1.root"
+  # 2018
+  "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018A/EGamma/ReMiniAODSkimForEff_SingleEle_2018A/200925_171447/0000/ReMiniAOD_SkimForEfficiency_1.root",
+)
+process.CTPPSPreMixProducer.Verbosity = 0
+
+# this is because we don't have strips in 2018 PU samples
+if YEAR==2018:
+  process.CTPPSPreMixProducer.includeStrips = False
 
 # rng service for premixing
 process.RandomNumberGeneratorService.CTPPSPreMixProducer = cms.PSet(initialSeed = cms.untracked.uint32(42))
@@ -62,22 +104,19 @@ process.RandomNumberGeneratorService.CTPPSPreMixProducer = cms.PSet(initialSeed 
 process.CTPPSPreMixProducer.Sim_CTPPSPixelRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
 process.CTPPSPreMixProducer.Sim_TotemRPRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
 
-# minimal logger settings
-process.MessageLogger = cms.Service("MessageLogger",
-  statistics = cms.untracked.vstring(),
-  destinations = cms.untracked.vstring('cerr'),
-  cerr = cms.untracked.PSet(
-    threshold = cms.untracked.string('WARNING')
-  )
-)
-
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.threshold = ''
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000
-process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+process.MessageLogger.destinations = cms.untracked.vstring('cout')
+process.MessageLogger.cout = cms.untracked.PSet( 
+  # threshold = cms.untracked.string('WARNING'),
+  threshold = cms.untracked.string('INFO'),
+  FwkReport = cms.untracked.PSet(
+    optionalPSet = cms.untracked.bool(True),
+    reportEvery = cms.untracked.int32(1),
+    limit = cms.untracked.int32(50000000)
+  ),
 )
+process.MessageLogger.statistics = cms.untracked.vstring()
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
@@ -140,13 +179,13 @@ process.source = cms.Source("PoolSource",
       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/EA3A3DC6-8129-E911-A5A8-44A842B4B3F1.root',
       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/6A34DDBB-8129-E911-A290-405CFDE57581.root'
        # 2017 postTS2 conditions (13900+13900+13900+13900+13900)
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/607EBFC6-8129-E911-AB8C-10983627C3DB.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/AA2C55CA-8129-E911-97CA-000E1EB004E0.root',
+      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/607EBFC6-8129-E911-AB8C-10983627C3DB.root',
+#      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/AA2C55CA-8129-E911-97CA-000E1EB004E0.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/CCB642C7-8129-E911-B9B9-44A842B420F1.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/B42CE2BA-8129-E911-9E43-44A842B45218.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/682C0277-0D27-E911-9F43-0CC47A57D13E.root'
        # 2018 conditions (13900+7900+10900+7800+12800+13900+13900+13900+7800+12800)
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/80147D50-1827-E911-942D-0CC47A57CEB4.root',
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/80147D50-1827-E911-942D-0CC47A57CEB4.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/9EE63030-5327-E911-A4A8-002590D9D8B6.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/246EE615-2827-E911-A1EF-0CC47AD24CD8.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/D8071C21-5D27-E911-82CD-003048CB87DE.root',
@@ -170,14 +209,14 @@ process.source = cms.Source("PoolSource",
        ########                                                                                                                                                                     
 
        # 2017 preTS2 conditions (13900+9700+13900+8900+7900)
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/066FBB76-FC2A-E911-B414-FA163EEBE295.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F62CC6E2-132B-E911-858F-FA163E5609EE.root',
+             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/066FBB76-FC2A-E911-B414-FA163EEBE295.root',
+             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F62CC6E2-132B-E911-858F-FA163E5609EE.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8DBDE12-012B-E911-BAF7-FA163EDADC7B.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/20B98A5F-3F2B-E911-BFA0-FA163EEBE295.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8A3AC71-252B-E911-BC46-0CC47A4C8F30.root'
 
        # 2017 postTS2 conditions 13900+13900+3900+11100+6100                                                                                                                        
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/42DE3465-252B-E911-8584-0CC47A7C3404.root',
+             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/42DE3465-252B-E911-8584-0CC47A7C3404.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/C6D334DF-402B-E911-90C6-0CC47A7C34D0.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/2E85FA04-7D2B-E911-8080-0CC47A4D7646.root',
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A6F6C349-4827-E911-8F2D-FA163E614239.root',
@@ -196,11 +235,11 @@ process.source = cms.Source("PoolSource",
        #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DEBEFE79-6927-E911-B475-FA163EE69449.root'
 
        # 2016 preTS2 conditions (13900+7800+13900+13900+13900 )
-       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3ED6A08F-6C27-E911-8D6A-FA163E1F999C.root',
-       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C0C4FB0E-7227-E911-A53E-FA163E1DC155.root',
-       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CC6F2015-6327-E911-8B30-FA163ED0D5AA.root',
-       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A10005B-6327-E911-9AE0-FA163EE4A297.root',
-       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E464766B-6327-E911-8266-FA163E777760.root'
+       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3ED6A08F-6C27-E911-8D6A-FA163E1F999C.root',
+       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C0C4FB0E-7227-E911-A53E-FA163E1DC155.root',
+       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CC6F2015-6327-E911-8B30-FA163ED0D5AA.root',
+       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A10005B-6327-E911-9AE0-FA163EE4A297.root',
+       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E464766B-6327-E911-8266-FA163E777760.root'
 
 
     )
@@ -319,6 +358,26 @@ def RemoveModules(pr):
 (ctpps_2016 & ~ctpps_2017 & ~ctpps_2018).toModify(process, RemoveModules)
 
 
+# add PPS efficiency simulation
+
+process.load("PPtoPPWWjets.PPtoPPWWjets.PPSEfficiencyProducer_cfi")
+# rng service for efficiency
+process.RandomNumberGeneratorService.PPSEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
+process.PPSEfficiencyProducer.verbosity = 1
+process.PPSEfficiencyProducer.outputSummary = True
+process.PPSEfficiencyProducer.year = YEAR
+process.PPSEfficiencyProducer.era = ERA
+
+if YEAR == 2016:
+  print("What should I do with efficiencies?")
+  sys.exit(1)
+if YEAR == 2017:
+  process.PPSEfficiencyProducer.efficiencyFileName_Near = "/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root"
+  process.PPSEfficiencyProducer.efficiencyFileName_Far = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_singleRP.root"
+if YEAR == 2018:
+  process.PPSEfficiencyProducer.efficiencyFileName_Near = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root"
+  process.PPSEfficiencyProducer.efficiencyFileName_Far = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root"
+  
 #########################                                                                                                                                                           
 # Configure Analyzer
 #########################                                                                                                                                                           
@@ -356,14 +415,17 @@ if MC == True and YEAR == 2018:
 
 process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
 process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("PPSEfficiencyProducer", "multiRP")
 process.demo.isMC = cms.bool(MC)
 process.demo.doMCTheorySystematics = cms.bool(DoTheorySystematics)
 process.demo.useMCProtons = cms.bool(UseMCProtons)
 process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
-
+process.maxEvents = cms.untracked.PSet(
+  input = cms.untracked.int32(1000)
+  # input = cms.untracked.int32(100)
+)
 
 # processing path
 process.p = cms.Path(
@@ -373,6 +435,7 @@ process.p = cms.Path(
     * process.CTPPSPreMixProducer
     * process.reco_local
     * process.ctppsProtons
+    * process.PPSEfficiencyProducer
     * process.genParticlesForJetsNoNu 
     * process.goodOfflinePrimaryVertices  
     * process.slimmedJetsAK8JetId 

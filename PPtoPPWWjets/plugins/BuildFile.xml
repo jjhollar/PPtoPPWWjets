@@ -15,4 +15,11 @@
 <use name="PhysicsTools/Utilities"/>
 <use name="CondFormats/RunInfo"/>
 <use name="CondFormats/DataRecord"/>
-<flags EDM_PLUGIN="1"/>
+
+<use name="PPtoPPWWjets/PPtoPPWWjets"/>
+
+<library name="PPtoPPWWjetsPlugins" file="*.cc">
+	<flags EDM_PLUGIN="1"/>
+</library>
+
+<!-- <flags EDM_PLUGIN="1"/> -->
