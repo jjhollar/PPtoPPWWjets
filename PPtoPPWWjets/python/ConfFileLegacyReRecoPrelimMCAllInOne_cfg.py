@@ -90,7 +90,7 @@ process.CTPPSPreMixProducer.PUFilesList = cms.vstring(
   # 2017
   # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2017ReMiniAODSkimForEff_SingleEle_2017E/SingleElectron/ReMiniAODSkimForEff_SingleEle_2017E/200928_074338/0000/ReMiniAOD_SkimForEfficiency_1.root"
   # 2018
-  "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018A/EGamma/ReMiniAODSkimForEff_SingleEle_2018A/200925_171447/0000/ReMiniAOD_SkimForEfficiency_1.root",
+  # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018A/EGamma/ReMiniAODSkimForEff_SingleEle_2018A/200925_171447/0000/ReMiniAOD_SkimForEfficiency_1.root",
 )
 process.CTPPSPreMixProducer.Verbosity = 0
 
@@ -108,8 +108,8 @@ process.CTPPSPreMixProducer.Sim_TotemRPRecHitTag = cms.InputTag("ctppsDirectProt
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.destinations = cms.untracked.vstring('cout')
 process.MessageLogger.cout = cms.untracked.PSet( 
-  # threshold = cms.untracked.string('WARNING'),
-  threshold = cms.untracked.string('INFO'),
+  threshold = cms.untracked.string('WARNING'),
+  # threshold = cms.untracked.string('INFO'),
   FwkReport = cms.untracked.PSet(
     optionalPSet = cms.untracked.bool(True),
     reportEvery = cms.untracked.int32(1),
@@ -185,7 +185,7 @@ process.source = cms.Source("PoolSource",
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/B42CE2BA-8129-E911-9E43-44A842B45218.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/682C0277-0D27-E911-9F43-0CC47A57D13E.root'
        # 2018 conditions (13900+7900+10900+7800+12800+13900+13900+13900+7800+12800)
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/80147D50-1827-E911-942D-0CC47A57CEB4.root',
+#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/80147D50-1827-E911-942D-0CC47A57CEB4.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/9EE63030-5327-E911-A4A8-002590D9D8B6.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/246EE615-2827-E911-A1EF-0CC47AD24CD8.root',
 #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/D8071C21-5D27-E911-82CD-003048CB87DE.root',
@@ -363,8 +363,6 @@ def RemoveModules(pr):
 process.load("PPtoPPWWjets.PPtoPPWWjets.PPSEfficiencyProducer_cfi")
 # rng service for efficiency
 process.RandomNumberGeneratorService.PPSEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
-process.PPSEfficiencyProducer.verbosity = 1
-process.PPSEfficiencyProducer.outputSummary = True
 process.PPSEfficiencyProducer.year = YEAR
 process.PPSEfficiencyProducer.era = ERA
 
