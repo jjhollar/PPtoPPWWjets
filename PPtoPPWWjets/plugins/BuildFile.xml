@@ -16,10 +16,6 @@
 <use name="CondFormats/RunInfo"/>
 <use name="CondFormats/DataRecord"/>
 
-<use name="PPtoPPWWjets/PPtoPPWWjets"/>
-
 <library name="PPtoPPWWjetsPlugins" file="*.cc">
 	<flags EDM_PLUGIN="1"/>
 </library>
-
-<!-- <flags EDM_PLUGIN="1"/> -->

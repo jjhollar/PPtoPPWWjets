@@ -2,7 +2,7 @@ import FWCore.ParameterSet.Config as cms
 
 MC=True
 YEAR=2018
-ERA="A"
+ERA="D"
 MINIAOD=False
 DoTheorySystematics=True
 UseMCProtons=True
@@ -34,39 +34,6 @@ if MC == True and YEAR == 2017 and (ERA == "E" or ERA == "F"):
 if MC == True and YEAR == 2018:
    process.load("Validation.CTPPS.simu_config.year_2018_cff")
 
-#JH - debugging small shift                                                                                                                                                           
-process.load("CalibPPS.ESProducers.ctppsBeamParametersFromLHCInfoESSource_cfi")
-process.ctppsBeamParametersFromLHCInfoESSource.beamDivX45 = process.ctppsBeamParametersESSource.beamDivX45
-process.ctppsBeamParametersFromLHCInfoESSource.beamDivX56 = process.ctppsBeamParametersESSource.beamDivX56
-process.ctppsBeamParametersFromLHCInfoESSource.beamDivY45 = process.ctppsBeamParametersESSource.beamDivY45
-process.ctppsBeamParametersFromLHCInfoESSource.beamDivY56 = process.ctppsBeamParametersESSource.beamDivY56
-
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX45 = process.ctppsBeamParametersESSource.vtxOffsetX45
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX56 = process.ctppsBeamParametersESSource.vtxOffsetX56
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY45 = process.ctppsBeamParametersESSource.vtxOffsetY45
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY56 = process.ctppsBeamParametersESSource.vtxOffsetY56
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ45 = process.ctppsBeamParametersESSource.vtxOffsetZ45
-process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ56 = process.ctppsBeamParametersESSource.vtxOffsetZ56
-
-process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevX = process.ctppsBeamParametersESSource.vtxStddevX
-process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevY = process.ctppsBeamParametersESSource.vtxStddevY
-process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevZ = process.ctppsBeamParametersESSource.vtxStddevZ
-
-# do not apply vertex smearing again
-process.ctppsBeamParametersESSource.vtxStddevX = 0
-process.ctppsBeamParametersESSource.vtxStddevY = 0
-process.ctppsBeamParametersESSource.vtxStddevZ = 0
-
-# undo CMS vertex shift
-#process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.2475 * 1E-1
-#process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.6924 * 1E-1
-#process.ctppsBeamParametersESSource.vtxOffsetZ45 = -8.1100 * 1E-1
-# These should be the vtx shift values for 2017...
-process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.024793
-process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.0692861
-process.ctppsBeamParametersESSource.vtxOffsetZ45 = -7.89895
-# end JH
-
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 
@@ -85,24 +52,25 @@ SetDefaults(process)
 
 # add pre-mixing of recHits
 
-process.load("protonPreMix.protonPreMix.CTPPSPreMixProducer_cfi")
-process.CTPPSPreMixProducer.PUFilesList = cms.vstring(
+process.load("protonPreMix.protonPreMix.ctppsPreMixProducer_cfi")
+process.ctppsPreMixProducer.PUFilesList = cms.vstring(
   # 2017
   # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2017ReMiniAODSkimForEff_SingleEle_2017E/SingleElectron/ReMiniAODSkimForEff_SingleEle_2017E/200928_074338/0000/ReMiniAOD_SkimForEfficiency_1.root"
   # 2018
   # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018A/EGamma/ReMiniAODSkimForEff_SingleEle_2018A/200925_171447/0000/ReMiniAOD_SkimForEfficiency_1.root",
+ "file:/eos/cms/store/group/phys_pps/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018D/EGamma/ReMiniAODSkimForEff_SingleEle_2018D/200925_172800/0000/ReMiniAOD_SkimForEfficiency_92.root"
 )
-process.CTPPSPreMixProducer.Verbosity = 0
+process.ctppsPreMixProducer.Verbosity = 0
 
 # this is because we don't have strips in 2018 PU samples
 if YEAR==2018:
-  process.CTPPSPreMixProducer.includeStrips = False
+  process.ctppsPreMixProducer.includeStrips = False
 
 # rng service for premixing
-process.RandomNumberGeneratorService.CTPPSPreMixProducer = cms.PSet(initialSeed = cms.untracked.uint32(42))
+process.RandomNumberGeneratorService.ctppsPreMixProducer = cms.PSet(initialSeed = cms.untracked.uint32(42))
 
-process.CTPPSPreMixProducer.Sim_CTPPSPixelRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
-process.CTPPSPreMixProducer.Sim_TotemRPRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
+process.ctppsPreMixProducer.Sim_CTPPSPixelRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
+process.ctppsPreMixProducer.Sim_TotemRPRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
 
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -173,11 +141,11 @@ process.source = cms.Source("PoolSource",
        # A0W=5E-6
        ########
        # 2017 preTS2 conditions (12800+13900+13900+13900+13700)
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/5E2364A2-8129-E911-8830-D8D385AF8B02.root',
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/82ECCABC-8129-E911-ABD9-D4AE526A0CFB.root',
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/94C668B7-CE2A-E911-A7AF-00259075D708.root',
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/EA3A3DC6-8129-E911-A5A8-44A842B4B3F1.root',
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/6A34DDBB-8129-E911-A290-405CFDE57581.root'
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/5E2364A2-8129-E911-8830-D8D385AF8B02.root',
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/82ECCABC-8129-E911-ABD9-D4AE526A0CFB.root',
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/94C668B7-CE2A-E911-A7AF-00259075D708.root',
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/EA3A3DC6-8129-E911-A5A8-44A842B4B3F1.root',
+      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/6A34DDBB-8129-E911-A290-405CFDE57581.root'
        # 2017 postTS2 conditions (13900+13900+13900+13900+13900)
       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/607EBFC6-8129-E911-AB8C-10983627C3DB.root',
 #      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/AA2C55CA-8129-E911-97CA-000E1EB004E0.root',
@@ -321,6 +289,40 @@ process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
 # for direct sim                                                                                                                                                           
 #########################                   
 process.load("CalibPPS.ESProducers.ctppsLHCInfoRandomXangleESSource_cfi")
+
+#JH - debugging small shift                                                                                                                                                           
+process.load("CalibPPS.ESProducers.ctppsBeamParametersFromLHCInfoESSource_cfi")
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivX45 = process.ctppsBeamParametersESSource.beamDivX45
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivX56 = process.ctppsBeamParametersESSource.beamDivX56
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivY45 = process.ctppsBeamParametersESSource.beamDivY45
+process.ctppsBeamParametersFromLHCInfoESSource.beamDivY56 = process.ctppsBeamParametersESSource.beamDivY56
+
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX45 = process.ctppsBeamParametersESSource.vtxOffsetX45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetX56 = process.ctppsBeamParametersESSource.vtxOffsetX56
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY45 = process.ctppsBeamParametersESSource.vtxOffsetY45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetY56 = process.ctppsBeamParametersESSource.vtxOffsetY56
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ45 = process.ctppsBeamParametersESSource.vtxOffsetZ45
+process.ctppsBeamParametersFromLHCInfoESSource.vtxOffsetZ56 = process.ctppsBeamParametersESSource.vtxOffsetZ56
+
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevX = process.ctppsBeamParametersESSource.vtxStddevX
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevY = process.ctppsBeamParametersESSource.vtxStddevY
+process.ctppsBeamParametersFromLHCInfoESSource.vtxStddevZ = process.ctppsBeamParametersESSource.vtxStddevZ
+
+# do not apply vertex smearing again
+process.ctppsBeamParametersESSource.vtxStddevX = 0
+process.ctppsBeamParametersESSource.vtxStddevY = 0
+process.ctppsBeamParametersESSource.vtxStddevZ = 0
+
+# undo CMS vertex shift
+#process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.2475 * 1E-1
+#process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.6924 * 1E-1
+#process.ctppsBeamParametersESSource.vtxOffsetZ45 = -8.1100 * 1E-1
+# These should be the vtx shift values for 2017...
+process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.024793
+process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.0692861
+process.ctppsBeamParametersESSource.vtxOffsetZ45 = -7.89895
+# end JH
+
 process.ctppsLHCInfoRandomXangleESSource.generateEveryNEvents = 1
 if MC == True and YEAR == 2016:
     process.ctppsLHCInfoRandomXangleESSource.xangleHistogramFile = "CrossingAngles2016.root"
@@ -346,36 +348,37 @@ process.beamDivergenceVtxGenerator.srcGenParticle = cms.VInputTag(
 process.ctppsLocalTrackLiteProducer.includeDiamonds = False
 
 # point the track producers to the correct products
-process.ctppsPixelLocalTracks.label = "CTPPSPreMixProducer"
-process.totemRPUVPatternFinder.tagRecHit = cms.InputTag("CTPPSPreMixProducer")
+process.ctppsPixelLocalTracks.label = "ctppsPreMixProducer"
+process.totemRPUVPatternFinder.tagRecHit = cms.InputTag("ctppsPreMixProducer")
 
 # reconstruction (if 2016 data, remove modules for RPs which did not exist at that time)
 def RemoveModules(pr):
   pr.reco_local.remove(pr.ctppsPixelLocalTracks)
   pr.ctppsLocalTrackLiteProducer.includePixels = False
-  pr.CTPPSPreMixProducer.includePixels = False
+  pr.ctppsPreMixProducer.includePixels = False
 
 (ctpps_2016 & ~ctpps_2017 & ~ctpps_2018).toModify(process, RemoveModules)
 
 
 # add PPS efficiency simulation
 
-process.load("PPtoPPWWjets.PPtoPPWWjets.PPSEfficiencyProducer_cfi")
 # rng service for efficiency
-process.RandomNumberGeneratorService.PPSEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
-process.PPSEfficiencyProducer.year = YEAR
-process.PPSEfficiencyProducer.era = ERA
+process.load("protonPreMix.protonPreMix.ppsEfficiencyProducer_cfi")
+
+process.RandomNumberGeneratorService.ppsEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
+process.ppsEfficiencyProducer.year = cms.int32(YEAR)
+process.ppsEfficiencyProducer.era = cms.string("D1")
 
 if YEAR == 2016:
   print("What should I do with efficiencies?")
   sys.exit(1)
 if YEAR == 2017:
-  process.PPSEfficiencyProducer.efficiencyFileName_Near = "/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root"
-  process.PPSEfficiencyProducer.efficiencyFileName_Far = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_singleRP.root"
+  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_singleRP.root")
 if YEAR == 2018:
-  process.PPSEfficiencyProducer.efficiencyFileName_Near = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root"
-  process.PPSEfficiencyProducer.efficiencyFileName_Far = "/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root"
-  
+  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
+
 #########################                                                                                                                                                           
 # Configure Analyzer
 #########################                                                                                                                                                           
@@ -413,7 +416,8 @@ if MC == True and YEAR == 2018:
 
 process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
 process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("PPSEfficiencyProducer", "multiRP")
+# process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ppsEfficiencyProducer", "multiRP")
 process.demo.isMC = cms.bool(MC)
 process.demo.doMCTheorySystematics = cms.bool(DoTheorySystematics)
 process.demo.useMCProtons = cms.bool(UseMCProtons)
@@ -421,8 +425,8 @@ process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(1000)
-  # input = cms.untracked.int32(100)
+  # input = cms.untracked.int32(1000)
+  input = cms.untracked.int32(100)
 )
 
 # processing path
@@ -430,10 +434,10 @@ process.p = cms.Path(
     process.hltFilter
     * process.beamDivergenceVtxGenerator
     * process.ctppsDirectProtonSimulation
-    * process.CTPPSPreMixProducer
+    * process.ctppsPreMixProducer
     * process.reco_local
     * process.ctppsProtons
-    * process.PPSEfficiencyProducer
+    * process.ppsEfficiencyProducer
     * process.genParticlesForJetsNoNu 
     * process.goodOfflinePrimaryVertices  
     * process.slimmedJetsAK8JetId 
