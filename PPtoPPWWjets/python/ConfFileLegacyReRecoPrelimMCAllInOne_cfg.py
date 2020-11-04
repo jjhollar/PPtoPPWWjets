@@ -1,12 +1,38 @@
 import FWCore.ParameterSet.Config as cms
 
+import FWCore.ParameterSet.VarParsing as VarParsing
+options = VarParsing.VarParsing ()
+options.register('year',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.int,
+                "year")
+options.register('era',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.string,
+                "CMS era")
+options.register('sampleTag',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.string,
+                "Tag of the sample to analyze")
+options.parseArguments() 
+
+
+###########################################################
+# possible sampleTags: WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6 #
+###########################################################
+
 MC=True
-YEAR=2018
-ERA="D"
+YEAR=options.year
+ERA=options.era
 MINIAOD=False
+SAMPLETAG=options.sampleTag
 DoTheorySystematics=True
 UseMCProtons=True
 
+print "\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n"
 
 # load common code
 if MC == True and YEAR == 2016 and (ERA == "B" or ERA == "C" or ERA == "G"):
@@ -47,19 +73,22 @@ if MC == True and YEAR == 2017:
 if MC == True and YEAR == 2018:
    process.GlobalTag.globaltag ='102X_upgrade2018_realistic_v20' # this one is for Autumn18 MC campaign
 
-
-SetDefaults(process)
+from signalSamples_cfi import *
+print "Signal sample file list: "
+print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG))
+print "\n"
+process.source = cms.Source("PoolSource",
+    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG))
+)
 
 # add pre-mixing of recHits
+from pileupSamples_cfi import *
+print "Mixing PU samples: "
+print "\n".join(pileupSamples(YEAR,ERA)[:3])
+print "...\n" 
 
 process.load("protonPreMix.protonPreMix.ctppsPreMixProducer_cfi")
-process.ctppsPreMixProducer.PUFilesList = cms.vstring(
-  # 2017
-  # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2017ReMiniAODSkimForEff_SingleEle_2017E/SingleElectron/ReMiniAODSkimForEff_SingleEle_2017E/200928_074338/0000/ReMiniAOD_SkimForEfficiency_1.root"
-  # 2018
-  # "file:/eos/project-c/ctpps/subsystems/Pixel/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018A/EGamma/ReMiniAODSkimForEff_SingleEle_2018A/200925_171447/0000/ReMiniAOD_SkimForEfficiency_1.root",
- "file:/eos/cms/store/group/phys_pps/ReMiniAODSkimForEfficiencies/2018ReMiniAODSkimForEff_SingleEle_2018D/EGamma/ReMiniAODSkimForEff_SingleEle_2018D/200925_172800/0000/ReMiniAOD_SkimForEfficiency_92.root"
-)
+process.ctppsPreMixProducer.PUFilesList = cms.vstring(*pileupSamples(YEAR,ERA))
 process.ctppsPreMixProducer.Verbosity = 0
 
 # this is because we don't have strips in 2018 PU samples
@@ -68,9 +97,6 @@ if YEAR==2018:
 
 # rng service for premixing
 process.RandomNumberGeneratorService.ctppsPreMixProducer = cms.PSet(initialSeed = cms.untracked.uint32(42))
-
-process.ctppsPreMixProducer.Sim_CTPPSPixelRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
-process.ctppsPreMixProducer.Sim_TotemRPRecHitTag = cms.InputTag("ctppsDirectProtonSimulation")
 
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -85,133 +111,6 @@ process.MessageLogger.cout = cms.untracked.PSet(
   ),
 )
 process.MessageLogger.statistics = cms.untracked.vstring()
-
-process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(
-       ########
-       # a0W=1
-       ########
-       # 2017 preTS2 conditions (13900+13900+13900+4700+8900 events)                                                                                                                         
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/FAB1B549-E128-E911-A65A-00266CF3E3C4.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/9C913C20-C128-E911-AA20-0CC47A7FC74A.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/DCA44DDD-0829-E911-B529-3417EBE7002A.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/D885C77E-9729-E911-86ED-002590DD7E50.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/98CCB2F2-F429-E911-8537-002590DD7C9E.root'
-       # 2017 postTS2 conditions (4900+3900+13900+13900+12000 events)
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/8A6E7948-3F2A-E911-AA0A-003048C446B8.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/FCCD54D5-6E2A-E911-8E9E-40F2E9C6ADD2.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/605F2A99-8129-E911-A94B-A0369F7FC770.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/BA7C4BA6-8129-E911-8481-549F35AC7E3C.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/7C4BD408-002A-E911-B157-A0369F7FC770.root'
-       # 2018 conditions (8900+13900+8900+3900+13900+1000+6900+13900+7800+13900
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/7ED25E4C-F429-E911-8911-44A842CFD5D8.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/C08A9140-A629-E911-8422-00259073E51E.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/30487E78-F929-E911-9E65-44A84225D36F.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/6C82900E-D129-E911-959E-A4BF0112DCAC.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/B0095FE6-6B27-E911-A001-1866DA879B75.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/1C6A1B56-6D28-E911-A6CB-1866DA890B94.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/444F67F1-5F28-E911-9ABC-1866DA87A7E7.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/52577878-6128-E911-B2F5-0CC47A7EEF1A.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/CE197716-A928-E911-9D92-0CC47A7EEE96.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/40B84092-8028-E911-85F8-1866DA890574.root'
-       # 2016 preTS2 conditions 13900+13900+13900+ 13900+13900
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/00ECF9DB-8928-E911-AB93-1866DA87C2CD.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/481190FB-8928-E911-A62E-D4AE526A0B29.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/D24455FB-8928-E911-BB89-D4AE526A0B29.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/F460A406-2829-E911-97D0-D4AE526A1654.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W1e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/7AE0D7DC-DC28-E911-91B4-1866DA890574.root'
-
-
-       ########
-       # a0W=2
-       ########
-#       # 2017 preTS2 conditions
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/B2416746-4E2A-E911-9BD9-24BE05C3CBD1.root',
-#      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/A0C43183-4E2A-E911-8E96-24BE05C63791.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/A4781A5B-4E2A-E911-B0AA-EC0D9A8221E6.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/2AEA1879-4E2A-E911-A9FB-44A8421293A8.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W2e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/D80A77B1-4D2A-E911-9200-842B2B6F5ED7.root'
-       # 2017 postTS2 conditions                                                                                                                                                             
-   
-       # 2018
-
-       # 2016 preTS2 conditions
-
-       ########
-       # A0W=5E-6
-       ########
-       # 2017 preTS2 conditions (12800+13900+13900+13900+13700)
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/5E2364A2-8129-E911-8830-D8D385AF8B02.root',
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/82ECCABC-8129-E911-ABD9-D4AE526A0CFB.root',
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/94C668B7-CE2A-E911-A7AF-00259075D708.root',
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/EA3A3DC6-8129-E911-A5A8-44A842B4B3F1.root',
-      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/6A34DDBB-8129-E911-A290-405CFDE57581.root'
-       # 2017 postTS2 conditions (13900+13900+13900+13900+13900)
-      # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/607EBFC6-8129-E911-AB8C-10983627C3DB.root',
-#      '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/AA2C55CA-8129-E911-97CA-000E1EB004E0.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/CCB642C7-8129-E911-B9B9-44A842B420F1.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/B42CE2BA-8129-E911-9E43-44A842B45218.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/682C0277-0D27-E911-9F43-0CC47A57D13E.root'
-       # 2018 conditions (13900+7900+10900+7800+12800+13900+13900+13900+7800+12800)
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/80147D50-1827-E911-942D-0CC47A57CEB4.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/9EE63030-5327-E911-A4A8-002590D9D8B6.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/246EE615-2827-E911-A1EF-0CC47AD24CD8.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/D8071C21-5D27-E911-82CD-003048CB87DE.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/1C174898-3427-E911-83E3-0CC47AA53D6A.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/F4DBA7F9-3527-E911-9737-0CC47A57CC42.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/12A16111-3627-E911-BAD0-002590FD5694.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/0A86282D-3F27-E911-97FD-AC1F6BB17570.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/1E22FD16-7627-E911-9D87-AC1F6BB177EE.root',
-#       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/AE4751BD-3E27-E911-AE1C-0CC47A0AD780.root'
-       # 2016preTS2 conditions (13900+13900+13900+7900+8100)
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/C091C041-3F27-E911-B9DF-0CC47A57D164.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/06267A65-2827-E911-84CD-00259029E714.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/3E42A8A0-3827-E911-99CD-002590D9D980.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/9A028E0C-9327-E911-B265-0CC47AA53D86.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/DCDB5EBB-7A27-E911-9168-002590FD5694.root'
-
-
-
-       ########                                                                                                                                                                     
-       # aCW=2E-5                                                                                                                                                                   
-       ########                                                                                                                                                                     
-
-       # 2017 preTS2 conditions (13900+9700+13900+8900+7900)
-             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/066FBB76-FC2A-E911-B414-FA163EEBE295.root',
-             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F62CC6E2-132B-E911-858F-FA163E5609EE.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8DBDE12-012B-E911-BAF7-FA163EDADC7B.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/20B98A5F-3F2B-E911-BFA0-FA163EEBE295.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8A3AC71-252B-E911-BC46-0CC47A4C8F30.root'
-
-       # 2017 postTS2 conditions 13900+13900+3900+11100+6100                                                                                                                        
-             # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/42DE3465-252B-E911-8584-0CC47A7C3404.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/C6D334DF-402B-E911-90C6-0CC47A7C34D0.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/2E85FA04-7D2B-E911-8080-0CC47A4D7646.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A6F6C349-4827-E911-8F2D-FA163E614239.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6219EB0E-6E27-E911-B416-FA163E1AAE3A.root'
-
-       # 2018 (13900+7800+13900+13900+13900+13900+11700+13900+9500+10600) 
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4A9F16E5-4927-E911-85F6-FA163E0959C0.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/96625B83-6B27-E911-B01D-FA163E6A8980.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E442C22F-6127-E911-8004-FA163E63CDB5.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/820A78B8-6727-E911-BE24-FA163EBE4CE4.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/18DB385C-5627-E911-84CB-FA163E2BE632.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F069DFEC-6227-E911-9ED2-FA163E5598C7.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/821B8C47-6327-E911-B061-FA163E14F11E.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A4DC0FED-6A27-E911-86E2-FA163E8FF902.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4C663FD1-8427-E911-B4AC-02163E019EEC.root',
-       #       '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DEBEFE79-6927-E911-B475-FA163EE69449.root'
-
-       # 2016 preTS2 conditions (13900+7800+13900+13900+13900 )
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3ED6A08F-6C27-E911-8D6A-FA163E1F999C.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C0C4FB0E-7227-E911-A53E-FA163E1DC155.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CC6F2015-6327-E911-8B30-FA163ED0D5AA.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A10005B-6327-E911-9AE0-FA163EE4A297.root',
-       # '/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E464766B-6327-E911-8266-FA163E777760.root'
-
-
-    )
-)
 
 ### ADD SOME NEW JET COLLECTIONS                                                                                                                                           
 # New (March 8, 2019) - to recover ak8 CHS jets with 2017 MiniAOD                                                                                                          
@@ -344,12 +243,13 @@ process.beamDivergenceVtxGenerator.srcGenParticle = cms.VInputTag(
     cms.InputTag("genParticles")
 )
 
-# remove timing tracks from trackLites, they are not produced by protonPreMix
-process.ctppsLocalTrackLiteProducer.includeDiamonds = False
 
 # point the track producers to the correct products
 process.ctppsPixelLocalTracks.label = "ctppsPreMixProducer"
 process.totemRPUVPatternFinder.tagRecHit = cms.InputTag("ctppsPreMixProducer")
+
+# remove timing tracks from trackLites, they are not produced by protonPreMix
+process.ctppsLocalTrackLiteProducer.includeDiamonds = False
 
 # reconstruction (if 2016 data, remove modules for RPs which did not exist at that time)
 def RemoveModules(pr):
@@ -367,17 +267,21 @@ process.load("protonPreMix.protonPreMix.ppsEfficiencyProducer_cfi")
 
 process.RandomNumberGeneratorService.ppsEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
 process.ppsEfficiencyProducer.year = cms.int32(YEAR)
-process.ppsEfficiencyProducer.era = cms.string("D1")
+process.ppsEfficiencyProducer.era = cms.string(ERA)
 
 if YEAR == 2016:
-  print("What should I do with efficiencies?")
-  sys.exit(1)
+  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root")
 if YEAR == 2017:
   process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root")
-  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_singleRP.root")
+  # process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_singleRP.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_singleRP_reMiniAOD.root")
+
 if YEAR == 2018:
-  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
-  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
+  # process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_radiation_withAvg_reMiniAOD.root")  
+  # process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_singleRP_reMiniAOD.root")
 
 #########################                                                                                                                                                           
 # Configure Analyzer
@@ -389,10 +293,10 @@ process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 if YEAR == 2016:
     process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
     process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
-if YEAR==2017:
+if YEAR == 2017:
     process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
     process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
-if YEAR==2018:
+if YEAR == 2018:
     process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2018_cfi")
     process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
@@ -425,9 +329,25 @@ process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
 process.maxEvents = cms.untracked.PSet(
-  # input = cms.untracked.int32(1000)
-  input = cms.untracked.int32(100)
+  input = cms.untracked.int32(1000)
+  # input = cms.untracked.int32(100)
 )
+
+# # reconstruction plotter (analysis example)
+# process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
+#   tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+#   tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP"),
+#   tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+#   rpId_45_F = cms.uint32(23),
+#   rpId_45_N = cms.uint32(3),
+#   rpId_56_N = cms.uint32(103),
+#   rpId_56_F = cms.uint32(123),
+
+#   association_cuts_45 = process.ctppsProtons.association_cuts_45,
+#   association_cuts_56 = process.ctppsProtons.association_cuts_56,
+
+#   outputFile = cms.string("output_protons.root")
+# )
 
 # processing path
 process.p = cms.Path(
@@ -438,6 +358,9 @@ process.p = cms.Path(
     * process.reco_local
     * process.ctppsProtons
     * process.ppsEfficiencyProducer
+
+    # * process.ctppsProtonReconstructionPlotter
+
     * process.genParticlesForJetsNoNu 
     * process.goodOfflinePrimaryVertices  
     * process.slimmedJetsAK8JetId 
