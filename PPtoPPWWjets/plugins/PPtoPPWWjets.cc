@@ -307,63 +307,63 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    /* 2017 */
    if(isMC==false && year==2017 && era == "B")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "C")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "D")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "E")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2017 && era == "F")
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V32_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V32_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017F_V32_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017F_V32_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==true && year==2017)
      {
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V32_MC_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Fall17_17Nov2017_V32_MC_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017_V32_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2017/Fall17_17Nov2017_V32_MC_L3Absolute_AK8PFchs.txt");
      }
 
    /* 2016 */
    if(isMC==true && year==2016)
      {
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017_V11_MC_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017_V11_MC_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017_V11_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017_V11_MC_L3Absolute_AK8PFchs.txt");
      }
    if(isMC==false && year==2016 && (era == "B" || era == "C" || era == "D"))
      {
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017BCD_V11_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017BCD_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017BCD_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017BCD_V11_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2016 && (era == "E" || era == "F"))
      {
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017EF_V11_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017EF_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017EF_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017EF_V11_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2016 && (era == "G" || era == "H"))
      {
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Summer16_07Aug2017GH_V11_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017GH_V11_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017GH_V11_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JEC2016/Summer16_07Aug2017GH_V11_DATA_L2L3Residual_AK8PFchs.txt");
      }
 
 
@@ -371,32 +371,32 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    /* 2018 */
    if(isMC==true && year==2018)
      {
-       jecAK8PayloadNames_.push_back("Autumn18_V19_MC_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_V19_MC_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_V19_MC_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_V19_MC_L3Absolute_AK8PFchs.txt");
      }
    if(isMC==false && year==2018 && era == "A")
      {
-       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunA_V19_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunA_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunA_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunA_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2018 && era == "B")
      {
-       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunB_V19_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunB_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunB_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunB_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2018 && era == "C")
      {
-       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunC_V19_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunC_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunC_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunC_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
    if(isMC==false && year==2018 && era == "D")
      {
-       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L2Relative_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L3Absolute_AK8PFchs.txt");
-       jecAK8PayloadNames_.push_back("Autumn18_RunD_V19_DATA_L2L3Residual_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunD_V19_DATA_L2Relative_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunD_V19_DATA_L3Absolute_AK8PFchs.txt");
+       jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunD_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
 
 
@@ -417,18 +417,18 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
    // Get JER smearing                                                                                                                                           
    if(isMC==true && year==2018)
      {
-       jerAK8chsName_res_ = "Autumn18_V7b_MC_PtResolution_AK8PFchs.txt";
-       jerAK8chsName_sf_ = "Autumn18_V7b_MC_SF_AK8PFchs.txt";
+       jerAK8chsName_res_ = "JER2018/Autumn18_V7b_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "JER2018/Autumn18_V7b_MC_SF_AK8PFchs.txt";
      }
    if(isMC==true && year==2017)
      {                                     
-       jerAK8chsName_res_ = "Fall17_V3b_MC_PtResolution_AK8PFchs.txt";
-       jerAK8chsName_sf_ = "Fall17_V3b_MC_SF_AK8PFchs.txt";
+       jerAK8chsName_res_ = "JER2017/Fall17_V3b_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "JER2017/Fall17_V3b_MC_SF_AK8PFchs.txt";
      }
    if(isMC==true && year==2016)
      {
-       jerAK8chsName_res_ = "Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
-       jerAK8chsName_sf_ = "Summer16_25nsV1_MC_SF_AK8PFchs.txt";
+       jerAK8chsName_res_ = "JER2016/Summer16_25nsV1_MC_PtResolution_AK8PFchs.txt";
+       jerAK8chsName_sf_ = "JER2016/Summer16_25nsV1_MC_SF_AK8PFchs.txt";
      }
 }
 

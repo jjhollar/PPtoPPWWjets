@@ -17,7 +17,14 @@ use_x509userproxy   = true
 # This will submit the partNumber-th part of the job, which is split in nParts parts
 
 queue other_arguments from (
-	2017 D WW_A0W1e-6
-	2018 A WW_A0W2e-6 1 5
+	2017 B WW_A0W1e-6
+	# 2017 C WW_A0W1e-6
+	# 2017 D WW_A0W1e-6
+	# 2017 E WW_A0W1e-6
+	# 2017 F WW_A0W1e-6
+	# 2018 A WW_A0W2e-6
+	# 2018 B WW_A0W2e-6
+	# 2018 C WW_A0W2e-6
+	# 2018 D WW_A0W2e-6
 )
 

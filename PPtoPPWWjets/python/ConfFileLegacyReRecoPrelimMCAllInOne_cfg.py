@@ -129,17 +129,41 @@ process.RandomNumberGeneratorService.ctppsPreMixProducer = cms.PSet(initialSeed 
 
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.destinations = cms.untracked.vstring('cout')
-process.MessageLogger.cout = cms.untracked.PSet( 
-  threshold = cms.untracked.string('WARNING'),
-  # threshold = cms.untracked.string('INFO'),
+process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
+            optionalPSet = cms.untracked.bool(True),
+            reportEvery = cms.untracked.int32(100),
+            limit = cms.untracked.int32(2000)
+        )
+
+process.MessageLogger.destinations.append('logFile')
+process.MessageLogger.logFile = cms.untracked.PSet(
+  output = cms.untracked.string(OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"),
+  optionalPSet = cms.untracked.bool(True),
+    INFO = cms.untracked.PSet(
+      limit = cms.untracked.int32(0)
+     ),
+  noTimeStamps = cms.untracked.bool(False),
   FwkReport = cms.untracked.PSet(
     optionalPSet = cms.untracked.bool(True),
     reportEvery = cms.untracked.int32(1),
-    limit = cms.untracked.int32(50000000)
-  ),
-)
-process.MessageLogger.statistics = cms.untracked.vstring()
+    limit = cms.untracked.int32(10000000)
+    ),
+  default = cms.untracked.PSet(
+    limit = cms.untracked.int32(10000000)
+    ),
+  Root_NoDictionary = cms.untracked.PSet(
+    optionalPSet = cms.untracked.bool(True),
+    limit = cms.untracked.int32(0)
+    ),
+  FwkSummary = cms.untracked.PSet(
+    optionalPSet = cms.untracked.bool(True),
+    reportEvery = cms.untracked.int32(1),
+    limit = cms.untracked.int32(10000000)
+    ),
+  threshold = cms.untracked.string('INFO')
+  )
+
+process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
 ### ADD SOME NEW JET COLLECTIONS                                                                                                                                           
 # New (March 8, 2019) - to recover ak8 CHS jets with 2017 MiniAOD                                                                                                          
@@ -318,6 +342,8 @@ if YEAR == 2018:
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
 process.TFileService = cms.Service("TFileService", fileName = cms.string(OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"))
 print "Output will be saved in: "+OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"
+print "Log will be saved in: "+OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"
+print ""
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
@@ -360,8 +386,8 @@ process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(1000)
-  # input = cms.untracked.int32(100)
+  # input = cms.untracked.int32(1000)
+  input = cms.untracked.int32(10)
 )
 
 # # reconstruction plotter (analysis example)
