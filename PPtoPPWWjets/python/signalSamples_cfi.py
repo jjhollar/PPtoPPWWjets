@@ -1,4 +1,7 @@
-def signalSamples(year,era,sampleTag):
+def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
+
+	# provides the i-th files sublist out of n sublists for each year, era, and sampleTag
+	# Example: part 1 of 3, part 2 of 3, part 3 of 3
 
 	# recorded luminosity of each period from brilcalc, 1/ub
 	lumi_weights = {
@@ -267,6 +270,191 @@ def signalSamples(year,era,sampleTag):
 		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/280000/56FDC100-1030-E911-A1D5-002590FD5A48.root",
 		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/267351E9-B62A-E911-8463-7CD30AD09C88.root",
 	]
+	WW_ACW2e_5 = [
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/066FBB76-FC2A-E911-B414-FA163EEBE295.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F62CC6E2-132B-E911-858F-FA163E5609EE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8DBDE12-012B-E911-BAF7-FA163EDADC7B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/20B98A5F-3F2B-E911-BFA0-FA163EEBE295.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/F8A3AC71-252B-E911-BC46-0CC47A4C8F30.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/42DE3465-252B-E911-8584-0CC47A7C3404.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/C6D334DF-402B-E911-90C6-0CC47A7C34D0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/2E85FA04-7D2B-E911-8080-0CC47A4D7646.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A6F6C349-4827-E911-8F2D-FA163E614239.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6219EB0E-6E27-E911-B416-FA163E1AAE3A.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4A9F16E5-4927-E911-85F6-FA163E0959C0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/96625B83-6B27-E911-B01D-FA163E6A8980.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E442C22F-6127-E911-8004-FA163E63CDB5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/820A78B8-6727-E911-BE24-FA163EBE4CE4.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/18DB385C-5627-E911-84CB-FA163E2BE632.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F069DFEC-6227-E911-9ED2-FA163E5598C7.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/821B8C47-6327-E911-B061-FA163E14F11E.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A4DC0FED-6A27-E911-86E2-FA163E8FF902.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4C663FD1-8427-E911-B4AC-02163E019EEC.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DEBEFE79-6927-E911-B475-FA163EE69449.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3ED6A08F-6C27-E911-8D6A-FA163E1F999C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C0C4FB0E-7227-E911-A53E-FA163E1DC155.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CC6F2015-6327-E911-8B30-FA163ED0D5AA.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A10005B-6327-E911-9AE0-FA163EE4A297.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E464766B-6327-E911-8266-FA163E777760.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A267BC22-6427-E911-B416-FA163ED36045.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A0852D6E-6327-E911-98F7-FA163E4637E0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/80C0FBAC-6827-E911-A4B8-FA163E848E20.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/760A89CB-7C27-E911-84FE-FA163E2E5B91.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6AAFBA85-8E27-E911-A4F2-FA163E8FF902.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/7215E41F-6727-E911-8E17-FA163EE6AF41.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3C5226EA-6727-E911-801E-FA163EFD7D19.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/961566CD-6827-E911-AD1F-FA163E2890BA.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/861BD46C-7427-E911-BF9F-FA163EE2FC8C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/D2815FDC-5D27-E911-8A4A-FA163E2FCD5C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E286C354-7127-E911-9A33-FA163ECCE6F0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CC338BD2-7127-E911-B60D-FA163EE197C6.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/52286ED9-7127-E911-8D72-FA163EEE3FEF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/D22A7E6E-7727-E911-A5D7-FA163E82F168.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/8C30E4C6-7127-E911-B0E7-FA163E29D251.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F07B57B7-7227-E911-946D-FA163E293146.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/18DB072B-7227-E911-90FF-FA163EE66323.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/2C2E036C-7427-E911-B32B-FA163E22AFFD.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C67C01BC-7427-E911-B2B0-FA163E53CC91.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A80AA724-7E27-E911-AB59-FA163EEFAAC2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5CE95B69-7E27-E911-B457-FA163E6A8980.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/8CD5D795-7327-E911-BACC-FA163EEC5F91.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/1E812154-7427-E911-90D4-FA163EA5E58D.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/B6B1C29E-7427-E911-8838-FA163E8EA847.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/BED4085D-7727-E911-B66B-FA163E0959C0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5C3D4B96-7727-E911-AE4B-FA163EEFC7B5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E0C25FA0-7727-E911-98DD-FA163ED8FB28.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/96121FB3-6827-E911-9232-FA163E5578E8.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/104662CC-6827-E911-A98E-FA163E51B2B9.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4096AA33-7A27-E911-827D-FA163E3DFCCB.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/364BF4CA-7A27-E911-89AB-FA163E0DF5F2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A495B13-7B27-E911-994B-FA163E8F9CBA.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/B685C736-7C27-E911-85E5-FA163ECCD3B2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/58ECBC74-7C27-E911-833C-FA163E5A18F0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/7C6933B2-7C27-E911-89EB-FA163E60A5FD.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/BEA0A0C1-7C27-E911-A1EF-FA163ED2F018.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/8AA8BD99-7C27-E911-BC6D-FA163E019504.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/72FCDD23-7D27-E911-95F9-FA163E75C6E8.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A8390D4-7C27-E911-BDF3-FA163E865CC2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/90CC1B7A-7D27-E911-BBA5-FA163E1A95B7.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/34FD3B73-7B27-E911-874E-FA163E57A90D.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E6A16DE4-7C27-E911-A1EF-FA163EED90F7.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5A91F926-7D27-E911-9EF0-FA163E3DF515.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6A9D105D-7D27-E911-B49C-FA163EAFECF2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/EE9CAD9B-7D27-E911-AB4B-FA163EE59243.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/1EC42ACC-7D27-E911-A960-FA163EAD4CB1.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/9AAEC100-7E27-E911-9E19-FA163EA9A90B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/2AF11D31-7E27-E911-9447-FA163ED03425.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/32B268B3-7E27-E911-8573-FA163EC307AB.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/2C068172-8B27-E911-A727-FA163EB26BEA.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/1834A04C-BE27-E911-B98E-FA163ED35A39.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F6BDDE1E-AA27-E911-A06C-FA163EA9A90B.root",
+	]
+
+	WW_ACW5e_6 = [
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/4AE8D3C0-E427-E911-AC60-0025905C542E.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/B411F5D9-E427-E911-ACE8-0025904C6414.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/2034DED3-F527-E911-BF3B-0CC47AFB7D8C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/2A2CE068-CA28-E911-9053-0025905C2CB8.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/B6306423-0227-E911-B889-FA163E172877.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/E6E9AB30-AA27-E911-B62E-FA163EC134B5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/2CD7C0D1-F727-E911-861E-68CC6EA5BE6A.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/5665E26D-9429-E911-9C48-C0BFC0E567FE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/42F5356B-0028-E911-AEE5-44A842CFD60C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/3ED1532C-1228-E911-A591-0CC47A1DF814.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/0A5C3552-EA28-E911-AB27-002590E7D7D0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/EEB00B13-B628-E911-A886-1866DA890268.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/9E13E1C5-BC27-E911-AB2C-1866DA87D7BF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/98934333-E127-E911-9EDF-D4AE526A091F.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/60B55A00-0928-E911-90CD-842B2B766242.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/8E49EA3B-8A28-E911-A339-D4AE526A048B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/D25CF17D-E527-E911-97C7-6CC2173BC370.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/3EC07D22-C128-E911-BBA8-C4346BC76CD8.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/30000/64AEAE23-D528-E911-ABC6-008CFA064788.root",
+	]
+
+	WW_ACW8e_6 = [
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/263DD151-D12B-E911-A0F9-0CC47AA53D76.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/D88F0D0C-5A2A-E911-82A0-FA163EABB003.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/187123FD-4F2A-E911-8D00-FA163E7EE2FE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/049A37F2-592A-E911-B23B-FA163E91FAAB.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/7E5881F7-592A-E911-B6FC-FA163EFC49F9.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/60C69D44-8C2A-E911-BA21-FA163EC22F3C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/C0E5FB07-5A2A-E911-88E1-FA163E5CEC0B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/9A17F507-5A2A-E911-8407-FA163E5CEC0B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/90000/3AB039FE-D02B-E911-8521-FA163E672014.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/FEEF3CD8-5D27-E911-8CD4-FA163E6B94A5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6E2A41EF-6527-E911-8059-FA163EA11AEF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C2C57886-8E27-E911-80C5-FA163E355512.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C8AD91CB-7E27-E911-95A1-FA163E840824.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/BE5A5559-8027-E911-BA16-FA163E76C639.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/B49E2C17-7F27-E911-9A0A-FA163E63CDB5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/AA70971A-8027-E911-B922-FA163EBE4CE4.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/B211FA5A-8427-E911-AC9A-FA163E4F1FDC.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DA57B0DF-5D27-E911-A592-02163E019F11.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A2D82221-7F27-E911-B428-FA163EA84D75.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/56167FB3-8027-E911-9226-FA163EA0C012.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/16958FB4-8027-E911-BD97-FA163EC6502C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/12887201-8527-E911-8041-FA163E401182.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5C91DEDE-8D27-E911-8385-FA163ED6AFAF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/724CF109-7F27-E911-BB28-FA163E01B3E3.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/BADBD6D8-7F27-E911-890C-FA163EB1A399.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/24CBC9C8-8427-E911-A7FD-FA163EB2E120.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/FA8EDDC7-A027-E911-9178-02163E01A0B1.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/0E31AF5C-8427-E911-91E4-FA163E949BDE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/7C3F9621-8927-E911-882B-FA163E2BE632.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/D09E4875-7F27-E911-A0DC-FA163EDD6A45.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3A222181-8027-E911-8B26-FA163E2D36A9.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C6141612-8127-E911-8352-FA163E9BE5CE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/988F0FE2-8D27-E911-8F8F-FA163E2D5FC7.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/2A13C589-8E27-E911-A7AC-FA163E2C529F.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/B42CF42E-8027-E911-8409-FA163EA1D1FE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/D6A0C80B-8927-E911-B1AC-FA163EAFB5E2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/20AF1464-8227-E911-81F8-FA163EBBE2BF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F6C9728F-8F27-E911-99E0-FA163E614239.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/34F08163-9327-E911-9069-FA163E6754BE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/52AB7E8B-8127-E911-B70D-FA163E544538.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DCC89A17-8227-E911-922C-FA163EA222CE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/0CFC8EEB-8827-E911-9196-FA163E23E675.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/44CA0442-8927-E911-931D-FA163E336AEF.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F42906C3-8D27-E911-9ACE-FA163E1D4484.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/2E8E016A-8927-E911-8105-FA163E39862B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E84665E8-8E27-E911-B08A-FA163E167242.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/60F92EEA-8E27-E911-878D-FA163E73D0EC.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5834AE90-8127-E911-A267-FA163E0481A2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/98B3F1A7-8F27-E911-BD0D-FA163E777760.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6E5521D0-9227-E911-AF99-FA163E840824.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/9C9B228F-8127-E911-B21C-02163E01A130.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/1CCB1E1D-8927-E911-9E98-FA163E3509C2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6018738D-8D27-E911-8F39-FA163E0EE963.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/CE7DBF51-9527-E911-A93C-FA163E486311.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/16B6788D-8E27-E911-9568-FA163EE59C15.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/A2D379D8-9327-E911-A878-FA163EFD7D19.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/88A00652-9427-E911-BFA8-FA163EE6AF41.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/DED356B5-8927-E911-8F57-FA163EDB46B5.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/7EC4AC97-8E27-E911-8582-FA163EEC6C65.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/72EDD442-0D27-E911-8A92-00259048AE00.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/3C034578-1927-E911-A72E-002590D9D8C0.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/5E12DCDD-2227-E911-809D-0CC47A0AD742.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/260DCF6A-FE26-E911-90CB-0CC47AD24D28.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/4A2400F6-0627-E911-92D5-0025901FB438.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/863B52DB-0D27-E911-8247-0CC47AA53D86.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/6E4EB15A-0227-E911-A6D6-002590D9D8C2.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/F0C68408-0E27-E911-9A4A-0025901AA5AE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/8E218449-3427-E911-88DE-0CC47A57CBCC.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E8CB0283-3B27-E911-B9CF-0CC47AA477B6.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/300A5C24-8327-E911-8B1D-00259048A87C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/12EFCF56-5727-E911-80B6-0CC47A0AD742.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/9653784C-2B27-E911-A2A9-003048CB87DE.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/ECAA0045-3427-E911-9D58-003048F23B78.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/18651CAB-B227-E911-871A-002590FD5694.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/56F364DA-D227-E911-8013-0CC47A0AD6F8.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/36F5F5F8-1D28-E911-AE3C-002590D9D9BC.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/14EDD58D-2828-E911-923F-00259048AC9A.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/C2EE41EE-1F28-E911-9DE2-0025907DE22C.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/80000/E01C430C-6E28-E911-AE09-0CC47AA53D6E.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/7887F795-EF2E-E911-8DFE-FA163E08595B.root",
+		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/342B7FFF-F82E-E911-BD21-0025901AC3F0.root",
+	]
 
 	full_file_list = []
 	if sampleTag == "WW_A0W1e-6":
@@ -275,6 +463,12 @@ def signalSamples(year,era,sampleTag):
 		full_file_list = WW_A0W2e_6
 	elif sampleTag == "WW_A0W5e-6":
 		full_file_list = WW_A0W5e_6
+	elif sampleTag == "WW_ACW2e-5":
+		full_file_list = WW_ACW2e_5
+	elif sampleTag == "WW_ACW5e-6":
+		full_file_list = WW_ACW5e_6
+	elif sampleTag == "WW_ACW8e-6":
+		full_file_list = WW_ACW8e_6
 	else:
 		print "WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list"
 		return []
@@ -306,4 +500,8 @@ def signalSamples(year,era,sampleTag):
 	    fileCount += nFiles_for_era[key]
 	    # print "Weight", lumi_weights[key], "File list length: ", len(file_lists[key])
 
-	return file_lists[str(year)+era]
+	# split in n_sublists, as equally as possible, and return the i_sublists-th part
+	eraTag = str(year)+era
+	sublist_low_index = (i_sublists-1) * (nFiles_for_era[eraTag] // n_sublists) + min(i_sublists-1, nFiles_for_era[eraTag] % n_sublists)
+	sublist_high_index = i_sublists * (nFiles_for_era[eraTag] // n_sublists) + min(i_sublists, nFiles_for_era[eraTag] % n_sublists)
+	return file_lists[eraTag][sublist_low_index:sublist_high_index]

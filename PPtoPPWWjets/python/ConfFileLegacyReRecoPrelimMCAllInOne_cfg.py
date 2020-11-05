@@ -1,4 +1,5 @@
 import FWCore.ParameterSet.Config as cms
+import sys
 
 import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing ()
@@ -17,11 +18,36 @@ options.register('sampleTag',
                 VarParsing.VarParsing.multiplicity.singleton,
                 VarParsing.VarParsing.varType.string,
                 "Tag of the sample to analyze")
+options.register('outputDir',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.string,
+                "Output directory")
+options.register('partNumber',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.int,
+                "Number of the part")
+options.register('nParts',
+                '',
+                VarParsing.VarParsing.multiplicity.singleton,
+                VarParsing.VarParsing.varType.int,
+                "Number of parts")
+options.partNumber = 0
+options.nParts = 0
 options.parseArguments() 
 
+if ((options.partNumber == 0) ^ (options.nParts == 0)):
+  print "ERROR: either none or both partNumber and nParts must be set"
+  sys.exit(1)
+elif ((options.partNumber == 0) & (options.nParts == 0)):
+  options.partNumber = 1
+  options.nParts = 1
 
 ###########################################################
-# possible sampleTags: WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6 #
+# possible sampleTags:                                    #
+# WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6                      #
+# WW_ACW2e-5, WW_ACW5e-6, WW_ACW8e-6                      #
 ###########################################################
 
 MC=True
@@ -29,6 +55,9 @@ YEAR=options.year
 ERA=options.era
 MINIAOD=False
 SAMPLETAG=options.sampleTag
+OUTPUTDIR=options.outputDir
+PARTNUMBER=options.partNumber
+NPARTS=options.nParts
 DoTheorySystematics=True
 UseMCProtons=True
 
@@ -75,10 +104,10 @@ if MC == True and YEAR == 2018:
 
 from signalSamples_cfi import *
 print "Signal sample file list: "
-print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG))
+print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 print "\n"
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG))
+    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 )
 
 # add pre-mixing of recHits
@@ -287,6 +316,8 @@ if YEAR == 2018:
 # Configure Analyzer
 #########################                                                                                                                                                           
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
+process.TFileService = cms.Service("TFileService", fileName = cms.string(OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"))
+print "Output will be saved in: "+OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
