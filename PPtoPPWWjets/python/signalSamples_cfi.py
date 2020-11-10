@@ -5,6 +5,9 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 
 	# recorded luminosity of each period from brilcalc, 1/ub
 	lumi_weights = {
+		"2016B" : 4291753570.355125427,
+		"2016C" : 1490748474.430695534,
+		"2016G" : 3629501694.956498623,
 		"2017B" : 2367138592.987761497,
 		"2017C" : 8.6806766e+09,
 		"2017D" : 4142765586.060470104,

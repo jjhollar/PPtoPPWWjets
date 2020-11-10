@@ -145,7 +145,7 @@ process.MessageLogger.logFile = cms.untracked.PSet(
   noTimeStamps = cms.untracked.bool(False),
   FwkReport = cms.untracked.PSet(
     optionalPSet = cms.untracked.bool(True),
-    reportEvery = cms.untracked.int32(1),
+    reportEvery = cms.untracked.int32(1000),
     limit = cms.untracked.int32(10000000)
     ),
   default = cms.untracked.PSet(
