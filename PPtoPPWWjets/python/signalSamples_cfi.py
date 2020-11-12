@@ -482,7 +482,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 	for key in lumi_weights.keys():
 	    w_frac = lumi_weights[key]/total_lumi
 	    nFilesToUse = int(round(w_frac * nFiles))
-	    if nFilesToUse == 0: nFilesToUse = 1
+	    if nFilesToUse < 2: nFilesToUse = 2
 	    # print("Key", key, "Weight",lumi_weights[key],"file to use: ", nFilesToUse)
 	    nFiles_for_era[key] = nFilesToUse
 
