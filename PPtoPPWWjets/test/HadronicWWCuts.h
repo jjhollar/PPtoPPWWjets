@@ -166,10 +166,6 @@ public :
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop();
-   virtual Float_t  Aperture(Float_t xangle, Int_t arm, TString era);
-   virtual Bool_t   PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, Int_t thesample);
-   virtual Bool_t  SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample);
-   virtual Bool_t  MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample);
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
@@ -238,6 +234,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 20)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root");
+    if(samplenumber == 21)
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/SIGNAL/ExclWWjets_A0W2e-6_2017_preTS2_NoPUProtons_Fall17.root");
     if(samplenumber == 22)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root");
     if(samplenumber == 23)
@@ -309,6 +307,11 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     if(samplenumber == 223)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root");
 
+    if(samplenumber == 999)
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
         f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Bv1_17Nov2017_merge.root");
@@ -363,6 +366,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       if(samplenumber == 20)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root");
+      if(samplenumber == 21)
+        f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/SIGNAL/ExclWWjets_A0W2e-6_2017_preTS2_NoPUProtons_Fall17.root");
       if(samplenumber == 22)
         f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root");
       if(samplenumber == 23)
@@ -434,6 +439,11 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       if(samplenumber == 223)
 	f = new TFile("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root");
 
+      if(samplenumber == 999)
+	//	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+	//	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+
     }
     TDirectory * dir;
 
@@ -490,6 +500,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     if(samplenumber == 20)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 21)
+      dir = (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/SIGNAL/ExclWWjets_A0W2e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 22)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 23)
@@ -559,6 +571,11 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root:/demo");
     if(samplenumber == 223)
       dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root:/demo");
+
+    if(samplenumber == 999)
+      //      dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+      //      dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+      dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
 
     dir->GetObject("ntp1",tree);
 

@@ -7,215 +7,6 @@
 #include <string.h>
 #include <TMath.h>
 
-/*                                                                                                                                                                          
- * This function applies the 2017 pixel radiation damage efficiencies to signal MC, using the 2-d x,y maps. 
- * The efficiencies are averaged over all currently available tables for pre-TS2 and post-TS2. 
- * Currently it throws a random number to accept-reject the proton, rather than weighting the event (could be changed). 
- *
- * This should be used for single-RP pixel protons.                                                                                                                         
- * Requires the following files to be present in the working directory: pixelEfficiencies.root, PreliminaryEfficiencies_October92019_1D2DMultiTrack.root 
- * Ref: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf                                                   
- */
-bool HadronicWWCuts::SingleRPEffCorr(Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample)
-{
-  float effcorr = 1.0;
-  bool passes = true;
-
-  // Apply to signal MC - here for 2017 pre-TS2
-  if(thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)
-    {
-      if(arm == 0)
-	effcorr = hpixeff2017PreTS245->GetBinContent(hpixeff2017PreTS245->FindBin(trackx220,tracky220));
-      if(arm == 1)
-	effcorr = hpixeff2017PreTS256->GetBinContent(hpixeff2017PreTS256->FindBin(trackx220,tracky220));
-    }
-  // 2017 post-TS2
-  if(thesample == 24 || thesample == 25 || thesample == 41)
-    {
-      if(arm == 0)
-        effcorr = hpixeff2017PostTS245->GetBinContent(hpixeff2017PostTS245->FindBin(trackx220,tracky220));
-      if(arm == 1)
-        effcorr = hpixeff2017PostTS256->GetBinContent(hpixeff2017PostTS256->FindBin(trackx220,tracky220));
-    }
-
-  float therand = rnd->Uniform();
-  if(therand <= effcorr)
-    passes = true;
-  else
-    {
-      passes = false;
-    }
-
-  return passes;
-}
-
-/*                                                                                                                                                                          
- * This function applies the 2017 pixel radiation damage and strip radiation damage, plus the strip multi-track efficiencies, to signal MC.
- * The total efficiency is taken as the product of those 3 terms. The 2-d x,y maps are used for the radiation damage efficiency.                                            
- * The efficiencies are averaged over all currently available tables for pre-TS2 and post-TS2.                                                                              
- * Currently it throws a random number to accept-reject the proton, rather than weighting the event (could be changed).                                                     
- *                                                                                                                                                                          
- * This should be used for multi-RP protons.                                                                                                                         
- * Requires the following files to be present in the working directory: pixelEfficiencies.root, PreliminaryEfficiencies_October92019_1D2DMultiTrack.root                    
- * Refs: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf                                                   
- * https://indico.cern.ch/event/853567/contributions/3591200/attachments/1922308/3180339/StripsEffPOG_08102019.pdf
- */
-bool HadronicWWCuts::MultiRPEffCorr(Float_t trackx210, Float_t tracky210, Float_t trackx220, Float_t tracky220, Int_t arm, Int_t thesample)
-{
-  float effcorrpixrad = 1.0;
-  float effcorrstrrad = 1.0;
-  float effcorrstrmultitrk = 1.0;
-
-  bool passes = true;
-
-  // Apply to signal MC - here for 2017 pre-TS2 rad damage                                                                                                                         
-  if(thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)
-    {
-      if(arm == 0)
-	{
-	  effcorrpixrad = hpixeff2017PreTS245->GetBinContent(hpixeff2017PreTS245->FindBin(trackx220,tracky220));
-	  effcorrstrrad = hstreff2017PreTS245->GetBinContent(hstreff2017PreTS245->FindBin(trackx210,tracky210));
-	  effcorrstrmultitrk = hmultistreff2017PreTS245->GetBinContent(1);
-	}
-      if(arm == 1)
-	{
-	  effcorrpixrad = hpixeff2017PreTS256->GetBinContent(hpixeff2017PreTS256->FindBin(trackx220,tracky220));
-          effcorrstrrad = hstreff2017PreTS256->GetBinContent(hstreff2017PreTS256->FindBin(trackx210,tracky210));
-          effcorrstrmultitrk = hmultistreff2017PreTS256->GetBinContent(1);
-	}
-    }
-  // 2017 post-TS2 rad damage
-  if(thesample == 24 || thesample == 25 || thesample == 41)
-    {
-      if(arm == 0)
-        {
-          effcorrpixrad = hpixeff2017PostTS245->GetBinContent(hpixeff2017PostTS245->FindBin(trackx220,tracky220));
-          effcorrstrrad = hstreff2017PostTS245->GetBinContent(hstreff2017PostTS245->FindBin(trackx210,tracky210));
-          effcorrstrmultitrk = hmultistreff2017PostTS245->GetBinContent(1);
-        }
-      if(arm == 1)
-        {
-          effcorrpixrad = hpixeff2017PostTS256->GetBinContent(hpixeff2017PostTS256->FindBin(trackx220,tracky220));
-          effcorrstrrad = hstreff2017PostTS256->GetBinContent(hstreff2017PostTS256->FindBin(trackx210,tracky210));
-          effcorrstrmultitrk = hmultistreff2017PostTS256->GetBinContent(1);
-        }
-    }
-
-  float therand = rnd->Uniform();
-  if(therand <= (effcorrpixrad*effcorrstrrad*effcorrstrmultitrk))
-    passes = true;
-  else
-    {
-      passes = false;
-    }
-
-  return passes;
-}
-
-/*
- * This function applies the 2017 pixel fiducial cuts on data or signal MC. Depending on the sample 2 different sets of cuts are used 
- * for pre-TS2 and post-TS2. In case the fiducial cuts are given for finer time periods, the most strict set is used.
- *
- * Ref: https://indico.cern.ch/event/854012/contributions/3610560/attachments/1930919/3198180/POGPixelEfficiency_2017.pdf
- */
-bool HadronicWWCuts::PixelFiducial(Float_t trackx, Float_t tracky, Int_t arm, Int_t thesample)
-{
-  bool passesfiducial = false; 
-
-  float pixacceptxmin = -999.;
-  float pixacceptxmax = 999.;
-  float pixacceptymin = -999.;
-  float pixacceptymax = 999.;
-
-  if((thesample < 0 && thesample > -4) || (thesample == 21 || thesample == 22 || thesample == 27 || thesample == 31 || thesample == 99)) // preTS2 2017
-    {
-      if(arm == 0)
-	{
-	  pixacceptxmin = 1.995;
-	  pixacceptxmax = 24.334;
-	  pixacceptymin = -11.098;
-	  pixacceptymax = 4.298;
-	}
-      if(arm == 1)
-	{
-          pixacceptxmin = 2.137;
-          pixacceptxmax = 24.620;
-          pixacceptymin = -10.698;
-          pixacceptymax = 4.698;
-	}
-    }
-  if((thesample < -3 && thesample > -6) || (thesample == 24 || thesample == 25))// postTS2 2017
-    {
-      if(arm == 0)
-        {
-          pixacceptxmin = 1.995;
-          pixacceptxmax = 24.497;
-          pixacceptymin = -10.098;
-          pixacceptymax = 4.998;
-        }
-      if(arm == 1)
-        {
-          pixacceptxmin = 2.422;
-          pixacceptxmax = 24.620;
-          pixacceptymin = -9.698;
-          pixacceptymax = 5.398;
-        }
-    }
-
-  if((trackx > pixacceptxmin) && (trackx < pixacceptxmax) && (tracky > pixacceptymin) && (tracky < pixacceptymax))
-    passesfiducial = true;
-
-  return passesfiducial;
-}
-
-/*                                                                                                                                                                          
- * This function applies the collimator aperture cuts on data or signal MC, based on the crossing angle, arm, and era. 
- *                                                                                                                                                                          
- * Ref: https://indico.cern.ch/event/849095/contributions/3568020/attachments/1913799/3163250/j_kaspar_apertures.pdf
- */
-float HadronicWWCuts::Aperture(Float_t xangle, Int_t arm, TString era)
-{
-  float aperturelimit = 0.0;
-  if(era == "2016preTS2")
-    {
-      if(arm == 0)
-	aperturelimit = 0.111;
-      if(arm == 1)
-	aperturelimit = 0.138;
-    }
-  if(era == "2016postTS2")
-    {
-      if(arm == 0)
-        aperturelimit = 0.104;
-      if(arm == 1) // Note - 1 strip RP was not in, so no aperture cuts derived
-        aperturelimit = 999.9;
-    }
-  if(era == "2017preTS2")
-    {
-      if(arm == 0)
-	aperturelimit = 0.066 + (3.54E-4 * xangle);
-      if(arm == 1)
-        aperturelimit = 0.062 + (5.96E-4 * xangle);
-    }
-  if(era == "2017postTS2")
-    {
-      if(arm == 0)
-        aperturelimit = 0.073 + (4.11E-4 * xangle);
-      if(arm == 1)
-        aperturelimit = 0.067 + (6.87E-4 * xangle);
-    }
-  if(era == "2018")
-    {
-      if(arm == 0)
-        aperturelimit = 0.079 + (4.21E-4 * xangle);
-      if(arm == 1)
-        aperturelimit = 0.074 + (6.6E-4 * xangle);
-    }
-
-  return aperturelimit;
-}
-
-
 void HadronicWWCuts::Loop()
 {
 //   In a ROOT session, you can do:
@@ -253,20 +44,11 @@ void HadronicWWCuts::Loop()
    // Limit bkg MC samples to 1M events for quick tests
    //   if((samplenumber > 1 && samplenumber < 20) || (samplenumber > 100 && samplenumber < 120) || (samplenumber > 200 && samplenumber < 220))
    //     nentries = 1000000;
+
+   // Total event weight (PU + anything else)
    Float_t myweight = 1.0;
 
-   Float_t Dx45ref140 = -8.226;
-   Float_t Dx56ref140 = -6.191;
-   Float_t Dx45ref130 = -8.591;
-   Float_t Dx56ref130 = -6.621;
-   Float_t Dx45ref120 = -9.145;
-   Float_t Dx56ref120 = -7.291;
-
-   Float_t Aln45pixels = -42.05;
-   Float_t Aln56pixels = -42.05;
-   Float_t Aln45strips = -3.70;
-   Float_t Aln56strips = -2.75;
-
+   // Pre-selection plots
    TH1F *hmjjdat = new TH1F("hmjjdat","hmjjdat",250,0,5000);
    TH1F *hmjjdatpfjet = new TH1F("hmjjdatpfjet","hmjjdatpfjet",250,0,5000);
    TH1F *hmjjdatpfhttrim = new TH1F("hmjjdatpfhttrim","hmjjdatpfhttrim",250,0,5000);
@@ -279,8 +61,6 @@ void HadronicWWCuts::Loop()
    TH2F *hmyppsingle = new TH2F("hmyppsingle","hmyppsingle",100,0,5000,100,-5,5);
    TH2F *hmyppmulti = new TH2F("hmyppmulti","hmyppmulti",100,0,5000,100,-5,5);
    TH2F *hmyjjdat = new TH2F("hmyjjdat","hmyjjdat",100,0,5000,100,-5,5);
-
-
 
    TH1F *hmjdat1 = new TH1F("hmjdat1","hmjdat1",250,0,1000);
    TH1F *htau21dat1 = new TH1F("htau21dat1","htau21dat1",250,0,1);
@@ -301,6 +81,7 @@ void HadronicWWCuts::Loop()
    TH1F *hacopdat = new TH1F("hacopdat","hacopdat",250,0,1);
    TH1F *hnvtx = new TH1F("hnvtx","hnvtx",100,0,100);
    TH1F *hptratio = new TH1F("hptratio","hptratio",500,0,5);
+   TH1F *hprunedrotatedjjdat = new TH1F("hprunedrotatedjjdat","hprunedrotatedjjdat",250,0,500);
 
    TH1F *hxipix45 = new TH1F("hxipix45","hxipix45",500,0,0.5);
    TH1F *hypix45 = new TH1F("hypix45","hypix45",500,-50,50);
@@ -326,70 +107,121 @@ void HadronicWWCuts::Loop()
    TH1F *hdxi56 = new TH1F("hdxi56","hdxi56",500,-0.2,0.2);
    TH1F *hdy56 = new TH1F("hdy56","hdy56",500,-20,20);
 
-   TH1F *hmassmatchantiw = new TH1F("hmassmatchantiw","hmassmatchantiw",500,-2500,2500);
-   TH1F *hymatchantiw = new TH1F("hymatchantiw","hymatchantiw",100,-5,5);
-   TH1F *hmassmatchratioantiw = new TH1F("hmassmatchratioantiw","hmassmatchratioantiw",100,-5,5);
+   // Sideband control region plots - WW
+   TH1F *hmassmatchantiacopmmww = new TH1F("hmassmatchantiacopmmww","hmassmatchantiacopmmww",500,-2500,2500);
+   TH1F *hymatchantiacopmmww = new TH1F("hymatchantiacopmmww","hymatchantiacopmmww",100,-5,5);
+   TH1F *hmassmatchratioantiacopmmww = new TH1F("hmassmatchratioantiacopmmww","hmassmatchratioantiacopmmww",100,-5,5);
+   TH1F *hmassmatchantitaummww = new TH1F("hmassmatchantitaummww","hmassmatchantitaummww",500,-2500,2500);
+   TH1F *hymatchantitaummww = new TH1F("hymatchantitaummww","hymatchantitaummww",100,-5,5);
+   TH1F *hmassmatchratioantitaummww = new TH1F("hmassmatchratioantitaummww","hmassmatchratioantitaummww",100,-5,5);
+   TH1F *hmassmatchantiptbalmmww = new TH1F("hmassmatchantiptbalmmww","hmassmatchantiptbalmmww",500,-2500,2500);
+   TH1F *hymatchantiptbalmmww = new TH1F("hymatchantiptbalmmww","hymatchantiptbalmmww",100,-5,5);
+   TH1F *hmassmatchratioantiptbalmmww = new TH1F("hmassmatchratioantiptbalmmww","hmassmatchratioantiptbalmmww",100,-5,5);
+   TH1F *hmassmatchantiprunedmmww = new TH1F("hmassmatchantiprunedmmww","hmassmatchantiprunedmmww",500,-2500,2500);
+   TH1F *hymatchantiprunedmmww = new TH1F("hymatchantiprunedmmww","hymatchantiprunedmmww",100,-5,5);
+   TH1F *hmassmatchratioantiprunedmmww = new TH1F("hmassmatchratioantiprunedmmww","hmassmatchratioantiprunedmmww",100,-5,5);
 
-   TH1F *hmassmatchantiacopmm = new TH1F("hmassmatchantiacopmm","hmassmatchantiacopmm",500,-2500,2500);
-   TH1F *hymatchantiacopmm = new TH1F("hymatchantiacopmm","hymatchantiacopmm",100,-5,5);
-   TH1F *hmassmatchratioantiacopmm = new TH1F("hmassmatchratioantiacopmm","hmassmatchratioantiacopmm",100,-5,5);
-   TH1F *hmassmatchantitaumm = new TH1F("hmassmatchantitaumm","hmassmatchantitaumm",500,-2500,2500);
-   TH1F *hymatchantitaumm = new TH1F("hymatchantitaumm","hymatchantitaumm",100,-5,5);
-   TH1F *hmassmatchratioantitaumm = new TH1F("hmassmatchratioantitaumm","hmassmatchratioantitaumm",100,-5,5);
-   TH1F *hmassmatchantiptbalmm = new TH1F("hmassmatchantiptbalmm","hmassmatchantiptbalmm",500,-2500,2500);
-   TH1F *hymatchantiptbalmm = new TH1F("hymatchantiptbalmm","hymatchantiptbalmm",100,-5,5);
-   TH1F *hmassmatchratioantiptbalmm = new TH1F("hmassmatchratioantiptbalmm","hmassmatchratioantiptbalmm",100,-5,5);
-
-   TH1F *hmassmatchsigmcmm = new TH1F("hmassmatchsigmcmm","hmassmatchsigmcmm",500,-2500,2500);
-   TH1F *hymatchsigmcmm = new TH1F("hymatchsigmcmm","hymatchsigmcmm",500,-5,5);
-   TH1F *hmassmatchratiosigmcmm = new TH1F("hmassmatchratiosigmcmm","hmassmatchratiosigmcmm",500,-5,5);
-
-   TH1F *hmassmatchratiosigmcmmshiftup = new TH1F("hmassmatchratiosigmcmmshiftup","hmassmatchratiosigmcmmshiftup",500,-5,5);
-   TH1F *hmassmatchratiosigmcmmshiftdown = new TH1F("hmassmatchratiosigmcmmshiftdown","hmassmatchratiosigmcmmshiftdown",500,-5,5);
-   TH1F *hymatchsigmcmmshiftup = new TH1F("hymatchsigmcmmshiftup","hymatchsigmcmmshiftup",500,-5,5);
-   TH1F *hymatchsigmcmmshiftdown = new TH1F("hymatchsigmcmmshiftdown","hymatchsigmcmmshiftdown",500,-5,5);
-
-
-   TH2F *hmassrapiditymatchvetosignalregion = new TH2F("hmassrapiditymatchvetosignalregion","hmassrapiditymatchvetosignalregion",500,-5,5,500,-5,5);
-   TH2F *hmassrapiditymatchvetoorsignalregion = new TH2F("hmassrapiditymatchvetoorsignalregion","hmassrapiditymatchvetoorsignalregion",500,-5,5,500,-5,5);
-
-   TH2F *hmassrapiditymatchantitaumm = new TH2F("hmassrapiditymatchantitaumm","hmassrapiditymatchantitaumm",500,-5,5,500,-5,5);
-   TH2F *hmassrapiditymatchantiacopmm = new TH2F("hmassrapiditymatchantiacopmm","hmassrapiditymatchantiacopmm",500,-5,5,500,-5,5);
-   TH2F *hmassrapiditymatchantiptbalmm = new TH2F("hmassrapiditymatchantiptbalmm","hmassrapiditymatchantiptbalmm",500,-5,5,500,-5,5);
+   // Sideband control region plots - ZZ                                                                                                                                                                        
+   TH1F *hmassmatchantiacopmmzz = new TH1F("hmassmatchantiacopmmzz","hmassmatchantiacopmmzz",500,-2500,2500);
+   TH1F *hymatchantiacopmmzz = new TH1F("hymatchantiacopmmzz","hymatchantiacopmmzz",100,-5,5);
+   TH1F *hmassmatchratioantiacopmmzz = new TH1F("hmassmatchratioantiacopmmzz","hmassmatchratioantiacopmmzz",100,-5,5);
+   TH1F *hmassmatchantitaummzz = new TH1F("hmassmatchantitaummzz","hmassmatchantitaummzz",500,-2500,2500);
+   TH1F *hymatchantitaummzz = new TH1F("hymatchantitaummzz","hymatchantitaummzz",100,-5,5);
+   TH1F *hmassmatchratioantitaummzz = new TH1F("hmassmatchratioantitaummzz","hmassmatchratioantitaummzz",100,-5,5);
+   TH1F *hmassmatchantiptbalmmzz = new TH1F("hmassmatchantiptbalmmzz","hmassmatchantiptbalmmzz",500,-2500,2500);
+   TH1F *hymatchantiptbalmmzz = new TH1F("hymatchantiptbalmmzz","hymatchantiptbalmmzz",100,-5,5);
+   TH1F *hmassmatchratioantiptbalmmzz = new TH1F("hmassmatchratioantiptbalmmzz","hmassmatchratioantiptbalmmzz",100,-5,5);
+   TH1F *hmassmatchantiprunedmmzz = new TH1F("hmassmatchantiprunedmmzz","hmassmatchantiprunedmmzz",500,-2500,2500);
+   TH1F *hymatchantiprunedmmzz = new TH1F("hymatchantiprunedmmzz","hymatchantiprunedmmzz",100,-5,5);
+   TH1F *hmassmatchratioantiprunedmmzz = new TH1F("hmassmatchratioantiprunedmmzz","hmassmatchratioantiprunedmmzz",100,-5,5);
 
 
-   TH1F *hymatchsigmcmult = new TH1F("hymatchsigmcmult","hymatchsigmcmult",500,-5,5);
-   TH2F *hmasscorrsigmcmult = new TH2F("hmasscorrsigmcmult","hmasscorrsigmcmult",250,0,2500,250,0,2500);
-   TH2F *hycorrsigmcmult = new TH2F("hycorrsigmcmult","hycorrsigmcmult",100,-5,5,100,-5,5);
-   TH2F *hmasscorrsigmcmulttruthmatched = new TH2F("hmasscorrsigmcmulttruthmatched","hmasscorrsigmcmulttruthmatched",250,0,2500,250,0,2500);
+   // 1-D proton-VV matching plots                                                                                                                                                                              
+   TH2F *hgenxinomatch = new TH2F("hgenxinomatch","hgenxinomatch",500,0,0.5,500,0,0.5);
+   TH1F *hmassmatchratiosigmcoutofacceptancemm = new TH1F("hmassmatchratiosigmcoutofacceptancemm","hmassmatchratiosigmcoutofacceptancemm",100,-5,5);
+   TH1F *hmassmatchratiosigmcinacceptancemm = new TH1F("hmassmatchratiosigmcinacceptancemm","hmassmatchratiosigmcinacceptancemm",100,-5,5);
+   TH1F *hmassmatchratiosigmcinacceptancenomatchmm = new TH1F("hmassmatchratiosigmcinacceptancenomatchmm","hmassmatchratiosigmcinacceptancenomatchmm",100,-5,5);
+   TH1F *hymatchsigmcoutofacceptancemm = new TH1F("hymatchsigmcoutofacceptancemm","hymatchsigmcoutofacceptancemm",500,-5,5);
+   TH1F *hymatchsigmcinacceptancemm = new TH1F("hymatchsigmcinacceptancemm","hymatchsigmcinacceptancemm",500,-5,5);
+   TH1F *hymatchsigmcinacceptancenomatchmm = new TH1F("hymatchsigmcinacceptancenomatchmm","hymatchsigmcinacceptancenomatchmm",500,-5,5);
+   
+   // 1-D proton-VV matching plots with systematic shifts
+   TH1F *hmassmatchratiosigmcmmshiftupww = new TH1F("hmassmatchratiosigmcmmshiftupww","hmassmatchratiosigmcmmshiftupww",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmshiftdownww = new TH1F("hmassmatchratiosigmcmmshiftdownww","hmassmatchratiosigmcmmshiftdownww",500,-5,5);
+   TH1F *hymatchsigmcmmshiftupww = new TH1F("hymatchsigmcmmshiftupww","hymatchsigmcmmshiftupww",500,-5,5);
+   TH1F *hymatchsigmcmmshiftdownww = new TH1F("hymatchsigmcmmshiftdownww","hymatchsigmcmmshiftdownww",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmshiftupzz = new TH1F("hmassmatchratiosigmcmmshiftupzz","hmassmatchratiosigmcmmshiftupzz",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmshiftdownzz = new TH1F("hmassmatchratiosigmcmmshiftdownzz","hmassmatchratiosigmcmmshiftdownzz",500,-5,5);
+   TH1F *hymatchsigmcmmshiftupzz = new TH1F("hymatchsigmcmmshiftupzz","hymatchsigmcmmshiftupzz",500,-5,5);
+   TH1F *hymatchsigmcmmshiftdownzz = new TH1F("hymatchsigmcmmshiftdownzz","hymatchsigmcmmshiftdownzz",500,-5,5);
+
+
+   // 2-D proton-VV matching plots
+   TH2F *hmassrapiditymatchvetosignalregionww = new TH2F("hmassrapiditymatchvetosignalregionww","hmassrapiditymatchvetosignalregionww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchvetoorsignalregionww = new TH2F("hmassrapiditymatchvetoorsignalregionww","hmassrapiditymatchvetoorsignalregionww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchvetosignalregionzz = new TH2F("hmassrapiditymatchvetosignalregionzz","hmassrapiditymatchvetosignalregionzz",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchvetoorsignalregionzz = new TH2F("hmassrapiditymatchvetoorsignalregionzz","hmassrapiditymatchvetoorsignalregionzz",500,-5,5,500,-5,5);
+
+   TH2F *hmassrapiditymatchantitaummww = new TH2F("hmassrapiditymatchantitaummww","hmassrapiditymatchantitaummww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiacopmmww = new TH2F("hmassrapiditymatchantiacopmmww","hmassrapiditymatchantiacopmmww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiptbalmmww = new TH2F("hmassrapiditymatchantiptbalmmww","hmassrapiditymatchantiptbalmmww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiprunedmmww = new TH2F("hmassrapiditymatchantiprunedmmww","hmassrapiditymatchantiprunedmmww",500,-5,5,500,-5,5);
+
+   TH2F *hmassrapiditymatchantitaummzz = new TH2F("hmassrapiditymatchantitaummzz","hmassrapiditymatchantitaummzz",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiacopmmzz = new TH2F("hmassrapiditymatchantiacopmmzz","hmassrapiditymatchantiacopmmzz",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiptbalmmzz = new TH2F("hmassrapiditymatchantiptbalmmzz","hmassrapiditymatchantiptbalmmzz",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchantiprunedmmzz = new TH2F("hmassrapiditymatchantiprunedmmzz","hmassrapiditymatchantiprunedmmzz",500,-5,5,500,-5,5);
 
    TH2F *hycorrpreseldatmult = new TH2F("hycorrpreseldatmult","hycorrpreseldatmult",100,-5,5,100,-5,5);
    TH2F *hmasscorrpreseldatmult = new TH2F("hmasscorrpreseldatmult","hmasscorrpreseldatmult",250,0,2500,250,0,2500);
    TH2F *dymassratiocorrpreseldatmult = new TH2F("dymassratiocorrpreseldatmult","dymassratiocorrpreseldatmult",500,-5,5,500,-5,5);
 
-   TH1F *hmasswwantiptbal = new TH1F("hmasswwantiptbal","hmasswwantiptbal",250,0,5000);
+   // Anit-pT balance control plots
+   TH1F *hmassvvantiptbalww = new TH1F("hmassvvantiptbalww","hmassvvantiptbalww",250,0,5000);
+   TH1F *hmassvvantiptbalzz = new TH1F("hmassvvantiptbalzz","hmassvvantiptbalzz",250,0,5000);
 
    // Anti-acoplanarity control plots
-   TH1F *hmasswwantiacop = new TH1F("hmasswwantiacop","hmasswwantiacop",250,0,5000);
-   TH1F *hmj1antiacop = new TH1F("hmj1antiacop","hmj1antiacop",250,0,1000);
-   TH1F *htau211antiacop = new TH1F("htau211antiacop","htau211antiacop",250,0,1);
-   TH1F *hmj2antiacop = new TH1F("hmj2antiacop","hmj2antiacop",250,0,1000);
-   TH1F *htau212antiacop = new TH1F("htau212antiacop","htau212antiacop",250,0,1);
+   TH1F *hmassvvantiacopww = new TH1F("hmassvvantiacopww","hmassvvantiacopww",250,0,5000);
+   TH1F *hmj1antiacopww = new TH1F("hmj1antiacopww","hmj1antiacopww",250,0,1000);
+   TH1F *htau211antiacopww = new TH1F("htau211antiacopww","htau211antiacopww",250,0,1);
+   TH1F *hmj2antiacopww = new TH1F("hmj2antiacopww","hmj2antiacopww",250,0,1000);
+   TH1F *htau212antiacopww = new TH1F("htau212antiacopww","htau212antiacopww",250,0,1);
+   TH1F *hmassvvantiacopzz = new TH1F("hmassvvantiacopzz","hmassvvantiacopzz",250,0,5000);
+   TH1F *hmj1antiacopzz = new TH1F("hmj1antiacopzz","hmj1antiacopzz",250,0,1000);
+   TH1F *htau211antiacopzz = new TH1F("htau211antiacopzz","htau211antiacopzz",250,0,1);
+   TH1F *hmj2antiacopzz = new TH1F("hmj2antiacopzz","hmj2antiacopzz",250,0,1000);
+   TH1F *htau212antiacopzz = new TH1F("htau212antiacopzz","htau212antiacopzz",250,0,1);
 
    // Anti-tau21 control plots
-   TH1F *hmasswwantitau = new TH1F("hmasswwantitau","hmasswwantitau",250,0,5000);
-   TH1F *hmj1antitau = new TH1F("hmj1antitau","hmj1antitau",250,0,1000);
-   TH1F *htau211antitau = new TH1F("htau211antitau","htau211antitau",250,0,1);
-   TH1F *hmj2antitau = new TH1F("hmj2antitau","hmj2antitau",250,0,1000);
-   TH1F *htau212antitau = new TH1F("htau212antitau","htau212antitau",250,0,1);
+   TH1F *hmassvvantitauww = new TH1F("hmassvvantitauww","hmassvvantitauww",250,0,5000);
+   TH1F *hmj1antitauww = new TH1F("hmj1antitauww","hmj1antitauww",250,0,1000);
+   TH1F *htau211antitauww = new TH1F("htau211antitauww","htau211antitauww",250,0,1);
+   TH1F *hmj2antitauww = new TH1F("hmj2antitauww","hmj2antitauww",250,0,1000);
+   TH1F *htau212antitauww = new TH1F("htau212antitauww","htau212antitauww",250,0,1);
+   TH1F *hmassvvantitauzz = new TH1F("hmassvvantitauzz","hmassvvantitauzz",250,0,5000);
+   TH1F *hmj1antitauzz = new TH1F("hmj1antitauzz","hmj1antitauzz",250,0,1000);
+   TH1F *htau211antitauzz = new TH1F("htau211antitauzz","htau211antitauzz",250,0,1);
+   TH1F *hmj2antitauzz = new TH1F("hmj2antitauzz","hmj2antitauzz",250,0,1000);
+   TH1F *htau212antitauzz = new TH1F("htau212antitauzz","htau212antitauzz",250,0,1);
 
-   TH1F *hmasswwsignal = new TH1F("hmasswwsignal","hmasswwsignal",250,0,5000);
-   TH1F *hywwsignal = new TH1F("hywwsignal","hywwsignal",250,-5,5);
+   // Anti-pruned mass control plots                                                                                                                                                               
+   TH1F *hmassvvantiprunedww = new TH1F("hmassvvantiprunedww","hmassvvantiprunedww",250,0,5000);
+   TH1F *hmj1antiprunedww = new TH1F("hmj1antiprunedww","hmj1antiprunedww",250,0,1000);
+   TH1F *htau211antiprunedww = new TH1F("htau211antiprunedww","htau211antiprunedww",250,0,1);
+   TH1F *hmj2antiprunedww = new TH1F("hmj2antiprunedww","hmj2antiprunedww",250,0,1000);
+   TH1F *htau212antiprunedww = new TH1F("htau212antiprunedww","htau212antiprunedww",250,0,1);
+   TH1F *hmassvvantiprunedzz = new TH1F("hmassvvantiprunedzz","hmassvvantiprunedzz",250,0,5000);
+   TH1F *hmj1antiprunedzz = new TH1F("hmj1antiprunedzz","hmj1antiprunedzz",250,0,1000);
+   TH1F *htau211antiprunedzz = new TH1F("htau211antiprunedzz","htau211antiprunedzz",250,0,1);
+   TH1F *hmj2antiprunedzz = new TH1F("hmj2antiprunedzz","hmj2antiprunedzz",250,0,1000);
+   TH1F *htau212antiprunedzz = new TH1F("htau212antiprunedzz","htau212antiprunedzz",250,0,1);
+
    TH1F *hcrossingangle = new TH1F("hcrossingangle","hcrossingangle",70,100,170);
 
    TH1F *hmppres = new TH1F("hmppres","hmppres",100,0,2);
    TH1F *hmjjres = new TH1F("hmjjres","hmjjres",100,0,2);
-   TH1F *hmassmatchratiosigmcmult = new TH1F("hmassmatchratiosigmcmult","hmassmatchratiosigmcmult",500,-5,5);
+   TH1F *hmassmatchratiosigmcmultww = new TH1F("hmassmatchratiosigmcmultww","hmassmatchratiosigmcmultww",500,-5,5);
+   TH1F *hmassmatchratiosigmcmultzz = new TH1F("hmassmatchratiosigmcmultzz","hmassmatchratiosigmcmultzz",500,-5,5);
 
    TH1F *xijets45= new TH1F("xijets45","xijets45",250,0,0.25);
    TH1F *xijets56= new TH1F("xijets56","xijets56",250,0,0.25);
@@ -397,6 +229,29 @@ void HadronicWWCuts::Loop()
    TH1F *resxijets56= new TH1F("resxijets56","resxijets56",100,0,2);
    TH2F *resxijetscorr45= new TH2F("resxijetscorr45","resxijetscorr45",300,0,0.3,300,0,0.3);
    TH2F *resxijetscorr56= new TH2F("resxijetscorr56","resxijetscorr56",300,0,0.3,300,0,0.3);
+
+   TH1F *hmassvvsignalww = new TH1F("hmassvvsignalww","hmassvvsignalww",250,0,5000);
+   TH1F *hywwsignalww = new TH1F("hywwsignalww","hywwsignalww",250,-5,5);
+   TH1F *hmassvvsignalzz = new TH1F("hmassvvsignalzz","hmassvvsignalzz",250,0,5000);
+   TH1F *hywwsignalzz = new TH1F("hywwsignalzz","hywwsignalzz",250,-5,5);
+
+   // Signal region plots                                                                                                                                                                          
+   TH1F *hmassmatchsigmcmmww = new TH1F("hmassmatchsigmcmmww","hmassmatchsigmcmmww",500,-2500,2500);
+   TH1F *hymatchsigmcmmww = new TH1F("hymatchsigmcmmww","hymatchsigmcmmww",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmww = new TH1F("hmassmatchratiosigmcmmww","hmassmatchratiosigmcmmww",500,-5,5);
+   TH1F *hymatchsigmcmultww = new TH1F("hymatchsigmcmultww","hymatchsigmcmultww",500,-5,5);
+   TH2F *hmasscorrsigmcmultww = new TH2F("hmasscorrsigmcmultww","hmasscorrsigmcmultww",250,0,2500,250,0,2500);
+   TH2F *hycorrsigmcmultww = new TH2F("hycorrsigmcmultww","hycorrsigmcmultww",100,-5,5,100,-5,5);
+   TH2F *hmasscorrsigmcmulttruthmatchedww = new TH2F("hmasscorrsigmcmulttruthmatchedww","hmasscorrsigmcmulttruthmatchedww",250,0,2500,250,0,2500);
+ 
+   TH1F *hmassmatchsigmcmmzz = new TH1F("hmassmatchsigmcmmzz","hmassmatchsigmcmmzz",500,-2500,2500);
+   TH1F *hymatchsigmcmmzz = new TH1F("hymatchsigmcmmzz","hymatchsigmcmmzz",500,-5,5);
+   TH1F *hmassmatchratiosigmcmmzz = new TH1F("hmassmatchratiosigmcmmzz","hmassmatchratiosigmcmmzz",500,-5,5);
+   TH1F *hymatchsigmcmultzz = new TH1F("hymatchsigmcmultzz","hymatchsigmcmultzz",500,-5,5);
+   TH2F *hmasscorrsigmcmultzz = new TH2F("hmasscorrsigmcmultzz","hmasscorrsigmcmultzz",250,0,2500,250,0,2500);
+   TH2F *hycorrsigmcmultzz = new TH2F("hycorrsigmcmultzz","hycorrsigmcmultzz",100,-5,5,100,-5,5);
+   TH2F *hmasscorrsigmcmulttruthmatchedzz = new TH2F("hmasscorrsigmcmulttruthmatchedzz","hmasscorrsigmcmulttruthmatchedzz",250,0,2500,250,0,2500);
+
 
 
    std::vector<float> *mppsmultmult = new std::vector<float>;
@@ -422,13 +277,15 @@ void HadronicWWCuts::Loop()
 
 
    // Counters for # of MC events passing cuts
-   Int_t npasspresel = 0;
-   Int_t npassdijetkine = 0;
-   Int_t npassjetsubstr = 0;
-   Int_t npassjetxi = 0;
-   Int_t npasspps = 0;
-   Int_t npassppsbeforecuts = 0;
-   Int_t npassppsmatchksenia = 0;
+   Float_t npasspresel = 0;
+   Float_t npassdijetkine = 0;
+   Float_t npassjetsubstr = 0;
+   Float_t npassjetxi = 0;
+   Float_t npasspps = 0;
+   Float_t npassppsbeforecuts = 0;
+   Float_t npassppsmatchksenia = 0;
+   Float_t npassppsmatchkseniaww = 0;
+   Float_t npassppsmatchkseniazz = 0;
 
    TString outtextfile = "MC_EventsForMixing.txt";
 
@@ -453,6 +310,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 20)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017.txt";
+   if(samplenumber == 21)
+     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017.txt";
    if(samplenumber == 22)
      outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017.txt";
    if(samplenumber == 23)
@@ -512,7 +371,7 @@ void HadronicWWCuts::Loop()
      outtextfile = "MC_EventsForMixing_wjets_2018.txt";
    if(samplenumber == 209)
      outtextfile = "MC_EventsForMixing_zjets_2018.txt";
-
+   
    if(samplenumber == 220)
      outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018.txt";
    if(samplenumber == 222)
@@ -563,6 +422,12 @@ void HadronicWWCuts::Loop()
        erastring = "2018";
      }
 
+   // JH: "999" is a dummy samplenumber used for testing new ntuples
+   if(samplenumber == 999)
+     erastring = "2016preTS2";
+     //     erastring = "2018";
+     //     erastring = "2017preTS2";
+
    PPSProtonEfficiency eff;
 
    Long64_t nbytes = 0, nb = 0;
@@ -608,6 +473,7 @@ void HadronicWWCuts::Loop()
            Float_t etajet1 = 0.0; Float_t etajet2 = 0.0;
            Float_t phijet1 = 0.0; Float_t phijet2 = 0.0;
            Float_t ejet1 = 0.0; Float_t ejet2 = 0.0;
+	   Float_t rotatedprunedmasses = 0.0;
            int indleading = 0;
            int indsecond = 1;
 
@@ -743,7 +609,7 @@ void HadronicWWCuts::Loop()
 		       Float_t rhoprime2 = 0;
 		       Float_t taut21ddt2 = 0;
 
-		       npasspresel++;
+		       npasspresel+= 1.0*myweight;
 
 		       if(jet_corrmass->at(indleading) >= 55 && jet_corrmass->at(indleading) <= 215)
 			 {
@@ -771,6 +637,11 @@ void HadronicWWCuts::Loop()
 		       hphidat2->Fill(jet_phi->at(indsecond),myweight);
 		       xijets45->Fill(xijets1);
 		       xijets56->Fill(xijets2);
+
+		       // Ksenia's rotation of the pruned mass correlation for WW/ZZ separation
+		       rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jet_corrmass->at(indleading)) + (TMath::Sin(TMath::Pi()/4.0)*jet_corrmass->at(indsecond));
+		       if(jet_corrmass->at(indleading) >= 55 && jet_corrmass->at(indleading) <= 215 && jet_corrmass->at(indsecond) >= 55 && jet_corrmass->at(indsecond) <= 215)
+			 hprunedrotatedjjdat->Fill(rotatedprunedmasses,myweight);
 		       //		       resxijets45->Fill(xijets1/genxijets1);
 		       //		       resxijets56->Fill(xijets2/genxijets2);
 		       //		       resxijetscorr45->Fill(xijets1,genxijets1);
@@ -787,11 +658,12 @@ void HadronicWWCuts::Loop()
 		       hacopdat->Fill(acop,myweight);
 		       //		       std::cout << "phi1 = " << jet_phi->at(indleading) << ", phi2 = " << jet_phi->at(indsecond) << ", dphi = " << dphi 
 		       //				 << ", acop = " << acop << std::endl;
-			   
+		       
 		       Float_t ptbalcut = 1.3;
 		       Float_t acopcut = 0.01;
-		       Float_t mwlowcut = 65.0;
-		       Float_t mwhicut = 105.0;
+		       Float_t mwlowcut = 60.0;
+		       Float_t mwhicut = 107.0;
+		       Float_t mrotatedcut = 117.8;
 		       Float_t tau21cut = 0.75;
 
 		       // Proton part
@@ -884,17 +756,14 @@ void HadronicWWCuts::Loop()
                                        passesselector = TightMultiRPProton(thex1, they1, thex2, they2,
                                                                            thetax1, thetay1, thetax2, thetay2,
                                                                            thearm, rpid1, rpid2,
-                                                                           130, erastring, thexi,
+                                                                           crossingangle, erastring, thexi,
                                                                            theshift1, theshift2);
 				       
-				       passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
-
-				       //				       if(samplenumber > 200)
-				       if(samplenumber > 200)
-					 {
-					   //					   passesprotonefficiency = true; // JH testing effect of efficiencies
-					   passesprotonefficiency = true; // JH - for 2018 set eff = 100% until final values available
-					 }
+				       // Note: As of Nov. 2020, the efficiencies are applied at the ntuple-making level (A. Bellora). 
+				       // Therefore we do not re-apply them here, but leave the call commented out in case it's needed to 
+				       // compare to older studies. 
+				       // passesprotonefficiency = eff.GetMultiRPAcceptRejectDecision(thex1, they1, thex2, they2, rpid1, rpid2, erastring);
+				       passesprotonefficiency = true; 
 				     }
 
 				   if((passesselector == true) && (passesprotonefficiency == true) && (thexi >= 0.05))
@@ -911,9 +780,9 @@ void HadronicWWCuts::Loop()
 					   thystmulti45s->push_back(thethetasty);
 					   tmulti45s->push_back(thet);
 					   timemulti45s->push_back(thetime);
-
+					   
 					   nMultiTracks45++;
-
+					   
 					   // Apply xi scale systematic shifts for MC                                                                                  
 					   // For now comment this out, until systematics ROOT file is officially released
 					   /*
@@ -997,12 +866,14 @@ void HadronicWWCuts::Loop()
 			       hmppmulti->Fill(mpp);
 			       hyppmulti->Fill(ypp);
 			       hmyppmulti->Fill(mpp,ypp);
+			       
 			       hmasscorrpreseldatmult->Fill(mpp,mydijet.M());
 			       hycorrpreseldatmult->Fill(ypp,mydijet.Rapidity());
 			       dymassratiocorrpreseldatmult->Fill(1-mydijet.M()/mpp,mydijet.Rapidity()-ypp);
+
 			       hdtmulti->Fill(timemulti45s->at(indexmaxmulti45) - timemulti56s->at(indexmaxmulti56));
 			       ismultimulti = 1;
-			       npassppsbeforecuts++;
+			       npassppsbeforecuts+= 1.0*myweight;
 			     }
 
 			   // Old - all combinations
@@ -1030,10 +901,10 @@ void HadronicWWCuts::Loop()
 			     }
 			   */     
 			 }
-
+		       
 		       hnmult45->Fill(nMultiTracks45);
 		       hnmult56->Fill(nMultiTracks56);
-
+		       
                        // Signal region, only for MC
                        if(samplenumber > 0)
                          {
@@ -1055,33 +926,54 @@ void HadronicWWCuts::Loop()
 			     }
                            if((acop < acopcut) && (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
-			       npassdijetkine++;
+			       npassdijetkine+= 1.0*myweight;
 			       if((jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
 				  (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
 				  (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
 				 {
-				   npassjetsubstr++;
+				   npassjetsubstr+= 1.0*myweight;
 
 				   // Just counting
 				   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
-				     npassjetxi++;
+				     npassjetxi+= 1.0*myweight;
 
 				   if(xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 && xijets2 < 0.205)
 				     {
-				       hmasswwsignal->Fill(mydijet.M());
-				       hywwsignal->Fill(mydijet.Rapidity());
-
+				       if(rotatedprunedmasses <= mrotatedcut)
+					 {
+					   hmassvvsignalww->Fill(mydijet.M());
+					   hywwsignalww->Fill(mydijet.Rapidity());
+					 }
+				       if(rotatedprunedmasses > mrotatedcut)
+					 {
+                                           hmassvvsignalzz->Fill(mydijet.M());
+                                           hywwsignalzz->Fill(mydijet.Rapidity());
+					 }
 				       if(mpp>0) // MC events with protons - e.g. signal MC
 					 {
 					   for(Int_t s = 0; s < mppsmultmult->size(); s++)
 					     {
-					       hmassmatchsigmcmm->Fill(mppsmultmult->at(s)-mydijet.M());
-					       hymatchsigmcmm->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
-					       hmassmatchratiosigmcmm->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
-					       hmassmatchratiosigmcmmshiftup->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
-                                               hmassmatchratiosigmcmmshiftdown->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
-					       hymatchsigmcmmshiftup->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
-					       hymatchsigmcmmshiftdown->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
+					       if(rotatedprunedmasses <= mrotatedcut)
+						 {
+						   hmassmatchsigmcmmww->Fill(mppsmultmult->at(s)-mydijet.M());
+						   hymatchsigmcmmww->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
+						   hmassmatchratiosigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
+						   hmassmatchratiosigmcmmshiftupww->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
+						   hmassmatchratiosigmcmmshiftdownww->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
+						   hymatchsigmcmmshiftupww->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
+						   hymatchsigmcmmshiftdownww->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
+						 }
+                                               if(rotatedprunedmasses > mrotatedcut)
+                                                 {
+                                                   hmassmatchsigmcmmzz->Fill(mppsmultmult->at(s)-mydijet.M());
+                                                   hymatchsigmcmmzz->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
+                                                   hmassmatchratiosigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
+                                                   hmassmatchratiosigmcmmshiftupzz->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
+                                                   hmassmatchratiosigmcmmshiftdownzz->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
+                                                   hymatchsigmcmmshiftupzz->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
+                                                   hymatchsigmcmmshiftdownzz->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
+                                                 }
+
 					     }
 					   
 					   int match45 = 0; int match56 = 0;
@@ -1097,18 +989,65 @@ void HadronicWWCuts::Loop()
 					       if(gen_proton_pz->at(gp) < 0)
 						 xigen56 = gen_proton_xi->at(gp);
 					     }
-					   
-					   
-					   npasspps++;
-					   hmassmatchratiosigmcmult->Fill(1 - (mydijet.M()/mppsmultmult->at(0)));
-					   hymatchsigmcmult->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
-					   hmasscorrsigmcmult->Fill(mydijet.M(),mppsmultmult->at(0));
-					   hycorrsigmcmult->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+					   float mppgen = TMath::Sqrt(13000.0*13000.0*xigen45*xigen56);
+					   float yppgen = -0.5*TMath::Log(xigen56/xigen45);
+
+					   npasspps+= 1.0*myweight;
+
+					   if(rotatedprunedmasses <= mrotatedcut)
+					     {
+					       hmassmatchratiosigmcmultww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)));
+					       hymatchsigmcmultww->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
+					       hmasscorrsigmcmultww->Fill(mydijet.M(),mppsmultmult->at(0));
+					       hycorrsigmcmultww->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+					     }
+					   if(rotatedprunedmasses > mrotatedcut)
+					     {
+                                               hmassmatchratiosigmcmultzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)));
+                                               hymatchsigmcmultzz->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
+                                               hmasscorrsigmcmultzz->Fill(mydijet.M(),mppsmultmult->at(0));
+                                               hycorrsigmcmultzz->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+					     }
 					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= 0.11506000) && 
 					      (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= 0.057220000))
-					     npassppsmatchksenia++;
+					     {
+					       npassppsmatchksenia+= 1.0*myweight;
+					       if(rotatedprunedmasses <= mrotatedcut)
+						 npassppsmatchkseniaww+= 1.0*myweight;
+					       if(rotatedprunedmasses > mrotatedcut)
+						 npassppsmatchkseniazz+= 1.0*myweight;
+					     }
+					   else
+					     {
+					       hgenxinomatch->Fill(xigen45,xigen56);
+					     }
+					   
 					   if(match45 == 1 && match56 == 1)
-					     hmasscorrsigmcmulttruthmatched->Fill(mydijet.M(),mppsmultmult->at(0));
+					     {
+                                               if(rotatedprunedmasses <= mrotatedcut)
+						 hmasscorrsigmcmulttruthmatchedww->Fill(mydijet.M(),mppsmultmult->at(0));
+                                               if(rotatedprunedmasses > mrotatedcut)
+                                                 hmasscorrsigmcmulttruthmatchedzz->Fill(mydijet.M(),mppsmultmult->at(0));
+					     }
+
+					   // JH - testing with 2018 hard-coded values
+					   //					   if((xigen45 > (0.079 + (4.21E-4 * crossingangle))) || (xigen56 > (0.074 + (6.6E-4 * crossingangle))))
+					   //					   JH - testing with 2017preTS2 hard-coded values
+					   if((xigen45 > (0.066 + (3.54E-4 * crossingangle))) || (xigen56 > (0.062 + (5.96E-4 * crossingangle))))
+					     {
+					       hmassmatchratiosigmcoutofacceptancemm->Fill((1 - (mydijet.M()/mppsmultmult->at(0))));
+					       hymatchsigmcoutofacceptancemm->Fill(mydijet.Rapidity() - yppsmultmult->at(0));
+					     }
+					   else
+					     {
+					       hmassmatchratiosigmcinacceptancemm->Fill((1 - (mydijet.M()/mppsmultmult->at(0))));
+					       hymatchsigmcinacceptancemm->Fill(mydijet.Rapidity() - yppsmultmult->at(0));
+                                               if(match45 == 0 || match56 == 0)
+                                                 {
+						   hmassmatchratiosigmcinacceptancenomatchmm->Fill((1 - (mydijet.M()/mppsmultmult->at(0))));
+						   hymatchsigmcinacceptancenomatchmm->Fill(mydijet.Rapidity() - yppsmultmult->at(0));
+						 }
+					     }
 					 }
 				     }
 				 }
@@ -1125,19 +1064,38 @@ void HadronicWWCuts::Loop()
 			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 			      (jet1.Pt()/jet2.Pt() < ptbalcut))
 			     {
-			       hmasswwantiacop->Fill(mydijet.M());
-			       hmj1antiacop->Fill(jet_corrmass->at(indleading));
-			       hmj2antiacop->Fill(jet_corrmass->at(indsecond));
-			       htau211antiacop->Fill(taut21ddt1);
-			       htau212antiacop->Fill(taut21ddt2);
-
-			       if(mpp>0)
-				 {
-				   hmassmatchantiacopmm->Fill(mppmm-mydijet.M());
-				   hymatchantiacopmm->Fill(yppmm-mydijet.Rapidity());
-				   hmassmatchratioantiacopmm->Fill(1 - (mydijet.M()/mppmm));
-				   hmassrapiditymatchantiacopmm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                               if(rotatedprunedmasses <= mrotatedcut)
+                                 {
+				   hmassvvantiacopww->Fill(mydijet.M());
+				   hmj1antiacopww->Fill(jet_corrmass->at(indleading));
+				   hmj2antiacopww->Fill(jet_corrmass->at(indsecond));
+				   htau211antiacopww->Fill(taut21ddt1);
+				   htau212antiacopww->Fill(taut21ddt2);
+				   
+				   if(mpp>0)
+				     {
+				       hmassmatchantiacopmmww->Fill(mppmm-mydijet.M());
+				       hymatchantiacopmmww->Fill(yppmm-mydijet.Rapidity());
+				       hmassmatchratioantiacopmmww->Fill(1 - (mydijet.M()/mppmm));
+				       hmassrapiditymatchantiacopmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				     }
 				 }
+                               if(rotatedprunedmasses > mrotatedcut)
+                                 {
+                                   hmassvvantiacopzz->Fill(mydijet.M());
+                                   hmj1antiacopzz->Fill(jet_corrmass->at(indleading));
+                                   hmj2antiacopzz->Fill(jet_corrmass->at(indsecond));
+                                   htau211antiacopzz->Fill(taut21ddt1);
+                                   htau212antiacopzz->Fill(taut21ddt2);
+
+                                   if(mpp>0)
+                                     {
+                                       hmassmatchantiacopmmzz->Fill(mppmm-mydijet.M());
+                                       hymatchantiacopmmzz->Fill(yppmm-mydijet.Rapidity());
+                                       hmassmatchratioantiacopmmzz->Fill(1 - (mydijet.M()/mppmm));
+                                       hmassrapiditymatchantiacopmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                     }
+                                 }
 			     } // anti-acoplanarity
 			   // Anti pT balance                                                                                                                     
 			   if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
@@ -1146,15 +1104,30 @@ void HadronicWWCuts::Loop()
 			      (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 			      (acop < acopcut))
 			     {
-			       hmasswwantiptbal->Fill(mydijet.M());
-
-			       if(mpp>0)
-				 {
-				   hmassmatchantiptbalmm->Fill(mppmm-mydijet.M());
-                                   hymatchantiptbalmm->Fill(yppmm-mydijet.Rapidity());
-                                   hmassmatchratioantiptbalmm->Fill(1 - (mydijet.M()/mppmm));
-                                   hmassrapiditymatchantiptbalmm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                               if(rotatedprunedmasses <= mrotatedcut)
+                                 {
+				   hmassvvantiptbalww->Fill(mydijet.M());
+				   
+				   if(mpp>0)
+				     {
+				       hmassmatchantiptbalmmww->Fill(mppmm-mydijet.M());
+				       hymatchantiptbalmmww->Fill(yppmm-mydijet.Rapidity());
+				       hmassmatchratioantiptbalmmww->Fill(1 - (mydijet.M()/mppmm));
+				       hmassrapiditymatchantiptbalmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				     }
 				 }
+                               if(rotatedprunedmasses > mrotatedcut)
+                                 {
+                                   hmassvvantiptbalzz->Fill(mydijet.M());
+
+                                   if(mpp>0)
+                                     {
+                                       hmassmatchantiptbalmmzz->Fill(mppmm-mydijet.M());
+                                       hymatchantiptbalmmzz->Fill(yppmm-mydijet.Rapidity());
+                                       hmassmatchratioantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm));
+                                       hmassrapiditymatchantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                     }
+                                 }
 			     } // anti-pT balance
 			   // Anti tau21                                                                                                                          
 			   if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
@@ -1163,20 +1136,79 @@ void HadronicWWCuts::Loop()
 			      (acop < acopcut) &&
 			      (jet1.Pt()/jet2.Pt()) <  ptbalcut)
 			     {
-			       hmasswwantitau->Fill(mydijet.M());
-                               hmj1antitau->Fill(jet_corrmass->at(indleading));
-                               hmj2antitau->Fill(jet_corrmass->at(indsecond));
-                               htau211antitau->Fill(taut21ddt1);
-                               htau212antitau->Fill(taut21ddt2);
-
-			       if(mpp>0)
+			       if(rotatedprunedmasses <= mrotatedcut)
 				 {
-				   hmassmatchantitaumm->Fill(mppmm-mydijet.M());
-				   hymatchantitaumm->Fill(yppmm-mydijet.Rapidity());
-				   hmassmatchratioantitaumm->Fill(1 - (mydijet.M()/mppmm));
-				   hmassrapiditymatchantitaumm->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				   hmassvvantitauww->Fill(mydijet.M());
+				   hmj1antitauww->Fill(jet_corrmass->at(indleading));
+				   hmj2antitauww->Fill(jet_corrmass->at(indsecond));
+				   htau211antitauww->Fill(taut21ddt1);
+				   htau212antitauww->Fill(taut21ddt2);
+				   
+				   if(mpp>0)
+				     {
+				       hmassmatchantitaummww->Fill(mppmm-mydijet.M());
+				       hymatchantitaummww->Fill(yppmm-mydijet.Rapidity());
+				       hmassmatchratioantitaummww->Fill(1 - (mydijet.M()/mppmm));
+				       hmassrapiditymatchantitaummww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				     }
 				 }
+                               if(rotatedprunedmasses > mrotatedcut)
+                                 {
+                                   hmassvvantitauzz->Fill(mydijet.M());
+                                   hmj1antitauzz->Fill(jet_corrmass->at(indleading));
+                                   hmj2antitauzz->Fill(jet_corrmass->at(indsecond));
+                                   htau211antitauzz->Fill(taut21ddt1);
+                                   htau212antitauzz->Fill(taut21ddt2);
+
+                                   if(mpp>0)
+                                     {
+                                       hmassmatchantitaummzz->Fill(mppmm-mydijet.M());
+                                       hymatchantitaummzz->Fill(yppmm-mydijet.Rapidity());
+                                       hmassmatchratioantitaummzz->Fill(1 - (mydijet.M()/mppmm));
+                                       hmassrapiditymatchantitaummzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                     }
+                                 }
 			     } // anti-tau21
+			   // anti-pruned mass
+			   if((taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+                              (jet_corrmass->at(indleading) < mwlowcut || jet_corrmass->at(indleading) > mwhicut) &&
+                              (jet_corrmass->at(indsecond) < mwlowcut || jet_corrmass->at(indsecond) > mwhicut) &&
+                              (acop < acopcut) &&
+                              (jet1.Pt()/jet2.Pt()) <  ptbalcut)
+                             {
+                               if(rotatedprunedmasses <= mrotatedcut)
+                                 {
+				   hmassvvantiprunedww->Fill(mydijet.M());
+				   hmj1antiprunedww->Fill(jet_corrmass->at(indleading));
+				   hmj2antiprunedww->Fill(jet_corrmass->at(indsecond));
+				   htau211antiprunedww->Fill(taut21ddt1);
+				   htau212antiprunedww->Fill(taut21ddt2);
+				   
+				   if(mpp>0)
+				     {
+				       hmassmatchantiprunedmmww->Fill(mppmm-mydijet.M());
+				       hymatchantiprunedmmww->Fill(yppmm-mydijet.Rapidity());
+				       hmassmatchratioantiprunedmmww->Fill(1 - (mydijet.M()/mppmm));
+				       hmassrapiditymatchantiprunedmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				     }
+				 }
+                               if(rotatedprunedmasses > mrotatedcut)
+                                 {
+                                   hmassvvantiprunedzz->Fill(mydijet.M());
+                                   hmj1antiprunedzz->Fill(jet_corrmass->at(indleading));
+                                   hmj2antiprunedzz->Fill(jet_corrmass->at(indsecond));
+                                   htau211antiprunedzz->Fill(taut21ddt1);
+                                   htau212antiprunedzz->Fill(taut21ddt2);
+
+                                   if(mpp>0)
+                                     {
+                                       hmassmatchantiprunedmmzz->Fill(mppmm-mydijet.M());
+                                       hymatchantiprunedmmzz->Fill(yppmm-mydijet.Rapidity());
+                                       hmassmatchratioantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm));
+                                       hmassrapiditymatchantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                     }
+                                 }
+                             }// anti-pruned mass
 			   // All cuts, but with signal region in matching blinded
 			   if((taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) &&
@@ -1192,10 +1224,17 @@ void HadronicWWCuts::Loop()
 				   ymatch = yppmm-mydijet.Rapidity();
 				   if(fabs(ymatch) > 0.5 || fabs(massmatch) > 1.0)
 				     {
-				       hmassrapiditymatchvetoorsignalregion->Fill(massmatch,ymatch);
+				       if(rotatedprunedmasses <= mrotatedcut)
+					 hmassrapiditymatchvetoorsignalregionww->Fill(massmatch,ymatch);
+				       if(rotatedprunedmasses > mrotatedcut)
+					 hmassrapiditymatchvetoorsignalregionzz->Fill(massmatch,ymatch);
+
 				       if(fabs(massmatch) > 1.0 && fabs(massmatch) > 1.0)
 					 {
-					   hmassrapiditymatchvetosignalregion->Fill(massmatch,ymatch);
+					   if(rotatedprunedmasses <= mrotatedcut)
+					     hmassrapiditymatchvetosignalregionww->Fill(massmatch,ymatch);
+					   if(rotatedprunedmasses > mrotatedcut)
+                                             hmassrapiditymatchvetosignalregionzz->Fill(massmatch,ymatch);
 					 }
 				     }
 				 }
@@ -1319,6 +1358,8 @@ void HadronicWWCuts::Loop()
 
    if(samplenumber == 20)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+   if(samplenumber == 21)
+     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2017preTS2.root","RECREATE");
    if(samplenumber == 22)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2017preTS2.root","RECREATE");
    if(samplenumber == 23)
@@ -1392,16 +1433,23 @@ void HadronicWWCuts::Loop()
    if(samplenumber == 223)
      fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018.root","RECREATE");
 
+   if(samplenumber == 999)
+     //     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+     //     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2018A.root","RECREATE");
+     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2016B.root","RECREATE");
+
    ofs.close();
 
+   fx->mkdir("PreselectionAndControl");
+   fx->mkdir("JetSubstructure");
+   fx->mkdir("Sidebands");
+   fx->mkdir("Signal");
+   fx->mkdir("SingleProtonDistributions");
+   fx->mkdir("MCGenDistributions");
+
+   fx->cd("PreselectionAndControl");
    hmjjdat->Write();
    hyjjdat->Write();
-   hmjdat1->Write();
-   htau21dat1->Write();
-   hmjdat2->Write();
-   htau21dat2->Write();
-   htau21ddtdat1->Write();
-   htau21ddtdat2->Write();
    hptdat1->Write();
    hptdat2->Write();
    hetadat1->Write();
@@ -1409,6 +1457,7 @@ void HadronicWWCuts::Loop()
    hphidat1->Write();
    hphidat2->Write();
    hdeta->Write();
+   hprunedrotatedjjdat->Write();
    hacopdat->Write();
    hmjjdatpfjet->Write();
    hmjjdatpfhttrim->Write();
@@ -1416,8 +1465,146 @@ void HadronicWWCuts::Loop()
    hnvtx->Write();
    hcrossingangle->Write();
    hptratio->Write();
+
+   hmppmulti->Write();
+   hyppmulti->Write();
+   hdtmulti->Write(); 
+
+   hmassvvsignalww->Write();
+   hywwsignalww->Write();
+   hmassvvsignalzz->Write();
+   hywwsignalzz->Write();
+
+   hmyppsingle->Write();
+   hmyppmulti->Write();
+   hmyjjdat->Write();
+   xijets45->Write();
+   xijets56->Write();
+
+   hmasscorrpreseldatmult->Write();
+   hycorrpreseldatmult->Write();
+   dymassratiocorrpreseldatmult->Write();
+
+   fx->cd("JetSubstructure");
+   hmjdat1->Write();
+   htau21dat1->Write();
+   hmjdat2->Write();
+   htau21dat2->Write();
+   htau21ddtdat1->Write();
+   htau21ddtdat2->Write();
    tau21vrhoprime1->Write();
    tau21vrhoprime2->Write();
+
+
+   fx->cd("Sidebands");
+   hmassmatchantitaummww->Write();
+   hymatchantitaummww->Write();
+   hmassmatchratioantitaummww->Write();
+   hmassmatchantiprunedmmww->Write();
+   hymatchantiprunedmmww->Write();
+   hmassmatchratioantiprunedmmww->Write();
+   hmassmatchantiacopmmww->Write();
+   hymatchantiacopmmww->Write();
+   hmassmatchratioantiacopmmww->Write();
+   hmassmatchantiptbalmmww->Write();
+   hymatchantiptbalmmww->Write();
+   hmassmatchratioantiptbalmmww->Write();
+   hmassmatchantitaummzz->Write();
+   hymatchantitaummzz->Write();
+   hmassmatchratioantitaummzz->Write();
+   hmassmatchantiprunedmmzz->Write();
+   hymatchantiprunedmmzz->Write();
+   hmassmatchratioantiprunedmmzz->Write();
+   hmassmatchantiacopmmzz->Write();
+   hymatchantiacopmmzz->Write();
+   hmassmatchratioantiacopmmzz->Write();
+   hmassmatchantiptbalmmzz->Write();
+   hymatchantiptbalmmzz->Write();
+   hmassmatchratioantiptbalmmzz->Write();
+
+   hmassvvantitauww->Write();
+   hmassvvantiacopww->Write();
+   hmassvvantiptbalww->Write();
+   hmassvvantiprunedww->Write();
+   hmj1antiacopww->Write();
+   hmj2antiacopww->Write();
+   htau211antiacopww->Write();
+   htau212antiacopww->Write();
+   hmj1antitauww->Write();
+   hmj2antitauww->Write();
+   htau211antitauww->Write();
+   htau212antitauww->Write();
+   hmj1antiprunedww->Write();
+   hmj2antiprunedww->Write();
+   htau211antiprunedww->Write();
+   htau212antiprunedww->Write();
+
+   hmassvvantitauzz->Write();
+   hmassvvantiacopzz->Write();
+   hmassvvantiptbalzz->Write();
+   hmassvvantiprunedzz->Write();
+   hmj1antiacopzz->Write();
+   hmj2antiacopzz->Write();
+   htau211antiacopzz->Write();
+   htau212antiacopzz->Write();
+   hmj1antitauzz->Write();
+   hmj2antitauzz->Write();
+   htau211antitauzz->Write();
+   htau212antitauzz->Write();
+   hmj1antiprunedzz->Write();
+   hmj2antiprunedzz->Write();
+   htau211antiprunedzz->Write();
+   htau212antiprunedzz->Write();
+
+   hmassvvsignalww->Write();
+   hywwsignalww->Write();
+   hmassvvsignalzz->Write();
+   hywwsignalzz->Write();
+
+   hmassrapiditymatchantiacopmmww->Write();
+   hmassrapiditymatchantiptbalmmww->Write();
+   hmassrapiditymatchantitaummww->Write();
+   hmassrapiditymatchantiprunedmmww->Write();
+   hmassrapiditymatchantiacopmmzz->Write();
+   hmassrapiditymatchantiptbalmmzz->Write();
+   hmassrapiditymatchantitaummzz->Write();
+   hmassrapiditymatchantiprunedmmzz->Write();
+
+   hmassrapiditymatchvetosignalregionww->Write();
+   hmassrapiditymatchvetoorsignalregionww->Write();
+   hmassrapiditymatchvetosignalregionzz->Write();
+   hmassrapiditymatchvetoorsignalregionzz->Write();
+
+   fx->cd("Signal");
+   hmassmatchsigmcmmww->Write();
+   hymatchsigmcmmww->Write();
+   hmassmatchratiosigmcmmww->Write();
+   hmassmatchsigmcmmzz->Write();
+   hymatchsigmcmmzz->Write();
+   hmassmatchratiosigmcmmzz->Write();
+
+   hmassmatchratiosigmcmmshiftupww->Write();
+   hmassmatchratiosigmcmmshiftdownww->Write();
+   hymatchsigmcmmshiftupww->Write();
+   hymatchsigmcmmshiftdownww->Write();
+   hmassmatchratiosigmcmmshiftupzz->Write();
+   hmassmatchratiosigmcmmshiftdownzz->Write();
+   hymatchsigmcmmshiftupzz->Write();
+   hymatchsigmcmmshiftdownzz->Write();
+
+   hmassmatchratiosigmcmultww->Write();
+   hymatchsigmcmultww->Write();
+   hmasscorrsigmcmultww->Write();
+   hycorrsigmcmultww->Write();
+   hmasscorrsigmcmulttruthmatchedww->Write();
+   hmassmatchratiosigmcmultzz->Write();
+   hymatchsigmcmultzz->Write();
+   hmasscorrsigmcmultzz->Write();
+   hycorrsigmcmultzz->Write();
+   hmasscorrsigmcmulttruthmatchedzz->Write();
+
+
+   fx->cd("SingleProtonDistributions");
    hxipix45->Write();
    hypix45->Write();
    hxipix56->Write();
@@ -1439,77 +1626,20 @@ void HadronicWWCuts::Loop()
    hnmult45->Write();
    hnmult56->Write();
 
-   hmppmulti->Write();
-   hyppmulti->Write();
-   hdtmulti->Write(); 
-
-   hmassmatchantiw->Write();
-   hymatchantiw->Write();
-   hmassmatchratioantiw->Write();
-
-   hmassmatchantitaumm->Write();
-   hymatchantitaumm->Write();
-   hmassmatchratioantitaumm->Write();
-   hmassmatchantiacopmm->Write();
-   hymatchantiacopmm->Write();
-   hmassmatchratioantiacopmm->Write();
-   hmassmatchantiptbalmm->Write();
-   hymatchantiptbalmm->Write();
-   hmassmatchratioantiptbalmm->Write();
-
-   hmassmatchsigmcmm->Write();
-   hymatchsigmcmm->Write();
-   hmassmatchratiosigmcmm->Write();
-
-   hmassmatchratiosigmcmmshiftup->Write();
-   hmassmatchratiosigmcmmshiftdown->Write();
-   hymatchsigmcmmshiftup->Write();
-   hymatchsigmcmmshiftdown->Write();
-
-
-   hmassmatchratiosigmcmult->Write();
-   hymatchsigmcmult->Write();
-   hmasscorrsigmcmult->Write();
-   hycorrsigmcmult->Write();
-   hmasscorrsigmcmulttruthmatched->Write();
-
-   //   hmppres->Write();
-
-   hmasswwantitau->Write();
-   hmasswwantiacop->Write();
-   hmasswwantiptbal->Write();
-   hmj1antiacop->Write();
-   hmj2antiacop->Write();
-   htau211antiacop->Write();
-   htau212antiacop->Write();
-   hmj1antitau->Write();
-   hmj2antitau->Write();
-   htau211antitau->Write();
-   htau212antitau->Write();
-
-
-   hmasswwsignal->Write();
-   hywwsignal->Write();
-
-   hmyppsingle->Write();
-   hmyppmulti->Write();
-   hmyjjdat->Write();
-   xijets45->Write();
-   xijets56->Write();
+   fx->cd("MCGenDistributions");
    resxijets45->Write();
    resxijets56->Write();
    resxijetscorr45->Write();
    resxijetscorr56->Write();
 
-   hmasscorrpreseldatmult->Write();
-   hycorrpreseldatmult->Write();
-   dymassratiocorrpreseldatmult->Write();
+   hgenxinomatch->Write();
+   hmassmatchratiosigmcoutofacceptancemm->Write();
+   hmassmatchratiosigmcinacceptancemm->Write();
+   hmassmatchratiosigmcinacceptancenomatchmm->Write();
+   hymatchsigmcoutofacceptancemm->Write();
+   hymatchsigmcinacceptancemm->Write();
+   hymatchsigmcinacceptancenomatchmm->Write();
 
-   hmassrapiditymatchantiacopmm->Write();
-   hmassrapiditymatchantiptbalmm->Write();
-   hmassrapiditymatchantitaumm->Write();
-   hmassrapiditymatchvetosignalregion->Write();
-   hmassrapiditymatchvetoorsignalregion->Write();
 
    fx->Close();
 
@@ -1535,6 +1665,8 @@ void HadronicWWCuts::Loop()
 	     << "Passing xi(jets) = " << npassjetxi << std::endl
 	     << "Passing 2 PPS multi-RP protons = " << npasspps << std::endl
 	     << "\t(After preselection and before other central cuts = " << npassppsbeforecuts << std::endl
-	     << "Passing pp-WW matching = " << npassppsmatchksenia << std::endl;
+	     << "Passing pp-diboson matching = " << npassppsmatchksenia << std::endl
+	     << "Passing WW channel cut = " << npassppsmatchkseniaww << std::endl
+	     << "Passing ZZ channel cut = " << npassppsmatchkseniazz << std::endl;
 
 }
