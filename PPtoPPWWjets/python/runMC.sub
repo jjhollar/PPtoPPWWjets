@@ -1,0 +1,99 @@
+executable			= runMC.sh
+arguments			= $ENV(CMSSW_BASE) $(other_arguments)
+output 				= WWjets_MC_$(Process).out
+error 				= WWjets_MC_$(Process).err
+log 				= WWjets_MC_$(Process).log
+getenv				= True
++JobFlavour			= "workday"
+notify_user			= andrea.bellora@cern.ch
+notification		= Always
+use_x509userproxy   = true
+
+
+# add here the arguments of runMC.sh
+# year CMS_era sampleTag
+# you can also add some splitting into further jobs, by putting another 2 arguments:
+# year CMS_era sampleTag partNumber nParts
+# This will submit the partNumber-th part of the job, which is split in nParts parts
+
+queue other_arguments from (
+	# WW_A0W1e-6
+	2016 B WW_A0W1e-6
+	2016 C WW_A0W1e-6
+	2016 G WW_A0W1e-6
+	2017 B WW_A0W1e-6	
+	2017 C WW_A0W1e-6
+	2017 D WW_A0W1e-6
+	2017 E WW_A0W1e-6
+	2017 F WW_A0W1e-6
+	2018 A WW_A0W1e-6
+	2018 B WW_A0W1e-6
+	2018 C WW_A0W1e-6
+	2018 D WW_A0W1e-6
+	# WW_A0W2e-6
+	2016 B WW_A0W2e-6
+	2016 C WW_A0W2e-6
+	2016 G WW_A0W2e-6
+	2017 B WW_A0W2e-6	
+	2017 C WW_A0W2e-6
+	2017 D WW_A0W2e-6
+	2017 E WW_A0W2e-6
+	2017 F WW_A0W2e-6
+	2018 A WW_A0W2e-6
+	2018 B WW_A0W2e-6
+	2018 C WW_A0W2e-6
+	2018 D WW_A0W2e-6
+	# WW_A0W5e-6
+	2016 B WW_A0W5e-6
+	2016 C WW_A0W5e-6
+	2016 G WW_A0W5e-6
+	2017 B WW_A0W5e-6	
+	2017 C WW_A0W5e-6
+	2017 D WW_A0W5e-6
+	2017 E WW_A0W5e-6
+	2017 F WW_A0W5e-6
+	2018 A WW_A0W5e-6
+	2018 B WW_A0W5e-6
+	2018 C WW_A0W5e-6
+	2018 D WW_A0W5e-6
+	# WW_ACW2e-5
+	2016 B WW_ACW2e-5
+	2016 C WW_ACW2e-5
+	2016 G WW_ACW2e-5
+	2017 B WW_ACW2e-5	
+	2017 C WW_ACW2e-5
+	2017 D WW_ACW2e-5
+	2017 E WW_ACW2e-5
+	2017 F WW_ACW2e-5
+	2018 A WW_ACW2e-5
+	2018 B WW_ACW2e-5
+	2018 C WW_ACW2e-5
+	2018 D WW_ACW2e-5	
+	# WW_ACW5e-6
+	2016 B WW_ACW5e-6
+	2016 C WW_ACW5e-6
+	2016 G WW_ACW5e-6
+	2017 B WW_ACW5e-6	
+	2017 C WW_ACW5e-6
+	2017 D WW_ACW5e-6
+	2017 E WW_ACW5e-6
+	2017 F WW_ACW5e-6
+	2018 A WW_ACW5e-6
+	2018 B WW_ACW5e-6
+	2018 C WW_ACW5e-6
+	2018 D WW_ACW5e-6
+	# WW_ACW8e-6
+	2016 B WW_ACW8e-6
+	2016 C WW_ACW8e-6
+	2016 G WW_ACW8e-6
+	2017 B WW_ACW8e-6	
+	2017 C WW_ACW8e-6
+	2017 D WW_ACW8e-6
+	2017 E WW_ACW8e-6
+	2017 F WW_ACW8e-6
+	2018 A WW_ACW8e-6
+	2018 B WW_ACW8e-6
+	2018 C WW_ACW8e-6
+	2018 D WW_ACW8e-6
+)
+
