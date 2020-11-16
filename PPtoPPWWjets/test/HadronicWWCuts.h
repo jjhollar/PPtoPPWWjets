@@ -159,7 +159,7 @@ public :
 
    TString erastring;
 
-   HadronicWWCuts(Int_t mysample = 6, TTree *tree=0);
+   HadronicWWCuts(Int_t mysample = 223, TTree *tree=0);
    virtual ~HadronicWWCuts();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
