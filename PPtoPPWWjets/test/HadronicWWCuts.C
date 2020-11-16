@@ -698,6 +698,7 @@ void HadronicWWCuts::Loop()
 			 {
 			   float thexi = 0;
 			   float thethetasty = 0;
+			   float thethetastx = 0;
 			   float thet = 0;
 			   float thetime = -999;
 			   float thetax1 = 0;
@@ -726,6 +727,7 @@ void HadronicWWCuts::Loop()
 				 {
 				   thexi = proton_xi->at(p);
 				   thethetasty = proton_thy->at(p);
+				   thethetastx = proton_thx->at(p);
 				   thet = -1.0 * proton_t->at(p);
 				   thetime = proton_time->at(p);
 				   rpid1 = proton_rpid1->at(p);
@@ -747,7 +749,7 @@ void HadronicWWCuts::Loop()
 				       passesselector = TightMultiRPProton(thex1, they1, thex2, they2,
 									   thetax1, thetay1, thetax2, thetay2,
 									   thearm, rpid1, rpid2, 
-									   crossingangle, erastring, thexi, 						      
+									   crossingangle, erastring, thexi, thethetasty, 						      
 									   theshift1, theshift2);
 				     }
 
@@ -756,7 +758,7 @@ void HadronicWWCuts::Loop()
                                        passesselector = TightMultiRPProton(thex1, they1, thex2, they2,
                                                                            thetax1, thetay1, thetax2, thetay2,
                                                                            thearm, rpid1, rpid2,
-                                                                           crossingangle, erastring, thexi,
+                                                                           crossingangle, erastring, thexi, thethetasty,
                                                                            theshift1, theshift2);
 				       
 				       // Note: As of Nov. 2020, the efficiencies are applied at the ntuple-making level (A. Bellora). 

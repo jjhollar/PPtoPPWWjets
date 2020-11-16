@@ -12,11 +12,11 @@
  * [1] TightMultiRPProton(contributing track1 x, contributing track1 y, contributing track2 x, contributing track2 y, 
                           contributing track1 theta_x, contributing track1 theta_y, contributing track2 theta_x, contributing track2 theta_y,
 			  proton arm, contributing track1 RPID, contributing track2 RPID, 
-			  crossing angle, era, xi,
+			  crossing angle, era, xi, thetastarx,
 			  contributing track1 pixel shift, contributing track2 pixel shift)
  */
 
-
+#include "aperture_param_v2.h"
 /*
  * Pixel sensor area fiducial cuts. Note that for now, only the tightest value of each era is used.
  */
@@ -170,10 +170,48 @@ bool PixelFiducialCuts(Float_t trackx=0.0, Float_t tracky=0.0, Float_t trackthet
   
 }
 
+
+/*
+ *New aperture cuts from Chris & Jan
+ *
+ *
+ */
+
+//----------------------------------------------------------------------------------------------------
+
+/// For given conditions (period, arm and xangle) returns whether a pair of xi and theta*_x is within
+/// the aperture limitations (in acceptance). For single-RP reconstruction use th_x_star = 0.
+bool IsWithinAperture(TString era, Int_t arm, double xangle, double xi, double th_x_star)
+{
+  string period_conv="";
+  string arm_conv="";
+
+  if(era == "2016preTS2")period_conv="2016_preTS2";
+  if(era == "2016postTS2")period_conv="2016_postTS2";
+  if(era == "2017preTS2")period_conv="2017_preTS2";
+  if(era == "2017postTS2")period_conv="2017_postTS2";
+  if(era == "2018")period_conv="2018";
+
+  if(arm == 0)arm_conv="arm0";
+  if(arm == 1)arm_conv="arm1";
+
+
+    TF2 aperture("a", GetApertureParametrisation_version2(period_conv, arm_conv).c_str());
+    
+    aperture.SetParameter("xangle", xangle);
+    aperture.SetParameter("xi", xi);
+    const double th_x_star_upper_limit = -aperture.EvalPar(nullptr);
+    //std::cout << "----------------- >   Aperture result: " << (th_x_star < th_x_star_upper_limit) << endl;
+    return (th_x_star < th_x_star_upper_limit);
+}
+
+
+
 /*
  * First approximate collimator aperture cuts
  * Ref: https://indico.cern.ch/event/849095/contributions/3568020/attachments/1913799/3163250/j_kaspar_apertures.pdf                                                                   
  */
+
 bool ApertureCuts(Float_t xangle, Int_t arm, TString era, Float_t thexi)
 {
   bool passes = false;
@@ -271,7 +309,7 @@ bool SanityCheck(Int_t thearm=0, TString theera="", Int_t therpid=23)
 bool TightMultiRPProton(Float_t trackx1=0.0, Float_t tracky1=0.0, Float_t trackx2=0.0, Float_t tracky2=0.0, 
 			Float_t trackthetax1=0.0, Float_t trackthetay1=0.0, Float_t trackthetax2=0.0, Float_t trackthetay2=0.0, 
 			Int_t thearm=0, Int_t therpid1=103, Int_t therpid2=123,  
-			Float_t xangle=0.0, TString era="2015", Float_t xi=0.0, 
+			Float_t xangle=0.0, TString era="2015", Float_t xi=0.0, Float_t th_x_star=0,
 			Int_t trackpixshift1=0, Int_t trackpixshift2=0)
 {
   bool passesall = false;
@@ -285,7 +323,8 @@ bool TightMultiRPProton(Float_t trackx1=0.0, Float_t tracky1=0.0, Float_t trackx
 	PixelFiducialCuts(trackx1, tracky1, trackthetax1, trackthetay1, thearm, era, therpid1) &&
 	PixelFiducialCuts(trackx2, tracky2, trackthetax2, trackthetay2, thearm, era, therpid2) &&
 	PixelBXShiftCuts(trackpixshift1, trackpixshift2) && 
-	ApertureCuts(xangle, thearm, era, xi);
+	IsWithinAperture(era, thearm, xangle, xi, th_x_star);
+//	ApertureCuts(xangle, thearm, era, xi);
     }
   else if(era == "2016preTS2" || era == "2016postTS2")
     {
@@ -293,7 +332,8 @@ bool TightMultiRPProton(Float_t trackx1=0.0, Float_t tracky1=0.0, Float_t trackx
       passesall = 
 	SanityCheck(thearm, era, therpid1) &&
         SanityCheck(thearm, era, therpid2) &&
-	ApertureCuts(xangle, thearm, era, xi);
+	IsWithinAperture(era, thearm, xangle, xi, th_x_star);
+        //ApertureCuts(xangle, thearm, era, xi);
     }
   else
     {
