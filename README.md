@@ -25,7 +25,6 @@ Step-by-step instructions to setup a working environment, including the proton d
 	scram b -j8
 
 	cd PPtoPPWWjets/PPtoPPWWjets/python
-	 (copy relevant JEC files from subdirectories JEC2016, JEC2017, or JECAUTUMN18 to this directory)
 
     cmsRun ConfFileLegacyReRecoPrelim_cfg.py
 	 (for data)
