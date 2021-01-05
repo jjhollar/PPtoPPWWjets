@@ -1,0 +1,23 @@
+# Counting experiment with multiple channels
+imax 3  number of channels
+jmax 1  number of processes-1
+kmax 2  number of nuisance parameters (sources of systematical uncertainties)
+------------
+# three channels (2016, 2017, 2018); "Obervation" is set to the expected background for now
+bin            y2016ww 	      y2017ww    y2018ww
+observation     3             7     	 18
+------------
+# now we list the expected events for signal and all backgrounds in that bin
+# the second 'process' line must have a positive number for backgrounds, and 0 for signal
+# then we list the independent sources of uncertainties, and give their effect (syst. error)
+# on each process and bin
+# The example uses the a0w 2e-6 point, with the anti-acoplanarity bkg estimates
+bin            y2016ww   y2016ww  y2017ww y2017ww  y2018ww   y2018ww 
+process        wwsig     wwbg     wwsig   wwbg	   wwsig     wwbg    
+process        0       	 1        0       1	   0	     1	     
+rate           0.15      0.8      0.39    3.2      4.08      18.3    
+
+------------
+signal  lnN    1.20      -       1.20	  -	   1.20      -      only flat 20% uncertainty on signal, just a guess for now
+bkg     lnN     -      1.88      -        1.47      -        1.18   only stat error on anti-acop bkg for now
+

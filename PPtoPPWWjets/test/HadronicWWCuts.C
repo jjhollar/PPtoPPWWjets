@@ -287,6 +287,24 @@ void HadronicWWCuts::Loop()
    Float_t npassppsmatchkseniaww = 0;
    Float_t npassppsmatchkseniazz = 0;
 
+   // Counters for sideband background normalization
+   Float_t npassnonblindnormregionww = 0;
+   Float_t npassantiacopnormregionww = 0;
+   Float_t npassantitaunormregionww = 0;
+   Float_t npassantimassnormregionww = 0;
+   Float_t npassantiacopsigregionww = 0;
+   Float_t npassantitausigregionww = 0;
+   Float_t npassantimasssigregionww = 0;
+
+   Float_t npassnonblindnormregionzz = 0;
+   Float_t npassantiacopnormregionzz = 0;
+   Float_t npassantitaunormregionzz = 0;
+   Float_t npassantimassnormregionzz = 0;
+   Float_t npassantiacopsigregionzz = 0;
+   Float_t npassantitausigregionzz = 0;
+   Float_t npassantimasssigregionzz = 0;
+
+
    TString outtextfile = "MC_EventsForMixing.txt";
 
    if(samplenumber == 2)
@@ -821,7 +839,11 @@ void HadronicWWCuts::Loop()
 		       Float_t mwhicut = 107.0;
 		       Float_t mrotatedcut = 117.8;
 		       Float_t tau21cut = 0.75;
-
+		       Float_t massmatchcutksenia = 0.11506000;
+		       Float_t rapiditymatchcutksenia = 0.057220000;
+		       Float_t massmatchnormregion = 1.0;
+		       Float_t rapiditymatchnormregion = 0.5;
+		       
 		       // Proton part
 		       float mpp = 0;
 		       float ypp = 0;
@@ -1166,8 +1188,9 @@ void HadronicWWCuts::Loop()
                                                hmasscorrsigmcmultzz->Fill(mydijet.M(),mppsmultmult->at(0));
                                                hycorrsigmcmultzz->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
 					     }
-					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= 0.11506000) && 
-					      (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= 0.057220000))
+
+					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) && 
+					      (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
 					     {
 					       npassppsmatchksenia+= 1.0*myweight;
 					       if(rotatedprunedmasses <= mrotatedcut)
@@ -1236,6 +1259,14 @@ void HadronicWWCuts::Loop()
 				       hymatchantiacopmmww->Fill(yppmm-mydijet.Rapidity());
 				       hmassmatchratioantiacopmmww->Fill(1 - (mydijet.M()/mppmm));
 				       hmassrapiditymatchantiacopmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+				       // Sideband background method
+				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+					  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+					 npassantiacopsigregionww += 1.0*myweight;
+				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) || 
+					  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+					 npassantiacopnormregionww += 1.0*myweight ;
 				     }
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
@@ -1252,6 +1283,14 @@ void HadronicWWCuts::Loop()
                                        hymatchantiacopmmzz->Fill(yppmm-mydijet.Rapidity());
                                        hmassmatchratioantiacopmmzz->Fill(1 - (mydijet.M()/mppmm));
                                        hmassrapiditymatchantiacopmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+                                       // Sideband background method                                                                                                                             
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+                                         npassantiacopsigregionzz += 1.0*myweight;
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+                                         npassantiacopnormregionzz += 1.0*myweight ;
                                      }
                                  }
 			     } // anti-acoplanarity
@@ -1308,6 +1347,14 @@ void HadronicWWCuts::Loop()
 				       hymatchantitaummww->Fill(yppmm-mydijet.Rapidity());
 				       hmassmatchratioantitaummww->Fill(1 - (mydijet.M()/mppmm));
 				       hmassrapiditymatchantitaummww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+                                       // Sideband background method                                                                                                                             
+				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+                                         npassantitausigregionww += 1.0*myweight;
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+                                         npassantitaunormregionww += 1.0*myweight ;
 				     }
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
@@ -1324,6 +1371,14 @@ void HadronicWWCuts::Loop()
                                        hymatchantitaummzz->Fill(yppmm-mydijet.Rapidity());
                                        hmassmatchratioantitaummzz->Fill(1 - (mydijet.M()/mppmm));
                                        hmassrapiditymatchantitaummzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+                                       // Sideband background method                                                                                                                             
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+                                         npassantitausigregionzz += 1.0*myweight;
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+                                         npassantitaunormregionzz += 1.0*myweight ;
                                      }
                                  }
 			     } // anti-tau21
@@ -1348,6 +1403,14 @@ void HadronicWWCuts::Loop()
 				       hymatchantiprunedmmww->Fill(yppmm-mydijet.Rapidity());
 				       hmassmatchratioantiprunedmmww->Fill(1 - (mydijet.M()/mppmm));
 				       hmassrapiditymatchantiprunedmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+                                       // Sideband background method                                                                                                                             
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+                                         npassantimasssigregionww += 1.0*myweight;
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+                                         npassantimassnormregionww += 1.0*myweight ;
 				     }
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
@@ -1364,6 +1427,14 @@ void HadronicWWCuts::Loop()
                                        hymatchantiprunedmmzz->Fill(yppmm-mydijet.Rapidity());
                                        hmassmatchratioantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm));
                                        hmassrapiditymatchantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+
+                                       // Sideband background method                                                                                                                             
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+                                         npassantimasssigregionzz += 1.0*myweight;
+                                       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
+                                          (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
+                                         npassantimassnormregionzz += 1.0*myweight ;
                                      }
                                  }
                              }// anti-pruned mass
@@ -1380,14 +1451,19 @@ void HadronicWWCuts::Loop()
 				   Float_t ymatch = 0.0;
 				   massmatch = 1 - (mydijet.M()/mppmm);
 				   ymatch = yppmm-mydijet.Rapidity();
-				   if(fabs(ymatch) > 0.5 || fabs(massmatch) > 1.0)
+				   if(fabs(ymatch) > rapiditymatchnormregion || fabs(massmatch) > massmatchnormregion)
 				     {
 				       if(rotatedprunedmasses <= mrotatedcut)
-					 hmassrapiditymatchvetoorsignalregionww->Fill(massmatch,ymatch);
+					 {
+					   hmassrapiditymatchvetoorsignalregionww->Fill(massmatch,ymatch);
+					   npassnonblindnormregionww += 1.0*myweight;
+					 }
 				       if(rotatedprunedmasses > mrotatedcut)
-					 hmassrapiditymatchvetoorsignalregionzz->Fill(massmatch,ymatch);
-
-				       if(fabs(massmatch) > 1.0 && fabs(massmatch) > 1.0)
+					 {
+					   hmassrapiditymatchvetoorsignalregionzz->Fill(massmatch,ymatch);
+					   npassnonblindnormregionzz += 1.0*myweight;
+					 }
+				       if(fabs(ymatch) > rapiditymatchnormregion && fabs(massmatch) > massmatchnormregion)
 					 {
 					   if(rotatedprunedmasses <= mrotatedcut)
 					     hmassrapiditymatchvetosignalregionww->Fill(massmatch,ymatch);
@@ -1973,6 +2049,10 @@ if(samplenumber == 20)
      {normxsec = 2.64; nevgen = 10000.0;}
 
    std::cout << "Ran over " << nentries << " events " << std::endl;
+
+   std::cout << std::endl << std::endl << "=====================================================" << std::endl;
+   std::cout << "Cut flow" << std::endl;
+   std::cout <<  "=====================================================" << std::endl;
    std::cout << "Passing preselection = " << npasspresel << std::endl
 	     << "Passing dijet kinematics = " << npassdijetkine << std::endl
 	     << "Passing jet substructure = " << npassjetsubstr << std::endl
@@ -1983,4 +2063,21 @@ if(samplenumber == 20)
 	     << "Passing WW channel cut = " << npassppsmatchkseniaww << std::endl
 	     << "Passing ZZ channel cut = " << npassppsmatchkseniazz << std::endl;
 
+   std::cout << std::endl << std::endl << "=====================================================" << std::endl;
+   std::cout << "Sideband background method yields" << std::endl;
+   std::cout <<  "=====================================================" << std::endl;
+   
+   std::cout << "Anti-acoplanarity" << std::endl
+	     << "\t WW norm. region = " << npassantiacopnormregionww << ", WW sig. region = " << npassantiacopsigregionww << std::endl
+	     << "\t ZZ norm. region = " << npassantiacopnormregionzz << ", ZZ sig. region = " << npassantiacopsigregionzz << std::endl;
+   std::cout << "Anti-tau21" << std::endl
+             << "\t WW norm. region = " << npassantitaunormregionww << ", WW sig. region = " << npassantitausigregionww << std::endl
+             << "\t ZZ norm. region = " << npassantitaunormregionzz << ", ZZ sig. region = " << npassantitausigregionzz << std::endl;
+   std::cout << "Anti-pruned mass" << std::endl
+             << "\t WW norm. region = " << npassantimassnormregionww << ", WW sig. region = " << npassantimasssigregionww << std::endl
+             << "\t ZZ norm. region = " << npassantimassnormregionzz << ", ZZ sig. region = " << npassantimasssigregionzz << std::endl;
+   std::cout << "Non-blinded normalization region" << std::endl
+	     << "\t WW norm. region = " << npassnonblindnormregionww << std::endl
+	     << "\t ZZ norm. region = " << npassnonblindnormregionzz << std::endl;
+ 
 }
