@@ -14,13 +14,10 @@ else
 	file_dir=${output_dir}/${2}/${3}/
 	if [ $# -eq 6 ]
 	then
-		set -x
+		echo "cmsRun ConfFileLegacyReRecoPrelimMCAllInOne_cfg.py year=${2} era=${3} sampleTag=${4} outputDir=${file_dir} partNumber=${5} nParts=${6}"
 		cmsRun ConfFileLegacyReRecoPrelimMCAllInOne_cfg.py year=${2} era=${3} sampleTag=${4} outputDir=${file_dir} partNumber=${5} nParts=${6}
-		set +x
 	else
-		set -x
+		echo "cmsRun ConfFileLegacyReRecoPrelimMCAllInOne_cfg.py year=${2} era=${3} sampleTag=${4} outputDir=${file_dir}"
 		cmsRun ConfFileLegacyReRecoPrelimMCAllInOne_cfg.py year=${2} era=${3} sampleTag=${4} outputDir=${file_dir}
-		set +x
 	fi
 fi
-

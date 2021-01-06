@@ -3,6 +3,8 @@
  *
  */
 
+#include "CMS_lumi.h"
+
 void ULPlotStackTest2018(Int_t var = 1)
 {
   // 2018
@@ -38,7 +40,6 @@ void ULPlotStackTest2018(Int_t var = 1)
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
   Float_t mcbxsec = 0.0583; // pb, a0W=2E-6
   Float_t mcdxsec = 0.1648; // pb, aCW=2E-5
-  Float_t mbaaxsec = 0.1074; // pb 
   Float_t mcaaxsec = 0.00264; // pb, a0Z=5E-5
 
 
@@ -94,35 +95,81 @@ void ULPlotStackTest2018(Int_t var = 1)
   if(var == 21)
     {hist = "hyjjdat"; thetitle = "y(jj)"; filetitle = "yjj";}
   if(var == 22)
-    {hist = "hmasswwantitau"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mwwantitau"; rangelo = 1000.0; rangehi = 3000.0;}
+    {hist = "hmassvvantitauww"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 23)
-    {hist = "hmasswwantiacop"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mwwantiacop"; rangelo = 1000.0; rangehi = 3000.0;}
+    {hist = "hmassvvantiacopww"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mvvantiacopww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 24)
-    {hist = "hmasswwantiptbal"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mwwanttptbal"; rangelo = 1000.0; rangehi = 3000.0;}
+    {hist = "hmassvvantiptbalww"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 25)
-    {hist = "hmasswwsignal"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
+    {hist = "hmassvvsignalww"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 26)
-    {hist = "hywwsignal"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind"; rangelo = -3.0; rangehi = 3.0;}
+    {hist = "hywwsignalww"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind"; rangelo = -3.0; rangehi = 3.0;}
   if(var == 27)
     {hist = "xijets45"; thetitle = "#xi(jets), 45"; filetitle = "xijets45";}
   if(var == 28)
     {hist = "xijets56"; thetitle = "#xi(jets), 56"; filetitle = "xijets56";}
   if(var == 29)
-    {hist = "hmj1antiacop"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacop"; rangelo = 65; rangehi = 105;}
+    {hist = "hmj1antiacopww"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacopww"; rangelo = 65; rangehi = 105;}
   if(var == 30)
-    {hist = "hmj2antiacop"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacop"; rangelo = 65; rangehi = 105;}
+    {hist = "hmj2antiacopww"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacopww"; rangelo = 65; rangehi = 105;}
   if(var == 31)
-    {hist = "htau211antiacop"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacop";}
+    {hist = "htau211antiacopww"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacopww";}
   if(var == 32)
-    {hist = "htau212antiacop"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacop";}
+    {hist = "htau212antiacopww"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacopww";}
   if(var == 33)
-    {hist = "hmj1antitau"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitau"; rangelo = 65; rangehi = 105;}
+    {hist = "hmj1antitauww"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitauww"; rangelo = 65; rangehi = 105;}
   if(var == 34)
-    {hist = "hmj2antitau"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitau"; rangelo = 65; rangehi = 105;}
+    {hist = "hmj2antitauww"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitauww"; rangelo = 65; rangehi = 105;}
   if(var == 35)
-    {hist = "htau211antitau"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitau";}
+    {hist = "htau211antitauww"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitauww";}
   if(var == 36)
-    {hist = "htau212antitau"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitau";}
+    {hist = "htau212antitauww"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauww";}
+  if(var == 37)
+    {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww";}
+  
+  // ZZ plots
+  if(var == 38)
+    {hist = "hmassvvantitauzz"; thetitle = "m(ZZ), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 39)
+    {hist = "hmassvvantiacopzz"; thetitle = "m(ZZ), acoplanarity > 0.1"; filetitle = "mvvantiacopzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 40)
+    {hist = "hmassvvantiptbalzz"; thetitle = "m(ZZ), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 41)
+    {hist = "hmassvvsignalzz"; thetitle = "m(ZZ), signal"; filetitle = "mzzsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 42)
+    {hist = "hywwsignalzz"; thetitle = "y(ZZ), signal"; filetitle = "yzzsignalblind"; rangelo = -3.0; rangehi = 3.0;}
+  if(var == 43)
+    {hist = "hmj1antiacopzz"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacopzz"; rangelo = 65; rangehi = 105;}
+  if(var == 44)
+    {hist = "hmj2antiacopzz"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacopzz"; rangelo = 65; rangehi = 105;}
+  if(var == 45)
+    {hist = "htau211antiacopzz"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacopzz";}
+  if(var == 46)
+    {hist = "htau212antiacopzz"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacopzz";}
+  if(var == 47)
+    {hist = "hmj1antitauzz"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitauzz"; rangelo = 65; rangehi = 105;}
+  if(var == 48)
+    {hist = "hmj2antitauzz"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitauzz"; rangelo = 65; rangehi = 105;}
+  if(var == 49)
+    {hist = "htau211antitauzz"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitauzz";}
+  if(var == 50)
+    {hist = "htau212antitauzz"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauzz";}
+  if(var == 51)
+    {hist = "hmassvvantiprunedzz"; thetitle = "m(ZZ), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedzz";}
+
+  if ((var >= 29 && var <= 40) || var == 22 || var == 23 || var == 24 ||
+  	  (var >= 43) )
+    hist = "Sidebands/"+hist;
+  else if ( var == 1  || var == 21 || var == 25 || var == 26 || var == 27 || var == 28  || var == 4 ||  
+            var == 5  || var == 6  || var == 7  || var == 8  || var == 9  || var == 10  || var == 11 || 
+            var == 12 || var == 13 || var == 14 || var == 15 || var == 16  || var == 41 || var == 42 )
+    hist = "PreselectionAndControl/"+hist;
+  else if ( var == 2  || var == 3  || var == 17 || var == 18 || var == 19 || var == 20 )
+    hist = "JetSubstructure/"+hist;
+
+  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2/";
+  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples/";
+  TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/";
 
   /*
   TFile *f100 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017C.root");
@@ -141,41 +188,63 @@ void ULPlotStackTest2018(Int_t var = 1)
   TH1F *h104 = (TH1F *)f104->Get(hist);
   */
   //  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJER_datahist2017BCD.root");
-  TFile *f100 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018ABCD.root");
+  TFile *f100 = TFile::Open(dataFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018ABCD.root");
   TH1F *h100 = (TH1F *)f100->Get(hist);
 
-  TFile *f2 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2018.root");
+  TFile *f2 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2018.root");
   TH1F *h2 = (TH1F *)f2->Get(hist);
 
-  TFile *f3 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2018.root");
+  TFile *f3 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2018.root");
   TH1F *h3 = (TH1F *)f3->Get(hist);
 
-  TFile *f4 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2018.root");
+  TFile *f4 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2018.root");
   TH1F *h4 = (TH1F *)f4->Get(hist);
   
-  TFile *f5 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2018.root");
+  TFile *f5 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2018.root");
   TH1F *h5 = (TH1F *)f5->Get(hist);
   
-  TFile *f6 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2018.root");
+  TFile *f6 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2018.root");
   TH1F *h6 = (TH1F *)f6->Get(hist);
 
-  TFile *f7 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic_2018.root");
+  TFile *f7 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic_2018.root");
   TH1F *h7 = (TH1F *)f7->Get(hist);
 
-  TFile *f8 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2018.root");
+  TFile *f8 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2018.root");
   TH1F *h8 = (TH1F *)f8->Get(hist);
 
-  TFile *f9 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root");
+  TFile *f9 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root");
   TH1F *h9 = (TH1F *)f9->Get(hist);
 
-  TFile *f10 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root");
+  TFile *f10 = TFile::Open(backgroundFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root");
   TH1F *h10 = (TH1F *)f10->Get(hist);
 
-  TFile *fa1 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018.root");
+  TFile *fa1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018A.root");
   TH1F *ha1 = (TH1F *)fa1->Get(hist);
+  TFile *fa2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018B.root");
+  TH1F *ha2 = (TH1F *)fa2->Get(hist);
+  TFile *fa3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018C.root");
+  TH1F *ha3 = (TH1F *)fa3->Get(hist);
+  TFile *fa4 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018D.root");
+  TH1F *ha4 = (TH1F *)fa4->Get(hist);
 
-  TFile *fd1 = TFile::Open("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018.root");
+
+  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018A.root");
+  TH1F *hb1 = (TH1F *)fb1->Get(hist);
+  TFile *fb2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018B.root");
+  TH1F *hb2 = (TH1F *)fb2->Get(hist);
+  TFile *fb3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018C.root");
+  TH1F *hb3 = (TH1F *)fb3->Get(hist);
+  TFile *fb4 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018D.root");
+  TH1F *hb4 = (TH1F *)fb4->Get(hist);
+
+  TFile *fd1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018A.root");
   TH1F *hd1 = (TH1F *)fd1->Get(hist);
+  TFile *fd2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018B.root");
+  TH1F *hd2 = (TH1F *)fd2->Get(hist);
+  TFile *fd3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018C.root");
+  TH1F *hd3 = (TH1F *)fd3->Get(hist);
+  TFile *fd4 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018D.root");
+  TH1F *hd4 = (TH1F *)fd4->Get(hist);
 
   h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
@@ -192,11 +261,11 @@ void ULPlotStackTest2018(Int_t var = 1)
     {
       rebinfactor = 5;
       if(var == 19 || var == 20)
-	rebinfactor = 10;
-      if(var == 25 || var == 26) {rebinfactor = 5;}
+		rebinfactor = 10;
+      // if(var == 25 || var == 26) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
-      if(var > 20 && var < 25) {rebinfactor = 10;}
-      if(var == 29 || var == 30 || var == 33 || var == 34)
+      if((var > 20 && var < 25) || (var > 37 && var < 41)) {rebinfactor = 10;}
+      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 43 || var == 43 || var == 47 || var == 48)
         rebinfactor = 1;
       h2->Rebin(rebinfactor); 
       h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor);
@@ -207,7 +276,20 @@ void ULPlotStackTest2018(Int_t var = 1)
       h100->Rebin(rebinfactor); //h101->Rebin(rebinfactor); h102->Rebin(rebinfactor); h103->Rebin(rebinfactor); h104->Rebin(rebinfactor);
       h1000->Rebin(rebinfactor);
 
-      ha1->Rebin(rebinfactor); hd1->Rebin(rebinfactor);
+      ha1->Rebin(rebinfactor);
+      ha2->Rebin(rebinfactor);
+      ha3->Rebin(rebinfactor);
+      ha4->Rebin(rebinfactor);
+
+      hb1->Rebin(rebinfactor);
+      hb2->Rebin(rebinfactor);
+      hb3->Rebin(rebinfactor);
+      hb4->Rebin(rebinfactor);
+
+      hd1->Rebin(rebinfactor);
+      hd2->Rebin(rebinfactor);
+      hd3->Rebin(rebinfactor);
+      hd4->Rebin(rebinfactor);
     }
 
   // For MC in higher QCD pT bins, only running on 100k events from the ntuple per bin, so renormalize to that                                               
@@ -258,13 +340,44 @@ void ULPlotStackTest2018(Int_t var = 1)
   h10->Scale(mc10xsec*1000*lumi/1944000.0);
   h10->SetFillColor(kAzure+1);
 
-  ha1->Sumw2(); // Signal, a0W=1E-6, 2018
-  ha1->Scale(mcaxsec*1000*lumi/93000.0);
+  ha1->Sumw2(); // Signal, a0W=1E-6, 2018A --> 2018
+  ha1->Scale(mcaxsec*1000*lumi/87100.0);
+  ha2->Sumw2(); // Signal, a0W=1E-6, 2018B 
+  ha2->Scale(mcaxsec*1000*lumi/59400.0);
+  ha3->Sumw2(); // Signal, a0W=1E-6, 2018C 
+  ha3->Scale(mcaxsec*1000*lumi/72700.0);
+  ha4->Sumw2(); // Signal, a0W=1E-6, 2018D 
+  ha4->Scale(mcaxsec*1000*lumi/266400.0);
+  ha1->Add(ha2);
+  ha1->Add(ha3);  
+  ha1->Add(ha4);  
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
-  hd1->Sumw2(); // Signal, aCW=2E-5, 2018                                                                                                                                           
-  hd1->Scale(mcdxsec*1000*lumi/123000.0);
-  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
+  hb1->Sumw2(); // Signal, a0W=2E-6, 2018A --> 2018
+  hb1->Scale(mcbxsec*1000*lumi/102800.0);
+  hb2->Sumw2(); // Signal, a0W=2E-6, 2018B 
+  hb2->Scale(mcbxsec*1000*lumi/55600.0);
+  hb3->Sumw2(); // Signal, a0W=2E-6, 2018C 
+  hb3->Scale(mcbxsec*1000*lumi/54500.0);
+  hb4->Sumw2(); // Signal, a0W=2E-6, 2018D 
+  hb4->Scale(mcbxsec*1000*lumi/279000.0);
+  hb1->Add(hb2);
+  hb1->Add(hb3);  
+  hb1->Add(hb4);  
+  hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan);
+
+  hd1->Sumw2(); // Signal, aCW=2E-5, 2018A --> 2018
+  hd1->Scale(mcdxsec*1000*lumi/122900.0);
+  hd2->Sumw2(); // Signal, aCW=2E-5, 2018B 
+  hd2->Scale(mcdxsec*1000*lumi/53400.0);
+  hd3->Sumw2(); // Signal, aCW=2E-5, 2018C 
+  hd3->Scale(mcdxsec*1000*lumi/56200.0);
+  hd4->Sumw2(); // Signal, aCW=2E-5, 2018D 
+  hd4->Scale(mcdxsec*1000*lumi/68200.0);
+  hd1->Add(hd2);
+  hd1->Add(hd3);  
+  hd1->Add(hd4);  
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan);
 
   /*
   h12->Add(h11);
@@ -317,7 +430,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   h10->SetStats(0);     
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
-  if(var != 25 && var != 26)
+  if(var != 25 && var != 26 && var != 41 && var != 42)
     h10->SetMaximum(h100->GetMaximum()*1.5);
   h10->SetTitle(thetitle);                                                                                                                                
   h10->SetXTitle(thetitle);
@@ -383,6 +496,8 @@ void ULPlotStackTest2018(Int_t var = 1)
   // Signal MC                                                                                                                                                                        
   ha1->Draw("histsame");
 
+  // hb1->Draw("histsame");
+
   hd1->Draw("histsame");
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
@@ -395,6 +510,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   lg1->AddEntry(h7,"Powheg ttbar");
   lg1->AddEntry(h9,"Madgraph Z+jets");
   lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+  // lg1->AddEntry(hb1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=2*10^{-6} GeV^{-2}");
   lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
   lg1->AddEntry(h100,"2018ABCD Data");
   lg1->Draw("same");
@@ -426,6 +542,8 @@ void ULPlotStackTest2018(Int_t var = 1)
 
   // Signal MC                                                                                                                                                                        
   ha1->Draw("histsame");
+
+  // hb1->Draw("histsame");
 
   hd1->Draw("histsame");
 
@@ -485,7 +603,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   l3->SetLineWidth(3);
   //  l3->Draw("same");
 
-  CMS_lumi2016((TPad*)c1->GetPad(1),0,0,"2018, L = 52.9 fb^{-1}");
+  CMS_lumi((TPad*)c1->GetPad(1),0,0,"2018, L = 52.9 fb^{-1}");
 
   TString outplotname = "validationplots2018ABCD_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
@@ -494,6 +612,28 @@ void ULPlotStackTest2018(Int_t var = 1)
   //  TCanvas *c3 = new TCanvas("c3","c3");
   //  h7->Draw("hist");
   //  ha->Draw("hist");
+  f100->Close();
+  f2->Close();
+  f3->Close();
+  f4->Close();
+  f5->Close();
+  f6->Close();
+  f7->Close();
+  f8->Close();
+  f9->Close();
+  f10->Close();
+  fa1->Close();
+  fa2->Close();
+  fa3->Close();
+  fa4->Close();
+  fb1->Close();
+  fb2->Close();
+  fb3->Close();
+  fb4->Close();
+  fd1->Close();
+  fd2->Close();
+  fd3->Close();
+  fd4->Close();
 }
 
 void PlotStackAll2018()
@@ -518,8 +658,16 @@ void PlotStackAll2018()
   ULPlotStackTest2018(22);
   ULPlotStackTest2018(23);
   ULPlotStackTest2018(24);
+  ULPlotStackTest2018(25);
+  ULPlotStackTest2018(26);
   ULPlotStackTest2018(27);
   ULPlotStackTest2018(28);
+
+  ULPlotStackTest2018(38);
+  ULPlotStackTest2018(39);
+  ULPlotStackTest2018(40);
+  ULPlotStackTest2018(41);
+  ULPlotStackTest2018(42);
 }
 
 void PlotStackSideband2018()
@@ -532,4 +680,15 @@ void PlotStackSideband2018()
   ULPlotStackTest2018(34);
   ULPlotStackTest2018(35);
   ULPlotStackTest2018(36);
+  ULPlotStackTest2018(37);
+
+  ULPlotStackTest2018(43);
+  ULPlotStackTest2018(44);
+  ULPlotStackTest2018(45);
+  ULPlotStackTest2018(46);
+  ULPlotStackTest2018(47);
+  ULPlotStackTest2018(48);
+  ULPlotStackTest2018(49);
+  ULPlotStackTest2018(50);
+  ULPlotStackTest2018(51);
 }

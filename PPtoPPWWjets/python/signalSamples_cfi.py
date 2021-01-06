@@ -3,6 +3,8 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 	# provides the i-th files sublist out of n sublists for each year, era, and sampleTag
 	# Example: part 1 of 3, part 2 of 3, part 3 of 3
 
+	# warning: for ZZ samples the only file available is returned
+
 	# recorded luminosity of each period from brilcalc, 1/ub
 	lumi_weights = {
 		"2016B" : 4291753570.355125427,
@@ -459,6 +461,33 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW8e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/342B7FFF-F82E-E911-BD21-0025901AC3F0.root",
 	]
 
+	ZZ_A0Z_1e_5 = [
+		"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_-1E-5_ACZ_0E0_13TeV-fpmc_AODSIM.root"
+	]
+
+	ZZ_A0Z1e_5 = [
+		"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_1E-5_ACZ_0E0_13TeV-fpmc_AODSIM.root"
+	]
+
+	ZZ_A0Z5e_5 = [
+		"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_5E-5_ACZ_0E0_13TeV-fpmc_AODSIM.root"
+	]
+
+	ZZ_ACZ_1e_5 = [
+	"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_0E0_ACZ_-1E-5_13TeV-fpmc_AODSIM.root"
+	]
+
+	ZZ_ACZ1e_5 = [
+		"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_0E0_ACZ_1E-5_13TeV-fpmc_AODSIM.root"
+	]
+
+	ZZ_ACZ5e_5 = [
+		"file:/eos/cms/store/group/phys_pps/MC/requests_2017mcv2/private/AAZZ_bSM/AODSIM/GGToZZ_bSM_A0Z_0E0_ACZ_5E-5_13TeV-fpmc_AODSIM.root"
+	]
+
+
+
+
 	full_file_list = []
 	if sampleTag == "WW_A0W1e-6":
 		full_file_list = WW_A0W1e_6
@@ -472,6 +501,18 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		full_file_list = WW_ACW5e_6
 	elif sampleTag == "WW_ACW8e-6":
 		full_file_list = WW_ACW8e_6
+	elif sampleTag == "ZZ_A0Z-1e-5":
+		return ZZ_A0Z_1e_5
+	elif sampleTag == "ZZ_A0Z1e-5":
+		return ZZ_A0Z1e_5
+	elif sampleTag == "ZZ_A0Z5e-5":
+		return ZZ_A0Z5e_5
+	elif sampleTag == "ZZ_ACZ-1e-5":
+		return ZZ_ACZ_1e_5
+	elif sampleTag == "ZZ_ACZ1e-5":
+		return ZZ_ACZ1e_5
+	elif sampleTag == "ZZ_ACZ5e-5":
+		return ZZ_ACZ5e_5
 	else:
 		print "WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list"
 		return []

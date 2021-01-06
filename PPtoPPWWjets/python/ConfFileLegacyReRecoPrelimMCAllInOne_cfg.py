@@ -48,6 +48,8 @@ elif ((options.partNumber == 0) & (options.nParts == 0)):
 # possible sampleTags:                                    #
 # WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6                      #
 # WW_ACW2e-5, WW_ACW5e-6, WW_ACW8e-6                      #
+# ZZ_A0Z-1e-5, ZZ_A0Z1e-5, ZZ_A0Z5e-5                     #
+# ZZ_ACZ-1e-5, ZZ_ACZ1e-5, ZZ_ACZ5e-5                     #
 ###########################################################
 
 MC=True
@@ -107,7 +109,8 @@ print "Signal sample file list: "
 print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 print "\n"
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
+    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS)),
+    skipEvents = cms.untracked.uint32(5200)
 )
 
 # add pre-mixing of recHits
@@ -332,7 +335,7 @@ if YEAR == 2017:
 
 if YEAR == 2018:
   # process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
-  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_radiation_withAvg_reMiniAOD.root")  
+  process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_radiation_reMiniAOD.root")  
   # process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
   process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_singleRP_reMiniAOD.root")
 

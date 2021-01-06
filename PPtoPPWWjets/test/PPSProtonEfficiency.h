@@ -89,7 +89,7 @@ PPSProtonEfficiency::PPSProtonEfficiency ()
   rnd->SetSeed(123456);
 
   // Pixels - lumi-weighted rad. damage + multi-RP averages for pre- and post-TS2 2017
-  TFile *fpixeff = TFile::Open("pixelEfficiencies_multiRP.root");
+  TFile *fpixeff = TFile::Open("/eos/project-c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_multiRP.root");
   hpixeff2017B45 = (TH2F *)fpixeff->Get("Pixel/2017/2017B/h45_220_2017B_all_2D"); // 2.4fb                                                
   hpixeff2017B56 = (TH2F *)fpixeff->Get("Pixel/2017/2017B/h56_220_2017B_all_2D");
   hpixeff2017C145 = (TH2F *)fpixeff->Get("Pixel/2017/2017C1/h45_220_2017C1_all_2D"); // 5.3fb                                             
@@ -142,7 +142,7 @@ PPSProtonEfficiency::PPSProtonEfficiency ()
   hpixeff2017PostTS256->Add(hpixeff2017F356);
   
   // Strips
-  TFile *fstripeff = TFile::Open("PreliminaryEfficiencies_July132020_1D2DMultiTrack.root");
+  TFile *fstripeff = TFile::Open("/eos/project-c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root");
 
   // Strips - lumi-weighted rad. damage averages for pre-TS2 2016
   hstreff2016B45near = (TH2F *)fstripeff->Get("Strips/2016/2016B/h45_2016B_RP2_all_2D");
