@@ -82,6 +82,8 @@ void HadronicWWCuts::Loop()
    TH1F *hnvtx = new TH1F("hnvtx","hnvtx",100,0,100);
    TH1F *hptratio = new TH1F("hptratio","hptratio",500,0,5);
    TH1F *hprunedrotatedjjdat = new TH1F("hprunedrotatedjjdat","hprunedrotatedjjdat",250,0,500);
+   TH1F *hprunedrotatedjjprematchingdat = new TH1F("hprunedrotatedjjprematchingdat","hprunedrotatedjjprematchingdat",250,0,500);
+
 
    TH1F *hxipix45 = new TH1F("hxipix45","hxipix45",500,0,0.5);
    TH1F *hypix45 = new TH1F("hypix45","hypix45",500,-50,50);
@@ -1322,7 +1324,7 @@ void HadronicWWCuts::Loop()
                                      }
                                  }
 			     } // anti-acoplanarity
-			   // Anti pT balance                                                                                                                     
+			   // Anti pT balance                                                                                                                   
 			   if((jet1.Pt()/jet2.Pt()) > ptbalcut &&
 			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
 			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
@@ -1354,7 +1356,7 @@ void HadronicWWCuts::Loop()
                                      }
                                  }
 			     } // anti-pT balance
-			   // Anti tau21                                                                                                                          
+			   // Anti tau21                                                                                                                        
 			   if((taut21ddt1 > tau21cut) && (taut21ddt2 > tau21cut) &&
 			      (jet_corrmass->at(indleading) >= mwlowcut && jet_corrmass->at(indleading) <= mwhicut) && 
 			      (jet_corrmass->at(indsecond) >= mwlowcut && jet_corrmass->at(indsecond) <= mwhicut) &&
@@ -1537,6 +1539,10 @@ void HadronicWWCuts::Loop()
 				   Float_t ymatch = 0.0;
 				   massmatch = 1 - (mydijet.M()/mppmm);
 				   ymatch = yppmm-mydijet.Rapidity();
+
+				   // Store rotated mass variable after all central cuts, but before proton matching
+				   hprunedrotatedjjprematchingdat->Fill(rotatedprunedmasses);
+
 				   if(fabs(ymatch) > rapiditymatchnormregion || fabs(massmatch) > massmatchnormregion)
 				     {
 				       if(rotatedprunedmasses <= mrotatedcut)
@@ -2098,6 +2104,7 @@ if(samplenumber == 20)
    hycorrsigmcmultzz->Write();
    hmasscorrsigmcmulttruthmatchedzz->Write();
 
+   hprunedrotatedjjprematchingdat->Write();
 
    fx->cd("SingleProtonDistributions");
    hxipix45->Write();
