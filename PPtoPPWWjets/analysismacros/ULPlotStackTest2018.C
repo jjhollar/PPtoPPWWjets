@@ -126,43 +126,47 @@ void ULPlotStackTest2018(Int_t var = 1)
     {hist = "htau212antitauww"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauww";}
   if(var == 37)
     {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww";}
-  
-  // ZZ plots
   if(var == 38)
-    {hist = "hmassvvantitauzz"; thetitle = "m(ZZ), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauzz"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 39)
-    {hist = "hmassvvantiacopzz"; thetitle = "m(ZZ), acoplanarity > 0.1"; filetitle = "mvvantiacopzz"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 40)
-    {hist = "hmassvvantiptbalzz"; thetitle = "m(ZZ), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalzz"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 41)
-    {hist = "hmassvvsignalzz"; thetitle = "m(ZZ), signal"; filetitle = "mzzsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 42)
-    {hist = "hywwsignalzz"; thetitle = "y(ZZ), signal"; filetitle = "yzzsignalblind"; rangelo = -3.0; rangehi = 3.0;}
-  if(var == 43)
-    {hist = "hmj1antiacopzz"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacopzz"; rangelo = 65; rangehi = 105;}
-  if(var == 44)
-    {hist = "hmj2antiacopzz"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacopzz"; rangelo = 65; rangehi = 105;}
-  if(var == 45)
-    {hist = "htau211antiacopzz"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacopzz";}
-  if(var == 46)
-    {hist = "htau212antiacopzz"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacopzz";}
-  if(var == 47)
-    {hist = "hmj1antitauzz"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitauzz"; rangelo = 65; rangehi = 105;}
-  if(var == 48)
-    {hist = "hmj2antitauzz"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitauzz"; rangelo = 65; rangehi = 105;}
-  if(var == 49)
-    {hist = "htau211antitauzz"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitauzz";}
-  if(var == 50)
-    {hist = "htau212antitauzz"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauzz";}
-  if(var == 51)
-    {hist = "hmassvvantiprunedzz"; thetitle = "m(ZZ), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedzz";}
+    {hist = "hmassvvantiprunednarrowww"; thetitle = "m(WW) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowww";}  
 
-  if ((var >= 29 && var <= 40) || var == 22 || var == 23 || var == 24 ||
-  	  (var >= 43) )
+  // ZZ plots
+  if(var == 58)
+    {hist = "hmassvvantitauzz"; thetitle = "m(ZZ), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 59)
+    {hist = "hmassvvantiacopzz"; thetitle = "m(ZZ), acoplanarity > 0.1"; filetitle = "mvvantiacopzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 60)
+    {hist = "hmassvvantiptbalzz"; thetitle = "m(ZZ), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalzz"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 61)
+    {hist = "hmassvvsignalzz"; thetitle = "m(ZZ), signal"; filetitle = "mzzsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 62)
+    {hist = "hywwsignalzz"; thetitle = "y(ZZ), signal"; filetitle = "yzzsignalblind"; rangelo = -3.0; rangehi = 3.0;}
+  if(var == 63)
+    {hist = "hmj1antiacopzz"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacopzz"; rangelo = 65; rangehi = 105;}
+  if(var == 64)
+    {hist = "hmj2antiacopzz"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacopzz"; rangelo = 65; rangehi = 105;}
+  if(var == 65)
+    {hist = "htau211antiacopzz"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacopzz";}
+  if(var == 66)
+    {hist = "htau212antiacopzz"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacopzz";}
+  if(var == 67)
+    {hist = "hmj1antitauzz"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitauzz"; rangelo = 65; rangehi = 105;}
+  if(var == 68)
+    {hist = "hmj2antitauzz"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitauzz"; rangelo = 65; rangehi = 105;}
+  if(var == 69)
+    {hist = "htau211antitauzz"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitauzz";}
+  if(var == 70)
+    {hist = "htau212antitauzz"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauzz";}
+  if(var == 71)
+    {hist = "hmassvvantiprunedzz"; thetitle = "m(ZZ), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedzz";}
+  if(var == 72)
+    {hist = "hmassvvantiprunednarrowzz"; thetitle = "m(ZZ) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowzz";}
+
+  if ((var >= 29 && var <= 58) || var == 22 || var == 23 || var == 24 ||
+      (var >= 63) || var == 58 || var == 59 || var == 60)
     hist = "Sidebands/"+hist;
   else if ( var == 1  || var == 21 || var == 25 || var == 26 || var == 27 || var == 28  || var == 4 ||  
             var == 5  || var == 6  || var == 7  || var == 8  || var == 9  || var == 10  || var == 11 || 
-            var == 12 || var == 13 || var == 14 || var == 15 || var == 16  || var == 41 || var == 42 )
+            var == 12 || var == 13 || var == 14 || var == 15 || var == 16  || var == 61 || var == 62 )
     hist = "PreselectionAndControl/"+hist;
   else if ( var == 2  || var == 3  || var == 17 || var == 18 || var == 19 || var == 20 )
     hist = "JetSubstructure/"+hist;
@@ -261,11 +265,11 @@ void ULPlotStackTest2018(Int_t var = 1)
     {
       rebinfactor = 5;
       if(var == 19 || var == 20)
-		rebinfactor = 10;
+    rebinfactor = 10;
       // if(var == 25 || var == 26) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
-      if((var > 20 && var < 25) || (var > 37 && var < 41)) {rebinfactor = 10;}
-      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 43 || var == 43 || var == 47 || var == 48)
+      if((var > 20 && var < 25) || (var > 57 && var < 61)) {rebinfactor = 10;}
+      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 63 || var == 67 || var == 68)
         rebinfactor = 1;
       h2->Rebin(rebinfactor); 
       h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor);
@@ -430,7 +434,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   h10->SetStats(0);     
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
-  if(var != 25 && var != 26 && var != 41 && var != 42)
+  if(var != 25 && var != 26 && var != 61 && var != 62)
     h10->SetMaximum(h100->GetMaximum()*1.5);
   h10->SetTitle(thetitle);                                                                                                                                
   h10->SetXTitle(thetitle);
@@ -661,13 +665,13 @@ void PlotStackAll2018()
   ULPlotStackTest2018(25);
   ULPlotStackTest2018(26);
   ULPlotStackTest2018(27);
-  ULPlotStackTest2018(28);
+  ULPlotStackTest2016(28);
 
-  ULPlotStackTest2018(38);
-  ULPlotStackTest2018(39);
-  ULPlotStackTest2018(40);
-  ULPlotStackTest2018(41);
-  ULPlotStackTest2018(42);
+  ULPlotStackTest2016(58);
+  ULPlotStackTest2016(59);
+  ULPlotStackTest2016(60);
+  ULPlotStackTest2016(61);
+  ULPlotStackTest2016(62);
 }
 
 void PlotStackSideband2018()
@@ -680,15 +684,16 @@ void PlotStackSideband2018()
   ULPlotStackTest2018(34);
   ULPlotStackTest2018(35);
   ULPlotStackTest2018(36);
-  ULPlotStackTest2018(37);
+  ULPlotStackTest2016(38);
 
-  ULPlotStackTest2018(43);
-  ULPlotStackTest2018(44);
-  ULPlotStackTest2018(45);
-  ULPlotStackTest2018(46);
-  ULPlotStackTest2018(47);
-  ULPlotStackTest2018(48);
-  ULPlotStackTest2018(49);
-  ULPlotStackTest2018(50);
-  ULPlotStackTest2018(51);
+  ULPlotStackTest2016(63);
+  ULPlotStackTest2016(64);
+  ULPlotStackTest2016(65);
+  ULPlotStackTest2016(66);
+  ULPlotStackTest2016(67);
+  ULPlotStackTest2016(68);
+  ULPlotStackTest2016(69);
+  ULPlotStackTest2016(70);
+  ULPlotStackTest2016(71);
+  ULPlotStackTest2016(72);
 }

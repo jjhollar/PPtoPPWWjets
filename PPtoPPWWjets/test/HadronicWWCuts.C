@@ -34,6 +34,10 @@ void HadronicWWCuts::Loop()
 //by  b_branchname->GetEntry(ientry); //read only this branch
    if (fChain == 0) return;
 
+   // TString outputFolder = "signalSamples/";
+   // TString outputFolder = "dataRun2/";
+   TString outputFolder = "backgroundSamples/";
+
    // RP ID's
    // 3   strips sector 45  -z, left
    // 103 strips sector 56  +z, right
@@ -332,253 +336,253 @@ void HadronicWWCuts::Loop()
    Float_t npassantimassnarrowsigregionzz = 0;
 
 
-   TString outtextfile = "MC_EventsForMixing.txt";
+   TString outtextfile = outputFolder+"MC_EventsForMixing.txt";
 
    if(samplenumber == 2)
-     outtextfile = "MC_EventsForMixing_QCD300to470_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD300to470_2017.txt";
    if(samplenumber == 3)
-     outtextfile = "MC_EventsForMixing_QCD470to600_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD470to600_2017.txt";
    if(samplenumber == 4)
-     outtextfile = "MC_EventsForMixing_QCD600to800_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD600to800_2017.txt";
    if(samplenumber == 5)
-     outtextfile = "MC_EventsForMixing_QCD800to1000_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD800to1000_2017.txt";
    if(samplenumber == 6)
-     outtextfile = "MC_EventsForMixing_QCD1000to1400_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1000to1400_2017.txt";
    if(samplenumber == 10)
-     outtextfile = "MC_EventsForMixing_QCD1400to1800_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1400to1800_2017.txt";
    if(samplenumber == 7)
-     outtextfile = "MC_EventsForMixing_ttbar_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_ttbar_2017.txt";
    if(samplenumber == 8)
-     outtextfile = "MC_EventsForMixing_wjets_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_wjets_2017.txt";
    if(samplenumber == 9)
-     outtextfile = "MC_EventsForMixing_zjets_2017.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_zjets_2017.txt";
 
    if(samplenumber == 20)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017B.txt";
    if(samplenumber == 21)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017C.txt";
    if(samplenumber == 22)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017D.txt";
    if(samplenumber == 23)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017B.txt";
    if(samplenumber == 24)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017C.txt";
    if(samplenumber == 25)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017D.txt";
    if(samplenumber == 26)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017B.txt";
    if(samplenumber == 27)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017C.txt";
    if(samplenumber == 28)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017D.txt";
    if(samplenumber == 29)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017B.txt";
    if(samplenumber == 30)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017C.txt";
    if(samplenumber == 31)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017D.txt";
    if(samplenumber == 32)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017B.txt";
    if(samplenumber == 33)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017C.txt";
    if(samplenumber == 34)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017D.txt";
    if(samplenumber == 35)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017B.txt";
    if(samplenumber == 36)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017C.txt";
    if(samplenumber == 37)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017D.txt";
 
    if(samplenumber == 40)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2017B.txt";
    if(samplenumber == 41)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2017B.txt";
    if(samplenumber == 42)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017B.txt";
    if(samplenumber == 43)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2017B.txt";
    if(samplenumber == 44)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2017B.txt";
    if(samplenumber == 45)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017B.txt";
 
    if(samplenumber == 50)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017E.txt";
    if(samplenumber == 51)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017F.txt";
    if(samplenumber == 52)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017E.txt";
    if(samplenumber == 53)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017F.txt";
    if(samplenumber == 54)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017E.txt";
    if(samplenumber == 55)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017F.txt";
    if(samplenumber == 56)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017E.txt";
    if(samplenumber == 57)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017F.txt";
    if(samplenumber == 58)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017E.txt";
    if(samplenumber == 59)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017F.txt";
    if(samplenumber == 60)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017E.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017E.txt";
    if(samplenumber == 61)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017F.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017F.txt";
 
    if(samplenumber == 102)
-     outtextfile = "MC_EventsForMixing_QCD300to470_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD300to470_2016.txt";
    if(samplenumber == 103)
-     outtextfile = "MC_EventsForMixing_QCD470to600_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD470to600_2016.txt";
    if(samplenumber == 104)
-     outtextfile = "MC_EventsForMixing_QCD600to800_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD600to800_2016.txt";
    if(samplenumber == 105)
-     outtextfile = "MC_EventsForMixing_QCD800to1000_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD800to1000_2016.txt";
    if(samplenumber == 106)
-     outtextfile = "MC_EventsForMixing_QCD1000to1400_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1000to1400_2016.txt";
    if(samplenumber == 110)
-     outtextfile = "MC_EventsForMixing_QCD1400to1800_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1400to1800_2016.txt";
    if(samplenumber == 107)
-     outtextfile = "MC_EventsForMixing_ttbar1000inf_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_ttbar1000inf_2016.txt";
    if(samplenumber == 108)
-     outtextfile = "MC_EventsForMixing_wjets_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_wjets_2016.txt";
    if(samplenumber == 109)
-     outtextfile = "MC_EventsForMixing_zjets_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_zjets_2016.txt";
    if(samplenumber == 111)
-     outtextfile = "MC_EventsForMixing_ttbar700to1000_2016.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_ttbar700to1000_2016.txt";
 
    if(samplenumber == 120)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016B.txt";
    if(samplenumber == 121)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016C.txt";
    if(samplenumber == 122)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016G.txt";
    if(samplenumber == 123)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016B.txt";
    if(samplenumber == 124)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016C.txt";
    if(samplenumber == 125)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2016G.txt";
    if(samplenumber == 126)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016B.txt";
    if(samplenumber == 127)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016C.txt";
    if(samplenumber == 128)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016G.txt";
    if(samplenumber == 129)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016B.txt";
    if(samplenumber == 130)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016C.txt";
    if(samplenumber == 131)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016G.txt";
    if(samplenumber == 132)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016B.txt";
    if(samplenumber == 133)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016C.txt";
    if(samplenumber == 134)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_preTS2_2016G.txt";
    if(samplenumber == 135)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016B.txt";
    if(samplenumber == 136)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016C.txt";
    if(samplenumber == 137)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016G.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_preTS2_2016G.txt";
 
    if(samplenumber == 140)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2016B.txt";
    if(samplenumber == 141)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016B.txt";
    if(samplenumber == 142)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016B.txt";
    if(samplenumber == 143)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2016B.txt";
    if(samplenumber == 144)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016B.txt";
    if(samplenumber == 145)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016B.txt";
 
    if(samplenumber == 202)
-     outtextfile = "MC_EventsForMixing_QCD300to470_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD300to470_2018.txt";
    if(samplenumber == 203)
-     outtextfile = "MC_EventsForMixing_QCD470to600_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD470to600_2018.txt";
    if(samplenumber == 204)
-     outtextfile = "MC_EventsForMixing_QCD600to800_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD600to800_2018.txt";
    if(samplenumber == 205)
-     outtextfile = "MC_EventsForMixing_QCD800to1000_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD800to1000_2018.txt";
    if(samplenumber == 206)
-     outtextfile = "MC_EventsForMixing_QCD1000to1400_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1000to1400_2018.txt";
    if(samplenumber == 210)
-     outtextfile = "MC_EventsForMixing_QCD1400to1800_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_QCD1400to1800_2018.txt";
    if(samplenumber == 207)
-     outtextfile = "MC_EventsForMixing_ttbar_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_ttbar_2018.txt";
    if(samplenumber == 208)
-     outtextfile = "MC_EventsForMixing_wjets_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_wjets_2018.txt";
    if(samplenumber == 209)
-     outtextfile = "MC_EventsForMixing_zjets_2018.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_zjets_2018.txt";
    
    if(samplenumber == 220)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_2018A.txt";
    if(samplenumber == 221)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_2018B.txt";
    if(samplenumber == 222)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_2018C.txt";
    if(samplenumber == 223)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W1E-6_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W1E-6_2018D.txt";
    if(samplenumber == 224)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_2018A.txt";
    if(samplenumber == 225)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_2018B.txt";
    if(samplenumber == 226)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_2018C.txt";
    if(samplenumber == 227)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W2E-6_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W2E-6_2018D.txt";
    if(samplenumber == 228)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_2018A.txt";
    if(samplenumber == 229)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_2018B.txt";
    if(samplenumber == 230)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_2018C.txt";
    if(samplenumber == 231)
-     outtextfile = "MC_EventsForMixing_signal_WWA0W5E-6_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWA0W5E-6_2018D.txt";
    if(samplenumber == 232)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_2018A.txt";
    if(samplenumber == 233)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_2018B.txt";
    if(samplenumber == 234)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_2018C.txt";
    if(samplenumber == 235)
-     outtextfile = "MC_EventsForMixing_signal_WWACW2E-5_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW2E-5_2018D.txt";
    if(samplenumber == 236)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_2018A.txt";
    if(samplenumber == 237)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_2018B.txt";
    if(samplenumber == 238)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_2018C.txt";
    if(samplenumber == 239)
-     outtextfile = "MC_EventsForMixing_signal_WWACW5E-6_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW5E-6_2018D.txt";
    if(samplenumber == 240)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_2018A.txt";
    if(samplenumber == 241)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_2018B.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_2018B.txt";
    if(samplenumber == 242)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_2018C.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_2018C.txt";
    if(samplenumber == 243)
-     outtextfile = "MC_EventsForMixing_signal_WWACW8E-6_2018D.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_WWACW8E-6_2018D.txt";
 
    if(samplenumber == 250)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z-1E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z-1E-5_2018A.txt";
    if(samplenumber == 251)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z1E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z1E-5_2018A.txt";
    if(samplenumber == 252)
-     outtextfile = "MC_EventsForMixing_signal_ZZA0Z5E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZA0Z5E-5_2018A.txt";
    if(samplenumber == 253)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ-1E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ-1E-5_2018A.txt";
    if(samplenumber == 254)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ1E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ1E-5_2018A.txt";
    if(samplenumber == 255)
-     outtextfile = "MC_EventsForMixing_signal_ZZACZ5E-5_2018A.txt";
+     outtextfile = outputFolder+"MC_EventsForMixing_signal_ZZACZ5E-5_2018A.txt";
 
 
    ofstream ofs(outtextfile);
@@ -1618,307 +1622,307 @@ void HadronicWWCuts::Loop()
 
    TFile *fx; 
 
-   //   TFile *fx = new TFile("vars_cuts_qcdpt170to300.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_qcdpt300to470.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_qcdpt470to600.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_qcdpt600to800.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_qcdpt800to1000.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_qcdpt1000to1400.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_datahist2017C.root","RECREATE");
-   //   TFile *fx = new TFile("vars_cuts_exclwwa0w2point5.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt170to300.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt300to470.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt470to600.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt600to800.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt800to1000.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_qcdpt1000to1400.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_datahist2017C.root","RECREATE");
+   //   TFile *fx = new TFile(outputFolder+"vars_cuts_exclwwa0w2point5.root","RECREATE");
 
    if(samplenumber == -1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017B.root","RECREATE");
    if(samplenumber == -2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017C.root","RECREATE");
    if(samplenumber == -3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017D.root","RECREATE");
    if(samplenumber == -4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017E.root","RECREATE");
    if(samplenumber == -5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017F.root","RECREATE");
 
    if(samplenumber == -6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016B.root","RECREATE");
    if(samplenumber == -7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016C.root","RECREATE");
    if(samplenumber == -8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016G.root","RECREATE");
    if(samplenumber == -9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016H.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016H.root","RECREATE");
 
    if(samplenumber == -10)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018A.root","RECREATE");
    if(samplenumber == -11)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018B.root","RECREATE");
    if(samplenumber == -12)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018C.root","RECREATE");
    if(samplenumber == -13)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2018D.root","RECREATE");
 
    if(samplenumber == 1)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300.root","RECREATE");
    if(samplenumber == 2)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470.root","RECREATE");
    if(samplenumber == 3)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600.root","RECREATE");
    if(samplenumber == 4)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800.root","RECREATE");                                                           
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800.root","RECREATE");                                                           
    if(samplenumber == 5)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000.root","RECREATE");
    if(samplenumber == 6)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400.root","RECREATE");
    if(samplenumber == 7)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic.root","RECREATE");
    if(samplenumber == 8)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic.root","RECREATE");
    if(samplenumber == 9)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic.root","RECREATE");
    if(samplenumber == 10)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800.root","RECREATE");
    if(samplenumber == 11)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1800to2400.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1800to2400.root","RECREATE");
    if(samplenumber == 12)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt2400to3200.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt2400to3200.root","RECREATE");
 
 if(samplenumber == 20)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017B.root","RECREATE");
    if(samplenumber == 21)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017C.root","RECREATE");
    if(samplenumber == 22)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2017D.root","RECREATE");
    if(samplenumber == 23)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017B.root","RECREATE");
    if(samplenumber == 24)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017C.root","RECREATE");
    if(samplenumber == 25)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2017D.root","RECREATE");
    if(samplenumber == 26)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017B.root","RECREATE");
    if(samplenumber == 27)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017C.root","RECREATE");
    if(samplenumber == 28)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2017D.root","RECREATE");
    if(samplenumber == 29)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 30)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017C.root","RECREATE");
    if(samplenumber == 31)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017D.root","RECREATE");
    if(samplenumber == 32)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017B.root","RECREATE");
    if(samplenumber == 33)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017C.root","RECREATE");
    if(samplenumber == 34)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2017D.root","RECREATE");
    if(samplenumber == 35)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017B.root","RECREATE");
    if(samplenumber == 36)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017C.root","RECREATE");
    if(samplenumber == 37)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2017D.root","RECREATE");
 
    if(samplenumber == 40)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 41)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 42)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 43)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 44)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2017B.root","RECREATE");
    if(samplenumber == 45)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2017B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2017B.root","RECREATE");
 
    if(samplenumber == 50)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_postTS2_2017E.root","RECREATE");
    if(samplenumber == 51)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_postTS2_2017F.root","RECREATE");
    if(samplenumber == 52)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_postTS2_2017E.root","RECREATE");
    if(samplenumber == 53)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_postTS2_2017F.root","RECREATE");
    if(samplenumber == 54)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_postTS2_2017E.root","RECREATE");
    if(samplenumber == 55)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_postTS2_2017F.root","RECREATE");
    if(samplenumber == 56)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_postTS2_2017E.root","RECREATE");
    if(samplenumber == 57)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_postTS2_2017F.root","RECREATE");
    if(samplenumber == 58)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_postTS2_2017E.root","RECREATE");
    if(samplenumber == 59)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_postTS2_2017F.root","RECREATE");
    if(samplenumber == 60)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_postTS2_2017E.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_postTS2_2017E.root","RECREATE");
    if(samplenumber == 61)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_postTS2_2017F.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_postTS2_2017F.root","RECREATE");
 
    // 2016
    if(samplenumber == 101)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2016.root","RECREATE");
    if(samplenumber == 102)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2016.root","RECREATE");
    if(samplenumber == 103)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2016.root","RECREATE");
    if(samplenumber == 104)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2016.root","RECREATE");
    if(samplenumber == 105)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2016.root","RECREATE");
    if(samplenumber == 106)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2016.root","RECREATE");
    if(samplenumber == 107)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic1000inf_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic1000inf_2016.root","RECREATE");
    if(samplenumber == 108)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2016.root","RECREATE");
    if(samplenumber == 109)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2016.root","RECREATE");
    if(samplenumber == 110)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2016.root","RECREATE");
    if(samplenumber == 111)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic700ot1000_2016.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic700ot1000_2016.root","RECREATE");
 
 
    if(samplenumber == 120)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016B.root","RECREATE");
    if(samplenumber == 121)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016C.root","RECREATE");
    if(samplenumber == 122)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016G.root","RECREATE");
    if(samplenumber == 123)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016B.root","RECREATE");
    if(samplenumber == 124)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016C.root","RECREATE");
    if(samplenumber == 125)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016G.root","RECREATE");
    if(samplenumber == 126)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016B.root","RECREATE");
    if(samplenumber == 127)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016C.root","RECREATE");
    if(samplenumber == 128)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016G.root","RECREATE");
    if(samplenumber == 129)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 130)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016C.root","RECREATE");
    if(samplenumber == 131)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016G.root","RECREATE");
    if(samplenumber == 132)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016B.root","RECREATE");
    if(samplenumber == 133)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016C.root","RECREATE");
    if(samplenumber == 134)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_preTS2_2016G.root","RECREATE");
    if(samplenumber == 135)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016B.root","RECREATE");
    if(samplenumber == 136)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016C.root","RECREATE");
    if(samplenumber == 137)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016G.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_preTS2_2016G.root","RECREATE");
 
    if(samplenumber == 140)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 141)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 142)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 143)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 144)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2016B.root","RECREATE");
    if(samplenumber == 145)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016B.root","RECREATE");
 
    // 2018
    if(samplenumber == 201)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt170to300_2018.root","RECREATE");
    if(samplenumber == 202)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt300to470_2018.root","RECREATE");
    if(samplenumber == 203)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt470to600_2018.root","RECREATE");
    if(samplenumber == 204)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt600to800_2018.root","RECREATE");
    if(samplenumber == 205)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt800to1000_2018.root","RECREATE");
    if(samplenumber == 206)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1000to1400_2018.root","RECREATE");
    if(samplenumber == 207)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_ttbarhadronic_2018.root","RECREATE");
    if(samplenumber == 208)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_wjetshadronic_2018.root","RECREATE");
    if(samplenumber == 209)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_zjetshadronic_2018.root","RECREATE");
    if(samplenumber == 210)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_qcdpt1400to1800_2018.root","RECREATE");
 
    if(samplenumber == 220)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018A.root","RECREATE");
    if(samplenumber == 221)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018B.root","RECREATE");
    if(samplenumber == 222)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018C.root","RECREATE");
    if(samplenumber == 223)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_2018D.root","RECREATE");
    if(samplenumber == 224)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018A.root","RECREATE");
    if(samplenumber == 225)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018B.root","RECREATE");
    if(samplenumber == 226)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018C.root","RECREATE");
    if(samplenumber == 227)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018D.root","RECREATE");
    if(samplenumber == 228)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018A.root","RECREATE");
    if(samplenumber == 229)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018B.root","RECREATE");
    if(samplenumber == 230)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018C.root","RECREATE");
    if(samplenumber == 231)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_2018D.root","RECREATE");
    if(samplenumber == 232)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018A.root","RECREATE");
    if(samplenumber == 233)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018B.root","RECREATE");
    if(samplenumber == 234)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018C.root","RECREATE");
    if(samplenumber == 235)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_2018D.root","RECREATE");
    if(samplenumber == 236)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018A.root","RECREATE");
    if(samplenumber == 237)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018B.root","RECREATE");
    if(samplenumber == 238)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018C.root","RECREATE");
    if(samplenumber == 239)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW5E-6_2018D.root","RECREATE");
    if(samplenumber == 240)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018A.root","RECREATE");
    if(samplenumber == 241)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018B.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018B.root","RECREATE");
    if(samplenumber == 242)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018C.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018C.root","RECREATE");
    if(samplenumber == 243)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018D.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW8E-6_2018D.root","RECREATE");
 
    if(samplenumber == 250)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z-1E-5_2018A.root","RECREATE");
    if(samplenumber == 251)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_2018A.root","RECREATE");
    if(samplenumber == 252)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_2018A.root","RECREATE");
    if(samplenumber == 253)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ-1E-5_2018A.root","RECREATE");
    if(samplenumber == 254)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_2018A.root","RECREATE");
    if(samplenumber == 255)
-     fx = new TFile("vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_2018A.root","RECREATE");
 
    if(samplenumber == 999)
-     //     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2017preTS2.root","RECREATE");
-     //     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2018A.root","RECREATE");
-     fx = new TFile("vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2016B.root","RECREATE");
+     //     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2017preTS2.root","RECREATE");
+     //     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2018A.root","RECREATE");
+     fx = new TFile(outputFolder+"vars_cuts_ntupleULReMiniv5finalWithAndreasMixingEfficiencies_exclWWA0W1E-6_2016B.root","RECREATE");
 
    ofs.close();
 
