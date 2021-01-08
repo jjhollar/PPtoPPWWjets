@@ -665,13 +665,13 @@ void PlotStackAll2018()
   ULPlotStackTest2018(25);
   ULPlotStackTest2018(26);
   ULPlotStackTest2018(27);
-  ULPlotStackTest2016(28);
+  ULPlotStackTest2018(28);
 
-  ULPlotStackTest2016(58);
-  ULPlotStackTest2016(59);
-  ULPlotStackTest2016(60);
-  ULPlotStackTest2016(61);
-  ULPlotStackTest2016(62);
+  ULPlotStackTest2018(58);
+  ULPlotStackTest2018(59);
+  ULPlotStackTest2018(60);
+  ULPlotStackTest2018(61);
+  ULPlotStackTest2018(62);
 }
 
 void PlotStackSideband2018()
@@ -684,16 +684,16 @@ void PlotStackSideband2018()
   ULPlotStackTest2018(34);
   ULPlotStackTest2018(35);
   ULPlotStackTest2018(36);
-  ULPlotStackTest2016(38);
+  ULPlotStackTest2018(38);
 
-  ULPlotStackTest2016(63);
-  ULPlotStackTest2016(64);
-  ULPlotStackTest2016(65);
-  ULPlotStackTest2016(66);
-  ULPlotStackTest2016(67);
-  ULPlotStackTest2016(68);
-  ULPlotStackTest2016(69);
-  ULPlotStackTest2016(70);
-  ULPlotStackTest2016(71);
-  ULPlotStackTest2016(72);
+  ULPlotStackTest2018(63);
+  ULPlotStackTest2018(64);
+  ULPlotStackTest2018(65);
+  ULPlotStackTest2018(66);
+  ULPlotStackTest2018(67);
+  ULPlotStackTest2018(68);
+  ULPlotStackTest2018(69);
+  ULPlotStackTest2018(70);
+  ULPlotStackTest2018(71);
+  ULPlotStackTest2018(72);
 }

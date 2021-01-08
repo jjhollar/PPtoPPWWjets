@@ -1,8 +1,8 @@
 executable			= runHadronicWWCuts.sh
 arguments			= $(sampleNumber) $ENV(CMSSW_BASE)
 # output 				= signalSamples/HadronicWWCuts_$(sampleNumber).out
-# output 				= dataRun2/HadronicWWCuts_$(sampleNumber).out
-output 				= backgroundSamples/HadronicWWCuts_$(sampleNumber).out
+output 				= dataRun2/HadronicWWCuts_$(sampleNumber).out
+# output 				= backgroundSamples/HadronicWWCuts_$(sampleNumber).out
 error 				= HadronicWWCuts_$(sampleNumber).err
 log 				= HadronicWWCuts_$(sampleNumber).log
 getenv				= True
@@ -130,37 +130,38 @@ queue sampleNumber in (
 # 	-8
 # 	-9
 # 	-10
+	-11
 # 	-12
 # 	-13
-#
-# FOR BACKGROUND
-#
-	2
-	3
-	4
-	5
-	6
-	7
-	8
-	9
-	10
-	102
-	103
-	104
-	105
-	106
-	107
-	108
-	109
-	110
-	111
-	202
-	203
-	204
-	205
-	206
-	207
-	208
-	209
-	210
+# #
+# # FOR BACKGROUND
+# #
+# 	2
+# 	3
+# 	4
+# 	5
+# 	6
+# 	7
+# 	8
+# 	9
+# 	10
+# 	102
+# 	103
+# 	104
+# 	105
+# 	106
+# 	107
+# 	108
+# 	109
+# 	110
+# 	111
+# 	202
+# 	203
+# 	204
+# 	205
+# 	206
+# 	207
+# 	208
+# 	209
+# 	210
 )
