@@ -33,6 +33,9 @@ void HadronicWWCuts::Loop()
 //    fChain->GetEntry(jentry);       //read all branches
 //by  b_branchname->GetEntry(ientry); //read only this branch
    if (fChain == 0) return;
+   // Doing proton systematics
+   TRandom3 ransource;
+   bool DOPROTONSYSTEMATICS = true;
 
    // TString outputFolder = "signalSamples/";
    TString outputFolder = "dataRun2/";
@@ -51,6 +54,12 @@ void HadronicWWCuts::Loop()
 
    // Total event weight (PU + anything else)
    Float_t myweight = 1.0;
+
+   TH1F *hxold0 = new TH1F("xiold0","xiold",100,0,0.2);
+   TH1F *hxnew0 = new TH1F("xinew0","xinew",100,0,0.2);
+   TH1F *hxold1 = new TH1F("xiold1","xiold",100,0,0.2);
+   TH1F *hxnew1 = new TH1F("xinew1","xinew",100,0,0.2);
+
 
    // Pre-selection plots
    TH1F *hmjjdat = new TH1F("hmjjdat","hmjjdat",250,0,5000);
@@ -926,10 +935,12 @@ void HadronicWWCuts::Loop()
 			   int theshift1 = -1;
 			   int theshift2 = -1;
 			   int thearm = -1;
-
+                         
+                           float deltaxi = 0;
+                            
 			   float xishiftmag56 = 0;
 			   float xishiftmag45 = 0;
-
+ 
 			   /*
 			    * First loop over all protons to get good multi-RP candidates and apply eff. corrections to MC
 			    */
@@ -938,6 +949,7 @@ void HadronicWWCuts::Loop()
 			       if(proton_ismultirp->at(p) == 1)
 				 {
 				   thexi = proton_xi->at(p);
+
 				   thethetasty = proton_thy->at(p);
 				   thethetastx = proton_thx->at(p);
 				   thet = -1.0 * proton_t->at(p);
@@ -951,6 +963,11 @@ void HadronicWWCuts::Loop()
 				   theshift1 = proton_trackpixshift1->at(p);
 				   theshift2 = proton_trackpixshift2->at(nMultiRP);
 				   thearm = proton_arm->at(p);
+
+                                // SYSTEMATICS SMEARING
+                                if(DOPROTONSYSTEMATICS){ deltaxi = ransource.Gaus(0., getUncSigma(thearm, erastring, thexi)) ;
+                                                        thexi += deltaxi ; }
+
 				   nMultiRP++;
 				   
 				   // Apply all good proton cuts
@@ -2199,4 +2216,19 @@ if(samplenumber == 20)
 	     << "\t WW norm. region = " << npassnonblindnormregionww << std::endl
 	     << "\t ZZ norm. region = " << npassnonblindnormregionzz << std::endl;
  
+/*
+TCanvas can;
+can.Divide(2,1);
+can.cd(1);
+hxold0->Draw();
+hxnew0->SetLineColor(kRed);
+hxnew0->Draw("same");
+can.cd(2);
+hxold1->Draw();
+hxnew1->SetLineColor(kRed);
+hxnew1->Draw("same");
+can.SaveAs("can2016pre.pdf");
+*/
 }
+
+
