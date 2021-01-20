@@ -17,6 +17,8 @@
  */
 
 #include "aperture_param_v2.h"
+TFile* protsystfile = new TFile("reco_charactersitics_version1.root"); // proton systematics
+
 /*
  * Pixel sensor area fiducial cuts. Note that for now, only the tightest value of each era is used.
  */
@@ -344,3 +346,28 @@ bool TightMultiRPProton(Float_t trackx1=0.0, Float_t tracky1=0.0, Float_t trackx
   return passesall;
 }
 
+
+float getUncSigma(Int_t arm=0, TString era="", Float_t xi=0)
+{
+   TString period_conv="";
+   TString arm_conv="";
+   TString grname;
+
+  if(era == "2016preTS2")period_conv="2016_preTS2";
+  if(era == "2016postTS2")period_conv="2016_postTS2";
+  if(era == "2017preTS2")period_conv="2017_preTS2";
+  if(era == "2017postTS2")period_conv="2017_postTS2";
+  if(era == "2018")period_conv="2018_preTS1"; // TODO extend with other subperiods
+
+  if(arm == 0)arm_conv="/multi rp-0/";
+  if(arm == 1)arm_conv="/multi rp-1/";
+  grname = period_conv + arm_conv + "xi/g_systematics_vs_xi";
+
+  TGraphErrors* hs;
+  hs = (TGraphErrors*)protsystfile->Get(grname);
+  float sigma = hs->Eval(xi);
+
+  
+  return sigma;
+ 
+}
