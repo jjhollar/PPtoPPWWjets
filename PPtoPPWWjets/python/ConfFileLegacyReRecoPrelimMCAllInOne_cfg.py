@@ -65,20 +65,33 @@ UseMCProtons=True
 
 print "\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n"
 
+from Configuration.Eras.Modifier_ctpps_2016_cff import ctpps_2016
+from Configuration.Eras.Modifier_ctpps_2017_cff import ctpps_2017
+from Configuration.Eras.Modifier_ctpps_2018_cff import ctpps_2018
+from Configuration.ProcessModifiers.run2_miniAOD_UL_cff import run2_miniAOD_UL
+
 # load common code
 if MC == True and YEAR == 2016 and (ERA == "B" or ERA == "C" or ERA == "G"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2016,run2_miniAOD_UL)
    from Validation.CTPPS.simu_config.year_2016_preTS2_cff import *
 if MC == True and YEAR == 2016 and (ERA == "H"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2016,run2_miniAOD_UL)
    from Validation.CTPPS.simu_config.year_2016_postTS2_cff import *
 if MC == True and YEAR == 2017 and (ERA == "B" or ERA == "C" or ERA == "D"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2017,run2_miniAOD_UL)
    from Validation.CTPPS.simu_config.year_2017_preTS2_cff import *
 if MC == True and YEAR == 2017 and (ERA == "E" or ERA == "F"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2017,run2_miniAOD_UL)
    from Validation.CTPPS.simu_config.year_2017_postTS2_cff import *
-if MC == True and YEAR == 2018:
+if MC == True and YEAR == 2018 and (ERA == "A" or ERA == "B1"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2018,run2_miniAOD_UL)
    from Validation.CTPPS.simu_config.year_2018_cff import *
-
-from Configuration.ProcessModifiers.run2_miniAOD_UL_cff import run2_miniAOD_UL
-process = cms.Process('CTPPSTestAcceptance', era,run2_miniAOD_UL)
+if MC == True and YEAR == 2018 and (ERA == "B2" or ERA == "C" or ERA == "D1"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2018,run2_miniAOD_UL)
+   from Validation.CTPPS.simu_config.year_2018_cff import *
+if MC == True and YEAR == 2018 and (ERA == "D2"):
+   process = cms.Process('CTPPSTestAcceptance', ctpps_2018,run2_miniAOD_UL)
+   from Validation.CTPPS.simu_config.year_2018_cff import *
 
 if MC == True and YEAR == 2016 and (ERA == "B" or ERA == "C" or ERA == "G"):
    process.load("Validation.CTPPS.simu_config.year_2016_preTS2_cff")
@@ -88,8 +101,18 @@ if MC == True and YEAR == 2017 and (ERA == "B" or ERA == "C" or ERA == "D"):
    process.load("Validation.CTPPS.simu_config.year_2017_preTS2_cff")
 if MC == True and YEAR == 2017 and (ERA == "E" or ERA == "F"):
    process.load("Validation.CTPPS.simu_config.year_2017_postTS2_cff")
-if MC == True and YEAR == 2018:
+if MC == True and YEAR == 2018 and (ERA == "A" or ERA == "B1"):
    process.load("Validation.CTPPS.simu_config.year_2018_cff")
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.MisalignedFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_preTS1.xml"]
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.RealFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_preTS1.xml"]
+if MC == True and YEAR == 2018 and (ERA == "B2" or ERA == "C" or ERA == "D1"):
+   process.load("Validation.CTPPS.simu_config.year_2018_cff")
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.MisalignedFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_TS1_TS2.xml"]
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.RealFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_TS1_TS2.xml"]
+if MC == True and YEAR == 2018 and (ERA == "D2"):
+   process.load("Validation.CTPPS.simu_config.year_2018_cff")
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.MisalignedFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_postTS2.xml"]
+   process.ctppsRPAlignmentCorrectionsDataESSourceXML.RealFiles = ["PPtoPPWWjets/PPtoPPWWjets/python/PPS_2018_Alignments/2018_postTS2.xml"]
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
@@ -109,22 +132,34 @@ print "Signal sample file list: "
 print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 print "\n"
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS)),
-    skipEvents = cms.untracked.uint32(5200)
+    fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 )
 
 # add pre-mixing of recHits
+# remove the sub-era tag for 2018, to comply with the PU samples
+pu_ERA = ERA
+if len(ERA) == 2 and YEAR == 2018:
+  pu_ERA = ERA[0]
+
 from pileupSamples_cfi import *
 print "Mixing PU samples: "
-print "\n".join(pileupSamples(YEAR,ERA)[:3])
+print "\n".join(pileupSamples(YEAR,pu_ERA)[:3])
 print "...\n" 
 
 process.load("protonPreMix.protonPreMix.ctppsPreMixProducer_cfi")
-process.ctppsPreMixProducer.PUFilesList = cms.vstring(*pileupSamples(YEAR,ERA))
+process.ctppsPreMixProducer.PUFilesList = cms.vstring(*pileupSamples(YEAR,pu_ERA))
 process.ctppsPreMixProducer.Verbosity = 0
+import FWCore.PythonUtilities.LumiList as LumiList
+import FWCore.ParameterSet.Types as CfgTypes
+process.inputs = cms.PSet(
+  lumisToProcess = CfgTypes.untracked(CfgTypes.VLuminosityBlockRange())
+)
 
-# this is because we don't have strips in 2018 PU samples
-if YEAR==2018:
+# use JSON for 2018 PU in order to mix the right events with the right period
+if YEAR == 2018:
+  pu_jsonFile = "/eos/project-c/ctpps/Operations/DataExternalConditions/2018/CMSgolden_2RPGood_anyarms_Era"+ERA+".json"
+  process.ctppsPreMixProducer.lumisToProcess = LumiList.LumiList(filename = pu_jsonFile).getVLuminosityBlockRange()
+  print "\nUsing JSON file for PU: "+pu_jsonFile+"\n"
   process.ctppsPreMixProducer.includeStrips = False
 
 # rng service for premixing
@@ -389,15 +424,16 @@ process.demo.year = cms.int32(YEAR)
 process.demo.era = cms.string(ERA)
 
 process.maxEvents = cms.untracked.PSet(
-  # input = cms.untracked.int32(1000)
+  # input = cms.untracked.int32(20)
   input = cms.untracked.int32(-1)
 )
 
-# # reconstruction plotter (analysis example)
+# reconstruction plotter (analysis example)
 # process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
 #   tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
 #   tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP"),
-#   tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+#   # tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+#   tagRecoProtonsMultiRP = cms.InputTag("ppsEfficiencyProducer", "multiRP"),
 #   rpId_45_F = cms.uint32(23),
 #   rpId_45_N = cms.uint32(3),
 #   rpId_56_N = cms.uint32(103),
@@ -406,7 +442,7 @@ process.maxEvents = cms.untracked.PSet(
 #   association_cuts_45 = process.ctppsProtons.association_cuts_45,
 #   association_cuts_56 = process.ctppsProtons.association_cuts_56,
 
-#   outputFile = cms.string("output_protons.root")
+#   outputFile = cms.string(OUTPUTDIR+"output_protons.root")
 # )
 
 # processing path

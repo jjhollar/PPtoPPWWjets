@@ -380,7 +380,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunA_V19_DATA_L3Absolute_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunA_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
-   if(isMC==false && year==2018 && era == "B")
+   if(isMC==false && year==2018 && (era == "B1" || era == "B2"))
      {
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunB_V19_DATA_L2Relative_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunB_V19_DATA_L3Absolute_AK8PFchs.txt");
@@ -392,7 +392,7 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunC_V19_DATA_L3Absolute_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunC_V19_DATA_L2L3Residual_AK8PFchs.txt");
      }
-   if(isMC==false && year==2018 && era == "D")
+   if(isMC==false && year==2018 && (era == "D1" || era == "D2"))
      {
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunD_V19_DATA_L2Relative_AK8PFchs.txt");
        jecAK8PayloadNames_.push_back("JECAUTUMN18/Autumn18_RunD_V19_DATA_L3Absolute_AK8PFchs.txt");

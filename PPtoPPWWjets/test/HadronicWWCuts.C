@@ -35,11 +35,15 @@ void HadronicWWCuts::Loop()
    if (fChain == 0) return;
    // Doing proton systematics
    TRandom3 ransource;
-   bool DOPROTONSYSTEMATICS = true;
+   bool DOPROTONSYSTEMATICS = false;
 
-   // TString outputFolder = "signalSamples/";
-   TString outputFolder = "dataRun2/";
-   // TString outputFolder = "backgroundSamples/";
+   TString outputFolder = "signalSamples";
+   // TString outputFolder = "dataRun2";
+   // TString outputFolder = "backgroundSamples";
+   if(DOPROTONSYSTEMATICS)
+      outputFolder += "_protonSystematics";
+
+   outputFolder += "/";
 
    // RP ID's
    // 3   strips sector 45  -z, left

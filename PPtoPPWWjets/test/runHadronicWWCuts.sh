@@ -9,4 +9,3 @@ else
 	eval `scramv1 runtime -sh`
 	root -l -q "runHadronicWWCuts.C(${1})"
 fi
-

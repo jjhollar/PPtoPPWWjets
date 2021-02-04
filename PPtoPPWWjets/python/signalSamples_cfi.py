@@ -16,9 +16,11 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		"2017E" : 9062549689.996923447,
 		"2017F" : 1.3247273e+10,
 		"2018A" : 11663794301.404205322,
-		"2018B" : 6517624249.612241745,
+		"2018B1" : 6135903882.410737991,
+		"2018B2" : 381720367.201503396,
 		"2018C" : 6258246518.342632294,
-		"2018D" : 30496850186.283702850,
+		"2018D1" : 19998142938.951736450,
+		"2018D2" : 10498707247.331964493,
 	}
 
 	total_lumi = sum(lumi_weights.values())
@@ -548,4 +550,11 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 	eraTag = str(year)+era
 	sublist_low_index = (i_sublists-1) * (nFiles_for_era[eraTag] // n_sublists) + min(i_sublists-1, nFiles_for_era[eraTag] % n_sublists)
 	sublist_high_index = i_sublists * (nFiles_for_era[eraTag] // n_sublists) + min(i_sublists, nFiles_for_era[eraTag] % n_sublists)
-	return file_lists[eraTag][sublist_low_index:sublist_high_index]
+
+	to_be_removed = []
+	to_be_returned = file_lists[eraTag][sublist_low_index:sublist_high_index]
+	for file in to_be_removed:
+		if file in to_be_returned:
+			to_be_returned.remove(file)
+
+	return to_be_returned

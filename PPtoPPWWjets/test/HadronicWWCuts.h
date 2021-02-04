@@ -178,6 +178,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
 
+  TString mcNtuplesFolder = "/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets";
+  
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
   if (tree == 0) {
@@ -235,96 +237,96 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     // 2017 PreTS2
     // WW_A0W1e-6
     if(samplenumber == 20)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 21)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 22)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     // WW_A0W2e-6
     if(samplenumber == 23)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 24)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 25)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     // WW_A0W5e-6
     if(samplenumber == 26)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 27)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 28)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     // WW_ACW2e-5
     if(samplenumber == 29)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 30)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 31)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 32)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 33)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 34)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 35)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 36)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 37)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     // ZZ_A0Z-1e-5
     if(samplenumber == 40)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
     // ZZ_A0Z1e-5
     if(samplenumber == 41)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
     // ZZ_A0Z5e-5
     if(samplenumber == 42)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
     // ZZ_ACZ-1e-5
     if(samplenumber == 43)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
     // ZZ_ACZ1e-5
     if(samplenumber == 44)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
     // ZZ_ACZ5e-5
     if(samplenumber == 45)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
     // 2017 PostTS2
     // WW_A0W1e-6
     if(samplenumber == 50)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 51)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     // WW_A0W2e-6
     if(samplenumber == 52)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 53)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     // WW_A0W5e-6
     if(samplenumber == 54)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 55)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     // WW_ACW2e-5
     if(samplenumber == 56)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 57)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 58)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 59)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 60)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 61)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW8e-6_Part1of1.root");
 
     if(samplenumber == 101)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
@@ -352,64 +354,64 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     // 2016 PreTS2
     // WW_A0W1e-6
     if(samplenumber == 120)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 121)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 122)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     // WW_A0W2e-6
     if(samplenumber == 123)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 124)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 125)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     // WW_A0W5e-6
     if(samplenumber == 126)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 127)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 128)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     // WW_ACW2e-5
     if(samplenumber == 129)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 130)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 131)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     // WW_ACW5e-6    
     if(samplenumber == 132)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 133)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 134)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     // WW_ACW8e-6
     if(samplenumber == 135)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 136)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 137)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     // ZZ_A0Z-1e-5
     if(samplenumber == 140)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
     // ZZ_A0Z1e-5
     if(samplenumber == 141)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
     // ZZ_A0Z5e-5
     if(samplenumber == 142)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
     // ZZ_ACZ-1e-5
     if(samplenumber == 143)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
     // ZZ_ACZ1e-5
     if(samplenumber == 144)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
     // ZZ_ACZ5e-5
     if(samplenumber == 145)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
     if(samplenumber == 201)
       f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
@@ -434,81 +436,81 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
     // WW_A0W1e-6
     if(samplenumber == 220)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 221)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 222)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     if(samplenumber == 223)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     // WW_A0W2e-6
     if(samplenumber == 224)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 225)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 226)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     if(samplenumber == 227)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
     // WW_A0W5e-6
     if(samplenumber == 228)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 229)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 230)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     if(samplenumber == 231)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
     // WW_ACW2e-5
     if(samplenumber == 232)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 233)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 234)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     if(samplenumber == 235)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 236)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 237)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 238)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     if(samplenumber == 239)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
     // WW_ACW5e-6
     if(samplenumber == 240)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 241)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 242)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     if(samplenumber == 243)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
     // ZZ_A0Z-1e-5
     if(samplenumber == 250)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
     // ZZ_A0Z1e-5
     if(samplenumber == 251)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
     // ZZ_A0Z5e-5
     if(samplenumber == 252)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
     // ZZ_ACZ-1e-5
     if(samplenumber == 253)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
     // ZZ_ACZ1e-5
     if(samplenumber == 254)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
     // ZZ_ACZ5e-5
     if(samplenumber == 255)
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
     if(samplenumber == 999)
-      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-      f = (TFile*)gROOT->GetListOfFiles()->FindObject("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      //      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+      f = (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
 
     if (!f || !f->IsOpen()) {
       if(samplenumber == -1)
@@ -569,96 +571,96 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       // 2017 PreTS2
       // WW_A0W1e-6
       if(samplenumber == 20)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 21)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 22)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       // WW_A0W2e-6
       if(samplenumber == 23)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 24)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 25)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       // WW_A0W5e-6
       if(samplenumber == 26)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 27)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 28)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       // WW_ACW2e-5
       if(samplenumber == 29)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 30)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 31)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 32)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 33)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 34)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 35)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 36)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 37)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       // ZZ_A0Z-1e-5
       if(samplenumber == 40)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
       // ZZ_A0Z1e-5
       if(samplenumber == 41)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if(samplenumber == 42)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
       // ZZ_ACZ-1e-5
       if(samplenumber == 43)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
       // ZZ_ACZ1e-5
       if(samplenumber == 44)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if(samplenumber == 45)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
       // 2017 PostTS2
       // WW_A0W1e-6
       if(samplenumber == 50)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 51)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       // WW_A0W2e-6
       if(samplenumber == 52)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 53)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       // WW_A0W5e-6
       if(samplenumber == 54)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 55)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       // WW_ACW2e-5
       if(samplenumber == 56)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 57)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 58)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 59)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 60)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/E/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/E/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 61)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/F/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2017/F/ExclWWjets_WW_ACW8e-6_Part1of1.root");
 
 
       // 2016 BG samples
@@ -691,64 +693,64 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
       // 2016 PreTS2
       // WW_A0W1e-6
       if(samplenumber == 120)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 121)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 122)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       // WW_A0W2e-6
       if(samplenumber == 123)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 124)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 125)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       // WW_A0W5e-6
       if(samplenumber == 126)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 127)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 128)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       // WW_ACW2e-5
       if(samplenumber == 129)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 130)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 131)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       // WW_ACW5e-6    
       if(samplenumber == 132)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 133)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 134)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       // WW_ACW8e-6
       if(samplenumber == 135)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 136)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 137)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/G/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/G/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       // ZZ_A0Z-1e-5
       if(samplenumber == 140)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
       // ZZ_A0Z1e-5
       if(samplenumber == 141)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if(samplenumber == 142)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
       // ZZ_ACZ-1e-5
       if(samplenumber == 143)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
       // ZZ_ACZ1e-5
       if(samplenumber == 144)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if(samplenumber == 145)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
     
       // 2016 BG samples
@@ -779,81 +781,81 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
 
       // WW_A0W1e-6
       if(samplenumber == 220)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 221)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 222)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       if(samplenumber == 223)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
       // WW_A0W2e-6
       if(samplenumber == 224)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 225)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 226)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       if(samplenumber == 227)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
       // WW_A0W5e-6
       if(samplenumber == 228)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 229)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 230)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       if(samplenumber == 231)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
       // WW_ACW2e-5
       if(samplenumber == 232)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 233)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 234)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       if(samplenumber == 235)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 236)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 237)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 238)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       if(samplenumber == 239)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
       // WW_ACW5e-6
       if(samplenumber == 240)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 241)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 242)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       if(samplenumber == 243)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
       // ZZ_A0Z-1e-5
       if(samplenumber == 250)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
       // ZZ_A0Z1e-5
       if(samplenumber == 251)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if(samplenumber == 252)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
       // ZZ_ACZ-1e-5
       if(samplenumber == 253)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
       // ZZ_ACZ1e-5
       if(samplenumber == 254)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if(samplenumber == 255)
-        f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+        f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
       if(samplenumber == 999)
-	//	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-	//	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-	f = new TFile("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+	//	f = new TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+	//	f = new TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+	f = new TFile(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
 
     }
 
@@ -985,9 +987,9 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
     //   dir = (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root:/demo");
 
     // if(samplenumber == 999)
-    //   //      dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
-    //   //      dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
-    //   dir = (TDirectory*)f->Get("/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+    //   //      dir = (TDirectory*)f->Get(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+    //   //      dir = (TDirectory*)f->Get(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+    //   dir = (TDirectory*)f->Get(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
 
     dir->GetObject("ntp1",tree);
 

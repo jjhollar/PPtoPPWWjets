@@ -7,6 +7,7 @@
 
 void ULPlotStackTest2018(Int_t var = 1)
 {
+  gStyle->SetOptTitle(0);
   // 2018
   Float_t lumi = 12.103+6.781+6.318+27.669;
 
@@ -125,9 +126,9 @@ void ULPlotStackTest2018(Int_t var = 1)
   if(var == 36)
     {hist = "htau212antitauww"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauww";}
   if(var == 37)
-    {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww";}
+    {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 38)
-    {hist = "hmassvvantiprunednarrowww"; thetitle = "m(WW) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowww";}  
+    {hist = "hmassvvantiprunednarrowww"; thetitle = "m(WW) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowww"; rangelo = 1000.0; rangehi = 3000.0;}  
 
   // ZZ plots
   if(var == 58)
@@ -157,9 +158,9 @@ void ULPlotStackTest2018(Int_t var = 1)
   if(var == 70)
     {hist = "htau212antitauzz"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauzz";}
   if(var == 71)
-    {hist = "hmassvvantiprunedzz"; thetitle = "m(ZZ), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedzz";}
+    {hist = "hmassvvantiprunedzz"; thetitle = "m(ZZ), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedzz"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 72)
-    {hist = "hmassvvantiprunednarrowzz"; thetitle = "m(ZZ) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowzz";}
+    {hist = "hmassvvantiprunednarrowzz"; thetitle = "m(ZZ) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowzz"; rangelo = 1000.0; rangehi = 3000.0;}
 
   if ((var >= 29 && var <= 58) || var == 22 || var == 23 || var == 24 ||
       (var >= 63) || var == 58 || var == 59 || var == 60)
@@ -269,7 +270,7 @@ void ULPlotStackTest2018(Int_t var = 1)
       // if(var == 25 || var == 26) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
       if((var > 20 && var < 25) || (var > 57 && var < 61)) {rebinfactor = 10;}
-      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 63 || var == 67 || var == 68)
+      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 63 || var == 64 || var == 67 || var == 68)
         rebinfactor = 1;
       h2->Rebin(rebinfactor); 
       h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor);
@@ -494,7 +495,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   h7->SetFillColor(kOrange+1);
   h7->Draw("histsame");
 
-  h100->SetMarkerStyle(20); h100->SetLineWidth(3);
+  h100->SetMarkerStyle(20); h100->SetLineWidth(3); h100->SetLineColor(kBlack);
   h100->Draw("esame");
 
   // Signal MC                                                                                                                                                                        
@@ -575,6 +576,7 @@ void ULPlotStackTest2018(Int_t var = 1)
   h1000->SetStats(0);
   h1000->SetTitle(thetitle);
   h1000->SetXTitle(thetitle);
+  h1000->SetMarkerStyle(20); h1000->SetLineWidth(3); h1000->SetLineColor(kBlack);
   h1000->Draw("esame");
 
   TLine *l1;
