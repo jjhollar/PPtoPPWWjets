@@ -36,6 +36,8 @@ void HadronicWWCuts::Loop()
    // Doing proton systematics
    TRandom3 ransource;
    bool DOPROTONSYSTEMATICS = false;
+   bool DOJECSYSTEMATICSUP = false;
+   bool DOJECSYSTEMATICSDOWN = false;
 
    TString outputFolder = "signalSamples";
    // TString outputFolder = "dataRun2";
@@ -348,6 +350,38 @@ void HadronicWWCuts::Loop()
    Float_t npassantimasssigregionzz = 0;
    Float_t npassantimassnarrowsigregionzz = 0;
 
+   // JEC systematics                                                                                                                                                 
+   JetCorrectionUncertainty *jectotal;
+   // For MC
+   if(samplenumber > 0 && samplenumber <= 100)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017_V32_MC_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber > 100 && samplenumber <= 200)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2016/Summer16_07Aug2017_V11_MC_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber > 200 && samplenumber <= 300)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JECAUTUMN18/Autumn18_V19_MC_UncertaintySources_AK8PFchs.txt", "Total")));
+   // For Data
+   if(samplenumber == -1)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017B_V32_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -2)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017C_V32_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -3)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017D_V32_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -4)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017E_V32_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -5)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2017/Fall17_17Nov2017F_V32_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -6 || samplenumber == -7)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2016/Summer16_07Aug2017BCD_V11_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -8 || samplenumber == -9)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JEC2016/Summer16_07Aug2017GH_V11_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -10)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JECAUTUMN18/Autumn18_RunA_V19_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -11)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JECAUTUMN18/Autumn18_RunB_V19_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -12)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JECAUTUMN18/Autumn18_RunC_V19_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
+   if(samplenumber == -13)
+     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("../python/JECAUTUMN18/Autumn18_RunD_V19_DATA_UncertaintySources_AK8PFchs.txt", "Total")));
 
    TString outtextfile = outputFolder+"MC_EventsForMixing.txt";
 
@@ -646,6 +680,7 @@ void HadronicWWCuts::Loop()
      //     erastring = "2018";
      //     erastring = "2017preTS2";
 
+   // Proton efficiencies
    PPSProtonEfficiency eff;
 
    Long64_t nbytes = 0, nb = 0;
@@ -792,6 +827,29 @@ void HadronicWWCuts::Loop()
 	   // We don't have 2 jets - skip this event                                                                                                                                        
 	   if(ptjet1 == 0 || ptjet2 == 0)
 	     continue;
+
+	   // JEC systematics
+	   if(DOJECSYSTEMATICSUP || DOJECSYSTEMATICSDOWN)
+	     {
+	       float jecscale1 = 0.0;
+	       float jecscale2 = 0.0;
+	       jectotal->setJetPt(ptjet1);
+	       jectotal->setJetEta(etajet1);
+	       if(DOJECSYSTEMATICSUP)
+		 jecscale1 = (1.0 + jectotal->getUncertainty(true));
+	       if(DOJECSYSTEMATICSDOWN)
+		 jecscale1 = (1.0 - jectotal->getUncertainty(true));
+               jectotal->setJetPt(ptjet2);
+               jectotal->setJetEta(etajet2);
+	       if(DOJECSYSTEMATICSUP)
+		 jecscale2 = (1.0 + jectotal->getUncertainty(true));
+	       if(DOJECSYSTEMATICSDOWN)
+                 jecscale2 = (1.0 - jectotal->getUncertainty(true));
+
+	       ptjet1*=jecscale1; etajet1*=jecscale1; phijet1*=jecscale1; ejet1*=jecscale1;
+               ptjet2*=jecscale2; etajet2*=jecscale2; phijet2*=jecscale2; ejet2*=jecscale2;
+	     }
+
 
 	   Float_t xijets1 = (1.0/13000.0)*(ptjet1*TMath::Exp(etajet1) + ptjet2*TMath::Exp(etajet2));
 	   Float_t xijets2 = (1.0/13000.0)*(ptjet1*TMath::Exp(-1*etajet1) + ptjet2*TMath::Exp(-1*etajet2));

@@ -21,6 +21,8 @@
 #include "PPSProtonEfficiency.h"
 #include "PPSProtonEfficiency.C"
 
+//gROOT->ProcessLine(".L ../../../jecsys/CondFormats/JetMETObjects/src/JetCorrectionUncertainty_cc.so");
+
 class HadronicWWCuts {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
