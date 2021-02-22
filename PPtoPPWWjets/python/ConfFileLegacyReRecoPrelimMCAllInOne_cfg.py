@@ -4,35 +4,35 @@ import sys
 import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing ()
 options.register('year',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.int,
-                "year")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.int,
+  "year")
 options.register('era',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.string,
-                "CMS era")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.string,
+  "CMS era")
 options.register('sampleTag',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.string,
-                "Tag of the sample to analyze")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.string,
+  "Tag of the sample to analyze")
 options.register('outputDir',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.string,
-                "Output directory")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.string,
+  "Output directory")
 options.register('partNumber',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.int,
-                "Number of the part")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.int,
+  "Number of the part")
 options.register('nParts',
-                '',
-                VarParsing.VarParsing.multiplicity.singleton,
-                VarParsing.VarParsing.varType.int,
-                "Number of parts")
+  '',
+  VarParsing.VarParsing.multiplicity.singleton,
+  VarParsing.VarParsing.varType.int,
+  "Number of parts")
 options.partNumber = 0
 options.nParts = 0
 options.parseArguments() 
@@ -127,6 +127,20 @@ if MC == True and YEAR == 2017:
 if MC == True and YEAR == 2018:
    process.GlobalTag.globaltag ='102X_upgrade2018_realistic_v20' # this one is for Autumn18 MC campaign
 
+# load the right optical functions with python acrobatics
+if MC == True and YEAR == 2017:
+  process.ctppsOpticalFunctionsESSource.configuration[0].opticalFunctions = cms.VPSet(
+    cms.PSet( xangle = cms.double(120), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2017/version5tim/120urad.root") ),
+    cms.PSet( xangle = cms.double(130), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2017/version5tim/130urad.root") ),
+    cms.PSet( xangle = cms.double(140), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2017/version5tim/140urad.root") )
+  )
+if MC == True and YEAR == 2018:
+  process.ctppsOpticalFunctionsESSource.configuration[0].opticalFunctions = cms.VPSet(
+    cms.PSet( xangle = cms.double(120), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2018/version6/120urad.root") ),
+    cms.PSet( xangle = cms.double(130), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2018/version6/130urad.root") ),
+    cms.PSet( xangle = cms.double(140), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2018/version6/140urad.root") )
+  )
+
 from signalSamples_cfi import *
 print "Signal sample file list: "
 print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
@@ -149,17 +163,13 @@ print "...\n"
 process.load("protonPreMix.protonPreMix.ctppsPreMixProducer_cfi")
 process.ctppsPreMixProducer.PUFilesList = cms.vstring(*pileupSamples(YEAR,pu_ERA))
 process.ctppsPreMixProducer.Verbosity = 0
-import FWCore.PythonUtilities.LumiList as LumiList
-import FWCore.ParameterSet.Types as CfgTypes
-process.inputs = cms.PSet(
-  lumisToProcess = CfgTypes.untracked(CfgTypes.VLuminosityBlockRange())
-)
 
+import FWCore.PythonUtilities.LumiList as LumiList
 # use JSON for 2018 PU in order to mix the right events with the right period
-if YEAR == 2018:
+if MC == True and YEAR == 2018:
   pu_jsonFile = "/eos/project-c/ctpps/Operations/DataExternalConditions/2018/CMSgolden_2RPGood_anyarms_Era"+ERA+".json"
   process.ctppsPreMixProducer.lumisToProcess = LumiList.LumiList(filename = pu_jsonFile).getVLuminosityBlockRange()
-  print "\nUsing JSON file for PU: "+pu_jsonFile+"\n"
+  print "Using JSON file for PU: "+pu_jsonFile+"\n"
   process.ctppsPreMixProducer.includeStrips = False
 
 # rng service for premixing
@@ -168,10 +178,10 @@ process.RandomNumberGeneratorService.ctppsPreMixProducer = cms.PSet(initialSeed 
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
-            optionalPSet = cms.untracked.bool(True),
-            reportEvery = cms.untracked.int32(100),
-            limit = cms.untracked.int32(2000)
-        )
+  optionalPSet = cms.untracked.bool(True),
+  reportEvery = cms.untracked.int32(100),
+  limit = cms.untracked.int32(2000)
+)
 
 process.MessageLogger.destinations.append('logFile')
 process.MessageLogger.logFile = cms.untracked.PSet(
@@ -199,7 +209,7 @@ process.MessageLogger.logFile = cms.untracked.PSet(
     limit = cms.untracked.int32(10000000)
     ),
   threshold = cms.untracked.string('INFO')
-  )
+)
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
@@ -212,20 +222,20 @@ process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 from JMEAnalysis.JetToolbox.jetToolbox_cff import *
 
 jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
-            PUMethod='CHS',
-            addPruning=True, addSoftDrop=False ,           # add basic grooming                                                                                            
-            addTrimming=False, addFiltering=False,
-            addPrunedSubjets=False, addSoftDropSubjets=False,
-            addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                                                       
-            #miniAOD = MINIAOD,                                                                                                                                            
-            dataTier = 'AOD',
-            runOnMC=MC,
-            bTagDiscriminators = None,  # blank means default list of discriminators, None means none                                                                      
-            bTagInfos = None,
-            subjetBTagDiscriminators = None,
-            subjetBTagInfos = None,
-            # added L1FastJet on top of the example config file                                                                                                            
-            JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual']
+  PUMethod='CHS',
+  addPruning=True, addSoftDrop=False ,           # add basic grooming                                                                                            
+  addTrimming=False, addFiltering=False,
+  addPrunedSubjets=False, addSoftDropSubjets=False,
+  addNsub=True, maxTau=4,                       # add Nsubjettiness tau1, tau2, tau3, tau4                                                                       
+  #miniAOD = MINIAOD,                                                                                                                                            
+  dataTier = 'AOD',
+  runOnMC=MC,
+  bTagDiscriminators = None,  # blank means default list of discriminators, None means none                                                                      
+  bTagInfos = None,
+  subjetBTagDiscriminators = None,
+  subjetBTagInfos = None,
+  # added L1FastJet on top of the example config file                                                                                                            
+  JETCorrPayload = 'AK8PFchs', JETCorrLevels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual']
 )
 
 
@@ -233,10 +243,10 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'noOutput',
 ###  PT CUT 
 #################################
 process.goodJets = cms.EDFilter("CandViewSelector",
-    src = cms.InputTag("selectedPatJetsAK8PFCHS"),
-    cut = cms.string("pt > 30.0"),
-    filter = cms.bool(True)
-  )
+  src = cms.InputTag("selectedPatJetsAK8PFCHS"),
+  cut = cms.string("pt > 30.0"),
+  filter = cms.bool(True)
+)
 
 
 #################################                                                                                                                                                   
@@ -245,33 +255,33 @@ process.goodJets = cms.EDFilter("CandViewSelector",
  
 from RecoMET.METProducers.METSigParams_cfi import *
 process.slimmedAK8JetsSmeared = cms.EDProducer('SmearedPATJetProducer',
-        src = cms.InputTag("slimmedJetsAK8JetId"),
-                                               enabled = cms.bool(True),
-        rho = cms.InputTag("fixedGridRhoFastjetAll"),
-        algo = cms.string('AK8PFchs'),
-        algopt = cms.string('AK8PFchs_pt'),
-        genJets = cms.InputTag('ak8GenJets'),
-                                               #        genJets = cms.InputTag('slimmedGenJetsAK8'),                                                                                
-        dRMax = cms.double(0.4),
-        dPtMaxFactor = cms.double(3),
-        seed = cms.uint32(37428479),
-        debug = cms.untracked.bool(False),
-    # Systematic variation                                                                                                                                                 
-    # 0: Nominal                                                                                                                                                           
-    # -1: -1 sigma (down variation)                                                                                                                                        
-    # 1: +1 sigma (up variation)                                                                                                                                           
-    variation = cms.int32(0)  # If not specified, default to 0                                                                                                             
-        )
+  src = cms.InputTag("slimmedJetsAK8JetId"),
+                                         enabled = cms.bool(True),
+  rho = cms.InputTag("fixedGridRhoFastjetAll"),
+  algo = cms.string('AK8PFchs'),
+  algopt = cms.string('AK8PFchs_pt'),
+  genJets = cms.InputTag('ak8GenJets'),
+  # genJets = cms.InputTag('slimmedGenJetsAK8'),                                                                                
+  dRMax = cms.double(0.4),
+  dPtMaxFactor = cms.double(3),
+  seed = cms.uint32(37428479),
+  debug = cms.untracked.bool(False),
+  # Systematic variation                                                                                                                                                 
+  # 0: Nominal                                                                                                                                                           
+  # -1: -1 sigma (down variation)                                                                                                                                        
+  # 1: +1 sigma (up variation)                                                                                                                                           
+  variation = cms.int32(0)  # If not specified, default to 0                                                                                                             
+)
 
 #################################                                                                                                                                          
 ###  JET ID  ###                                                                                                                                                           
 #################################                                                                                                                                          
 from PhysicsTools.SelectorUtils.pfJetIDSelector_cfi import pfJetIDSelector
 process.slimmedJetsAK8JetId = cms.EDFilter("PFJetIDSelectionFunctorFilter",
-                                           filterParams = pfJetIDSelector.clone(),
-                                           src = cms.InputTag("selectedPatJetsAK8PFCHS"),
-                                           filter = cms.bool(True)
-                                           )
+  filterParams = pfJetIDSelector.clone(),
+  src = cms.InputTag("selectedPatJetsAK8PFCHS"),
+  filter = cms.bool(True)
+)
 
 
 #########################                                                                                                                                                  
@@ -329,9 +339,9 @@ process.esPreferLHCInfo = cms.ESPrefer("CTPPSLHCInfoRandomXangleESSource", "ctpp
 
 process.beamDivergenceVtxGenerator.src = cms.InputTag("")
 process.beamDivergenceVtxGenerator.srcGenParticle = cms.VInputTag(
-    # Don't propagate PU protons
-    # cms.InputTag("genPUProtons","genPUProtons")
-    cms.InputTag("genParticles")
+  # Don't propagate PU protons
+  # cms.InputTag("genPUProtons","genPUProtons")
+  cms.InputTag("genParticles")
 )
 
 
@@ -386,32 +396,31 @@ print ""
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 
 if YEAR == 2016:
-    process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
-    process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+  process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2016_cfi")
+  process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 if YEAR == 2017:
-    process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
-    process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+  process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter_cfi")
+  process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 if YEAR == 2018:
-    process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2018_cfi")
-    process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
+  process.load("PPtoPPWWjets.PPtoPPWWjets.HLTFilter2018_cfi")
+  process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
 
 
 if MC == True and YEAR == 2016:
-    process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
-    process.demo.mcPileupFile = cms.string("PUHistos_mc_2016.root")
+  process.demo.dataPileupFile = cms.string("PUHistos_data_2016.root")
+  process.demo.mcPileupFile = cms.string("PUHistos_mc_2016.root")
 if MC == True and YEAR == 2017:
-    process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
-    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017.root")
-    # Special cases for buggy datasets in 2017 MC                                                                                                
-   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt300to470.root")
-   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt600to800.root")
-   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt1000to1400.root")                                                         
-   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
-   #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
+  process.demo.dataPileupFile = cms.string("PUHistos_data_2017.root")
+  process.demo.mcPileupFile = cms.string("PUHistos_mc_2017.root")
+  # Special cases for buggy datasets in 2017 MC                                                                                                
+  #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt300to470.root")
+  #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt600to800.root")
+  #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_QCDPt1000to1400.root")                                                         
+  #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Wjets.root")
+  #    process.demo.mcPileupFile = cms.string("PUHistos_mc_2017_Zjets.root")     
 if MC == True and YEAR == 2018:
-    process.demo.dataPileupFile = cms.string("PUHistos_data_2018.root")
-    process.demo.mcPileupFile = cms.string("PUHistos_mc_2018.root")
-
+  process.demo.dataPileupFile = cms.string("PUHistos_data_2018.root")
+  process.demo.mcPileupFile = cms.string("PUHistos_mc_2018.root")
 
 process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
 process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
@@ -447,18 +456,18 @@ process.maxEvents = cms.untracked.PSet(
 
 # processing path
 process.p = cms.Path(
-    process.hltFilter
-    * process.beamDivergenceVtxGenerator
-    * process.ctppsDirectProtonSimulation
-    * process.ctppsPreMixProducer
-    * process.reco_local
-    * process.ctppsProtons
-    * process.ppsEfficiencyProducer
+  process.hltFilter
+  * process.beamDivergenceVtxGenerator
+  * process.ctppsDirectProtonSimulation
+  * process.ctppsPreMixProducer
+  * process.reco_local
+  * process.ctppsProtons
+  * process.ppsEfficiencyProducer
 
-    # * process.ctppsProtonReconstructionPlotter
+  # * process.ctppsProtonReconstructionPlotter
 
-    * process.genParticlesForJetsNoNu 
-    * process.goodOfflinePrimaryVertices  
-    * process.slimmedJetsAK8JetId 
-    * process.demo
+  * process.genParticlesForJetsNoNu 
+  * process.goodOfflinePrimaryVertices  
+  * process.slimmedJetsAK8JetId 
+  * process.demo
 )

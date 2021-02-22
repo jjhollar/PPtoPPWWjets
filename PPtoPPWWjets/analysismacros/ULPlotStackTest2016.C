@@ -7,6 +7,7 @@
 
 void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 {
+  TString outplotdir = "validationplots/";
   gStyle->SetOptTitle(0);
 
   // pre-TS2
@@ -626,7 +627,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   CMS_lumi((TPad*)c1->GetPad(1),0,0,"2016, L = 10.0 fb^{-1}");
 
   c1->Update();
-  TString outplotname = "validationplots2016BCG_ntupleULReMiniv4final_" + filetitle + ".pdf";
+  TString outplotname = outplotdir+"validationplots2016BCG_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
 
   if (saveToRootFile){

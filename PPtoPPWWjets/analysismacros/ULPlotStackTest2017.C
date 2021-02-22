@@ -6,6 +6,7 @@
 
 void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
 {
+  TString outplotdir = "validationplots/";
   gStyle->SetOptTitle(0);
   //  Float_t lumi = 2.367+8.681+4.143+9.062+13.242;
   // pre-TS2
@@ -645,7 +646,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   CMS_lumi((TPad*)c1->GetPad(1),0,0,"2017, L = 37.2 fb^{-1}");
 
   c1->Update();
-  TString outplotname = "validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".pdf";
+  TString outplotname = outplotdir+"validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
   
   if (saveToRootFile){

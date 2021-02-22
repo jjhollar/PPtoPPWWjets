@@ -7,6 +7,7 @@
 
 void ULPlotStackTest2018(Int_t var = 1)
 {
+  TString outplotdir = "validationplots/";
   gStyle->SetOptTitle(0);
   // 2018
   Float_t lumi = 12.103+6.781+6.318+27.669;
@@ -611,7 +612,7 @@ void ULPlotStackTest2018(Int_t var = 1)
 
   CMS_lumi((TPad*)c1->GetPad(1),0,0,"2018, L = 52.9 fb^{-1}");
 
-  TString outplotname = "validationplots2018ABCD_ntupleULReMiniv4final_" + filetitle + ".pdf";
+  TString outplotname = outplotdir+"validationplots2018ABCD_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
 
   // Signal MC only
