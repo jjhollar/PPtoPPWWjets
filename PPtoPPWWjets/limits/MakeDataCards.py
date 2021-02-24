@@ -29,7 +29,7 @@ def main(argv):
 def makecard(channel, coupling):
     linenum = 0
 
-    infile = "PPtoPPWWjets_MC_Results.csv"
+    infile = "PPtoPPWWjets_MC_Results_v3.csv"
     infilehandle = open(infile)
     lines = infilehandle.readlines()
 
@@ -41,7 +41,7 @@ def makecard(channel, coupling):
     outfilehandle.write("# Counting experiment with multiple channels\n")
     outfilehandle.write("imax 6  number of channels\n")
     outfilehandle.write("jmax 1  number of processes-1\n")
-    outfilehandle.write("kmax 5  number of nuisance parameters (sources of systematical uncertainties)\n")
+    outfilehandle.write("kmax 7  number of nuisance parameters (sources of systematical uncertainties)\n")
     outfilehandle.write("------------\n")
     outfilehandle.write("# three channels (2016, 2017, 2018); 1 observed event in the first, 0 in the second\n")
     outfilehandle.write("bin            y2016ww        y2017ww    y2018ww    y2016zz  y2017zz  y2018zz\n")
@@ -57,6 +57,8 @@ def makecard(channel, coupling):
 
     signalsvector = [None] * 12
     staterrorsvector = [None] * 12
+    xiscale = [None] * 12
+    jecscale = [None] * 12
 
     # Hardcoded for now - backgrounds and stat. uncertainties from the anti-acoplanarity SB
     # Order of regions is 2016ww, 2017ww, 2018ww, 2016zz, 2017zz, 2018zz
@@ -69,14 +71,32 @@ def makecard(channel, coupling):
     staterrorsvector[9] = "-"
     staterrorsvector[11] = "-"
 
+    xiscale[1] = "-"
+    xiscale[3] = "-"
+    xiscale[5] = "-"
+    xiscale[7] = "-"
+    xiscale[9] = "-"
+    xiscale[11] = "-"
+
+    jecscale[1] = "-"
+    jecscale[3] = "-"
+    jecscale[5] = "-"
+    jecscale[7] = "-"
+    jecscale[9] = "-"
+    jecscale[11] = "-"
+
+
     # Proton efficiency systematics, for signal
-    efferrs = [1.141,"-",1.141,"-",1.0374,"-",1.0374,"-",1.0302,"-",1.0302,"-"]
+    efferrs = [1.141,"-",1.141,"-",1.0396,"-",1.0396,"-",1.0302,"-",1.0302,"-"]
 
     # Background model errors - difference between acoplanarity and mass sidebands
     bkgshapeerrs = ["-",1.25,"-",1.19,"-",1.10,"-",1.70,"-",1.50,"-",1.27]
     
     # Luminosity - applied to non-data driven yields (signal MC)
     lumis = [1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-"]
+
+    # xi scale systematics - temporary placeholder of 30% on signal MC
+    #    xiscale = [1.30,"-",1.30,"-",1.30,"-",1.30,"-",1.30,"-",1.30,"-"]
 
     signalsvector[1] = bgs[0]
     signalsvector[3] = bgs[1]
@@ -99,22 +119,44 @@ def makecard(channel, coupling):
                 zzexpect = tokens[12]
                 wwerror = tokens[13].rstrip()
                 zzerror = tokens[14].rstrip()
+                wwprotxierr = tokens[21].rstrip()
+                zzprotxierr = tokens[22].rstrip()
+                wwjecuperr = tokens[23].rstrip()
+                wwjecdownerr = tokens[25].rstrip()
+                zzjecuperr = tokens[24].rstrip()
+                zzjecdownerr = tokens[26].rstrip()
+
 
                 if(year == "2016"):
                     signalsvector[0] = round(float(wwexpect),3)
                     signalsvector[6] = round(float(zzexpect),3)
                     staterrorsvector[0] = round(float(wwerror),3)
                     staterrorsvector[6] = round(float(zzerror),3)
+                    xiscale[0] = round(float(wwprotxierr),3)
+                    xiscale[6] = round(float(zzprotxierr),3)
+                    jecscale[0] = round(max(float(wwjecuperr),float(wwjecdownerr)),3)
+                    jecscale[6] = round(max(float(zzjecuperr),float(zzjecdownerr)),3)
+
+
                 if(year == "2017"):
                     signalsvector[2] = round(float(wwexpect),3)
                     signalsvector[8] = round(float(zzexpect),3)
                     staterrorsvector[2] = round(float(wwerror),3)
                     staterrorsvector[8] = round(float(zzerror),3)
+                    xiscale[2] = round(float(wwprotxierr),3)
+                    xiscale[8] = round(float(zzprotxierr),3)
+                    jecscale[2] = round(max(float(wwjecuperr),float(wwjecdownerr)),3)
+                    jecscale[8] = round(max(float(zzjecuperr),float(zzjecdownerr)),3)
+
                 if(year == "2018"):
                     signalsvector[4] = round(float(wwexpect),3)
                     signalsvector[10] = round(float(zzexpect),3)
                     staterrorsvector[4] = round(float(wwerror),3)
                     staterrorsvector[10] = round(float(zzerror),3)
+                    xiscale[4] = round(float(wwprotxierr),3)
+                    xiscale[10] = round(float(zzprotxierr),3)
+                    jecscale[4] = round(max(float(wwjecuperr),float(wwjecdownerr)),3)
+                    jecscale[10] = round(max(float(zzjecuperr),float(zzjecdownerr)),3)
 
     outfilehandle.write("rate    ",)
     for entry in signalsvector:
@@ -137,6 +179,18 @@ def makecard(channel, coupling):
     outfilehandle.write("signal lnN  ",)
     for lumierror in lumis:
         outfilehandle.write(str(lumierror) + " ",)
+    outfilehandle.write("\n")
+
+    # Signal xi scale systematics
+    outfilehandle.write("signal lnN  ",)
+    for xiscaleerr in xiscale:
+        outfilehandle.write(str(xiscaleerr)  + " ",)
+    outfilehandle.write("\n")
+
+    # Signal JEC systematics
+    outfilehandle.write("signal lnN  ",)
+    for jecscaleerr in jecscale:
+        outfilehandle.write(str(jecscaleerr)  + " ",)
     outfilehandle.write("\n")
 
     # Background systematics - statistical error on sidebands

@@ -17,10 +17,10 @@ void PlotLimitsFinalReMiniAOD()
 
   Double_t la0w1, la0w2, la0w3, laCw1, laCw2, laCw3, la0z1, la0z2, laCz1, laCz2;
   TTree *ta0w1 = (TTree *)fa0w1->Get("limit");
-  TTree *ta0w2 = (TTree *)fa0w2->Get("limit");
+  //  TTree *ta0w2 = (TTree *)fa0w2->Get("limit");
   TTree *ta0w3 = (TTree *)fa0w3->Get("limit");
   TTree *taCw1 = (TTree *)faCw1->Get("limit");
-  TTree *taCw2 = (TTree *)faCw2->Get("limit");
+  //  TTree *taCw2 = (TTree *)faCw2->Get("limit");
   TTree *taCw3 = (TTree *)faCw3->Get("limit");
   TTree *ta0z1 = (TTree *)fa0z1->Get("limit");
   TTree *ta0z2 = (TTree *)fa0z2->Get("limit");
@@ -28,10 +28,10 @@ void PlotLimitsFinalReMiniAOD()
   TTree *taCz2 = (TTree *)faCz2->Get("limit");
 
   ta0w1->SetBranchAddress("limit", &la0w1);
-  ta0w2->SetBranchAddress("limit", &la0w2);
+  //  ta0w2->SetBranchAddress("limit", &la0w2);
   ta0w3->SetBranchAddress("limit", &la0w3);
   taCw1->SetBranchAddress("limit", &laCw1);
-  taCw2->SetBranchAddress("limit", &laCw2);
+  //  taCw2->SetBranchAddress("limit", &laCw2);
   taCw3->SetBranchAddress("limit", &laCw3);
   ta0z1->SetBranchAddress("limit", &la0z1);
   ta0z2->SetBranchAddress("limit", &la0z2);
@@ -70,10 +70,10 @@ void PlotLimitsFinalReMiniAOD()
   for(Int_t i = 0; i < 5; i++)
     {
       ta0w1->GetEntry(i);
-      ta0w2->GetEntry(i);
+      //      ta0w2->GetEntry(i);
       ta0w3->GetEntry(i);
       taCw1->GetEntry(i);
-      taCw2->GetEntry(i);
+      //      taCw2->GetEntry(i);
       taCw3->GetEntry(i);
       ta0z1->GetEntry(i);
       ta0z2->GetEntry(i);
