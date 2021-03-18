@@ -20,7 +20,7 @@ function mergeFiles () {
 		done 
 
 		hadd $merge_dir/$filename ${files_to_merge[@]}
-		echo "TrigReport Events total $nEvents" > $merge_dir/${filename%.*}.out
+		echo "TrigReport Events total = $nEvents" > $merge_dir/${filename%.*}.out
 	done
 }
 

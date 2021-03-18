@@ -1,8 +1,8 @@
 executable			= runMC.sh
 arguments			= $ENV(CMSSW_BASE) $(other_arguments)
-output 				= WWjets_MC_$(ClusterId)_$(Process).out
-error 				= WWjets_MC_$(ClusterId)_$(Process).err
-log 				= WWjets_MC_$(ClusterId)_$(Process).log
+output 				= logs/WWjets_MC_$(ClusterId)_$(Process).out
+error 				= logs/WWjets_MC_$(ClusterId)_$(Process).err
+log 				= logs/WWjets_MC_$(ClusterId)_$(Process).log
 getenv				= True
 +JobFlavour			= "nextweek"
 notify_user			= andrea.bellora@cern.ch
@@ -28,9 +28,11 @@ queue other_arguments from (
 	# 2017 E WW_A0W1e-6
 	# 2017 F WW_A0W1e-6
 	# 2018 A WW_A0W1e-6
-	# 2018 B WW_A0W1e-6
+	# 2018 B1 WW_A0W1e-6
+	# 2018 B2 WW_A0W1e-6
 	# 2018 C WW_A0W1e-6
-	# 2018 D WW_A0W1e-6
+	# 2018 D1 WW_A0W1e-6
+	# 2018 D2 WW_A0W1e-6
 	# WW_A0W2e-6
 	# 2016 B WW_A0W2e-6
 	# 2016 C WW_A0W2e-6
@@ -41,9 +43,11 @@ queue other_arguments from (
 	# 2017 E WW_A0W2e-6
 	# 2017 F WW_A0W2e-6
 	# 2018 A WW_A0W2e-6
-	# 2018 B WW_A0W2e-6
+	# 2018 B1 WW_A0W2e-6
+	# 2018 B2 WW_A0W2e-6
 	# 2018 C WW_A0W2e-6
-	# 2018 D WW_A0W2e-6
+	# 2018 D1 WW_A0W2e-6
+	# 2018 D2 WW_A0W2e-6
 	# WW_A0W5e-6
 	# 2016 B WW_A0W5e-6
 	# 2016 C WW_A0W5e-6
@@ -54,9 +58,11 @@ queue other_arguments from (
 	# 2017 E WW_A0W5e-6
 	# 2017 F WW_A0W5e-6
 	# 2018 A WW_A0W5e-6
-	# 2018 B WW_A0W5e-6
+	# 2018 B1 WW_A0W5e-6
+	# 2018 B2 WW_A0W5e-6
 	# 2018 C WW_A0W5e-6
-	# 2018 D WW_A0W5e-6
+	# 2018 D1 WW_A0W5e-6
+	# 2018 D2 WW_A0W5e-6
 	# WW_ACW2e-5
 	# 2016 B WW_ACW2e-5
 	# 2016 C WW_ACW2e-5
@@ -67,9 +73,11 @@ queue other_arguments from (
 	# 2017 E WW_ACW2e-5
 	# 2017 F WW_ACW2e-5
 	# 2018 A WW_ACW2e-5
-	# 2018 B WW_ACW2e-5
+	# 2018 B1 WW_ACW2e-5
+	# 2018 B2 WW_ACW2e-5
 	# 2018 C WW_ACW2e-5
-	# 2018 D WW_ACW2e-5
+	# 2018 D1 WW_ACW2e-5
+	# 2018 D2 WW_ACW2e-5
 	# WW_ACW5e-6
 	# 2016 B WW_ACW5e-6
 	# 2016 C WW_ACW5e-6
@@ -80,46 +88,49 @@ queue other_arguments from (
 	# 2017 E WW_ACW5e-6
 	# 2017 F WW_ACW5e-6
 	# 2018 A WW_ACW5e-6
-	# 2018 B WW_ACW5e-6
+	# 2018 B1 WW_ACW5e-6
+	# 2018 B2 WW_ACW5e-6
 	# 2018 C WW_ACW5e-6
-	# 2018 D WW_ACW5e-6
+	# 2018 D1 WW_ACW5e-6
+	# 2018 D2 WW_ACW5e-6
 	# WW_ACW8e-6
-	# 2016 B WW_ACW8e-6
-	# 2016 C WW_ACW8e-6
-	# 2016 G WW_ACW8e-6
-	# 2017 B WW_ACW8e-6	
-	# 2017 C WW_ACW8e-6
-	# 2017 D WW_ACW8e-6
-	# 2017 E WW_ACW8e-6
+	2016 B WW_ACW8e-6
+	2016 C WW_ACW8e-6
+	2016 G WW_ACW8e-6
+	2017 B WW_ACW8e-6	
+	2017 C WW_ACW8e-6
+	2017 D WW_ACW8e-6
+	2017 E WW_ACW8e-6
 	2017 F WW_ACW8e-6
-	# 2018 A WW_ACW8e-6
-	# 2018 B WW_ACW8e-6
-	# 2018 C WW_ACW8e-6
-	# 2018 D WW_ACW8e-6
-	# # ZZ Part
-	# # ZZ_A0Z-1e-5
+	2018 A WW_ACW8e-6
+	2018 B1 WW_ACW8e-6
+	2018 B2 WW_ACW8e-6
+	2018 C WW_ACW8e-6
+	2018 D1 WW_ACW8e-6
+	2018 D2 WW_ACW8e-6
+	# ZZ Part
+	# ZZ_A0Z-1e-5
 	# 2016 B ZZ_A0Z-1e-5
 	# 2017 B ZZ_A0Z-1e-5
 	# 2018 A ZZ_A0Z-1e-5
-	# # ZZ_A0Z1e-5
+	# ZZ_A0Z1e-5
 	# 2016 B ZZ_A0Z1e-5
 	# 2017 B ZZ_A0Z1e-5
 	# 2018 A ZZ_A0Z1e-5
-	# # ZZ_A0Z5e-5
+	# ZZ_A0Z5e-5
 	# 2016 B ZZ_A0Z5e-5
 	# 2017 B ZZ_A0Z5e-5
 	# 2018 A ZZ_A0Z5e-5
-	# # ZZ_ACZ-1e-5
+	# ZZ_ACZ-1e-5
 	# 2016 B ZZ_ACZ-1e-5
 	# 2017 B ZZ_ACZ-1e-5
 	# 2018 A ZZ_ACZ-1e-5
-	# # ZZ_ACZ1e-5
+	# ZZ_ACZ1e-5
 	# 2016 B ZZ_ACZ1e-5
 	# 2017 B ZZ_ACZ1e-5
 	# 2018 A ZZ_ACZ1e-5
-	# # ZZ_ACZ5e-5
+	# ZZ_ACZ5e-5
 	# 2016 B ZZ_ACZ5e-5
 	# 2017 B ZZ_ACZ5e-5
 	# 2018 A ZZ_ACZ5e-5
 )
-

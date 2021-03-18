@@ -37,13 +37,19 @@ void HadronicWWCuts::Loop()
    TRandom3 ransource;
    bool DOPROTONSYSTEMATICS = false;
    bool DOJECSYSTEMATICSUP = false;
-   bool DOJECSYSTEMATICSDOWN = false;
+   bool DOJECSYSTEMATICSDOWN = true;
 
-   TString outputFolder = "signalSamples";
+   // TString outputFolder = "testrun_hitMix";
+
+   TString outputFolder = "signalSamples_v3";
    // TString outputFolder = "dataRun2";
    // TString outputFolder = "backgroundSamples";
    if(DOPROTONSYSTEMATICS)
       outputFolder += "_protonSystematics";
+   if(DOJECSYSTEMATICSUP)
+      outputFolder += "_JECSystematicsUp";
+   if(DOJECSYSTEMATICSDOWN)
+      outputFolder += "_JECSystematicsDown";
 
    outputFolder += "/";
 

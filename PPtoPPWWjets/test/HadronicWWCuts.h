@@ -161,7 +161,7 @@ public :
 
    TString erastring;
 
-   HadronicWWCuts(Int_t mysample = 223, TTree *tree=0);
+   HadronicWWCuts(Int_t mysample = 500, TTree *tree=0);
    virtual ~HadronicWWCuts();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -180,7 +180,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0)
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
 
-  TString mcNtuplesFolder = "/afs/cern.ch/work/a/abellora/public/PPtoPPWWjets";
+  TString mcNtuplesFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v2";
+  // TString mcNtuplesFolder = "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
   
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.

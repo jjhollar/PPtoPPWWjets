@@ -1,2 +1,6 @@
 **/*.pyc
 PPtoPPWWjets/test/*.root
+PPtoPPWWjets/test/*.err
+PPtoPPWWjets/test/*.log
+PPtoPPWWjets/limits/pps*.txt
+PPtoPPWWjets/analysismacros/*.pdf

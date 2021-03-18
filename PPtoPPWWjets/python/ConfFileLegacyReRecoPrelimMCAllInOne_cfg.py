@@ -182,10 +182,12 @@ process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
   reportEvery = cms.untracked.int32(100),
   limit = cms.untracked.int32(2000)
 )
+process.MessageLogger.categories.append('PPS')
+process.MessageLogger.cerr.threshold = cms.untracked.string('INFO')
 
 process.MessageLogger.destinations.append('logFile')
 process.MessageLogger.logFile = cms.untracked.PSet(
-  output = cms.untracked.string(OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"),
+  output = cms.untracked.string(OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"),
   optionalPSet = cms.untracked.bool(True),
     INFO = cms.untracked.PSet(
       limit = cms.untracked.int32(0)
@@ -388,9 +390,9 @@ if YEAR == 2018:
 # Configure Analyzer
 #########################                                                                                                                                                           
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
-process.TFileService = cms.Service("TFileService", fileName = cms.string(OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"))
-print "Output will be saved in: "+OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"
-print "Log will be saved in: "+OUTPUTDIR+"ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"
+process.TFileService = cms.Service("TFileService", fileName = cms.string(OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"))
+print "Output will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"
+print "Log will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"
 print ""
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
@@ -423,8 +425,8 @@ if MC == True and YEAR == 2018:
   process.demo.mcPileupFile = cms.string("PUHistos_mc_2018.root")
 
 process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
-process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
-# process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP")
+process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP","CTPPSTestAcceptance")
+# process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance")
 process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ppsEfficiencyProducer", "multiRP")
 process.demo.isMC = cms.bool(MC)
 process.demo.doMCTheorySystematics = cms.bool(DoTheorySystematics)
@@ -438,21 +440,34 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # reconstruction plotter (analysis example)
-# process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
-#   tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-#   tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP"),
-#   # tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
-#   tagRecoProtonsMultiRP = cms.InputTag("ppsEfficiencyProducer", "multiRP"),
-#   rpId_45_F = cms.uint32(23),
-#   rpId_45_N = cms.uint32(3),
-#   rpId_56_N = cms.uint32(103),
-#   rpId_56_F = cms.uint32(123),
+process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
+  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+  tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP","CTPPSTestAcceptance"),
+  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance"),
+  # tagRecoProtonsMultiRP = cms.InputTag("ppsEfficiencyProducer", "multiRP"),
+  rpId_45_F = cms.uint32(23),
+  rpId_45_N = cms.uint32(3),
+  rpId_56_N = cms.uint32(103),
+  rpId_56_F = cms.uint32(123),
 
-#   association_cuts_45 = process.ctppsProtons.association_cuts_45,
-#   association_cuts_56 = process.ctppsProtons.association_cuts_56,
+  association_cuts_45 = process.ctppsProtons.association_cuts_45,
+  association_cuts_56 = process.ctppsProtons.association_cuts_56,
 
-#   outputFile = cms.string(OUTPUTDIR+"output_protons.root")
+  outputFile = cms.string(OUTPUTDIR+"/output_protons.root")
+)
+
+process.load("protonPreMix.protonPreMix.ctppsProductsInspector_cfi")
+process.ctppsProductsInspector.pixelRecHitTag = cms.untracked.InputTag("ctppsPreMixProducer","","CTPPSTestAcceptance")
+process.ctppsProductsInspector.trackLiteTag = cms.untracked.InputTag("ctppsLocalTrackLiteProducer","","CTPPSTestAcceptance")
+# process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ppsEfficiencyProducer", "multiRP","CTPPSTestAcceptance")
+process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance")
+
+# process.output = cms.OutputModule("PoolOutputModule",
+#     fileName = cms.untracked.string(OUTPUTDIR+"/output_data.root"),
+#     outputCommands = cms.untracked.vstring("keep *_ctpps*_*_*")
 # )
+
+# process.out = cms.EndPath(process.output)
 
 # processing path
 process.p = cms.Path(
@@ -463,7 +478,7 @@ process.p = cms.Path(
   * process.reco_local
   * process.ctppsProtons
   * process.ppsEfficiencyProducer
-
+  # * process.ctppsProductsInspector
   # * process.ctppsProtonReconstructionPlotter
 
   * process.genParticlesForJetsNoNu 
