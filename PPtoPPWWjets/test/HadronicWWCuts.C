@@ -37,7 +37,7 @@ void HadronicWWCuts::Loop()
    TRandom3 ransource;
    bool DOPROTONSYSTEMATICS = false;
    bool DOJECSYSTEMATICSUP = false;
-   bool DOJECSYSTEMATICSDOWN = true;
+   bool DOJECSYSTEMATICSDOWN = false;
 
    // TString outputFolder = "testrun_hitMix";
 
@@ -210,6 +210,10 @@ void HadronicWWCuts::Loop()
    TH2F *hycorrpreseldatmult = new TH2F("hycorrpreseldatmult","hycorrpreseldatmult",100,-5,5,100,-5,5);
    TH2F *hmasscorrpreseldatmult = new TH2F("hmasscorrpreseldatmult","hmasscorrpreseldatmult",250,0,2500,250,0,2500);
    TH2F *dymassratiocorrpreseldatmult = new TH2F("dymassratiocorrpreseldatmult","dymassratiocorrpreseldatmult",500,-5,5,500,-5,5);
+
+   TH2F *hmassrapiditymatchsigmcmmww = new TH2F("hmassrapiditymatchsigmcmmww","hmassrapiditymatchsigmcmmww",500,-5,5,500,-5,5);
+   TH2F *hmassrapiditymatchsigmcmmzz = new TH2F("hmassrapiditymatchsigmcmmzz","hmassrapiditymatchsigmcmmzz",500,-5,5,500,-5,5);
+
 
    // Anit-pT balance control plots
    TH1F *hmassvvantiptbalww = new TH1F("hmassvvantiptbalww","hmassvvantiptbalww",250,0,5000);
@@ -1299,6 +1303,7 @@ void HadronicWWCuts::Loop()
 					       hymatchsigmcmultww->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
 					       hmasscorrsigmcmultww->Fill(mydijet.M(),mppsmultmult->at(0));
 					       hycorrsigmcmultww->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+					       hmassrapiditymatchsigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity());
 					     }
 					   if(rotatedprunedmasses > mrotatedcut)
 					     {
@@ -1306,6 +1311,7 @@ void HadronicWWCuts::Loop()
                                                hymatchsigmcmultzz->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
                                                hmasscorrsigmcmultzz->Fill(mydijet.M(),mppsmultmult->at(0));
                                                hycorrsigmcmultzz->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
+                                               hmassrapiditymatchsigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity());
 					     }
 
 					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) && 
@@ -2194,6 +2200,9 @@ if(samplenumber == 20)
    hmasscorrsigmcmulttruthmatchedzz->Write();
 
    hprunedrotatedjjprematchingdat->Write();
+
+   hmassrapiditymatchsigmcmmww->Write();
+   hmassrapiditymatchsigmcmmzz->Write();
 
    fx->cd("SingleProtonDistributions");
    hxipix45->Write();
