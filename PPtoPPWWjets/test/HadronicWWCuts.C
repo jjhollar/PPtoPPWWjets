@@ -213,7 +213,14 @@ void HadronicWWCuts::Loop()
 
    TH2F *hmassrapiditymatchsigmcmmww = new TH2F("hmassrapiditymatchsigmcmmww","hmassrapiditymatchsigmcmmww",500,-5,5,500,-5,5);
    TH2F *hmassrapiditymatchsigmcmmzz = new TH2F("hmassrapiditymatchsigmcmmzz","hmassrapiditymatchsigmcmmzz",500,-5,5,500,-5,5);
-
+   TH1F *hmvvsigmcsigregionww = new TH1F("hmvvsigmcsigregionww","hmvvsigmcsigregionww",250,0,5000);
+   TH1F *hmvvsigmcsigregionzz = new TH1F("hmvvsigmcsigregionzz","hmvvsigmcsigregionzz",250,0,5000);                                                                                             TH1F *hyvvsigmcsigregionww = new TH1F("hyvvsigmcsigregionww","hyvvsigmcsigregionww",250,-5,5);
+   TH1F *hyvvsigmcsigregionzz = new TH1F("hyvvsigmcsigregionzz","hyvvsigmcsigregionzz",250,-5,5);
+   TH1F *hmppsigmcsigregionww = new TH1F("hmppsigmcsigregionww","hmppsigmcsigregionww",250,0,5000);
+   TH1F *hyppsigmcsigregionww = new TH1F("hyppsigmcsigregionww","hyppsigmcsigregionww",250,-5,5);
+   TH1F *hmppsigmcsigregionzz = new TH1F("hmppsigmcsigregionzz","hmppsigmcsigregionzz",250,0,5000);
+   TH1F *hyppsigmcsigregionzz = new TH1F("hyppsigmcsigregionzz","hyppsigmcsigregionzz",250,-5,5);
+                                                                                                    
 
    // Anit-pT balance control plots
    TH1F *hmassvvantiptbalww = new TH1F("hmassvvantiptbalww","hmassvvantiptbalww",250,0,5000);
@@ -230,6 +237,16 @@ void HadronicWWCuts::Loop()
    TH1F *htau211antiacopzz = new TH1F("htau211antiacopzz","htau211antiacopzz",250,0,1);
    TH1F *hmj2antiacopzz = new TH1F("hmj2antiacopzz","hmj2antiacopzz",250,0,1000);
    TH1F *htau212antiacopzz = new TH1F("htau212antiacopzz","htau212antiacopzz",250,0,1);
+
+   TH1F *hmvvsigmcantiacopsigregionww = new TH1F("hmvvsigmcantiacopsigregionww","hmvvsigmcantiacopsigregionww",250,0,5000);
+   TH1F *hmvvsigmcantiacopsigregionzz = new TH1F("hmvvsigmcantiacopsigregionzz","hmvvsigmcantiacopsigregionzz",250,0,5000);                                                                 
+   TH1F *hyvvsigmcantiacopsigregionww = new TH1F("hyvvsigmcantiacopsigregionww","hyvvsigmcantiacopsigregionww",250,-5,5);
+   TH1F *hyvvsigmcantiacopsigregionzz = new TH1F("hyvvsigmcantiacopsigregionzz","hyvvsigmcantiacopsigregionzz",250,-5,5);
+   TH1F *hmppsigmcantiacopsigregionww = new TH1F("hmppsigmcantiacopsigregionww","hmppsigmcantiacopsigregionww",250,0,5000);
+   TH1F *hyppsigmcantiacopsigregionww = new TH1F("hyppsigmcantiacopsigregionww","hyppsigmcantiacopsigregionww",250,-5,5);
+   TH1F *hmppsigmcantiacopsigregionzz = new TH1F("hmppsigmcantiacopsigregionzz","hmppsigmcantiacopsigregionzz",250,0,5000);
+   TH1F *hyppsigmcantiacopsigregionzz = new TH1F("hyppsigmcantiacopsigregionzz","hyppsigmcantiacopsigregionzz",250,-5,5);
+
 
    // Anti-tau21 control plots
    TH1F *hmassvvantitauww = new TH1F("hmassvvantitauww","hmassvvantitauww",250,0,5000);
@@ -1258,23 +1275,23 @@ void HadronicWWCuts::Loop()
 					     {
 					       if(rotatedprunedmasses <= mrotatedcut)
 						 {
-						   hmassmatchsigmcmmww->Fill(mppsmultmult->at(s)-mydijet.M());
-						   hymatchsigmcmmww->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
-						   hmassmatchratiosigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
-						   hmassmatchratiosigmcmmshiftupww->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
-						   hmassmatchratiosigmcmmshiftdownww->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
-						   hymatchsigmcmmshiftupww->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
-						   hymatchsigmcmmshiftdownww->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
+						   hmassmatchsigmcmmww->Fill(mppsmultmult->at(s)-mydijet.M(),myweight);
+						   hymatchsigmcmmww->Fill(yppsmultmult->at(s)-mydijet.Rapidity(),myweight);
+						   hmassmatchratiosigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(s)),myweight);
+						   hmassmatchratiosigmcmmshiftupww->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)),myweight);
+						   hmassmatchratiosigmcmmshiftdownww->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)),myweight);
+						   hymatchsigmcmmshiftupww->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity(),myweight);
+						   hymatchsigmcmmshiftdownww->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity(),myweight);
 						 }
                                                if(rotatedprunedmasses > mrotatedcut)
                                                  {
-                                                   hmassmatchsigmcmmzz->Fill(mppsmultmult->at(s)-mydijet.M());
-                                                   hymatchsigmcmmzz->Fill(yppsmultmult->at(s)-mydijet.Rapidity());
-                                                   hmassmatchratiosigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(s)));
-                                                   hmassmatchratiosigmcmmshiftupzz->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)));
-                                                   hmassmatchratiosigmcmmshiftdownzz->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)));
-                                                   hymatchsigmcmmshiftupzz->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity());
-                                                   hymatchsigmcmmshiftdownzz->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity());
+                                                   hmassmatchsigmcmmzz->Fill(mppsmultmult->at(s)-mydijet.M(),myweight);
+                                                   hymatchsigmcmmzz->Fill(yppsmultmult->at(s)-mydijet.Rapidity(),myweight);
+                                                   hmassmatchratiosigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(s)),myweight);
+                                                   hmassmatchratiosigmcmmshiftupzz->Fill(1 - (mydijet.M()/mppsmultmultshiftup->at(s)),myweight);
+                                                   hmassmatchratiosigmcmmshiftdownzz->Fill(1 - (mydijet.M()/mppsmultmultshiftdown->at(s)),myweight);
+                                                   hymatchsigmcmmshiftupzz->Fill(yppsmultmultshiftup->at(s)-mydijet.Rapidity(),myweight);
+                                                   hymatchsigmcmmshiftdownzz->Fill(yppsmultmultshiftdown->at(s)-mydijet.Rapidity(),myweight);
                                                  }
 
 					     }
@@ -1299,19 +1316,37 @@ void HadronicWWCuts::Loop()
 
 					   if(rotatedprunedmasses <= mrotatedcut)
 					     {
-					       hmassmatchratiosigmcmultww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)));
-					       hymatchsigmcmultww->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
-					       hmasscorrsigmcmultww->Fill(mydijet.M(),mppsmultmult->at(0));
-					       hycorrsigmcmultww->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
-					       hmassrapiditymatchsigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity());
+					       hmassmatchratiosigmcmultww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),myweight);
+					       hymatchsigmcmultww->Fill(yppsmultmult->at(0)-mydijet.Rapidity(),myweight);
+					       hmasscorrsigmcmultww->Fill(mydijet.M(),mppsmultmult->at(0),myweight);
+					       hycorrsigmcmultww->Fill(mydijet.Rapidity(),yppsmultmult->at(0),myweight);
+					       hmassrapiditymatchsigmcmmww->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity(),myweight);
+
+					       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+						  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+						 {
+						   hmvvsigmcsigregionww->Fill(mydijet.M(),myweight);
+						   hyvvsigmcsigregionww->Fill(mydijet.Rapidity(),myweight);
+						   hmppsigmcsigregionww->Fill(mppsmultmult->at(0),myweight);
+						   hyppsigmcsigregionww->Fill(yppsmultmult->at(0),myweight);
+						 }
 					     }
 					   if(rotatedprunedmasses > mrotatedcut)
 					     {
-                                               hmassmatchratiosigmcmultzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)));
-                                               hymatchsigmcmultzz->Fill(yppsmultmult->at(0)-mydijet.Rapidity());
-                                               hmasscorrsigmcmultzz->Fill(mydijet.M(),mppsmultmult->at(0));
-                                               hycorrsigmcmultzz->Fill(mydijet.Rapidity(),yppsmultmult->at(0));
-                                               hmassrapiditymatchsigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity());
+                                               hmassmatchratiosigmcmultzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),myweight);
+                                               hymatchsigmcmultzz->Fill(yppsmultmult->at(0)-mydijet.Rapidity(),myweight);
+                                               hmasscorrsigmcmultzz->Fill(mydijet.M(),mppsmultmult->at(0),myweight);
+                                               hycorrsigmcmultzz->Fill(mydijet.Rapidity(),yppsmultmult->at(0),myweight);
+                                               hmassrapiditymatchsigmcmmzz->Fill(1 - (mydijet.M()/mppsmultmult->at(0)),yppsmultmult->at(0)-mydijet.Rapidity(),myweight);
+
+					       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
+						  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
+						 {
+						   hmvvsigmcsigregionzz->Fill(mydijet.M(),myweight);
+						   hyvvsigmcsigregionzz->Fill(mydijet.Rapidity(),myweight);
+						   hmppsigmcsigregionzz->Fill(mppsmultmult->at(0),myweight);
+						   hyppsigmcsigregionzz->Fill(yppsmultmult->at(0),myweight);
+						 }
 					     }
 
 					   if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) && 
@@ -1372,23 +1407,29 @@ void HadronicWWCuts::Loop()
 			     {
                                if(rotatedprunedmasses <= mrotatedcut)
                                  {
-				   hmassvvantiacopww->Fill(mydijet.M());
-				   hmj1antiacopww->Fill(jet_corrmass->at(indleading));
-				   hmj2antiacopww->Fill(jet_corrmass->at(indsecond));
-				   htau211antiacopww->Fill(taut21ddt1);
-				   htau212antiacopww->Fill(taut21ddt2);
+				   hmassvvantiacopww->Fill(mydijet.M(),myweight);
+				   hmj1antiacopww->Fill(jet_corrmass->at(indleading),myweight);
+				   hmj2antiacopww->Fill(jet_corrmass->at(indsecond),myweight);
+				   htau211antiacopww->Fill(taut21ddt1,myweight);
+				   htau212antiacopww->Fill(taut21ddt2,myweight);
 				   
 				   if(mpp>0)
 				     {
-				       hmassmatchantiacopmmww->Fill(mppmm-mydijet.M());
-				       hymatchantiacopmmww->Fill(yppmm-mydijet.Rapidity());
-				       hmassmatchratioantiacopmmww->Fill(1 - (mydijet.M()/mppmm));
-				       hmassrapiditymatchantiacopmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				       hmassmatchantiacopmmww->Fill(mppmm-mydijet.M(),myweight);
+				       hymatchantiacopmmww->Fill(yppmm-mydijet.Rapidity(),myweight);
+				       hmassmatchratioantiacopmmww->Fill(1 - (mydijet.M()/mppmm),myweight);
+				       hmassrapiditymatchantiacopmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
 				       // Sideband background method
 				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
 					  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
-					 npassantiacopsigregionww += 1.0*myweight;
+					 {
+					   npassantiacopsigregionww += 1.0*myweight;
+                                           hmvvsigmcantiacopsigregionww->Fill(mydijet.M(),myweight);
+					   hyvvsigmcantiacopsigregionww->Fill(mydijet.Rapidity(),myweight);
+					   hmppsigmcantiacopsigregionww->Fill(mppsmultmult->at(0),myweight);
+					   hyppsigmcantiacopsigregionww->Fill(yppsmultmult->at(0),myweight);
+					 }
 				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) || 
 					  (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
 					 npassantiacopnormregionww += 1.0*myweight ;
@@ -1396,23 +1437,29 @@ void HadronicWWCuts::Loop()
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
                                  {
-                                   hmassvvantiacopzz->Fill(mydijet.M());
-                                   hmj1antiacopzz->Fill(jet_corrmass->at(indleading));
-                                   hmj2antiacopzz->Fill(jet_corrmass->at(indsecond));
-                                   htau211antiacopzz->Fill(taut21ddt1);
-                                   htau212antiacopzz->Fill(taut21ddt2);
+                                   hmassvvantiacopzz->Fill(mydijet.M(),myweight);
+                                   hmj1antiacopzz->Fill(jet_corrmass->at(indleading),myweight);
+                                   hmj2antiacopzz->Fill(jet_corrmass->at(indsecond),myweight);
+                                   htau211antiacopzz->Fill(taut21ddt1,myweight);
+                                   htau212antiacopzz->Fill(taut21ddt2,myweight);
 
                                    if(mpp>0)
                                      {
-                                       hmassmatchantiacopmmzz->Fill(mppmm-mydijet.M());
-                                       hymatchantiacopmmzz->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantiacopmmzz->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantiacopmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantiacopmmzz->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantiacopmmzz->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantiacopmmzz->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantiacopmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
                                        // Sideband background method                                                                                                                             
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
                                           (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) <= rapiditymatchcutksenia))
-                                         npassantiacopsigregionzz += 1.0*myweight;
+					 {
+					   npassantiacopsigregionzz += 1.0*myweight;
+                                           hmvvsigmcantiacopsigregionzz->Fill(mydijet.M(),myweight);
+                                           hyvvsigmcantiacopsigregionzz->Fill(mydijet.Rapidity(),myweight);
+                                           hmppsigmcantiacopsigregionzz->Fill(mppsmultmult->at(0),myweight);
+                                           hyppsigmcantiacopsigregionzz->Fill(yppsmultmult->at(0),myweight);
+					 }
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) > massmatchnormregion) ||
                                           (fabs(mydijet.Rapidity() - yppsmultmult->at(0)) > rapiditymatchnormregion))
                                          npassantiacopnormregionzz += 1.0*myweight ;
@@ -1428,26 +1475,26 @@ void HadronicWWCuts::Loop()
 			     {
                                if(rotatedprunedmasses <= mrotatedcut)
                                  {
-				   hmassvvantiptbalww->Fill(mydijet.M());
+				   hmassvvantiptbalww->Fill(mydijet.M(),myweight);
 				   
 				   if(mpp>0)
 				     {
-				       hmassmatchantiptbalmmww->Fill(mppmm-mydijet.M());
-				       hymatchantiptbalmmww->Fill(yppmm-mydijet.Rapidity());
-				       hmassmatchratioantiptbalmmww->Fill(1 - (mydijet.M()/mppmm));
-				       hmassrapiditymatchantiptbalmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				       hmassmatchantiptbalmmww->Fill(mppmm-mydijet.M(),myweight);
+				       hymatchantiptbalmmww->Fill(yppmm-mydijet.Rapidity(),myweight);
+				       hmassmatchratioantiptbalmmww->Fill(1 - (mydijet.M()/mppmm),myweight);
+				       hmassrapiditymatchantiptbalmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 				     }
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
                                  {
-                                   hmassvvantiptbalzz->Fill(mydijet.M());
+                                   hmassvvantiptbalzz->Fill(mydijet.M(),myweight);
 
                                    if(mpp>0)
                                      {
-                                       hmassmatchantiptbalmmzz->Fill(mppmm-mydijet.M());
-                                       hymatchantiptbalmmzz->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantiptbalmmzz->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantiptbalmmzz->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantiptbalmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
                                      }
                                  }
 			     } // anti-pT balance
@@ -1460,18 +1507,18 @@ void HadronicWWCuts::Loop()
 			     {
 			       if(rotatedprunedmasses <= mrotatedcut)
 				 {
-				   hmassvvantitauww->Fill(mydijet.M());
-				   hmj1antitauww->Fill(jet_corrmass->at(indleading));
-				   hmj2antitauww->Fill(jet_corrmass->at(indsecond));
-				   htau211antitauww->Fill(taut21ddt1);
-				   htau212antitauww->Fill(taut21ddt2);
+				   hmassvvantitauww->Fill(mydijet.M(),myweight);
+				   hmj1antitauww->Fill(jet_corrmass->at(indleading),myweight);
+				   hmj2antitauww->Fill(jet_corrmass->at(indsecond),myweight);
+				   htau211antitauww->Fill(taut21ddt1,myweight);
+				   htau212antitauww->Fill(taut21ddt2,myweight);
 				   
 				   if(mpp>0)
 				     {
-				       hmassmatchantitaummww->Fill(mppmm-mydijet.M());
-				       hymatchantitaummww->Fill(yppmm-mydijet.Rapidity());
-				       hmassmatchratioantitaummww->Fill(1 - (mydijet.M()/mppmm));
-				       hmassrapiditymatchantitaummww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				       hmassmatchantitaummww->Fill(mppmm-mydijet.M(),myweight);
+				       hymatchantitaummww->Fill(yppmm-mydijet.Rapidity(),myweight);
+				       hmassmatchratioantitaummww->Fill(1 - (mydijet.M()/mppmm),myweight);
+				       hmassrapiditymatchantitaummww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
                                        // Sideband background method                                                                                                                             
 				       if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1484,18 +1531,18 @@ void HadronicWWCuts::Loop()
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
                                  {
-                                   hmassvvantitauzz->Fill(mydijet.M());
-                                   hmj1antitauzz->Fill(jet_corrmass->at(indleading));
-                                   hmj2antitauzz->Fill(jet_corrmass->at(indsecond));
-                                   htau211antitauzz->Fill(taut21ddt1);
-                                   htau212antitauzz->Fill(taut21ddt2);
+                                   hmassvvantitauzz->Fill(mydijet.M(),myweight);
+                                   hmj1antitauzz->Fill(jet_corrmass->at(indleading),myweight);
+                                   hmj2antitauzz->Fill(jet_corrmass->at(indsecond)),myweight;
+                                   htau211antitauzz->Fill(taut21ddt1,myweight);
+                                   htau212antitauzz->Fill(taut21ddt2,myweight);
 
                                    if(mpp>0)
                                      {
-                                       hmassmatchantitaummzz->Fill(mppmm-mydijet.M());
-                                       hymatchantitaummzz->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantitaummzz->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantitaummzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantitaummzz->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantitaummzz->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantitaummzz->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantitaummzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
                                        // Sideband background method                                                                                                                             
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1516,18 +1563,18 @@ void HadronicWWCuts::Loop()
                              {
                                if(rotatedprunedmasses <= mrotatedcut)
                                  {
-				   hmassvvantiprunedww->Fill(mydijet.M());
-				   hmj1antiprunedww->Fill(jet_corrmass->at(indleading));
-				   hmj2antiprunedww->Fill(jet_corrmass->at(indsecond));
-				   htau211antiprunedww->Fill(taut21ddt1);
-				   htau212antiprunedww->Fill(taut21ddt2);
+				   hmassvvantiprunedww->Fill(mydijet.M(),myweight);
+				   hmj1antiprunedww->Fill(jet_corrmass->at(indleading),myweight);
+				   hmj2antiprunedww->Fill(jet_corrmass->at(indsecond),myweight);
+				   htau211antiprunedww->Fill(taut21ddt1,myweight);
+				   htau212antiprunedww->Fill(taut21ddt2,myweight);
 				   
 				   if(mpp>0)
 				     {
-				       hmassmatchantiprunedmmww->Fill(mppmm-mydijet.M());
-				       hymatchantiprunedmmww->Fill(yppmm-mydijet.Rapidity());
-				       hmassmatchratioantiprunedmmww->Fill(1 - (mydijet.M()/mppmm));
-				       hmassrapiditymatchantiprunedmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+				       hmassmatchantiprunedmmww->Fill(mppmm-mydijet.M(),myweight);
+				       hymatchantiprunedmmww->Fill(yppmm-mydijet.Rapidity(),myweight);
+				       hmassmatchratioantiprunedmmww->Fill(1 - (mydijet.M()/mppmm),myweight);
+				       hmassrapiditymatchantiprunedmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
                                        // Sideband background method                                                                                                                             
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1540,18 +1587,18 @@ void HadronicWWCuts::Loop()
 				 }
                                if(rotatedprunedmasses > mrotatedcut)
                                  {
-                                   hmassvvantiprunedzz->Fill(mydijet.M());
-                                   hmj1antiprunedzz->Fill(jet_corrmass->at(indleading));
-                                   hmj2antiprunedzz->Fill(jet_corrmass->at(indsecond));
-                                   htau211antiprunedzz->Fill(taut21ddt1);
-                                   htau212antiprunedzz->Fill(taut21ddt2);
+                                   hmassvvantiprunedzz->Fill(mydijet.M(),myweight);
+                                   hmj1antiprunedzz->Fill(jet_corrmass->at(indleading),myweight);
+                                   hmj2antiprunedzz->Fill(jet_corrmass->at(indsecond),myweight);
+                                   htau211antiprunedzz->Fill(taut21ddt1,myweight);
+                                   htau212antiprunedzz->Fill(taut21ddt2,myweight);
 
                                    if(mpp>0)
                                      {
-                                       hmassmatchantiprunedmmzz->Fill(mppmm-mydijet.M());
-                                       hymatchantiprunedmmzz->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantiprunedmmzz->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantiprunedmmzz->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantiprunedmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 
                                        // Sideband background method                                                                                                                             
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1574,18 +1621,18 @@ void HadronicWWCuts::Loop()
                              {
                                if(rotatedprunedmasses <= mrotatedcut)
                                  {
-                                   hmassvvantiprunednarrowww->Fill(mydijet.M());
-                                   hmj1antiprunednarrowww->Fill(jet_corrmass->at(indleading));
-                                   hmj2antiprunednarrowww->Fill(jet_corrmass->at(indsecond));
-                                   htau211antiprunednarrowww->Fill(taut21ddt1);
-                                   htau212antiprunednarrowww->Fill(taut21ddt2);
+                                   hmassvvantiprunednarrowww->Fill(mydijet.M(),myweight);
+                                   hmj1antiprunednarrowww->Fill(jet_corrmass->at(indleading),myweight);
+                                   hmj2antiprunednarrowww->Fill(jet_corrmass->at(indsecond),myweight);
+                                   htau211antiprunednarrowww->Fill(taut21ddt1,myweight);
+                                   htau212antiprunednarrowww->Fill(taut21ddt2,myweight);
 				   
                                    if(mpp>0)
                                      {
-                                       hmassmatchantiprunednarrowmmww->Fill(mppmm-mydijet.M());
-                                       hymatchantiprunednarrowmmww->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantiprunednarrowmmww->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantiprunednarrowmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantiprunednarrowmmww->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantiprunednarrowmmww->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantiprunednarrowmmww->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantiprunednarrowmmww->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 				       
                                        // Sideband background method                                                                                                                                   
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1598,18 +1645,18 @@ void HadronicWWCuts::Loop()
                                  }
                                if(rotatedprunedmasses > mrotatedcut)
                                  {
-                                   hmassvvantiprunednarrowzz->Fill(mydijet.M());
-                                   hmj1antiprunednarrowzz->Fill(jet_corrmass->at(indleading));
-                                   hmj2antiprunednarrowzz->Fill(jet_corrmass->at(indsecond));
-                                   htau211antiprunednarrowzz->Fill(taut21ddt1);
-                                   htau212antiprunednarrowzz->Fill(taut21ddt2);
+                                   hmassvvantiprunednarrowzz->Fill(mydijet.M(),myweight);
+                                   hmj1antiprunednarrowzz->Fill(jet_corrmass->at(indleading),myweight);
+                                   hmj2antiprunednarrowzz->Fill(jet_corrmass->at(indsecond),myweight);
+                                   htau211antiprunednarrowzz->Fill(taut21ddt1,myweight);
+                                   htau212antiprunednarrowzz->Fill(taut21ddt2,myweight);
 				   
                                    if(mpp>0)
                                      {
-                                       hmassmatchantiprunednarrowmmzz->Fill(mppmm-mydijet.M());
-                                       hymatchantiprunednarrowmmzz->Fill(yppmm-mydijet.Rapidity());
-                                       hmassmatchratioantiprunednarrowmmzz->Fill(1 - (mydijet.M()/mppmm));
-                                       hmassrapiditymatchantiprunednarrowmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity());
+                                       hmassmatchantiprunednarrowmmzz->Fill(mppmm-mydijet.M(),myweight);
+                                       hymatchantiprunednarrowmmzz->Fill(yppmm-mydijet.Rapidity(),myweight);
+                                       hmassmatchratioantiprunednarrowmmzz->Fill(1 - (mydijet.M()/mppmm),myweight);
+                                       hmassrapiditymatchantiprunednarrowmmzz->Fill(1 - (mydijet.M()/mppmm),yppmm-mydijet.Rapidity(),myweight);
 				       
                                        // Sideband background method                                                                                                                                     
                                        if((fabs(1 - (mydijet.M()/mppsmultmult->at(0))) <= massmatchcutksenia) &&
@@ -1642,20 +1689,20 @@ void HadronicWWCuts::Loop()
 				     {
 				       if(rotatedprunedmasses <= mrotatedcut)
 					 {
-					   hmassrapiditymatchvetoorsignalregionww->Fill(massmatch,ymatch);
+					   hmassrapiditymatchvetoorsignalregionww->Fill(massmatch,ymatch,myweight);
 					   npassnonblindnormregionww += 1.0*myweight;
 					 }
 				       if(rotatedprunedmasses > mrotatedcut)
 					 {
-					   hmassrapiditymatchvetoorsignalregionzz->Fill(massmatch,ymatch);
+					   hmassrapiditymatchvetoorsignalregionzz->Fill(massmatch,ymatch,myweight);
 					   npassnonblindnormregionzz += 1.0*myweight;
 					 }
 				       if(fabs(ymatch) > rapiditymatchnormregion && fabs(massmatch) > massmatchnormregion)
 					 {
 					   if(rotatedprunedmasses <= mrotatedcut)
-					     hmassrapiditymatchvetosignalregionww->Fill(massmatch,ymatch);
+					     hmassrapiditymatchvetosignalregionww->Fill(massmatch,ymatch,myweight);
 					   if(rotatedprunedmasses > mrotatedcut)
-                                             hmassrapiditymatchvetosignalregionzz->Fill(massmatch,ymatch);
+                                             hmassrapiditymatchvetosignalregionzz->Fill(massmatch,ymatch,myweight);
 					 }
 				     }
 				 }
@@ -2171,6 +2218,15 @@ if(samplenumber == 20)
    hmassrapiditymatchvetosignalregionzz->Write();
    hmassrapiditymatchvetoorsignalregionzz->Write();
 
+   hmvvsigmcantiacopsigregionww->Write();
+   hyvvsigmcantiacopsigregionww->Write();
+   hmppsigmcantiacopsigregionww->Write();
+   hyppsigmcantiacopsigregionww->Write();
+   hmvvsigmcantiacopsigregionzz->Write();
+   hyvvsigmcantiacopsigregionzz->Write();
+   hmppsigmcantiacopsigregionzz->Write();
+   hyppsigmcantiacopsigregionzz->Write();
+
    fx->cd("Signal");
    hmassmatchsigmcmmww->Write();
    hymatchsigmcmmww->Write();
@@ -2203,6 +2259,14 @@ if(samplenumber == 20)
 
    hmassrapiditymatchsigmcmmww->Write();
    hmassrapiditymatchsigmcmmzz->Write();
+   hmvvsigmcsigregionww->Write();
+   hyvvsigmcsigregionww->Write();
+   hmppsigmcsigregionww->Write();
+   hyppsigmcsigregionww->Write();
+   hmvvsigmcsigregionzz->Write();
+   hyvvsigmcsigregionzz->Write();
+   hmppsigmcsigregionzz->Write();
+   hyppsigmcsigregionzz->Write();
 
    fx->cd("SingleProtonDistributions");
    hxipix45->Write();
