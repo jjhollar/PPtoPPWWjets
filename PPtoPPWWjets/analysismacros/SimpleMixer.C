@@ -196,23 +196,23 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 
 
 
-  TString centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
+  TString centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
   Float_t eqlumi0 = eqlumi02017;
-  TString centralfile1 = "MC_EventsForMixing_QCD470to600_2017.txt";
+  TString centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2017.txt";
   Float_t eqlumi1 = eqlumi12017;
-  TString centralfile2 = "MC_EventsForMixing_QCD600to800_2017.txt";
+  TString centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2017.txt";
   Float_t eqlumi2 = eqlumi22017;
-  TString centralfile3 = "MC_EventsForMixing_QCD800to1000_2017.txt";
+  TString centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2017.txt";
   Float_t eqlumi3 = eqlumi32017; 
-  TString centralfile4 = "MC_EventsForMixing_QCD1000to1400_2017.txt";
+  TString centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2017.txt";
   Float_t eqlumi4 = eqlumi42017;
-  TString centralfile5 = "MC_EventsForMixing_QCD1400to1800_2017.txt";
+  TString centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2017.txt";
   Float_t eqlumi5 = eqlumi52017;
-  TString centralfile6 = "MC_EventsForMixing_ttbar_2017.txt";
+  TString centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2017.txt";
   Float_t eqlumi6 = eqlumi62017;
-  TString centralfile7 = "MC_EventsForMixing_wjets_2017.txt";
+  TString centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2017.txt";
   Float_t eqlumi7 = eqlumi72017;
-  TString centralfile8 = "MC_EventsForMixing_zjets_2017.txt";
+  TString centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2017.txt";
   Float_t eqlumi8 = eqlumi82017;
   TString centralfile9 = "";
   Float_t eqlumi9 = 0;
@@ -221,48 +221,48 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 
   if(year == 2016)
     {
-      centralfile0 = "MC_EventsForMixing_QCD300to470_2016.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2016.txt";
       eqlumi0 = eqlumi02016;
-      centralfile1 = "MC_EventsForMixing_QCD470to600_2016.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2016.txt";
       eqlumi1 = eqlumi12016;
-      centralfile2 = "MC_EventsForMixing_QCD600to800_2016.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2016.txt";
       eqlumi2 = eqlumi22016;
-      centralfile3 = "MC_EventsForMixing_QCD800to1000_2016.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2016.txt";
       eqlumi3 = eqlumi32016;
-      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2016.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2016.txt";
       eqlumi4 = eqlumi42016;
-      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2016.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2016.txt";
       eqlumi5 = eqlumi52016;
-      centralfile6 = "MC_EventsForMixing_ttbar700to1000_2016.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar700to1000_2016.txt";
       eqlumi6 = eqlumi62016;
-      centralfile7 = "MC_EventsForMixing_wjets_2016.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2016.txt";
       eqlumi7 = eqlumi72016;
-      centralfile8 = "MC_EventsForMixing_zjets_2016.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2016.txt";
       eqlumi8 = eqlumi82016;
-      centralfile9 = "MC_EventsForMixing_ttbar1000inf_2016.txt";
+      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar1000inf_2016.txt";
       eqlumi9 = eqlumi92016;
 
       lumi = lumi2016;
     }
   if(year == 2018)
     {
-      centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
       eqlumi0 = eqlumi02018;
-      centralfile1 = "MC_EventsForMixing_QCD470to600_2018.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2018.txt";
       eqlumi1 = eqlumi12018;
-      centralfile2 = "MC_EventsForMixing_QCD600to800_2018.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2018.txt";
       eqlumi2 = eqlumi22018;
-      centralfile3 = "MC_EventsForMixing_QCD800to1000_2018.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2018.txt";
       eqlumi3 = eqlumi32018;
-      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2018.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2018.txt";
       eqlumi4 = eqlumi42018;
-      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2018.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2018.txt";
       eqlumi5 = eqlumi52018;
-      centralfile6 = "MC_EventsForMixing_ttbar_2018.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2018.txt";
       eqlumi6 = eqlumi62018;
-      centralfile7 = "MC_EventsForMixing_wjets_2018.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2018.txt";
       eqlumi7 = eqlumi72018;
-      centralfile8 = "MC_EventsForMixing_zjets_2018.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2018.txt";
       eqlumi8 = eqlumi82018;
 
       lumi = lumi2018;
@@ -311,6 +311,10 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   Float_t taut21ddt2 = 0;
   Float_t xijets1 = 0;
   Float_t xijets2 = 0;
+
+  // Placeholders for proton xi values, which don't exist in background MC...
+  Float_t dummy1 = 0;
+  Float_t dummy2 = 0;
 
   Float_t acopcut = 0.01;
   Float_t mwlowcut = 65.0;
@@ -439,8 +443,9 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
-	  
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
+
 	  //	  if( ifs0.eof() ) break;
 	  
 	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
@@ -483,7 +488,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	  if( ifs1.eof() ) break;
@@ -527,7 +533,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	  if( ifs2.eof() ) break;
@@ -582,7 +589,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs3.eof() ) break;
@@ -626,7 +634,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs4.eof() ) break;
@@ -670,7 +679,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs5.eof() ) break;
@@ -718,7 +728,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs6.eof() ) break;
@@ -766,7 +777,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		   >> jetmass1  >> jetmass2
 		   >> taut21ddt1 >> taut21ddt2
 		   >> xijets1 >> xijets2
-		   >> run >> ls  >> event;
+		   >> run >> ls  >> event
+		   >> dummy1 >> dummy2;
 
 
 	      //          if( ifs6.eof() ) break;                                                                                                                                             
@@ -816,7 +828,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs7.eof() ) break;
@@ -863,7 +876,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event
+	       >> dummy1 >> dummy2;
 	  
 	  
 	  //	      if( ifs8.eof() ) break;
