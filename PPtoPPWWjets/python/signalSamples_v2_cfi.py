@@ -287,7 +287,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 			"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-A0W5e-6_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/40000/F4DBA7F9-3527-E911-9737-0CC47A57CC42.root",
 		],
 	}
-	WW_ACW2e_5 = {}
+	WW_ACW2e_5 = {
 		2017 : [
 			"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/066FBB76-FC2A-E911-B414-FA163EEBE295.root",
 			"/store/mc/RunIIFall17DRPremix/GGToWW_bSM-ACW2e-5_13TeV-fpmc-herwig6/AODSIM/PU2017_94X_mc2017_realistic_v11-v2/50000/20B98A5F-3F2B-E911-BFA0-FA163EEBE295.root",
