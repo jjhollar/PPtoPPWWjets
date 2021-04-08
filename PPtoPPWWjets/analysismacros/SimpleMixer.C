@@ -7,53 +7,53 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
   Float_t lumi2017 = 37.175;
   Float_t eqlumi = 0.0;
 
-  TString centralfile = "MC_EventsForMixing_QCD1000to1400.txt";
+  TString centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD1000to1400.txt";
 
   if(mcsample == 0)
     {
-      centralfile = "MC_EventsForMixing_QCD300to470_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD300to470_2017.txt";
       eqlumi = 11896906.0/(6838*1.14405*1000.0);
     }
   if(mcsample == 1)
     {
-      centralfile = "MC_EventsForMixing_QCD470to600_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD470to600_2017.txt";
       eqlumi = 27705084.0/(551.1*1.17619*1000.0);
     }
   
   if(mcsample == 2)
     {
-      centralfile = "MC_EventsForMixing_QCD600to800_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD600to800_2017.txt";
       eqlumi = 5329382.0/(156.4*1.19501*1000.0);
     }
   if(mcsample == 3)
     {
-      centralfile = "MC_EventsForMixing_QCD800to1000_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD800to1000_2017.txt";
       eqlumi = 39525104.0/(32.293*1000.0);
     }
   if(mcsample == 4)
     {
-      centralfile = "MC_EventsForMixing_QCD1000to1400_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD1000to1400_2017.txt";
 
       eqlumi = 14619206.0/(7.466*1.26149*1000.0);
     }
   if(mcsample == 5)
     {
-      centralfile = "MC_EventsForMixing_QCD1400to1800_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_QCD1400to1800_2017.txt";
       eqlumi = 14286.0/(0.6481*1.30019*1000.0);
     }
   if(mcsample == 6)
     {
-      centralfile = "MC_EventsForMixing_ttbar_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_ttbar_2017.txt";
       eqlumi = 35540872.0/(377.96*1000.0);
     }
   if(mcsample == 7)
     {
-      centralfile = "MC_EventsForMixing_wjets_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_wjets_2017.txt";
       eqlumi = 8081153.0/(33.7*1000.0);
     }
   if(mcsample == 8)
     {
-      centralfile = "MC_EventsForMixing_zjets_2017.txt";
+      centralfile = "/tmp/jjhollar/MC_EventsForMixing_zjets_2017.txt";
       eqlumi = 9783887.0/(14.6*1000.0);
     }
   
@@ -99,8 +99,10 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
   TH1F *hmjj = new TH1F("hmjj","hmjj",25,0,2500);
 
   Int_t i = 0;
+  Int_t dummy1 = 0;
+  Int_t dummy2 = 0;
 
-  while(true)
+  while(!ifs.eof())
     {
       Float_t xi45 = 0;
       Float_t xi56 = 0;
@@ -110,7 +112,14 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
            >> jetmass1  >> jetmass2
            >> taut21ddt1 >> taut21ddt2
            >> xijets1 >> xijets2
-           >> run >> ls  >> event;
+	  >> run >> ls  >> event
+	  >> dummy1 >> dummy2;
+
+      if(i % 10000 == 0)
+	{
+	  std::cout << "i = " << i << std::endl;
+	  std::cout << "acop = " << acop << std::endl;
+	}
 
       if( ifs.eof() ) break;
 
@@ -152,7 +161,7 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
 					      hmresdy->GetYaxis()->FindBin(-1*kseniarapmatchcut), hmresdy->GetYaxis()->FindBin(1*kseniarapmatchcut));
 
 
-  hmjj->Sumw2(); hmjj->Scale(lumi2017/eqlumi/remix); hmjj->SetLineWidth(3); hmjj->SetLineColor(9); hmjj->SetFillColor(9); hmjj->SetMaximum(5); 
+  hmjj->Sumw2(); hmjj->Scale(lumi2017/eqlumi/remix); hmjj->SetLineWidth(3); hmjj->SetLineColor(9); hmjj->SetFillColor(9); hmjj->SetMaximum(30); 
   //  hmjj->Draw("hist");
 
   std::cout << "N(bkg in signal region) = " << scaledsignalbox << " for lumi=" << lumi2017 << std::endl;
@@ -196,73 +205,76 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 
 
 
-  TString centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
+  TString centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
   Float_t eqlumi0 = eqlumi02017;
-  TString centralfile1 = "MC_EventsForMixing_QCD470to600_2017.txt";
+  TString centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2017.txt";
   Float_t eqlumi1 = eqlumi12017;
-  TString centralfile2 = "MC_EventsForMixing_QCD600to800_2017.txt";
+  TString centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2017.txt";
   Float_t eqlumi2 = eqlumi22017;
-  TString centralfile3 = "MC_EventsForMixing_QCD800to1000_2017.txt";
+  TString centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2017.txt";
   Float_t eqlumi3 = eqlumi32017; 
-  TString centralfile4 = "MC_EventsForMixing_QCD1000to1400_2017.txt";
+  TString centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2017.txt";
   Float_t eqlumi4 = eqlumi42017;
-  TString centralfile5 = "MC_EventsForMixing_QCD1400to1800_2017.txt";
+  TString centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2017.txt";
   Float_t eqlumi5 = eqlumi52017;
-  TString centralfile6 = "MC_EventsForMixing_ttbar_2017.txt";
+  TString centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2017.txt";
   Float_t eqlumi6 = eqlumi62017;
-  TString centralfile7 = "MC_EventsForMixing_wjets_2017.txt";
+  TString centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2017.txt";
   Float_t eqlumi7 = eqlumi72017;
-  TString centralfile8 = "MC_EventsForMixing_zjets_2017.txt";
+  TString centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2017.txt";
   Float_t eqlumi8 = eqlumi82017;
   TString centralfile9 = "";
   Float_t eqlumi9 = 0;
+
+  TString scentralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v3/MC_EventsForMixing_signal_WWA0W5E-6_2018D.txt";
+  Float_t seqlumi1 = 10.;
 
   Float_t lumi = lumi2017;
 
   if(year == 2016)
     {
-      centralfile0 = "MC_EventsForMixing_QCD300to470_2016.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2016.txt";
       eqlumi0 = eqlumi02016;
-      centralfile1 = "MC_EventsForMixing_QCD470to600_2016.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2016.txt";
       eqlumi1 = eqlumi12016;
-      centralfile2 = "MC_EventsForMixing_QCD600to800_2016.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2016.txt";
       eqlumi2 = eqlumi22016;
-      centralfile3 = "MC_EventsForMixing_QCD800to1000_2016.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2016.txt";
       eqlumi3 = eqlumi32016;
-      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2016.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2016.txt";
       eqlumi4 = eqlumi42016;
-      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2016.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2016.txt";
       eqlumi5 = eqlumi52016;
-      centralfile6 = "MC_EventsForMixing_ttbar700to1000_2016.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar700to1000_2016.txt";
       eqlumi6 = eqlumi62016;
-      centralfile7 = "MC_EventsForMixing_wjets_2016.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2016.txt";
       eqlumi7 = eqlumi72016;
-      centralfile8 = "MC_EventsForMixing_zjets_2016.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2016.txt";
       eqlumi8 = eqlumi82016;
-      centralfile9 = "MC_EventsForMixing_ttbar1000inf_2016.txt";
+      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar1000inf_2016.txt";
       eqlumi9 = eqlumi92016;
 
       lumi = lumi2016;
     }
   if(year == 2018)
     {
-      centralfile0 = "MC_EventsForMixing_QCD300to470_2018.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
       eqlumi0 = eqlumi02018;
-      centralfile1 = "MC_EventsForMixing_QCD470to600_2018.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2018.txt";
       eqlumi1 = eqlumi12018;
-      centralfile2 = "MC_EventsForMixing_QCD600to800_2018.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2018.txt";
       eqlumi2 = eqlumi22018;
-      centralfile3 = "MC_EventsForMixing_QCD800to1000_2018.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2018.txt";
       eqlumi3 = eqlumi32018;
-      centralfile4 = "MC_EventsForMixing_QCD1000to1400_2018.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2018.txt";
       eqlumi4 = eqlumi42018;
-      centralfile5 = "MC_EventsForMixing_QCD1400to1800_2018.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2018.txt";
       eqlumi5 = eqlumi52018;
-      centralfile6 = "MC_EventsForMixing_ttbar_2018.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2018.txt";
       eqlumi6 = eqlumi62018;
-      centralfile7 = "MC_EventsForMixing_wjets_2018.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2018.txt";
       eqlumi7 = eqlumi72018;
-      centralfile8 = "MC_EventsForMixing_zjets_2018.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2018.txt";
       eqlumi8 = eqlumi82018;
 
       lumi = lumi2018;
@@ -311,10 +323,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   Float_t taut21ddt2 = 0;
   Float_t xijets1 = 0;
   Float_t xijets2 = 0;
+  Float_t rotatedprunedmasses = 0.0;
+
+  Int_t dummy1 = 0; 
+  Int_t dummy2 = 0;
 
   Float_t acopcut = 0.01;
-  Float_t mwlowcut = 65.0;
-  Float_t mwhicut = 105.0;
+  Float_t mwlowcut = 60.0;
+  Float_t mwhicut = 107.0;
+  Float_t mrotatedcut = 117.8;
   Float_t tau21cut = 0.75;
 
   Float_t kseniammatchcut = 0.11506000;
@@ -344,6 +361,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   TH1F *hmjj7 = new TH1F("hmjj7","hmjj7",250,0,5000);
   TH1F *hmjj8 = new TH1F("hmjj8","hmjj8",250,0,5000);
   TH1F *hmjj9 = new TH1F("hmjj9","hmjj9",250,0,5000);
+
+  TH1F *shmjj1 = new TH1F("shmjj1","shmjj1",250,0,5000);
 
   TH1F *hmjjsumstack = new TH1F("hmjjsumstack","hmjjsumstack",250,0,5000);
   TH1F *hmjjqcd = new TH1F("hmjjqcd","hmjjqcd",250,0,5000);
@@ -428,7 +447,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
       cout << "Experiment #" << i << endl;
 
       // QCD                                                                                                                                                                                  
-      cout << "\tRunning QCD" << endl;
+      cout << "\tRunning QCD sample0" << endl;
       while(!ifs0.eof())
 	{
 	  Float_t xi45 = 0;
@@ -439,11 +458,14 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
+
+	  if( ifs0.eof() ) break;
+	  rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
 	  
-	  //	  if( ifs0.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) && 
+	     (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) && 
+	     (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral0->Fill(mww,PUweight);
 	      hmyjjcentral0->Fill(mww,yww,PUweight);
@@ -472,7 +494,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		}
 	    }
 	}
-      
+
+      cout << "\tRunning QCD sample1" << endl;
       while(!ifs1.eof())
 	{
 	  Float_t xi45 = 0;
@@ -483,12 +506,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	  if( ifs1.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs1.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral1->Fill(mww,PUweight);
 	      hmyjjcentral1->Fill(mww,yww,PUweight);
@@ -517,6 +543,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		}
 	    }
 	}
+
+      cout << "\tRunning QCD sample2" << endl;
       while(!ifs2.eof())
 	{
 	  Float_t xi45 = 0;
@@ -527,12 +555,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	  if( ifs2.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs2.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral2->Fill(mww,PUweight);
 	      hmyjjcentral2->Fill(mww,yww,PUweight);
@@ -572,6 +603,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	    }
 	}
 	 
+      cout << "\tRunning QCD sample3" << endl;
       while(!ifs3.eof())
 	{
 	  Float_t xi45 = 0;
@@ -582,12 +614,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs3.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs3.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral3->Fill(mww,PUweight);
 	      hmyjjcentral3->Fill(mww,yww,PUweight);
@@ -616,6 +651,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		}
 	    }
 	}
+
+      cout << "\tRunning QCD sample4" << endl;
       while(!ifs4.eof())
 	{
 	  Float_t xi45 = 0;
@@ -626,12 +663,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs4.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs4.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral4->Fill(mww,PUweight);
 	      hmyjjcentral4->Fill(mww,yww,PUweight);
@@ -660,6 +700,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		}
 	    }
 	}
+
+      cout << "\tRunning QCD sample5" << endl;
       while(!ifs5.eof())
 	{
 	  Float_t xi45 = 0;
@@ -670,12 +712,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs5.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs5.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral5->Fill(mww,PUweight);
 	      hmyjjcentral5->Fill(mww,yww,PUweight);
@@ -707,7 +752,6 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
       
       // ttbar
       cout << "\tRunning ttbar" << endl;
-      
       while(!ifs6.eof())
 	{
 	  Float_t xi45 = 0;
@@ -718,12 +762,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs6.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs6.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral6->Fill(mww,PUweight);
 	      hmyjjcentral6->Fill(mww,yww,PUweight);
@@ -766,12 +813,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 		   >> jetmass1  >> jetmass2
 		   >> taut21ddt1 >> taut21ddt2
 		   >> xijets1 >> xijets2
-		   >> run >> ls  >> event;
+		   >> run >> ls  >> event >> dummy1 >> dummy2;
 
 
-	      //          if( ifs6.eof() ) break;                                                                                                                                             
+	      if( ifs9.eof() ) break;                                                                                                                                             
+	      rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
 
-	      if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	      if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+		 (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+		 (rotatedprunedmasses <= mrotatedcut))
 		{
 		  hmjjcentral9->Fill(mww,PUweight);
 		  hmyjjcentral9->Fill(mww,yww,PUweight);
@@ -816,12 +866,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs7.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs7.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral7->Fill(mww,PUweight);
 	      hmyjjcentral7->Fill(mww,yww,PUweight);
@@ -863,12 +916,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
 	       >> jetmass1  >> jetmass2
 	       >> taut21ddt1 >> taut21ddt2
 	       >> xijets1 >> xijets2
-	       >> run >> ls  >> event;
+	       >> run >> ls  >> event >> dummy1 >> dummy2;
 	  
 	  
-	  //	      if( ifs8.eof() ) break;
-	  
-	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut))
+	  if( ifs8.eof() ) break;
+          rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+
+          if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+             (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (rotatedprunedmasses <= mrotatedcut))
 	    {
 	      hmjjcentral8->Fill(mww,PUweight);
 	      hmyjjcentral8->Fill(mww,yww,PUweight);
@@ -922,7 +978,42 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
       nbkgbyexperiment->Fill(nbkgtotal);
     }
 
+  // Signal MC
+  ifstream sifs1(scentralfile1);
 
+  while(!sifs1.eof())
+    {
+      Float_t xi45 = 0;
+      Float_t xi56 = 0;
+      
+      sifs1 >> channel >> PU >> PUweight >> mww >> yww
+	    >> acop >> jetptbal
+	    >> jetmass1  >> jetmass2
+	    >> taut21ddt1 >> taut21ddt2
+	    >> xijets1 >> xijets2
+	    >> run >> ls  >> event >> xi45 >> xi56;
+      
+      
+      if( sifs1.eof() ) break;
+      rotatedprunedmasses = (TMath::Cos(TMath::Pi()/4.0)*jetmass1) + (TMath::Sin(TMath::Pi()/4.0)*jetmass2);
+      
+      if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
+	 (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+	 (rotatedprunedmasses <= mrotatedcut))
+	{
+	  if(xi45 >= xicut && xi56 >= xicut)
+	    {
+	      Float_t mpp = 13000.0*TMath::Sqrt(xi45*xi56);
+	      Float_t ypp = 0.5*TMath::Log(xi45/xi56);
+	      //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl; \
+              
+	      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		{
+		  shmjj1->Fill(mww,PUweight);
+		}
+	    }
+	}
+    }
   // JH
   std::cout << "Total events = " << ntotal << ", 2-arm events = " << ntwoarms/remix << " (" << 1.0*ntwoarms/ntotal/remix << "), 2-arm events with xi>0.05 = " 
 	    << ntwoarmsxi5/remix << " (" << 1.0*ntwoarmsxi5/ntotal/remix << ")" << std::endl;
@@ -1055,11 +1146,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   if(year == 2016)
     hmjjttbar->Add(hmjj9);
 
+  /*
   hmjjqcd->Rebin(10);
   hmjjwjets->Rebin(10);
   hmjjzjets->Rebin(10);
   hmjjttbar->Rebin(10);
-  
+  */
+  hmjjqcd->Rebin(5);                                                                                                                    
+  hmjjwjets->Rebin(5);                                                                                                                  
+  hmjjzjets->Rebin(5);                                                                                                                  
+  hmjjttbar->Rebin(5);                                                                                                                  
+
   hmjjqcd->GetXaxis()->SetRangeUser(1000.0,3000);
   hmjjqcd->SetFillColor(kAzure+2);
   hmjjwjets->GetXaxis()->SetRangeUser(1000.0,3000);
@@ -1070,11 +1167,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   hmjjttbar->SetFillColor(kOrange+2);
 
   TCanvas *c2 = new TCanvas("c2","c2");
-  hmjjsum->Sumw2(); hmjjsum->SetLineWidth(3); hmjjsum->SetLineColor(11); hmjjsum->SetFillColor(11); hmjjsum->SetMaximum(5);
+  hmjjsum->Sumw2(); hmjjsum->SetLineWidth(3); hmjjsum->SetLineColor(11); hmjjsum->SetFillColor(11); hmjjsum->SetMaximum(30);
   hmjjsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
   hmjjsum->SetYTitle("Events");
 
-  hmjjqcd->Sumw2(); hmjjqcd->SetMaximum(5);
+  hmjjqcd->Sumw2(); hmjjqcd->SetMaximum(30);
   hmjjqcd->SetXTitle("m(W_{j}W_{j}) [GeV]");
   hmjjqcd->SetYTitle("Events");
   hmjjqcd->GetXaxis()->SetTitleSize(0.04);  hmjjqcd->GetXaxis()->SetTitleOffset(1.2);
@@ -1083,6 +1180,12 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
   hmjjwjets->Draw("histsame");
   hmjjzjets->Draw("histsame");
   hmjjttbar->Draw("histsame");
+
+  // Signal MC
+  shmjj1->Rebin(5);
+  shmjj1->GetXaxis()->SetRangeUser(1000.0,3000);
+  shmjj1->Scale(0.1); shmjj1->SetLineWidth(3); shmjj1->SetLineColor(6);
+  //  shmjj1->Draw("histsame");
 
   TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
   hmjjqcd->SetMarkerStyle(0); hmjjqcd->SetLineWidth(0);
@@ -1207,5 +1310,12 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017)
     CMS_lumi2016(c3,0,0,"2016, L = 10.2 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
+
+  c1->SaveAs("EventMixingBackgroudMassRapidityMatch2018WW.pdf");
+  c1->SaveAs("EventMixingBackgroudMassRapidityMatch2018WW.C");
+  c2->SaveAs("EventMixingBackgroudMWWSignalRegion2018WW.pdf");
+  c2->SaveAs("EventMixingBackgroudMWWSignalRegion2018WW.C");
+  c3->SaveAs("BackgroundEventMixingToys2018WW.pdf");
+  c3->SaveAs("BackgroundEventMixingToys2018WW.C");
 
 }
