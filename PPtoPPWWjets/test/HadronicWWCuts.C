@@ -1609,39 +1609,18 @@ void HadronicWWCuts::Loop() {
 
             // Mass/rapidity match cuts
             // Ksenia cuts: straight cuts
-            // Andrea cuts: bands with 2 signal regions
-            
-            // // 2 sigma
-            // float mrmatch_0 = 1.2625;
-            // float mrmatch_1 = -0.12775;
-            // float mrmatch_2 = 0.12375;
-            // float mrmatch_3 = -1.154625;
-            // float mrmatch_4 = -0.130875;
-            // float mrmatch_5 = 0.103625;
+            // Andrea cuts: diamond + bands 
 
-            // 1.5 sigma
-            float mrmatch_0 = 1.2625;
-            float mrmatch_1 = -0.0963125;
-            float mrmatch_2 = 0.0922125;
-            float mrmatch_3 = -1.154625;
-            float mrmatch_4 = -0.1015621;
-            float mrmatch_5 = 0.0743125;
-           
-            // 1 sigma
-            // float mrmatch_0 = 1.2625;
-            // float mrmatch_1 = -0.064875;
-            // float mrmatch_2 = 0.060875;
-            // float mrmatch_3 = -1.154625;
-            // float mrmatch_4 = -0.07225;
-            // float mrmatch_5 = 0.045;
-                      
-            // 0.5 sigma
-            // float mrmatch_0 = 1.2625;
-            // float mrmatch_1 = -0.0334375;
-            // float mrmatch_2 = 0.0294375;
-            // float mrmatch_3 = -1.154625;
-            // float mrmatch_4 = -0.0429375;
-            // float mrmatch_5 = 0.0156875;
+            // Average values for different samples
+            float slope_1 = 0.792079;
+            float intercept_1 = 0.002;
+            float sigma_1 = 0.06675;
+            float slope_2 = -0.866082;
+            float intercept_2 = -0.013625;
+            float sigma_2 = 0.058625;
+
+            float nSigmaDiamond = 1.25;
+            float nSigmaBands = 0.75;
 
             float massmatchratio = 999;
             float rapiditydelta = 999;
@@ -1655,19 +1634,40 @@ void HadronicWWCuts::Loop() {
                 (fabs(rapiditydelta) <= rapiditymatchcutksenia);
             bool passkseniacut_signalB = false;
 
-
             bool innormregion = (fabs(massmatchratio) > massmatchnormregion) ||
                                 (fabs(rapiditydelta) > rapiditymatchnormregion);
-            bool inband_1 = ((massmatchratio/mrmatch_0 + mrmatch_1) < rapiditydelta) && (rapiditydelta < (massmatchratio/mrmatch_0 + mrmatch_2));
-            bool inband_2 = ((massmatchratio/mrmatch_3 + mrmatch_4) < rapiditydelta) && (rapiditydelta < (massmatchratio/mrmatch_3 + mrmatch_5));
-            bool passandreacut_signalA = (!innormregion) && (inband_1 && inband_2);
-            bool passandreacut_signalB = (!innormregion) && (inband_1 || inband_2) && (!passandreacut_signalA);
+
+            bool inband_1_Diamond =
+                ((massmatchratio * slope_1 + intercept_1 -
+                  nSigmaDiamond * sigma_1) < rapiditydelta) &&
+                (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+                                  nSigmaDiamond * sigma_1));
+            bool inband_2_Diamond =
+                ((massmatchratio * slope_2 + intercept_2 -
+                  nSigmaDiamond * sigma_2) < rapiditydelta) &&
+                (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+                                  nSigmaDiamond * sigma_2));
+            bool inband_1_Bands =
+                ((massmatchratio * slope_1 + intercept_1 -
+                  nSigmaBands * sigma_1) < rapiditydelta) &&
+                (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+                                  nSigmaBands * sigma_1));
+            bool inband_2_Bands =
+                ((massmatchratio * slope_2 + intercept_2 -
+                  nSigmaBands * sigma_2) < rapiditydelta) &&
+                (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+                                  nSigmaBands * sigma_2));
+
+            bool passandreacut_signalA =
+                (!innormregion) && (inband_1_Diamond && inband_2_Diamond);
+            bool passandreacut_signalB =
+                (!innormregion) && (inband_1_Bands || inband_2_Bands) &&
+                (!passandreacut_signalA) && (massmatchratio < 0);
 
             bool passmassrapiditymatch_signalA = passandreacut_signalA;
             bool passmassrapiditymatch_signalB = passandreacut_signalB;
             // bool passmassrapiditymatch_signalA = passkseniacut_signalA;
             // bool passmassrapiditymatch_signalB = passkseniacut_signalB;
-
 
             // Signal region, only for MC
             if (samplenumber > 0) {
@@ -3345,16 +3345,16 @@ void HadronicWWCuts::Loop() {
             << npassppsmatch_A + npassppsmatch_B << std::endl
             << "Passing WW channel cut = "
             << npassppsmatchkseniaww_A + npassppsmatchkseniaww_B << std::endl
-            << "Passing WW channel cut A = "
-            << npassppsmatchkseniaww_A << std::endl
-            << "Passing WW channel cut B = "
-            << npassppsmatchkseniaww_B << std::endl
+            << "Passing WW channel cut A = " << npassppsmatchkseniaww_A
+            << std::endl
+            << "Passing WW channel cut B = " << npassppsmatchkseniaww_B
+            << std::endl
             << "Passing ZZ channel cut = "
             << npassppsmatchkseniazz_A + npassppsmatchkseniazz_B << std::endl
-            << "Passing ZZ channel cut A = "
-            << npassppsmatchkseniazz_A << std::endl
-            << "Passing ZZ channel cut B = "
-            << npassppsmatchkseniazz_B << std::endl;
+            << "Passing ZZ channel cut A = " << npassppsmatchkseniazz_A
+            << std::endl
+            << "Passing ZZ channel cut B = " << npassppsmatchkseniazz_B
+            << std::endl;
 
   std::cout << std::endl
             << std::endl
@@ -3385,8 +3385,7 @@ void HadronicWWCuts::Loop() {
             << npassantitausigregionww_A + npassantitausigregionww_B
             << std::endl
             << "\t WW sig. region A = " << npassantitausigregionww_A
-            << ", WW sig. region B = " << npassantitausigregionww_B
-            << std::endl
+            << ", WW sig. region B = " << npassantitausigregionww_B << std::endl
             << "\t ZZ norm. region = " << npassantitaunormregionzz
             << ", ZZ sig. region = "
             << npassantitausigregionzz_A + npassantitausigregionzz_B
