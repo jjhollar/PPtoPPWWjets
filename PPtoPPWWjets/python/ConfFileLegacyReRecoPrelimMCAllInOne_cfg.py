@@ -141,7 +141,15 @@ if MC == True and YEAR == 2018:
     cms.PSet( xangle = cms.double(140), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2018/version6/140urad.root") )
   )
 
-from signalSamples_cfi import *
+# from signalSamples_cfi import *
+# print "Signal sample file list: "
+# print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
+# print "\n"
+# process.source = cms.Source("PoolSource",
+#     fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
+# )
+
+from signalSamples_v2_cfi import *
 print "Signal sample file list: "
 print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 print "\n"

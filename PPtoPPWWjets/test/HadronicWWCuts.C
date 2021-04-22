@@ -39,9 +39,9 @@ void HadronicWWCuts::Loop() {
   bool DOJECSYSTEMATICSUP = false;
   bool DOJECSYSTEMATICSDOWN = false;
 
-  TString outputFolder = "testrun";
+  // TString outputFolder = "testrun";
 
-  // TString outputFolder = "signalSamples_v3";
+  TString outputFolder = "signalSamples_v4";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "backgroundSamples";
   if (DOPROTONSYSTEMATICS)
@@ -612,12 +612,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == -3)
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2017/"
-        "Fall17_17Nov2017D_V32_DATA_UncertaintySources_AK8PFchs.txt",
+        "Fall17_17Nov2017DE_V32_DATA_UncertaintySources_AK8PFchs.txt",
         "Total")));
   if (samplenumber == -4)
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2017/"
-        "Fall17_17Nov2017E_V32_DATA_UncertaintySources_AK8PFchs.txt",
+        "Fall17_17Nov2017DE_V32_DATA_UncertaintySources_AK8PFchs.txt",
         "Total")));
   if (samplenumber == -5)
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
@@ -734,21 +734,93 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 40)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2017B.txt";
+  if (samplenumber == 62)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2017C.txt";
+  if (samplenumber == 63)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2017D.txt";
+  if (samplenumber == 64)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_postTS2_2017E.txt";
+  if (samplenumber == 65)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_postTS2_2017F.txt";
   if (samplenumber == 41)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2017B.txt";
+  if (samplenumber == 66)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2017C.txt";
+  if (samplenumber == 67)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2017D.txt";
+  if (samplenumber == 68)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_postTS2_2017E.txt";
+  if (samplenumber == 69)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_postTS2_2017F.txt";
   if (samplenumber == 42)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017B.txt";
+  if (samplenumber == 70)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017C.txt";
+  if (samplenumber == 71)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017D.txt";
+  if (samplenumber == 72)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_postTS2_2017E.txt";
+  if (samplenumber == 73)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_postTS2_2017F.txt";
   if (samplenumber == 43)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2017B.txt";
+  if (samplenumber == 74)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2017C.txt";
+  if (samplenumber == 75)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2017D.txt";
+  if (samplenumber == 76)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_postTS2_2017E.txt";
+  if (samplenumber == 77)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_postTS2_2017F.txt";
   if (samplenumber == 44)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2017B.txt";
+  if (samplenumber == 78)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2017C.txt";
+  if (samplenumber == 79)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2017D.txt";
+  if (samplenumber == 80)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_postTS2_2017E.txt";
+  if (samplenumber == 81)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_postTS2_2017F.txt";
   if (samplenumber == 45)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017B.txt";
+  if (samplenumber == 82)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017C.txt";
+  if (samplenumber == 83)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017D.txt";
+  if (samplenumber == 84)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_postTS2_2017E.txt";
+  if (samplenumber == 85)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_postTS2_2017F.txt";
 
   if (samplenumber == 50)
     outtextfile =
@@ -866,21 +938,57 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 140)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2016B.txt";
+  if (samplenumber == 146)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2016C.txt";
+  if (samplenumber == 147)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_preTS2_2016G.txt";
   if (samplenumber == 141)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016B.txt";
+  if (samplenumber == 148)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016C.txt";
+  if (samplenumber == 149)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016G.txt";
   if (samplenumber == 142)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016B.txt";
+  if (samplenumber == 150)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016C.txt";
+  if (samplenumber == 151)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016G.txt";
   if (samplenumber == 143)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2016B.txt";
+  if (samplenumber == 152)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2016C.txt";
+  if (samplenumber == 153)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_preTS2_2016G.txt";
   if (samplenumber == 144)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016B.txt";
+  if (samplenumber == 154)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016C.txt";
+  if (samplenumber == 155)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016G.txt";
   if (samplenumber == 145)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016B.txt";
+  if (samplenumber == 156)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016C.txt";
+  if (samplenumber == 157)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016G.txt";
 
   if (samplenumber == 202)
     outtextfile = outputFolder + "MC_EventsForMixing_QCD300to470_2018.txt";
@@ -977,21 +1085,75 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 250)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_2018A.txt";
+  if (samplenumber == 256)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_2018B.txt";
+  if (samplenumber == 257)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_2018C.txt";
+  if (samplenumber == 258)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z-1E-5_2018D.txt";
   if (samplenumber == 251)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_2018A.txt";
+  if (samplenumber == 259)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_2018B.txt";
+  if (samplenumber == 260)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_2018C.txt";
+  if (samplenumber == 261)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_2018D.txt";
   if (samplenumber == 252)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_2018A.txt";
+  if (samplenumber == 262)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_2018B.txt";
+  if (samplenumber == 263)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_2018C.txt";
+  if (samplenumber == 264)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_2018D.txt";
   if (samplenumber == 253)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_2018A.txt";
+  if (samplenumber == 265)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_2018B.txt";
+  if (samplenumber == 266)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_2018C.txt";
+  if (samplenumber == 267)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ-1E-5_2018D.txt";
   if (samplenumber == 254)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_2018A.txt";
+  if (samplenumber == 268)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_2018B.txt";
+  if (samplenumber == 269)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_2018C.txt";
+  if (samplenumber == 270)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_2018D.txt";
   if (samplenumber == 255)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_2018A.txt";
+  if (samplenumber == 271)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_2018B.txt";
+  if (samplenumber == 272)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_2018C.txt";
+  if (samplenumber == 273)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_2018D.txt";
 
   ofstream ofs(outtextfile);
 
@@ -1012,10 +1174,16 @@ void HadronicWWCuts::Loop() {
     erastring = "2018";
   }
   // Mapping of sample number to era for signal MC
-  if (samplenumber >= 20 && samplenumber <= 45) {
+  if ((samplenumber >= 20 && samplenumber <= 45) || samplenumber == 66 ||
+      samplenumber == 67 || samplenumber == 70 || samplenumber == 71 ||
+      samplenumber == 74 || samplenumber == 75 || samplenumber == 78 ||
+      samplenumber == 79 || samplenumber == 82 || samplenumber == 83) {
     erastring = "2017preTS2";
   }
-  if (samplenumber >= 50 && samplenumber <= 61) {
+  if ((samplenumber >= 50 && samplenumber <= 61) || samplenumber == 68 ||
+      samplenumber == 69 || samplenumber == 72 || samplenumber == 73 ||
+      samplenumber == 76 || samplenumber == 77 || samplenumber == 80 ||
+      samplenumber == 81 || samplenumber == 84 || samplenumber == 85) {
     erastring = "2017postTS2";
   }
   if (samplenumber >= 120 && samplenumber < 200) {
@@ -1037,7 +1205,7 @@ void HadronicWWCuts::Loop() {
   Long64_t nbytes = 0, nb = 0;
   for (Long64_t jentry = 0; jentry < nentries; jentry++) {
     Long64_t ientry = LoadTree(jentry);
-    if (ientry > 500000)
+    if (ientry < 0)
       break;
     nb = fChain->GetEntry(jentry);
     nbytes += nb;
@@ -1609,7 +1777,7 @@ void HadronicWWCuts::Loop() {
 
             // Mass/rapidity match cuts
             // Ksenia cuts: straight cuts
-            // Andrea cuts: diamond + bands 
+            // Andrea cuts: diamond + bands
 
             // Average values for different samples
             float slope_1 = 0.792079;
@@ -2575,30 +2743,150 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z-1E-5_preTS2_2017B.root",
                    "RECREATE");
+  if (samplenumber == 62)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 63)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 64)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 65)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 41)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 66)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 67)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 68)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 69)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 42)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z5E-5_preTS2_2017B.root",
                    "RECREATE");
+  if (samplenumber == 70)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 71)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 72)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 73)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 43)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ-1E-5_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 74)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 75)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 76)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 77)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 44)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_preTS2_2017B.root",
                    "RECREATE");
+  if (samplenumber == 78)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 79)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 80)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 81)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 45)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ5E-5_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 82)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 83)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 84)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 85)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_postTS2_2017F.root",
                    "RECREATE");
 
   if (samplenumber == 50)
@@ -2815,30 +3103,90 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z-1E-5_preTS2_2016B.root",
                    "RECREATE");
+  if (samplenumber == 146)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 147)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 141)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 148)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 149)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_preTS2_2016G.root",
                    "RECREATE");
   if (samplenumber == 142)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z5E-5_preTS2_2016B.root",
                    "RECREATE");
+  if (samplenumber == 150)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 151)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 143)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ-1E-5_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 152)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 153)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_preTS2_2016G.root",
                    "RECREATE");
   if (samplenumber == 144)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_preTS2_2016B.root",
                    "RECREATE");
+  if (samplenumber == 154)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 155)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 145)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ5E-5_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 156)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 157)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_preTS2_2016G.root",
                    "RECREATE");
 
   // 2018
@@ -3019,30 +3367,120 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z-1E-5_2018A.root",
                    "RECREATE");
+  if (samplenumber == 256)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 257)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 258)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z-1E-5_2018D.root",
+                   "RECREATE");
   if (samplenumber == 251)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 259)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 260)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 261)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z1E-5_2018D.root",
                    "RECREATE");
   if (samplenumber == 252)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z5E-5_2018A.root",
                    "RECREATE");
+  if (samplenumber == 262)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 263)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 264)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z5E-5_2018D.root",
+                   "RECREATE");
   if (samplenumber == 253)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ-1E-5_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 265)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 266)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 267)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ-1E-5_2018D.root",
                    "RECREATE");
   if (samplenumber == 254)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_2018A.root",
                    "RECREATE");
+  if (samplenumber == 268)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 269)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 270)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ1E-5_2018D.root",
+                   "RECREATE");
   if (samplenumber == 255)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ5E-5_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 271)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 272)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 273)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ5E-5_2018D.root",
                    "RECREATE");
 
   if (samplenumber == 999)

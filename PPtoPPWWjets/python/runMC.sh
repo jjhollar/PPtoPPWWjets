@@ -5,7 +5,7 @@ then
     echo "Usage: CMSSW_BASE year cms_era sampleTag <partNumber> <nParts>"
     echo "Arguments in angular brackets are optional"
 else
-	output_dir="/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v2"
+	output_dir="/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v3"
 	export CMSSW_BASE=${1}
 	export SCRAM_ARCH=slc7_amd64_gcc700
 	cd $CMSSW_BASE/src/PPtoPPWWjets/PPtoPPWWjets/python

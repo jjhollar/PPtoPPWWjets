@@ -1,11 +1,11 @@
 executable			= runHadronicWWCuts.sh
 arguments			= $(sampleNumber) $ENV(CMSSW_BASE)
-# output 				= signalSamples_v3/HadronicWWCuts_$(sampleNumber).out
-# output 				= signalSamples_v3_protonSystematics/HadronicWWCuts_$(sampleNumber).out
-# output 				= signalSamples_v3_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
-output 				= signalSamples_v3_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
-# output 				= dataRun2/HadronicWWCuts_$(sampleNumber).out
-# output 				= backgroundSamples/HadronicWWCuts_$(sampleNumber).out
+output 				= signalSamples_v4/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v4_protonSystematics/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v4_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v4_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
+# output 				= dataRun2_v2/HadronicWWCuts_$(sampleNumber).out
+# output 				= backgroundSamples_v2/HadronicWWCuts_$(sampleNumber).out
 error 				= HadronicWWCuts_$(sampleNumber).err
 log 				= HadronicWWCuts_$(sampleNumber).log
 getenv				= True
@@ -18,18 +18,18 @@ queue sampleNumber in (
 # #
 	# WW Part
 	# WW_A0W1e-6
-	# 120 
-	# 121 
-	# 122 
-	# 20 
-	# 21 
-	# 22 
-	# 50 
-	# 51 
-	# 220 
-	# 221 
-	# 222 
-	# 223 
+	120 
+	121 
+	122 
+	20 
+	21 
+	22 
+	50 
+	51 
+	220 
+	221 
+	222 
+	223 
 	# WW_A0W2e-6
 	# 123 
 	# 124 
@@ -44,44 +44,44 @@ queue sampleNumber in (
 	# 226 
 	# 227 
 	# WW_A0W5e-6
-	# 126 
-	# 127 
-	# 128 
-	# 26 
-	# 27 
-	# 28 
-	# 54 
-	# 55 
-	# 228 
-	# 229 
-	# 230 
-	# 231 
+	126 
+	127 
+	128 
+	26 
+	27 
+	28 
+	54 
+	55 
+	228 
+	229 
+	230 
+	231 
 	# WW_ACW2e-5
-	# 129 
-	# 130 
-	# 131 
-	# 29 
-	# 30 
-	# 31 
-	# 56 
-	# 57 
-	# 232 
-	# 233 
-	# 234 
-	# 235 
+	129 
+	130 
+	131 
+	29 
+	30 
+	31 
+	56 
+	57 
+	232 
+	233 
+	234 
+	235 
 	# WW_ACW5e-6
-	# 132 
-	# 133 
-	# 134 
-	# 32 
-	# 33 
-	# 34 
-	# 58 
-	# 59 
-	# 236 
-	# 237 
-	# 238 
-	# 239 
+	132 
+	133 
+	134 
+	32 
+	33 
+	34 
+	58 
+	59 
+	236 
+	237 
+	238 
+	239 
 	# WW_ACW8e-6
 	135 
 	136 
@@ -97,45 +97,45 @@ queue sampleNumber in (
 	243 
 	# ZZ Part
 	# ZZ_A0Z-1e-5
-	# 140 
-	# 40 
-	# 250 
+	140 
+	40 
+	250 
 	# ZZ_A0Z1e-5
-	# 141 
-	# 41 
-	# 251 
+	141 
+	41 
+	251 
 	# ZZ_A0Z5e-5
-	# 142 
-	# 42 
-	# 252 
+	142 
+	42 
+	252 
 	# ZZ_ACZ-1e-5
-	# 143 
-	# 43 
-	# 253 
+	143 
+	43 
+	253 
 	# ZZ_ACZ1e-5
-	# 144 
-	# 44 
-	# 254 
+	144 
+	44 
+	254 
 	# ZZ_ACZ5e-5
-	# 145 
-	# 45 
-	# 255 
+	145 
+	45 
+	255 
 # #
 # # FOR DATA
 # #
-# 	-1
-# 	-2
-# 	-3
-# 	-4
-# 	-5
-# 	-6
-# 	-7
-# 	-8
-# 	-9
-# 	-10
-#   -11
-# 	-12
-# 	-13
+	# -1
+	# -2
+	# -3
+	# -4
+	# -5
+	# -6
+	# -7
+	# -8
+	# -9
+	# -10
+	# -11
+	# -12
+	# -13
 # #
 # # FOR BACKGROUND
 # #
