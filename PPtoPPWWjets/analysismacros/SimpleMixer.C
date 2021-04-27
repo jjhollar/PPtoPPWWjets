@@ -167,8 +167,126 @@ void SimpleMixer(Int_t mcsample = -1, Int_t remix = 1)
   std::cout << "N(bkg in signal region) = " << scaledsignalbox << " for lumi=" << lumi2017 << std::endl;
 }
 
+int InDiamond(float massmatchratio,float rapiditydelta)
+{
+  Float_t massmatchnormregion = 1.0;
+  Float_t rapiditymatchnormregion = 0.5;
+
+  // For Andrea's new optimized signal regions                                                                                   
+  float slope_1 = 0.792079;
+  float intercept_1 = 0.002;
+  float sigma_1 = 0.06675;
+  float slope_2 = -0.866082;
+  float intercept_2 = -0.013625;
+  float sigma_2 = 0.058625;
+  float nSigmaDiamond = 1.25;
+  float nSigmaBands = 0.75;
+
+  bool innormregion = (fabs(massmatchratio) > massmatchnormregion) ||
+    (fabs(rapiditydelta) > rapiditymatchnormregion);
+
+  bool inband_1_Diamond =
+    ((massmatchratio * slope_1 + intercept_1 -
+      nSigmaDiamond * sigma_1) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+		      nSigmaDiamond * sigma_1));
+  bool inband_2_Diamond =
+    ((massmatchratio * slope_2 + intercept_2 -
+      nSigmaDiamond * sigma_2) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+		      nSigmaDiamond * sigma_2));
+  bool inband_1_Bands =
+    ((massmatchratio * slope_1 + intercept_1 -
+      nSigmaBands * sigma_1) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+		      nSigmaBands * sigma_1));
+  bool inband_2_Bands =
+    ((massmatchratio * slope_2 + intercept_2 -
+      nSigmaBands * sigma_2) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+		      nSigmaBands * sigma_2));
+  
+  bool passandreacut_signalA =
+    (!innormregion) && (inband_1_Diamond && inband_2_Diamond);
+  bool passandreacut_signalB =
+    (!innormregion) && (inband_1_Bands || inband_2_Bands) &&
+    (!passandreacut_signalA) && (massmatchratio < 0);
+  
+  bool passmassrapiditymatch_signalA = passandreacut_signalA;
+  bool passmassrapiditymatch_signalB = passandreacut_signalB;
+
+  int passes = 0;
+  if(passandreacut_signalA==true)
+    passes = 1;
+
+  return passes;
+}
+
+int InRegionB(float massmatchratio,float rapiditydelta)
+{
+  Float_t massmatchnormregion = 1.0;
+  Float_t rapiditymatchnormregion = 0.5;
+
+  // For Andrea's new optimized signal regions                                                                                     
+  float slope_1 = 0.792079;
+  float intercept_1 = 0.002;
+  float sigma_1 = 0.06675;
+  float slope_2 = -0.866082;
+  float intercept_2 = -0.013625;
+  float sigma_2 = 0.058625;
+  float nSigmaDiamond = 1.25;
+  float nSigmaBands = 0.75;
+
+  bool innormregion = (fabs(massmatchratio) > massmatchnormregion) ||
+    (fabs(rapiditydelta) > rapiditymatchnormregion);
+
+  bool inband_1_Diamond =
+    ((massmatchratio * slope_1 + intercept_1 -
+      nSigmaDiamond * sigma_1) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+                      nSigmaDiamond * sigma_1));
+  bool inband_2_Diamond =
+    ((massmatchratio * slope_2 + intercept_2 -
+      nSigmaDiamond * sigma_2) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+                      nSigmaDiamond * sigma_2));
+  bool inband_1_Bands =
+    ((massmatchratio * slope_1 + intercept_1 -
+      nSigmaBands * sigma_1) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_1 + intercept_1 +
+                      nSigmaBands * sigma_1));
+  bool inband_2_Bands =
+    ((massmatchratio * slope_2 + intercept_2 -
+      nSigmaBands * sigma_2) < rapiditydelta) &&
+    (rapiditydelta < (massmatchratio * slope_2 + intercept_2 +
+                      nSigmaBands * sigma_2));
+  
+  bool passandreacut_signalA =
+    (!innormregion) && (inband_1_Diamond && inband_2_Diamond);
+  bool passandreacut_signalB =
+    (!innormregion) && (inband_1_Bands || inband_2_Bands) &&
+    (!passandreacut_signalA) && (massmatchratio < 0);
+  
+  bool passmassrapiditymatch_signalA = passandreacut_signalA;
+  bool passmassrapiditymatch_signalB = passandreacut_signalB;
+  
+  int passes = 0;
+
+  if(passmassrapiditymatch_signalB==true)
+    {
+      passes = 1;
+    }
+ 
+  return passes;
+}
+
 void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 {
+  gStyle->SetPadBottomMargin(0.15);
+  gStyle->SetPadLeftMargin(0.15);
+  gStyle->SetPadRightMargin(0.15);
+  gStyle->SetPalette(105);
+
   Float_t lumi2017 = 37.175;
   Float_t eqlumi02017 = 11896906.0/(6838*1.14405*1000.0);
   Float_t eqlumi12017 = 27705084.0/(551.1*1.17619*1000.0);
@@ -291,6 +409,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   Float_t nbkg7;
   Float_t nbkg8;
   Float_t nbkg9;
+
+  Float_t nbkg0b;
+  Float_t nbkg1b;
+  Float_t nbkg2b;
+  Float_t nbkg3b;
+  Float_t nbkg4b;
+  Float_t nbkg5b;
+  Float_t nbkg6b;
+  Float_t nbkg7b;
+  Float_t nbkg8b;
+  Float_t nbkg9b;
 
   TFile *f;
 
@@ -427,6 +556,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   TH2F *hmyjjcentral9 = new TH2F("hmyjjcentral9","hmyjjcentral9",250,0,5000,250,-5,5);
 
   TH1F *nbkgbyexperiment = new TH1F("nbkgbyexperiment","nbkgbyexperiment",100,0,100);
+  TH1F *nbkgbyexperimentb = new TH1F("nbkgbyexperimentb","nbkgbyexperimentb",100,0,100);
+
 
   Float_t xicut = 0.05;
   Int_t ntotal = 0;
@@ -434,6 +565,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   Int_t ntwoarmsxi5 = 0;
 
   Float_t nbkgaveragetotal = 0.0;
+  Float_t nbkgaveragetotalb = 0.0;
 
   Int_t subremix = 1;
 
@@ -461,8 +593,19 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
       nbkg8 = 0.0;
       nbkg9 = 0.0;
 
+      nbkg0b = 0.0;
+      nbkg1b = 0.0;
+      nbkg2b = 0.0;
+      nbkg3b = 0.0;
+      nbkg4b = 0.0;
+      nbkg5b = 0.0;
+      nbkg6b = 0.0;
+      nbkg7b = 0.0;
+      nbkg8b = 0.0;
+      nbkg9b = 0.0;
+      
       cout << "Experiment #" << i << endl;
-
+      
       // QCD                                                                                                                                                                                  
       cout << "\tRunning QCD sample0" << endl;
       while(!ifs0.eof())
@@ -502,11 +645,16 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;                  
 		      hmjjanyprotons0->Fill(mww);
 		      hmresdy0->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj0->Fill(mpp,PUweight);
-			  hyjj0->Fill(ypp,PUweight);
+			  hmjj0->Fill(mww,PUweight);
+			  hyjj0->Fill(yww,PUweight);
 			  nbkg0 += PUweight;
+			}
+		      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+			{
+			  nbkg0b += PUweight;
 			}
 		    }
 		}
@@ -552,12 +700,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons1->Fill(mww);
 		      hmresdy1->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj1->Fill(mpp,PUweight);
-                          hyjj1->Fill(ypp,PUweight);
+			  hmjj1->Fill(mww,PUweight);
+                          hyjj1->Fill(yww,PUweight);
                           nbkg1 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg1b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -612,12 +765,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons2->Fill(mww);
 		      hmresdy2->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj2->Fill(mpp,PUweight);
-                          hyjj2->Fill(ypp,PUweight);
+			  hmjj2->Fill(mww,PUweight);
+                          hyjj2->Fill(yww,PUweight);
                           nbkg2 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg2b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -662,12 +820,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons3->Fill(mww);
 		      hmresdy3->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj3->Fill(mpp,PUweight);
-                          hyjj3->Fill(ypp,PUweight);
+			  hmjj3->Fill(mww,PUweight);
+                          hyjj3->Fill(yww,PUweight);
 			  nbkg3 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg3b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -712,12 +875,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons4->Fill(mww);
 		      hmresdy4->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj4->Fill(mpp,PUweight);
-                          hyjj4->Fill(ypp,PUweight);
+			  hmjj4->Fill(mww,PUweight);
+                          hyjj4->Fill(yww,PUweight);
                           nbkg4 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg4b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -762,12 +930,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons5->Fill(mww);
 		      hmresdy5->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj5->Fill(mpp,PUweight);
-                          hyjj5->Fill(ypp,PUweight);
+			  hmjj5->Fill(mww,PUweight);
+                          hyjj5->Fill(yww,PUweight);
                           nbkg5 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg5b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -813,12 +986,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;                                                                       
 		      hmjjanyprotons6->Fill(mww);
 		      hmresdy6->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj6->Fill(mpp,PUweight);
-                          hyjj6->Fill(ypp,PUweight);
+			  hmjj6->Fill(mww,PUweight);
+                          hyjj6->Fill(yww,PUweight);
                           nbkg6 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg6b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -866,11 +1044,16 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 			  hmjjanyprotons9->Fill(mww);
 			  hmresdy9->Fill(1-(mww/mpp),ypp-yww,PUweight);
-			  if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+			  //			  if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+			  if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			    {
-			      hmjj9->Fill(mpp,PUweight);
-			      hyjj9->Fill(ypp,PUweight);
+			      hmjj9->Fill(mww,PUweight);
+			      hyjj9->Fill(yww,PUweight);
 			      nbkg9 += PUweight;
+			    }
+			  if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+			    {
+			      nbkg9b += PUweight;
 			    }
 			}
 		    }
@@ -919,12 +1102,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;                                                                       
 		      hmjjanyprotons7->Fill(mww);
 		      hmresdy7->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj7->Fill(mpp,PUweight);
-                          hyjj7->Fill(ypp,PUweight);
+			  hmjj7->Fill(mww,PUweight);
+                          hyjj7->Fill(yww,PUweight);
                           nbkg7 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg7b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -970,12 +1158,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 		      //	      std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl;
 		      hmjjanyprotons8->Fill(mww);
 		      hmresdy8->Fill(1-(mww/mpp),ypp-yww,PUweight);
-		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+		      //		      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+                      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 			{
-			  hmjj8->Fill(mpp,PUweight);
-                          hyjj8->Fill(ypp,PUweight);
+			  hmjj8->Fill(mww,PUweight);
+                          hyjj8->Fill(yww,PUweight);
                           nbkg8 += PUweight;
 			}
+                      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
+                        {
+                          nbkg8b += PUweight;
+                        }
 		    }
 		}
 	    }
@@ -994,17 +1187,39 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 	{
 	  nbkgtotal += (nbkg9*lumi/eqlumi9);
 	}
+
+      Float_t nbkgtotalb = (nbkg0b*lumi/eqlumi0)
+        +(nbkg1b*lumi/eqlumi1)
+        +(nbkg2b*lumi/eqlumi2)
+        +(nbkg3b*lumi/eqlumi3)
+        +(nbkg4b*lumi/eqlumi4)
+        +(nbkg5b*lumi/eqlumi5)
+        +(nbkg6b*lumi/eqlumi6)
+        +(nbkg7b*lumi/eqlumi7)
+        +(nbkg8b*lumi/eqlumi8);
+      if(year == 2016)
+        {
+          nbkgtotalb += (nbkg9b*lumi/eqlumi9);
+        }
       
-      std::cout << "\tExperiment N(bkg) = " << nbkgtotal << std::endl;
+      
+      std::cout << "\tExperiment N(bkg, diamond) = " << nbkgtotal << std::endl;
       std::cout << "\t\tQCD = " << (nbkg0*lumi/eqlumi0) << " + " << (nbkg1*lumi/eqlumi1) << " + " 
 		<< (nbkg2*lumi/eqlumi2) << " + " << (nbkg3*lumi/eqlumi3) << " + " << (nbkg4*lumi/eqlumi4)
 		<< " + " << (nbkg5*lumi/eqlumi5) << std::endl;
+      std::cout << "\tExperiment N(bkg, bands) = " << nbkgtotal << std::endl;
+      std::cout << "\t\tQCD = " << (nbkg0b*lumi/eqlumi0) << " + " << (nbkg1b*lumi/eqlumi1) << " + "
+                << (nbkg2b*lumi/eqlumi2) << " + " << (nbkg3b*lumi/eqlumi3) << " + " << (nbkg4b*lumi/eqlumi4)
+                << " + " << (nbkg5b*lumi/eqlumi5) << std::endl;
 
       
       nbkgaveragetotal += nbkgtotal;
       nbkgbyexperiment->Fill(nbkgtotal);
-    }
 
+      nbkgaveragetotalb += nbkgtotalb;
+      nbkgbyexperimentb->Fill(nbkgtotalb);
+    }
+  
   // Signal MC
   ifstream sifs1(scentralfile1);
 
@@ -1034,9 +1249,10 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 	      Float_t ypp = 0.5*TMath::Log(xi45/xi56);
 	      //              std::cout << "Mass match = " << 1-(mww/mpp) << ", rapidity macth = " << ypp-yww << std::endl; \
               
-	      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+	      //	      if(fabs(1-(mww/mpp)) < kseniammatchcut && fabs(ypp-yww)<kseniarapmatchcut)
+	      if(InDiamond(1-(mww/mpp),ypp-yww)==1)
 		{
-		  shmjj1->Fill(mpp,PUweight);
+		  shmjj1->Fill(mww,PUweight);
 		}
 	    }
 	}
@@ -1044,11 +1260,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   // JH
   std::cout << "Total events = " << ntotal << ", 2-arm events = " << ntwoarms/remix << " (" << 1.0*ntwoarms/ntotal/remix << "), 2-arm events with xi>0.05 = " 
 	    << ntwoarmsxi5/remix << " (" << 1.0*ntwoarmsxi5/ntotal/remix << ")" << std::endl;
-
-
+  
+  
   hmresdy0->Sumw2(); hmresdy1->Sumw2(); hmresdy2->Sumw2(); hmresdy3->Sumw2(); hmresdy4->Sumw2(); hmresdy5->Sumw2();
   hmresdy6->Sumw2(); hmresdy7->Sumw2(); hmresdy8->Sumw2(); hmresdy9->Sumw2();
-
+  
   hmresdy0->Scale(lumi/eqlumi0/remix/subremix);
   hmresdy0->SetMarkerStyle(20);
   hmresdy1->Scale(lumi/eqlumi1/remix/subremix);
@@ -1079,9 +1295,16 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
     hmresdysum->Add(hmresdy9);
 
   TCanvas *c1 = new TCanvas("c1","c1");
-  //  hmresdysum->Rebin2D(4,4);
+  hmresdysum->Rebin2D(4,4);
   hmresdysum->GetXaxis()->SetRangeUser(-3,3);
   hmresdysum->GetYaxis()->SetRangeUser(-1.5,1.5);
+  hmresdysum->GetXaxis()->SetLabelSize(0.07);
+  hmresdysum->GetYaxis()->SetLabelSize(0.07);
+  hmresdysum->GetXaxis()->SetTitleSize(0.075);
+  hmresdysum->GetYaxis()->SetTitleSize(0.075);
+  hmresdysum->GetXaxis()->SetTitleOffset(1.2);
+  hmresdysum->GetYaxis()->SetTitleOffset(1.2);
+  hmresdysum->GetZaxis()->SetLabelSize(0.06);
 
   if(bosons == 1)
     {
@@ -1094,8 +1317,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
       hmresdysum->SetYTitle("y(pp) - y(Z_{j}Z_{j})");
     }
 
-  hmresdysum->GetXaxis()->SetTitleSize(0.04); hmresdysum->GetXaxis()->SetTitleOffset(1.2);
-  hmresdysum->GetYaxis()->SetTitleSize(0.04);
+  hmresdysum->GetXaxis()->SetTitleSize(0.06); hmresdysum->GetXaxis()->SetTitleOffset(1.0);
+  hmresdysum->GetYaxis()->SetTitleSize(0.06);
   hmresdysum->SetStats(0);
   hmresdysum->SetTitle("Event mixing background, L=37.2fb^{-1}");
   hmresdysum->Draw("colz");
@@ -1109,10 +1332,65 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 
   TBox *b1 = new TBox(-0.10,-0.06,0.10,0.06);
-  b1->SetLineWidth(3); b1->SetFillStyle(0); b1->Draw("same");
+  b1->SetLineWidth(3); b1->SetFillStyle(0); // b1->Draw("same");
   TBox *b2 = new TBox(-1,-0.5,1,0.5);
   b2->SetLineWidth(3); b2->SetLineStyle(2); b2->SetFillStyle(0); b2->Draw("same");
+  /*
+   * New Andrea regions
+   */
+  // Band1 lower                                                                                                                                                            
+  TLine *l1 = new TLine(-0.69695, -0.5,-0.0838473, -0.0144293);
+  TLine *l2 = new TLine(-0.570629, -0.5,-0.0234464, -0.0666299);
+  TLine *l3 = new TLine(-0.0838473, -0.0144293,-0.0234464, -0.0666299);
+  TLine *l4 = new TLine(-0.69695, -0.5,-0.570629, -0.5);
+  // Band1 upper                                                                                                                                                            
+  //  TLine *l5 = new TLine(0.00465359, 0.055671,0.565635, 0.500041);
+  //  TLine *l6 = new TLine(0.0649541, 0.00347064,0.691956, 0.500041);
+  //  TLine *l7 = new TLine(0.00465359, 0.055671,0.0649541, 0.00347064);
+  //  TLine *l8 = new TLine(0.565635, 0.500041,0.691956, 0.500041);
+  // Band2 lower                                                                                                                                                            
+  TLine *l9 = new TLine(-0.0333464, 0.0590711,-0.542277, 0.5);
+  TLine *l10 = new TLine(-0.0862473, 0.0171706,-0.643812, 0.5);
+  TLine *l11 = new TLine(-0.0333464, 0.0590711,-0.0862473, 0.0171706);
+  TLine *l12 = new TLine(-0.643812, 0.5,-0.542277, 0.5);
+  // Band2 upper                                                                                                                                                            
+  //  TLine *l13 = new TLine(0.0144536, -0.07003,0.510813, -0.5);
+  //  TLine *l14 = new TLine(0.0673542, -0.0281293,0.612348, -0.5);
+  //  TLine *l15 = new TLine(0.0144536, -0.07003,0.0673542, -0.0281293);
+  //  TLine *l16 = new TLine(0.510813, -0.5,0.612348, -0.5);
+  // Diamond                                                                                                                                                                
+  TLine *l17 = new TLine(-0.103848, 0.00305359,-0.0155464, 0.0730542);
+  TLine *l18 = new TLine(-0.0155464, 0.0730542,0.0850544, -0.0140464);
+  TLine *l19 = new TLine(0.0850544, -0.0140464,-0.00334641, -0.0839473);
+  TLine *l20 = new TLine(-0.00334641, -0.0839473,-0.103848, 0.00305359);
 
+  l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
+  l2->SetLineColor(1); l2->SetLineWidth(3); l2->Draw("same");
+  l3->SetLineColor(1); l3->SetLineWidth(3); l3->Draw("same");
+  l4->SetLineColor(1);l4->SetLineWidth(3); l4->Draw("same");
+  /*
+  l5->SetLineColor(1); l5->SetLineWidth(3); l5->Draw("same");
+  l6->SetLineColor(1); l6->SetLineWidth(3); l6->Draw("same");
+  l7->SetLineColor(1); l7->SetLineWidth(3); l7->Draw("same");
+  l8->SetLineColor(1); l8->SetLineWidth(3); l8->Draw("same");
+  */
+  l9->SetLineColor(1); l9->SetLineWidth(3); l9->Draw("same");
+  l10->SetLineColor(1); l10->SetLineWidth(3); l10->Draw("same");
+  l11->SetLineColor(1); l11->SetLineWidth(3); l11->Draw("same");
+  l12->SetLineColor(1); l12->SetLineWidth(3); l12->Draw("same");
+  /*
+  l13->SetLineColor(1); l13->SetLineWidth(3); l13->Draw("same");
+  l14->SetLineColor(1); l14->SetLineWidth(3); l14->Draw("same");
+  l15->SetLineColor(1); l15->SetLineWidth(3); l15->Draw("same");
+  l16->SetLineColor(1); l16->SetLineWidth(3); l16->Draw("same");
+  */
+  l17->SetLineColor(1); l17->SetLineWidth(3); l17->Draw("same");
+  l18->SetLineColor(1); l18->SetLineWidth(3); l18->Draw("same");
+  l19->SetLineColor(1); l19->SetLineWidth(3); l19->Draw("same");
+  l20->SetLineColor(1); l20->SetLineWidth(3); l20->Draw("same");
+
+
+  /*
   Float_t scaledsignalbox = hmresdysum->Integral(hmresdysum->GetXaxis()->FindBin(-1*kseniammatchcut),hmresdysum->GetXaxis()->FindBin(1*kseniammatchcut),
                                               hmresdysum->GetYaxis()->FindBin(-1*kseniarapmatchcut), hmresdysum->GetYaxis()->FindBin(1*kseniarapmatchcut));
 
@@ -1123,12 +1401,14 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			  hmresdysum->GetXaxis()->FindBin(-1),hmresdysum->GetXaxis()->FindBin(0.5))) +
     (hmresdysum->Integral(hmresdysum->GetXaxis()->FindBin(-5),hmresdysum->GetXaxis()->FindBin(0.5),
 			  hmresdysum->GetXaxis()->FindBin(5),hmresdysum->GetXaxis()->FindBin(5)));
+  */
+  
 
+  std::cout << "N(bkg in diamond signal region, mean for L=" << lumi << ") = " << nbkgaveragetotal/remix << std::endl;
+  std::cout << "N(bkg in bands signal region, mean for L=" << lumi << ") = " << nbkgaveragetotalb/remix << std::endl;
 
-
-  std::cout << "N(bkg in signal region, mean for L=" << lumi << ") = " << nbkgaveragetotal/remix << std::endl;
-  std::cout << "N(bkg in signal region from 2D histogram) = " << scaledsignalbox << std::endl;
-  std::cout << "N(unblinded normalization region = " << unblindnormregion << " for lumi=" << lumi << std::endl;
+  //  std::cout << "N(bkg in signal region from 2D histogram) = " << scaledsignalbox << std::endl;
+  //  std::cout << "N(unblinded normalization region = " << unblindnormregion << " for lumi=" << lumi << std::endl;
 
   // Mass
   hmjj0->Scale(lumi/eqlumi0/remix/subremix);
@@ -1272,15 +1552,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   TCanvas *c2 = new TCanvas("c2","c2");
   hmjjsum->Sumw2(); hmjjsum->SetLineWidth(3); hmjjsum->SetLineColor(11); hmjjsum->SetFillColor(11); hmjjsum->SetMaximum(30);
   //  hmjjsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
-  hmjjsum->SetXTitle("m(pp) [GeV]");
+  hmjjsum->SetXTitle("m(VV) [GeV]");
   hmjjsum->SetYTitle("Events");
 
   hmjjqcd->Sumw2(); hmjjqcd->SetMaximum(30);
   //  hmjjqcd->SetXTitle("m(W_{j}W_{j}) [GeV]");
-  hmjjqcd->SetXTitle("m(pp) [GeV]");                                                                                                                                                                 
+  hmjjqcd->SetXTitle("m(VV) [GeV]");                                                                                                                                                                 
   hmjjqcd->SetYTitle("Events");
-  hmjjqcd->GetXaxis()->SetTitleSize(0.04);  hmjjqcd->GetXaxis()->SetTitleOffset(1.2);
-  hmjjqcd->GetYaxis()->SetTitleSize(0.04);
+  hmjjqcd->GetXaxis()->SetTitleSize(0.06);  hmjjqcd->GetXaxis()->SetTitleOffset(1.0);
+  hmjjqcd->GetYaxis()->SetTitleSize(0.06);
   hmjjqcd->Draw("hist");
   hmjjwjets->Draw("histsame");
   hmjjzjets->Draw("histsame");
@@ -1402,15 +1682,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   TCanvas *c2a = new TCanvas("c2a","c2a");
   hyjjsum->Sumw2(); hyjjsum->SetLineWidth(3); hyjjsum->SetLineColor(11); hyjjsum->SetFillColor(11); hyjjsum->SetMaximum(30);
   //  hyjjsum->SetXTitle("y(W_{j}W_{j}");
-  hyjjsum->SetXTitle("y(pp)");
+  hyjjsum->SetXTitle("y(VV)");
   hyjjsum->SetYTitle("Events");
 
   hyjjqcd->Sumw2(); hyjjqcd->SetMaximum(30);
   //  hyjjqcd->SetXTitle("y(W_{j}W_{j})");
-  hyjjqcd->SetXTitle("y(pp)");
+  hyjjqcd->SetXTitle("y(VV)");
   hyjjqcd->SetYTitle("Events");
-  hyjjqcd->GetXaxis()->SetTitleSize(0.04);  hyjjqcd->GetXaxis()->SetTitleOffset(1.2);
-  hyjjqcd->GetYaxis()->SetTitleSize(0.04);
+  hyjjqcd->GetXaxis()->SetTitleSize(0.06);  hyjjqcd->GetXaxis()->SetTitleOffset(1.0);
+  hyjjqcd->GetYaxis()->SetTitleSize(0.06);
   hyjjqcd->Draw("hist");
   hyjjwjets->Draw("histsame");
   hyjjzjets->Draw("histsame");
@@ -1439,12 +1719,17 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   nbkgbyexperiment->SetLineColor(4); nbkgbyexperiment->SetLineWidth(3); 
   nbkgbyexperiment->SetXTitle("N(bkg., event mixing)");
   nbkgbyexperiment->SetYTitle("N(experiments)");
-  nbkgbyexperiment->GetXaxis()->SetTitleSize(0.04); nbkgbyexperiment->GetXaxis()->SetTitleOffset(1.2);
-  nbkgbyexperiment->GetYaxis()->SetTitleSize(0.04);
-
+  nbkgbyexperiment->GetXaxis()->SetTitleSize(0.06); nbkgbyexperiment->GetXaxis()->SetTitleOffset(1.0);
+  nbkgbyexperiment->GetYaxis()->SetTitleSize(0.06);
   nbkgbyexperiment->Draw("hist");
 
-  cout << "Distribution of experiments: mean = " << nbkgbyexperiment->GetMean() << ", RMS = " << nbkgbyexperiment->GetRMS() << endl;
+  nbkgbyexperimentb->SetLineColor(2); nbkgbyexperimentb->SetLineWidth(3); nbkgbyexperimentb->SetLineStyle(2);
+  nbkgbyexperimentb->Draw("histsame");
+
+
+  cout << "Distribution of experiments: mean(diamond) = " << nbkgbyexperiment->GetMean() << ", RMS = " << nbkgbyexperiment->GetRMS() << endl;
+  cout << "Distribution of experiments: mean(bands) = " << nbkgbyexperimentb->GetMean() << ", RMS = " << nbkgbyexperimentb->GetRMS() << endl;
+
 
   if(year == 2017)
     CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
