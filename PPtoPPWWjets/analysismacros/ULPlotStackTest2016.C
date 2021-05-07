@@ -9,6 +9,12 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 {
   TString outplotdir = "validationplots/";
   gStyle->SetOptTitle(0);
+  gStyle->SetOptTitle(0);
+  gStyle->SetPadBottomMargin(0.2);
+  gStyle->SetPadLeftMargin(0.15);
+  gStyle->SetPadRightMargin(0.15);
+  TGaxis::SetExponentOffset(-0.085,-0.02,"y");
+
 
   // pre-TS2
   Float_t lumi = 4.718+1.631+3.667; //+5.095;
@@ -261,7 +267,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
   TH1F *h1000 = (TH1F *)h100->Clone("h1000");
 
-  TCanvas *c1 = new TCanvas("c1","c1",600,800);
+  TCanvas *c1 = new TCanvas("c1","c1",500,1000);
   c1->Divide(1,3);
   c1->cd(1);
 
@@ -437,10 +443,23 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   h10->Draw("histsame");
 
   h10->SetStats(0);     
+  h10->GetXaxis()->SetNdivisions(5);
+  h10->GetYaxis()->SetNdivisions(5);
+  h10->GetXaxis()->SetLabelSize(0.07);
+  h10->GetYaxis()->SetLabelSize(0.07);
+  h10->GetXaxis()->SetTitleSize(0.07);
+  h10->GetYaxis()->SetTitleSize(0.065);
+  h10->GetXaxis()->SetLabelOffset(0.025);
+  h10->GetYaxis()->SetLabelOffset(0.04);
+  h10->GetXaxis()->SetTitleOffset(1.1);
+
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
   if(var != 25 && var != 26 && var != 61 && var != 62)
-    h10->SetMaximum(h100->GetMaximum()*1.5);                                                                                                                
+    h10->SetMaximum(h100->GetMaximum()*2.5);                                                                                                                
+  else
+    h10->SetMaximum(h10->GetMaximum()*2.5);
+
   h10->SetTitle(thetitle);
   h10->SetXTitle(thetitle);
   h10->Draw("hist");                                                                                                                                      
@@ -519,7 +538,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   hd1->Draw("histsame");
 
-  TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
+  TLegend *lg1 = new TLegend(0.35,0.5,0.8,0.85);
   h10->SetMarkerStyle(0); 
   h7->SetMarkerStyle(0); 
   h8->SetMarkerStyle(0); h8->SetLineWidth(0);
@@ -627,6 +646,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   CMS_lumi((TPad*)c1->GetPad(1),0,0,"2016, L = 10.0 fb^{-1}");
 
   c1->Update();
+
   TString outplotname = outplotdir+"validationplots2016BCG_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
 

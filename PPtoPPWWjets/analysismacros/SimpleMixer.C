@@ -499,6 +499,28 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   TH1F *hmjjzjets = new TH1F("hmjjzjets","hmjjzjets",250,0,5000);
   TH1F *hmjjttbar = new TH1F("hmjjttbar","hmjjttbar",250,0,5000);
 
+  // Region B
+  TH1F *hmjjbsum = new TH1F("hmjjbsum","hmjjbsum",250,0,5000);
+  TH1F *hmjjb0 = new TH1F("hmjjb0","hmjjb0",250,0,5000);
+  TH1F *hmjjb1 = new TH1F("hmjjb1","hmjjb1",250,0,5000);
+  TH1F *hmjjb2 = new TH1F("hmjjb2","hmjjb2",250,0,5000);
+  TH1F *hmjjb3 = new TH1F("hmjjb3","hmjjb3",250,0,5000);
+  TH1F *hmjjb4 = new TH1F("hmjjb4","hmjjb4",250,0,5000);
+  TH1F *hmjjb5 = new TH1F("hmjjb5","hmjjb5",250,0,5000);
+  TH1F *hmjjb6 = new TH1F("hmjjb6","hmjjb6",250,0,5000);
+  TH1F *hmjjb7 = new TH1F("hmjjb7","hmjjb7",250,0,5000);
+  TH1F *hmjjb8 = new TH1F("hmjjb8","hmjjb8",250,0,5000);
+  TH1F *hmjjb9 = new TH1F("hmjjb9","hmjjb9",250,0,5000);
+
+  TH1F *shmjjb1 = new TH1F("shmjjb1","shmjjb1",250,0,5000);
+
+  TH1F *hmjjbsumstack = new TH1F("hmjjbsumstack","hmjjbsumstack",250,0,5000);
+  TH1F *hmjjbqcd = new TH1F("hmjjbqcd","hmjjbqcd",250,0,5000);
+  TH1F *hmjjbwjets = new TH1F("hmjjbwjets","hmjjbwjet",250,0,5000);
+  TH1F *hmjjbzjets = new TH1F("hmjjbzjets","hmjjbzjets",250,0,5000);
+  TH1F *hmjjbttbar = new TH1F("hmjjbttbar","hmjjbttbar",250,0,5000);
+
+
   TH1F *hyjjsum = new TH1F("hyjjsum","hyjjsum",250,-5,5);
   TH1F *hyjj0 = new TH1F("hyjj0","hyjj0",250,-5,5);
   TH1F *hyjj1 = new TH1F("hyjj1","hyjj1",250,-5,5);
@@ -516,6 +538,25 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   TH1F *hyjjwjets = new TH1F("hyjjwjets","hyjjwjet",250,-5,5);
   TH1F *hyjjzjets = new TH1F("hyjjzjets","hyjjzjets",250,-5,5);
   TH1F *hyjjttbar = new TH1F("hyjjttbar","hyjjttbar",250,-5,5);
+
+  // Region B
+  TH1F *hyjjbsum = new TH1F("hyjjbsum","hyjjbsum",250,-5,5);
+  TH1F *hyjjb0 = new TH1F("hyjjb0","hyjjb0",250,-5,5);
+  TH1F *hyjjb1 = new TH1F("hyjjb1","hyjjb1",250,-5,5);
+  TH1F *hyjjb2 = new TH1F("hyjjb2","hyjjb2",250,-5,5);
+  TH1F *hyjjb3 = new TH1F("hyjjb3","hyjjb3",250,-5,5);
+  TH1F *hyjjb4 = new TH1F("hyjjb4","hyjjb4",250,-5,5);
+  TH1F *hyjjb5 = new TH1F("hyjjb5","hyjjb5",250,-5,5);
+  TH1F *hyjjb6 = new TH1F("hyjjb6","hyjjb6",250,-5,5);
+  TH1F *hyjjb7 = new TH1F("hyjjb7","hyjjb7",250,-5,5);
+  TH1F *hyjjb8 = new TH1F("hyjjb8","hyjjb8",250,-5,5);
+  TH1F *hyjjb9 = new TH1F("hyjjb9","hyjjb9",250,-5,5);
+
+  TH1F *hyjjbsumstack = new TH1F("hyjjbsumstack","hyjjbsumstack",250,-5,5);
+  TH1F *hyjjbqcd = new TH1F("hyjjbqcd","hyjjbqcd",250,-5,5);
+  TH1F *hyjjbwjets = new TH1F("hyjjbwjets","hyjjbwjet",250,-5,5);
+  TH1F *hyjjbzjets = new TH1F("hyjjbzjets","hyjjbzjets",250,-5,5);
+  TH1F *hyjjbttbar = new TH1F("hyjjbttbar","hyjjbttbar",250,-5,5);
 
 
   TH1F *hmjjanyprotonssum = new TH1F("hmjjanyprotonssum","hmjjanyprotonssum",250,0,5000);
@@ -654,6 +695,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
 		      if(InRegionB(1-(mww/mpp),ypp-yww)==1)
 			{
+                          hmjjb0->Fill(mww,PUweight);
+                          hyjjb0->Fill(yww,PUweight);
 			  nbkg0b += PUweight;
 			}
 		    }
@@ -709,6 +752,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb1->Fill(mww,PUweight);
+                          hyjjb1->Fill(yww,PUweight);
                           nbkg1b += PUweight;
                         }
 		    }
@@ -774,6 +819,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb2->Fill(mww,PUweight);
+                          hyjjb2->Fill(yww,PUweight);
                           nbkg2b += PUweight;
                         }
 		    }
@@ -829,6 +876,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb3->Fill(mww,PUweight);
+                          hyjjb3->Fill(yww,PUweight);
                           nbkg3b += PUweight;
                         }
 		    }
@@ -884,6 +933,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb4->Fill(mww,PUweight);
+                          hyjjb4->Fill(yww,PUweight);
                           nbkg4b += PUweight;
                         }
 		    }
@@ -939,6 +990,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb5->Fill(mww,PUweight);
+                          hyjjb5->Fill(yww,PUweight);
                           nbkg5b += PUweight;
                         }
 		    }
@@ -995,6 +1048,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb6->Fill(mww,PUweight);
+                          hyjjb6->Fill(yww,PUweight);
                           nbkg6b += PUweight;
                         }
 		    }
@@ -1053,6 +1108,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			    }
 			  if(InRegionB(1-(mww/mpp),ypp-yww)==1)
 			    {
+			      hmjjb9->Fill(mww,PUweight);
+			      hyjjb9->Fill(yww,PUweight);
 			      nbkg9b += PUweight;
 			    }
 			}
@@ -1111,6 +1168,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb7->Fill(mww,PUweight);
+                          hyjjb7->Fill(yww,PUweight);
                           nbkg7b += PUweight;
                         }
 		    }
@@ -1167,6 +1226,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 			}
                       if(InRegionB(1-(mww/mpp),ypp-yww)==1)
                         {
+                          hmjjb8->Fill(mww,PUweight);
+                          hyjjb8->Fill(yww,PUweight);
                           nbkg8b += PUweight;
                         }
 		    }
@@ -1326,7 +1387,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c1,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c1,0,0,"2016, L = 10.2 fb^{-1}");
+    CMS_lumi2016(c1,0,0,"2016, L = 10.0 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c1,0,0,"2018, L = 52.9 fb^{-1}");
 
@@ -1410,7 +1471,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   //  std::cout << "N(bkg in signal region from 2D histogram) = " << scaledsignalbox << std::endl;
   //  std::cout << "N(unblinded normalization region = " << unblindnormregion << " for lumi=" << lumi << std::endl;
 
-  // Mass
+  // Mass Region A
   hmjj0->Scale(lumi/eqlumi0/remix/subremix);
   hmjj1->Scale(lumi/eqlumi1/remix/subremix);
   hmjj2->Scale(lumi/eqlumi2/remix/subremix);
@@ -1482,7 +1543,74 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   hmjjttbar->GetXaxis()->SetRangeUser(1000.0,2500);
   hmjjttbar->SetFillColor(kOrange+2);
 
-  // Rapidity
+  // Mass Region B
+  hmjjb0->Scale(lumi/eqlumi0/remix/subremix);
+  hmjjb1->Scale(lumi/eqlumi1/remix/subremix);
+  hmjjb2->Scale(lumi/eqlumi2/remix/subremix);
+  hmjjb3->Scale(lumi/eqlumi3/remix/subremix);
+  hmjjb4->Scale(lumi/eqlumi4/remix/subremix);
+  hmjjb5->Scale(lumi/eqlumi5/remix/subremix);
+  hmjjb6->Scale(lumi/eqlumi6/remix/subremix);
+  hmjjb7->Scale(lumi/eqlumi7/remix/subremix);
+  hmjjb8->Scale(lumi/eqlumi8/remix/subremix);
+  if(year == 2016)
+    hmjjb9->Scale(lumi/eqlumi9/remix/subremix);
+
+  hmjjbsum->Add(hmjjb0);
+  hmjjbsum->Add(hmjjb1);
+  hmjjbsum->Add(hmjjb2);
+  hmjjbsum->Add(hmjjb3);
+  hmjjbsum->Add(hmjjb4);
+  hmjjbsum->Add(hmjjb5);
+  hmjjbsum->Add(hmjjb6);
+  hmjjbsum->Add(hmjjb7);
+  hmjjbsum->Add(hmjjb8);
+  if(year == 2016)
+    hmjjbsum->Add(hmjjb9);
+
+  hmjjbqcd->Add(hmjjb0);
+  hmjjbqcd->Add(hmjjb1);
+  hmjjbqcd->Add(hmjjb2);
+  hmjjbqcd->Add(hmjjb3);
+  hmjjbqcd->Add(hmjjb4);
+  hmjjbqcd->Add(hmjjb5);
+  hmjjbqcd->Add(hmjjb6);
+  hmjjbqcd->Add(hmjjb7);
+  hmjjbqcd->Add(hmjjb8);
+  if(year == 2016)
+    hmjjbqcd->Add(hmjjb9);
+
+  hmjjbwjets->Add(hmjjb7);
+  hmjjbwjets->Add(hmjjb8);
+  hmjjbwjets->Add(hmjjb6);
+  if(year == 2016)
+    hmjjbwjets->Add(hmjjb9);
+
+  hmjjbzjets->Add(hmjjb8);
+  hmjjbzjets->Add(hmjjb7);
+  if(year == 2016)
+    hmjjbzjets->Add(hmjjb9);
+
+  hmjjbttbar->Add(hmjjb7);
+  if(year == 2016)
+    hmjjbttbar->Add(hmjjb9);
+
+  hmjjbqcd->Rebin(5);
+  hmjjbwjets->Rebin(5);
+  hmjjbzjets->Rebin(5);
+  hmjjbttbar->Rebin(5);
+
+  hmjjbqcd->GetXaxis()->SetRangeUser(1000.0,2500);
+  hmjjbqcd->SetFillColor(kAzure+2);
+  hmjjbwjets->GetXaxis()->SetRangeUser(1000.0,2500);
+  hmjjbwjets->SetFillColor(kGreen+2);
+  hmjjbzjets->GetXaxis()->SetRangeUser(1000.0,2500);
+  hmjjbzjets->SetFillColor(kYellow+2);
+  hmjjbttbar->GetXaxis()->SetRangeUser(1000.0,2500);
+  hmjjbttbar->SetFillColor(kOrange+2);
+
+
+  // Rapidity Region A
   hyjj0->Scale(lumi/eqlumi0/remix/subremix);
   hyjj1->Scale(lumi/eqlumi1/remix/subremix);
   hyjj2->Scale(lumi/eqlumi2/remix/subremix);
@@ -1548,8 +1676,77 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   hyjjttbar->GetXaxis()->SetRangeUser(-1.5,1.5);
   hyjjttbar->SetFillColor(kOrange+2);
 
+  // Rapidity Region B
+  hyjjb0->Scale(lumi/eqlumi0/remix/subremix);
+  hyjjb1->Scale(lumi/eqlumi1/remix/subremix);
+  hyjjb2->Scale(lumi/eqlumi2/remix/subremix);
+  hyjjb3->Scale(lumi/eqlumi3/remix/subremix);
+  hyjjb4->Scale(lumi/eqlumi4/remix/subremix);
+  hyjjb5->Scale(lumi/eqlumi5/remix/subremix);
+  hyjjb6->Scale(lumi/eqlumi6/remix/subremix);
+  hyjjb7->Scale(lumi/eqlumi7/remix/subremix);
+  hyjjb8->Scale(lumi/eqlumi8/remix/subremix);
+  if(year == 2016)
+    hyjjb9->Scale(lumi/eqlumi9/remix/subremix);
+
+  hyjjbsum->Add(hyjjb0);
+  hyjjbsum->Add(hyjjb1);
+  hyjjbsum->Add(hyjjb2);
+  hyjjbsum->Add(hyjjb3);
+  hyjjbsum->Add(hyjjb4);
+  hyjjbsum->Add(hyjjb5);
+  hyjjbsum->Add(hyjjb6);
+  hyjjbsum->Add(hyjjb7);
+  hyjjbsum->Add(hyjjb8);
+  if(year == 2016)
+    hyjjbsum->Add(hyjjb9);
+
+  hyjjbqcd->Add(hyjjb0);
+  hyjjbqcd->Add(hyjjb1);
+  hyjjbqcd->Add(hyjjb2);
+  hyjjbqcd->Add(hyjjb3);
+  hyjjbqcd->Add(hyjjb4);
+  hyjjbqcd->Add(hyjjb5);
+  hyjjbqcd->Add(hyjjb6);
+  hyjjbqcd->Add(hyjjb7);
+  hyjjbqcd->Add(hyjjb8);
+  if(year == 2016)
+    hyjjbqcd->Add(hyjjb9);
+
+  hyjjbwjets->Add(hyjjb7);
+  hyjjbwjets->Add(hyjjb8);
+  hyjjbwjets->Add(hyjjb6);
+  if(year == 2016)
+    hyjjbwjets->Add(hyjjb9);
+
+  hyjjbzjets->Add(hyjjb8);
+  hyjjbzjets->Add(hyjjb7);
+  if(year == 2016)
+    hyjjbzjets->Add(hyjjb9);
+
+  hyjjbttbar->Add(hyjjb7);
+  if(year == 2016)
+    hyjjbttbar->Add(hyjjb9);
+
+  hyjjbqcd->Rebin(5);
+  hyjjbwjets->Rebin(5);
+  hyjjbzjets->Rebin(5);
+  hyjjbttbar->Rebin(5);
+
+  hyjjbqcd->GetXaxis()->SetRangeUser(-1.5,1.5);
+  hyjjbqcd->SetFillColor(kAzure+2);
+  hyjjbwjets->GetXaxis()->SetRangeUser(-1.5,1.5);
+  hyjjbwjets->SetFillColor(kGreen+2);
+  hyjjbzjets->GetXaxis()->SetRangeUser(-1.5,1.5);
+  hyjjbzjets->SetFillColor(kYellow+2);
+  hyjjbttbar->GetXaxis()->SetRangeUser(-1.5,1.5);
+  hyjjbttbar->SetFillColor(kOrange+2);
+
+
   // Draw mass
-  TCanvas *c2 = new TCanvas("c2","c2");
+  TCanvas *c2 = new TCanvas("c2","c2",400,800);
+  c2->Divide(1,2);
+  c2->cd(1);
   hmjjsum->Sumw2(); hmjjsum->SetLineWidth(3); hmjjsum->SetLineColor(11); hmjjsum->SetFillColor(11); hmjjsum->SetMaximum(30);
   //  hmjjsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
   hmjjsum->SetXTitle("m(VV) [GeV]");
@@ -1572,7 +1769,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   shmjj1->Scale(0.1); shmjj1->SetLineWidth(3); shmjj1->SetLineColor(6);
   //  shmjj1->Draw("histsame");
 
-  TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
+  TLegend *lg1 = new TLegend(0.4,0.5,0.85,0.9);
   hmjjqcd->SetMarkerStyle(0); hmjjqcd->SetLineWidth(0);
   hmjjwjets->SetMarkerStyle(0); hmjjwjets->SetLineWidth(0);
   hmjjzjets->SetMarkerStyle(0); hmjjzjets->SetLineWidth(0);
@@ -1587,10 +1784,24 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2,0,0,"2016, L = 10.2 fb^{-1}");
+    CMS_lumi2016(c2,0,0,"2016, L = 10.0 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
 
+  c2->cd(2);
+  hmjjbsum->Sumw2(); hmjjbsum->SetLineWidth(3); hmjjbsum->SetLineColor(11); hmjjbsum->SetFillColor(11); hmjjbsum->SetMaximum(30);
+  hmjjbsum->SetXTitle("m(VV) [GeV]");
+  hmjjbsum->SetYTitle("Events");
+
+  hmjjbqcd->Sumw2(); hmjjbqcd->SetMaximum(30);
+  hmjjbqcd->SetXTitle("m(VV) [GeV]");                                                                                                                                                
+  hmjjbqcd->SetYTitle("Events");
+  hmjjbqcd->GetXaxis()->SetTitleSize(0.06);  hmjjbqcd->GetXaxis()->SetTitleOffset(1.0);
+  hmjjbqcd->GetYaxis()->SetTitleSize(0.06);
+  hmjjbqcd->Draw("hist");
+  hmjjbwjets->Draw("histsame");
+  hmjjbzjets->Draw("histsame");
+  hmjjbttbar->Draw("histsame");
 
   //  hmjjsum->Draw("hist");
 
@@ -1679,7 +1890,9 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   //  hmyjjcentralsum->Draw("colz");
 
   // Draw rapidity
-  TCanvas *c2a = new TCanvas("c2a","c2a");
+  TCanvas *c2a = new TCanvas("c2a","c2a",400,800);
+  c2a->Divide(1,2);
+  c2a->cd(1);
   hyjjsum->Sumw2(); hyjjsum->SetLineWidth(3); hyjjsum->SetLineColor(11); hyjjsum->SetFillColor(11); hyjjsum->SetMaximum(30);
   //  hyjjsum->SetXTitle("y(W_{j}W_{j}");
   hyjjsum->SetXTitle("y(VV)");
@@ -1696,7 +1909,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   hyjjzjets->Draw("histsame");
   hyjjttbar->Draw("histsame");
 
-  TLegend *lg1a = new TLegend(0.6,0.6,0.9,0.9);
+  TLegend *lg1a = new TLegend(0.4,0.5,0.85,0.9);
   hyjjqcd->SetMarkerStyle(0); hyjjqcd->SetLineWidth(0);
   hyjjwjets->SetMarkerStyle(0); hyjjwjets->SetLineWidth(0);
   hyjjzjets->SetMarkerStyle(0); hyjjzjets->SetLineWidth(0);
@@ -1711,9 +1924,25 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2,0,0,"2016, L = 10.2 fb^{-1}");
+    CMS_lumi2016(c2,0,0,"2016, L = 10.0 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
+
+  c2a->cd(2);
+  hyjjbsum->Sumw2(); hyjjbsum->SetLineWidth(3); hyjjbsum->SetLineColor(11); hyjjbsum->SetFillColor(11); hyjjbsum->SetMaximum(30);
+  hyjjbsum->SetXTitle("y(VV)");
+  hyjjbsum->SetYTitle("Events");
+
+  hyjjbqcd->Sumw2(); hyjjbqcd->SetMaximum(30);
+  hyjjbqcd->SetXTitle("y(VV)");
+  hyjjbqcd->SetYTitle("Events");
+  hyjjbqcd->GetXaxis()->SetTitleSize(0.06);  hyjjbqcd->GetXaxis()->SetTitleOffset(1.0);
+  hyjjbqcd->GetYaxis()->SetTitleSize(0.06);
+  hyjjbqcd->Draw("hist");
+  hyjjbwjets->Draw("histsame");
+  hyjjbzjets->Draw("histsame");
+  hyjjbttbar->Draw("histsame");
+
 
   TCanvas *c3 = new TCanvas("c3","c3");
   nbkgbyexperiment->SetLineColor(4); nbkgbyexperiment->SetLineWidth(3); 
@@ -1734,7 +1963,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c3,0,0,"2016, L = 10.2 fb^{-1}");
+    CMS_lumi2016(c3,0,0,"2016, L = 10.0 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
 

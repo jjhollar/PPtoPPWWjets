@@ -8,6 +8,14 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
 {
   TString outplotdir = "validationplots/";
   gStyle->SetOptTitle(0);
+  gStyle->SetOptTitle(0);
+  gStyle->SetPadBottomMargin(0.2);
+  gStyle->SetPadLeftMargin(0.15);
+  gStyle->SetPadRightMargin(0.15);
+  TGaxis::SetExponentOffset(-0.085,-0.02,"y");
+
+
+
   //  Float_t lumi = 2.367+8.681+4.143+9.062+13.242;
   // pre-TS2
   //  Float_t lumi = 2.361+8.577+4.075; // +8.959+13.214;
@@ -269,7 +277,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
   TH1F *h1000 = (TH1F *)h100->Clone("h1000");
 
-  TCanvas *c1 = new TCanvas("c1","c1",600,800);
+  TCanvas *c1 = new TCanvas("c1","c1",500,1000);
   c1->Divide(1,3);
   c1->cd(1);
 
@@ -406,7 +414,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hd1_3->Scale(mcdxsec*1000*lumi/41700.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
-  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan);
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
 
   hd2->Sumw2(); // Signal, aCW=2E-5, 2017E --> 2017postTS2                                                                                       
   hd2->Scale(mcdxsec*1000*lumipostTS2/92100.0);
@@ -464,10 +472,22 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h10->Draw("histsame");
 
   h10->SetStats(0);     
+  h10->GetXaxis()->SetNdivisions(5);
+  h10->GetYaxis()->SetNdivisions(5);
+  h10->GetXaxis()->SetLabelSize(0.07);
+  h10->GetYaxis()->SetLabelSize(0.07);
+  h10->GetXaxis()->SetTitleSize(0.07);
+  h10->GetYaxis()->SetTitleSize(0.065);
+  h10->GetXaxis()->SetLabelOffset(0.025);
+  h10->GetYaxis()->SetLabelOffset(0.04);
+  h10->GetXaxis()->SetTitleOffset(1.1);
+
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
   if(var != 25 && var != 26 && var != 61 && var != 62)
-    h10->SetMaximum(h100->GetMaximum()*1.5);
+    h10->SetMaximum(h100->GetMaximum()*2.5);
+  else
+    h10->SetMaximum(h10->GetMaximum()*2.5);
   h10->SetTitle(thetitle);                                                                                                                                
   h10->SetXTitle(thetitle);
   h10->Draw("hist");                                                                                                                                      
@@ -539,7 +559,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hd1->Add(hd2);
   hd1->Draw("histsame");
 
-  TLegend *lg1 = new TLegend(0.6,0.6,0.9,0.9);
+  TLegend *lg1 = new TLegend(0.35,0.5,0.8,0.85);
   h10->SetMarkerStyle(0); 
   h7->SetMarkerStyle(0); h7->SetLineWidth(0);
   h8->SetMarkerStyle(0); h8->SetLineWidth(0);
