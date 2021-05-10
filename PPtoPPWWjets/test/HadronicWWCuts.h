@@ -8,16 +8,16 @@
 #ifndef HadronicWWCuts_h
 #define HadronicWWCuts_h
 
+#include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-#include <TROOT.h>
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
 
-#include "PPSProtonEfficiency.C"
-#include "PPSProtonEfficiency.h"
 #include "PPSProtonSelector.C"
+#include "PPSProtonEfficiency.h"
+#include "PPSProtonEfficiency.C"
 
 // gROOT->ProcessLine(".L
 // ../../../jecsys/CondFormats/JetMETObjects/src/JetCorrectionUncertainty_cc.so");
@@ -182,8 +182,10 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
 
+  // TString mcNtuplesFolder =
+  //     "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v3";
   TString mcNtuplesFolder =
-      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v2";
+    "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v3";
   // TString mcNtuplesFolder =
   // "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
 

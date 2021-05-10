@@ -35,7 +35,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		"2018A" : 1.,
 		"2018B1" : 1.,
 		"2018B2" : 1.,
-		"2018C" : 1.,
+		"2018C"  : 1.,
 		"2018D1" : 1.,
 		"2018D2" : 1.,
 	}

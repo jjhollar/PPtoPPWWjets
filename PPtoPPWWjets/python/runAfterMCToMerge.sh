@@ -15,7 +15,7 @@ function mergeFiles () {
 		for sub_era in ${sub_eras[@]}
 		do 
 			files_to_merge="$files_to_merge $output_dir/2018/$sub_era/$filename"
-			nEvents_line=(`grep 'TrigReport Events total' "signalNTuples_v2/2018/$sub_era/${filename%.*}.out"`)
+			nEvents_line=(`grep 'TrigReport Events total' "$output_dir/2018/$sub_era/${filename%.*}.out"`)
 			nEvents=$(($nEvents + ${nEvents_line[4]}))
 		done 
 
@@ -24,7 +24,7 @@ function mergeFiles () {
 	done
 }
 
-output_dir="signalNTuples_v2"
+output_dir="signalNTuples_v3"
 
 pack1=("B1" "B2")
 pack2=("D1" "D2")

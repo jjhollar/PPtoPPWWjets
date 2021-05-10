@@ -1,10 +1,39 @@
+#include "../analysismacros/CMS_lumi.h"
+
 void MassRapiditySelectionWW(TFile *file) {
+
+  // Band1 lower                                                                                                                                                            
+  TLine *l1 = new TLine(-0.69695, -0.5,-0.0838473, -0.0144293);
+  TLine *l2 = new TLine(-0.570629, -0.5,-0.0234464, -0.0666299);
+  TLine *l3 = new TLine(-0.0838473, -0.0144293,-0.0234464, -0.0666299);
+  TLine *l4 = new TLine(-0.69695, -0.5,-0.570629, -0.5);
+  // Band1 upper                                                                                                                                                            
+  //  TLine *l5 = new TLine(0.00465359, 0.055671,0.565635, 0.500041);
+  //  TLine *l6 = new TLine(0.0649541, 0.00347064,0.691956, 0.500041);
+  //  TLine *l7 = new TLine(0.00465359, 0.055671,0.0649541, 0.00347064);
+  //  TLine *l8 = new TLine(0.565635, 0.500041,0.691956, 0.500041);
+  // Band2 lower                                                                                                                                                            
+  TLine *l9 = new TLine(-0.0333464, 0.0590711,-0.542277, 0.5);
+  TLine *l10 = new TLine(-0.0862473, 0.0171706,-0.643812, 0.5);
+  TLine *l11 = new TLine(-0.0333464, 0.0590711,-0.0862473, 0.0171706);
+  TLine *l12 = new TLine(-0.643812, 0.5,-0.542277, 0.5);
+  // Band2 upper                                                                                                                                                            
+  //  TLine *l13 = new TLine(0.0144536, -0.07003,0.510813, -0.5);
+  //  TLine *l14 = new TLine(0.0673542, -0.0281293,0.612348, -0.5);
+  //  TLine *l15 = new TLine(0.0144536, -0.07003,0.0673542, -0.0281293);
+  //  TLine *l16 = new TLine(0.510813, -0.5,0.612348, -0.5);
+  // Diamond                                                                                                                                                                
+  TLine *l17 = new TLine(-0.103848, 0.00305359,-0.0155464, 0.0730542);
+  TLine *l18 = new TLine(-0.0155464, 0.0730542,0.0850544, -0.0140464);
+  TLine *l19 = new TLine(0.0850544, -0.0140464,-0.00334641, -0.0839473);
+  TLine *l20 = new TLine(-0.00334641, -0.0839473,-0.103848, 0.00305359);
+
 	gStyle->SetOptStat(0);
 	gStyle->SetOptTitle(0);
   TH2D *hmassrapiditymatchsigmcmmww =
       (TH2D *)file->Get("Signal/hmassrapiditymatchsigmcmmww");
   TCanvas* c1 = new TCanvas("c1", "c1", 1920, 1080);
-  TCanvas* c2 = new TCanvas("c2", "c2", 1920, 1080);
+  TCanvas* c2 = new TCanvas("c2", "c2", 1400, 1080);
   c1->Divide(3, 2);
   TH2F *rotated = new TH2F("rotated", "rotated", 500, -5, 5, 500, -5, 5);
   vector<double> th, peak;
@@ -56,8 +85,10 @@ void MassRapiditySelectionWW(TFile *file) {
     }
   }
   c1->cd(2);
-  rotated_1->GetXaxis()->SetRangeUser(-2, 2);
-  rotated_1->GetYaxis()->SetRangeUser(-2, 2);
+  rotated_1->GetXaxis()->SetRangeUser(-1.5, 1.5);
+  rotated_1->GetYaxis()->SetRangeUser(-1.5, 1.5); 
+  rotated_1->GetXaxis()->SetTitle("(1 - m(WW)/m(PP))*cos(#theta_{1})-(y(PP)-y(WW))*sin(#theta_{1})");
+  rotated_1->GetYaxis()->SetTitle("(1 - m(WW)/m(PP))*sin(#theta_{1})+(y(PP)-y(WW))*cos(#theta_{1})");
   rotated_1->Draw("colz");
   c1->cd(5);
   TH1D *proj1 = rotated_1->ProjectionX();
@@ -66,6 +97,8 @@ void MassRapiditySelectionWW(TFile *file) {
   proj1->Draw();
   TF1 *f1 = new TF1("f1", "gaus(0)+gaus(3)", -2, 2);
   f1->SetParameters(max1, 0, 0.05, 0, -0.5, 0.5);
+  f1->SetNpx(10000);
+
   proj1->Fit(f1);
 
   for (int i = 0; i < hmassrapiditymatchsigmcmmww->GetNbinsX(); i++) {
@@ -79,12 +112,15 @@ void MassRapiditySelectionWW(TFile *file) {
     }
   }
   c1->cd(3);
-  rotated_2->GetXaxis()->SetRangeUser(-2, 2);
-  rotated_2->GetYaxis()->SetRangeUser(-2, 2);
+  rotated_2->GetXaxis()->SetRangeUser(-1.5, 1.5);
+  rotated_2->GetYaxis()->SetRangeUser(-1.5, 1.5);
+  rotated_2->GetXaxis()->SetTitle("(1 - m(WW)/m(PP))*cos(#theta_{2})-(y(PP)-y(WW))*sin(#theta_{2})");
+  rotated_2->GetYaxis()->SetTitle("(1 - m(WW)/m(PP))*sin(#theta_{2})+(y(PP)-y(WW))*cos(#theta_{2})");
+
   rotated_2->Draw("colz");
   c1->cd(6);
   TH1D *proj2 = rotated_2->ProjectionX();
-  proj2->GetXaxis()->SetRangeUser(-2, 2);
+  proj2->GetXaxis()->SetRangeUser(-1.5, 1.5);
   proj2->Rebin(2);
   proj2->Draw();
   TF1 *f2 = new TF1("f2", "gaus(0)+gaus(3)", -2, 2);
@@ -92,10 +128,10 @@ void MassRapiditySelectionWW(TFile *file) {
   proj2->Fit(f2);
 
   c1->cd(4);
-  hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-2, 2);
-  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("Mass match ratio");
-  hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-2, 2);
-  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("Delta rapidity");
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-1.5, 1.5);
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-1.5, 1.5);
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("y(PP)-y(WW)");
   hmassrapiditymatchsigmcmmww->Draw("colz");
 
   TGraphErrors *band1 = new TGraphErrors(4);
@@ -108,7 +144,7 @@ void MassRapiditySelectionWW(TFile *file) {
   TF1 *band1Center =
       new TF1("band1Center",
               "x/TMath::Tan([0]) - ([1])/(TMath::Sin([0]))", -1, 1);
-  double band1Sigma =
+  double sigma_1 =
       TMath::Abs(f1->GetParameter(2)) /
       (TMath::Sin(th_rot1));
   double slope_1 = 1./TMath::Tan(th_rot1);
@@ -118,7 +154,7 @@ void MassRapiditySelectionWW(TFile *file) {
   TF1 *band2Center =
       new TF1("band2Center",
               "x/TMath::Tan([0]) - ([1])/(TMath::Sin([0]))", -1, 1);
-  double band2Sigma =
+  double sigma_2 =
       TMath::Abs(f2->GetParameter(2)) /
       (TMath::Sin(th_rot2));
   double slope_2 = 1./TMath::Tan(th_rot2);
@@ -129,77 +165,138 @@ void MassRapiditySelectionWW(TFile *file) {
   // Find parameters for the diamond (four interceptions in ascending order)
   // Interceptions are found as (q2-q1)/(m1-m2)
   double deltaM = slope_1 - slope_2;
-  double diamondX_0 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_1 = (intercept_2 + nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_2 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_3 = (intercept_2 + nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaDiamond*band1Sigma))/deltaM;
+  double diamondX_0 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_1 = (intercept_2 + nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_2 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_3 = (intercept_2 + nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaDiamond*sigma_1))/deltaM;
   if (diamondX_1 > diamondX_2){
   	auto tmp = diamondX_2;
   	diamondX_2 = diamondX_1;
   	diamondX_1 = tmp;
   }
 
-  double diamondWidth = (band1Sigma < band2Sigma) ? band1Sigma : band2Sigma;
-  TF1* diamondCenter = (band1Sigma < band2Sigma) ? band1Center : band2Center;
+  double diamondWidth = (sigma_1 < sigma_2) ? sigma_1 : sigma_2;
+  TF1* diamondCenter = (sigma_1 < sigma_2) ? band1Center : band2Center;
 
   // Find band1 interceptions (bottom range given by norm region)
   deltaM = slope_1;
-  double band1X_0 = (-0.5 - (intercept_1 + nSigmaBands*band1Sigma))/deltaM;
-  double band1X_1 = (-0.5 - (intercept_1 - nSigmaBands*band1Sigma))/deltaM;
+  double band1X_0 = (-0.5 - (intercept_1 + nSigmaBands*sigma_1))/deltaM;
+  double band1X_1 = (-0.5 - (intercept_1 - nSigmaBands*sigma_1))/deltaM;
   deltaM = slope_1 - slope_2;
-  double band1X_2 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaBands*band1Sigma))/deltaM;
-  double band1X_3 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaBands*band1Sigma))/deltaM;
+  double band1X_2 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaBands*sigma_1))/deltaM;
+  double band1X_3 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaBands*sigma_1))/deltaM;
 
   // Find band1 interceptions (bottom range given by norm region)
   deltaM = slope_2;
-  double band2X_0 = (0.5 - (intercept_2 - nSigmaBands*band2Sigma))/deltaM;
-  double band2X_1 = (0.5 - (intercept_2 + nSigmaBands*band2Sigma))/deltaM;
+  double band2X_0 = (0.5 - (intercept_2 - nSigmaBands*sigma_2))/deltaM;
+  double band2X_1 = (0.5 - (intercept_2 + nSigmaBands*sigma_2))/deltaM;
   deltaM = slope_1 - slope_2;
-  double band2X_2 = (intercept_2 - nSigmaBands*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double band2X_3 = (intercept_2 + nSigmaBands*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
+  double band2X_2 = (intercept_2 - nSigmaBands*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double band2X_3 = (intercept_2 + nSigmaBands*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
 
   band1->SetPoint(0, band1X_0, -0.5);
   band1->SetPointError(0, 0, 0);
   band1->SetPoint(1, band1X_1, band1Center->Eval(band1X_1));
-  band1->SetPointError(1, 0, nSigmaBands*band1Sigma);
+  band1->SetPointError(1, 0, nSigmaBands*sigma_1);
   band1->SetPoint(2, band1X_2, band1Center->Eval(band1X_2));
-  band1->SetPointError(2, 0, nSigmaBands*band1Sigma);
-  band1->SetPoint(3, band1X_3, band1Center->Eval(band1X_3) - nSigmaBands*band1Sigma);
+  band1->SetPointError(2, 0, nSigmaBands*sigma_1);
+  band1->SetPoint(3, band1X_3, band1Center->Eval(band1X_3) - nSigmaBands*sigma_1);
   band1->SetPointError(3, 0, 0);
 
   band1->SetFillColor(46);
   band1->SetFillStyle(3001);
-  band1->Draw("3same");
+  // band1->Draw("3same");
 
   band2->SetPoint(0, band2X_0, 0.5);
   band2->SetPointError(0, 0, 0);
   band2->SetPoint(1, band2X_1, band2Center->Eval(band2X_1));
-  band2->SetPointError(1, 0, nSigmaBands*band2Sigma);
+  band2->SetPointError(1, 0, nSigmaBands*sigma_2);
   band2->SetPoint(2, band2X_2, band2Center->Eval(band2X_2));
-  band2->SetPointError(2, 0, nSigmaBands*band2Sigma);
-  band2->SetPoint(3, band2X_3, band2Center->Eval(band2X_3) + nSigmaBands*band2Sigma);
+  band2->SetPointError(2, 0, nSigmaBands*sigma_2);
+  band2->SetPoint(3, band2X_3, band2Center->Eval(band2X_3) + nSigmaBands*sigma_2);
   band2->SetPointError(3, 0, 0);
   band2->SetFillColor(46);
   band2->SetFillStyle(3001);
-  band2->Draw("3same");
+  // band2->Draw("3same");
 
-  diamond->SetPoint(0, diamondX_0, slope_1*diamondX_0 + nSigmaDiamond * band1Sigma);
+  diamond->SetPoint(0, diamondX_0, slope_1*diamondX_0 + nSigmaDiamond * sigma_1);
   diamond->SetPointError(0, 0, 0);
   diamond->SetPoint(1, diamondX_1, diamondCenter->Eval(diamondX_1));
   diamond->SetPointError(1, 0, nSigmaDiamond*diamondWidth);
   diamond->SetPoint(2, diamondX_2, diamondCenter->Eval(diamondX_2));
   diamond->SetPointError(2, 0, nSigmaDiamond*diamondWidth);
-  diamond->SetPoint(3, diamondX_3, slope_1*diamondX_3 - nSigmaDiamond * band1Sigma);
+  diamond->SetPoint(3, diamondX_3, slope_1*diamondX_3 - nSigmaDiamond * sigma_1);
   diamond->SetPointError(3, 0, 0);
   diamond->SetFillColor(kGreen);
   diamond->SetFillStyle(3001);
-  diamond->Draw("3same");
-
+  // diamond->Draw("3same");
+  l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
+  l2->SetLineColor(1); l2->SetLineWidth(3); l2->Draw("same");
+  l3->SetLineColor(1); l3->SetLineWidth(3); l3->Draw("same");
+  l4->SetLineColor(1);l4->SetLineWidth(3); l4->Draw("same");
+  /*
+  l5->SetLineColor(1); l5->SetLineWidth(3); l5->Draw("same");
+  l6->SetLineColor(1); l6->SetLineWidth(3); l6->Draw("same");
+  l7->SetLineColor(1); l7->SetLineWidth(3); l7->Draw("same");
+  l8->SetLineColor(1); l8->SetLineWidth(3); l8->Draw("same");
+  */
+  l9->SetLineColor(1); l9->SetLineWidth(3); l9->Draw("same");
+  l10->SetLineColor(1); l10->SetLineWidth(3); l10->Draw("same");
+  l11->SetLineColor(1); l11->SetLineWidth(3); l11->Draw("same");
+  l12->SetLineColor(1); l12->SetLineWidth(3); l12->Draw("same");
+  /*
+  l13->SetLineColor(1); l13->SetLineWidth(3); l13->Draw("same");
+  l14->SetLineColor(1); l14->SetLineWidth(3); l14->Draw("same");
+  l15->SetLineColor(1); l15->SetLineWidth(3); l15->Draw("same");
+  l16->SetLineColor(1); l16->SetLineWidth(3); l16->Draw("same");
+  */
+  l17->SetLineColor(kRed); l17->SetLineWidth(3); l17->Draw("same");
+  l18->SetLineColor(kRed); l18->SetLineWidth(3); l18->Draw("same");
+  l19->SetLineColor(kRed); l19->SetLineWidth(3); l19->Draw("same");
+  l20->SetLineColor(kRed); l20->SetLineWidth(3); l20->Draw("same");
   c2->cd();
   hmassrapiditymatchsigmcmmww->Draw("colz");
-  band1->Draw("3same");
-  band2->Draw("3same");
-  diamond->Draw("3same");
+  // band1->Draw("3same");
+  // band2->Draw("3same");
+  // diamond->Draw("3same");
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation, a_{W}^{0}/#Lambda^{2} = 2E-6");
+  c2->Print("MassMatchRatio.pdf");
+
+  l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
+  l2->SetLineColor(1); l2->SetLineWidth(3); l2->Draw("same");
+  l3->SetLineColor(1); l3->SetLineWidth(3); l3->Draw("same");
+  l4->SetLineColor(1);l4->SetLineWidth(3); l4->Draw("same");
+  /*
+  l5->SetLineColor(1); l5->SetLineWidth(3); l5->Draw("same");
+  l6->SetLineColor(1); l6->SetLineWidth(3); l6->Draw("same");
+  l7->SetLineColor(1); l7->SetLineWidth(3); l7->Draw("same");
+  l8->SetLineColor(1); l8->SetLineWidth(3); l8->Draw("same");
+  */
+  l9->SetLineColor(1); l9->SetLineWidth(3); l9->Draw("same");
+  l10->SetLineColor(1); l10->SetLineWidth(3); l10->Draw("same");
+  l11->SetLineColor(1); l11->SetLineWidth(3); l11->Draw("same");
+  l12->SetLineColor(1); l12->SetLineWidth(3); l12->Draw("same");
+  /*
+  l13->SetLineColor(1); l13->SetLineWidth(3); l13->Draw("same");
+  l14->SetLineColor(1); l14->SetLineWidth(3); l14->Draw("same");
+  l15->SetLineColor(1); l15->SetLineWidth(3); l15->Draw("same");
+  l16->SetLineColor(1); l16->SetLineWidth(3); l16->Draw("same");
+  */
+  l17->SetLineColor(kRed); l17->SetLineWidth(3); l17->Draw("same");
+  l18->SetLineColor(kRed); l18->SetLineWidth(3); l18->Draw("same");
+  l19->SetLineColor(kRed); l19->SetLineWidth(3); l19->Draw("same");
+  l20->SetLineColor(kRed); l20->SetLineWidth(3); l20->Draw("same");
+
+  c2->Print("SignalRegionsDefinition.pdf");
+  rotated_1->Draw("colz");
+  c2->Print("SignalRegionsDefinition_rotated.pdf");
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation, a_{W}^{0}/#Lambda^{2} = 2E-6");
+  proj1->Draw();
+  c2->Print("SignalRegionsDefinition_bandFitted.pdf");  
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation");
+
+
+
 
   cout << "Found good rotation angles: " << th_rot1 << " " << th_rot2
        << std::endl;
@@ -207,13 +304,13 @@ void MassRapiditySelectionWW(TFile *file) {
        << "Let Mn = 1 - (mydijet.M()/mppsmultmult->at(0))\n and Yn = "
           "yppsmultmult->at(0)-mydijet.Rapidity()\n"
        << "Mn/" << TMath::Tan(th_rot1) << " + "
-       << band1Center->Eval(0) - band1Sigma << " < Yn < "
+       << band1Center->Eval(0) - sigma_1 << " < Yn < "
        << "Mn/" << TMath::Tan(th_rot1) << " + "
-       << band1Center->Eval(0) + band1Sigma << "\nOR\n"
+       << band1Center->Eval(0) + sigma_1 << "\nOR\n"
        << "Mn/" << TMath::Tan(th_rot2) << " + "
-       << band2Center->Eval(0) - band2Sigma << " < Yn < "
+       << band2Center->Eval(0) - sigma_2 << " < Yn < "
        << "Mn/" << TMath::Tan(th_rot2) << " + "
-       << band2Center->Eval(0) + band2Sigma << endl;
+       << band2Center->Eval(0) + sigma_2 << endl;
 }
 
 void MassRapiditySelectionZZ(TFile *file) {
@@ -275,6 +372,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(2);
   rotated_1->GetXaxis()->SetRangeUser(-2, 2);
   rotated_1->GetYaxis()->SetRangeUser(-2, 2);
+  rotated_1->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
+  rotated_1->GetYaxis()->SetTitle("y(PP)-y(WW)");
   rotated_1->Draw("colz");
   c1->cd(5);
   TH1D *proj1 = rotated_1->ProjectionX();
@@ -298,6 +397,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(3);
   rotated_2->GetXaxis()->SetRangeUser(-2, 2);
   rotated_2->GetYaxis()->SetRangeUser(-2, 2);
+  rotated_2->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
+  rotated_2->GetYaxis()->SetTitle("y(PP)-y(WW)");
   rotated_2->Draw("colz");
   c1->cd(6);
   TH1D *proj2 = rotated_2->ProjectionX();
@@ -311,6 +412,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(4);
   hmassrapiditymatchsigmcmmzz->GetXaxis()->SetRangeUser(-2, 2);
   hmassrapiditymatchsigmcmmzz->GetYaxis()->SetRangeUser(-2, 2);
+  hmassrapiditymatchsigmcmmzz->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
+  hmassrapiditymatchsigmcmmzz->GetYaxis()->SetTitle("y(PP)-y(WW)");
   hmassrapiditymatchsigmcmmzz->Draw("colz");
 
   TGraphErrors *band1 = new TGraphErrors(4);
@@ -323,7 +426,7 @@ void MassRapiditySelectionZZ(TFile *file) {
   TF1 *band1Center =
       new TF1("band1Center",
               "x/TMath::Tan([0]) - ([1])/(TMath::Sin([0]))", -1, 1);
-  double band1Sigma =
+  double sigma_1 =
       TMath::Abs(f1->GetParameter(2)) /
       (TMath::Sin(th_rot1));
   double slope_1 = 1./TMath::Tan(th_rot1);
@@ -333,7 +436,7 @@ void MassRapiditySelectionZZ(TFile *file) {
   TF1 *band2Center =
       new TF1("band2Center",
               "x/TMath::Tan([0]) - ([1])/(TMath::Sin([0]))", -1, 1);
-  double band2Sigma =
+  double sigma_2 =
       TMath::Abs(f2->GetParameter(2)) /
       (TMath::Sin(th_rot2));
   double slope_2 = 1./TMath::Tan(th_rot2);
@@ -344,42 +447,42 @@ void MassRapiditySelectionZZ(TFile *file) {
   // Find parameters for the diamond (four interceptions in ascending order)
   // Interceptions are found as (q2-q1)/(m1-m2)
   double deltaM = slope_1 - slope_2;
-  double diamondX_0 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_1 = (intercept_2 + nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_2 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaDiamond*band1Sigma))/deltaM;
-  double diamondX_3 = (intercept_2 + nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaDiamond*band1Sigma))/deltaM;
+  double diamondX_0 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_1 = (intercept_2 + nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_2 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaDiamond*sigma_1))/deltaM;
+  double diamondX_3 = (intercept_2 + nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaDiamond*sigma_1))/deltaM;
   if (diamondX_1 > diamondX_2){
   	auto tmp = diamondX_2;
   	diamondX_2 = diamondX_1;
   	diamondX_1 = tmp;
   }
 
-  double diamondWidth = (band1Sigma < band2Sigma) ? band1Sigma : band2Sigma;
-  TF1* diamondCenter = (band1Sigma < band2Sigma) ? band1Center : band2Center;
+  double diamondWidth = (sigma_1 < sigma_2) ? sigma_1 : sigma_2;
+  TF1* diamondCenter = (sigma_1 < sigma_2) ? band1Center : band2Center;
 
   // Find band1 interceptions (bottom range given by norm region)
   deltaM = slope_1;
-  double band1X_0 = (-0.5 - (intercept_1 + nSigmaBands*band1Sigma))/deltaM;
-  double band1X_1 = (-0.5 - (intercept_1 - nSigmaBands*band1Sigma))/deltaM;
+  double band1X_0 = (-0.5 - (intercept_1 + nSigmaBands*sigma_1))/deltaM;
+  double band1X_1 = (-0.5 - (intercept_1 - nSigmaBands*sigma_1))/deltaM;
   deltaM = slope_1 - slope_2;
-  double band1X_2 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 + nSigmaBands*band1Sigma))/deltaM;
-  double band1X_3 = (intercept_2 - nSigmaDiamond*band2Sigma - (intercept_1 - nSigmaBands*band1Sigma))/deltaM;
+  double band1X_2 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 + nSigmaBands*sigma_1))/deltaM;
+  double band1X_3 = (intercept_2 - nSigmaDiamond*sigma_2 - (intercept_1 - nSigmaBands*sigma_1))/deltaM;
 
   // Find band1 interceptions (bottom range given by norm region)
   deltaM = slope_2;
-  double band2X_0 = (0.5 - (intercept_2 - nSigmaBands*band2Sigma))/deltaM;
-  double band2X_1 = (0.5 - (intercept_2 + nSigmaBands*band2Sigma))/deltaM;
+  double band2X_0 = (0.5 - (intercept_2 - nSigmaBands*sigma_2))/deltaM;
+  double band2X_1 = (0.5 - (intercept_2 + nSigmaBands*sigma_2))/deltaM;
   deltaM = slope_1 - slope_2;
-  double band2X_2 = (intercept_2 - nSigmaBands*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
-  double band2X_3 = (intercept_2 + nSigmaBands*band2Sigma - (intercept_1 + nSigmaDiamond*band1Sigma))/deltaM;
+  double band2X_2 = (intercept_2 - nSigmaBands*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
+  double band2X_3 = (intercept_2 + nSigmaBands*sigma_2 - (intercept_1 + nSigmaDiamond*sigma_1))/deltaM;
 
   band1->SetPoint(0, band1X_0, -0.5);
   band1->SetPointError(0, 0, 0);
   band1->SetPoint(1, band1X_1, band1Center->Eval(band1X_1));
-  band1->SetPointError(1, 0, nSigmaBands*band1Sigma);
+  band1->SetPointError(1, 0, nSigmaBands*sigma_1);
   band1->SetPoint(2, band1X_2, band1Center->Eval(band1X_2));
-  band1->SetPointError(2, 0, nSigmaBands*band1Sigma);
-  band1->SetPoint(3, band1X_3, band1Center->Eval(band1X_3) - nSigmaBands*band1Sigma);
+  band1->SetPointError(2, 0, nSigmaBands*sigma_1);
+  band1->SetPoint(3, band1X_3, band1Center->Eval(band1X_3) - nSigmaBands*sigma_1);
   band1->SetPointError(3, 0, 0);
 
   band1->SetFillColor(46);
@@ -389,22 +492,22 @@ void MassRapiditySelectionZZ(TFile *file) {
   band2->SetPoint(0, band2X_0, 0.5);
   band2->SetPointError(0, 0, 0);
   band2->SetPoint(1, band2X_1, band2Center->Eval(band2X_1));
-  band2->SetPointError(1, 0, nSigmaBands*band2Sigma);
+  band2->SetPointError(1, 0, nSigmaBands*sigma_2);
   band2->SetPoint(2, band2X_2, band2Center->Eval(band2X_2));
-  band2->SetPointError(2, 0, nSigmaBands*band2Sigma);
-  band2->SetPoint(3, band2X_3, band2Center->Eval(band2X_3) + nSigmaBands*band2Sigma);
+  band2->SetPointError(2, 0, nSigmaBands*sigma_2);
+  band2->SetPoint(3, band2X_3, band2Center->Eval(band2X_3) + nSigmaBands*sigma_2);
   band2->SetPointError(3, 0, 0);
   band2->SetFillColor(46);
   band2->SetFillStyle(3001);
   band2->Draw("3same");
 
-  diamond->SetPoint(0, diamondX_0, slope_1*diamondX_0 + nSigmaDiamond * band1Sigma);
+  diamond->SetPoint(0, diamondX_0, slope_1*diamondX_0 + nSigmaDiamond * sigma_1);
   diamond->SetPointError(0, 0, 0);
   diamond->SetPoint(1, diamondX_1, diamondCenter->Eval(diamondX_1));
   diamond->SetPointError(1, 0, nSigmaDiamond*diamondWidth);
   diamond->SetPoint(2, diamondX_2, diamondCenter->Eval(diamondX_2));
   diamond->SetPointError(2, 0, nSigmaDiamond*diamondWidth);
-  diamond->SetPoint(3, diamondX_3, slope_1*diamondX_3 - nSigmaDiamond * band1Sigma);
+  diamond->SetPoint(3, diamondX_3, slope_1*diamondX_3 - nSigmaDiamond * sigma_1);
   diamond->SetPointError(3, 0, 0);
   diamond->SetFillColor(kGreen);
   diamond->SetFillStyle(3001);
@@ -417,11 +520,11 @@ void MassRapiditySelectionZZ(TFile *file) {
        << "Let Mn = 1 - (mydijet.M()/mppsmultmult->at(0))\n and Yn = "
           "yppsmultmult->at(0)-mydijet.Rapidity()\n"
        << "Mn/" << TMath::Tan(th_rot1) << " + "
-       << band1Center->Eval(0) - band1Sigma << " < Yn < "
+       << band1Center->Eval(0) - sigma_1 << " < Yn < "
        << "Mn/" << TMath::Tan(th_rot1) << " + "
-       << band1Center->Eval(0) + band1Sigma << "\nOR\n"
+       << band1Center->Eval(0) + sigma_1 << "\nOR\n"
        << "Mn/" << TMath::Tan(th_rot2) << " + "
-       << band2Center->Eval(0) - band2Sigma << " < Yn < "
+       << band2Center->Eval(0) - sigma_2 << " < Yn < "
        << "Mn/" << TMath::Tan(th_rot2) << " + "
-       << band2Center->Eval(0) + band2Sigma << endl;
+       << band2Center->Eval(0) + sigma_2 << endl;
 }

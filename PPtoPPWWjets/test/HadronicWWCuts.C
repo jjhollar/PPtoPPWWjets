@@ -41,8 +41,9 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-  TString outputFolder = "signalSamples_v4";
+  TString outputFolder = "signalSamples_v5";
   // TString outputFolder = "dataRun2";
+  // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "backgroundSamples";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";

@@ -1,9 +1,9 @@
 executable			= runHadronicWWCuts.sh
 arguments			= $(sampleNumber) $ENV(CMSSW_BASE)
-output 				= signalSamples_v4/HadronicWWCuts_$(sampleNumber).out
-# output 				= signalSamples_v4_protonSystematics/HadronicWWCuts_$(sampleNumber).out
-# output 				= signalSamples_v4_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
-# output 				= signalSamples_v4_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v5/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v5_protonSystematics/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v5_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
+output 				= signalSamples_v5_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
 # output 				= dataRun2_v2/HadronicWWCuts_$(sampleNumber).out
 # output 				= backgroundSamples_v2/HadronicWWCuts_$(sampleNumber).out
 error 				= HadronicWWCuts_$(sampleNumber).err
@@ -16,110 +16,164 @@ notification		= Always
 queue sampleNumber in (
 # # FOR SIGNAL
 # #
-	# WW Part
-	# WW_A0W1e-6
-	120 
-	121 
-	122 
-	20 
-	21 
-	22 
-	50 
-	51 
-	220 
-	221 
-	222 
-	223 
-	# WW_A0W2e-6
-	# 123 
-	# 124 
-	# 125 
-	# 23 
-	# 24 
-	# 25 
-	# 52 
-	# 53 
-	# 224 
-	# 225 
-	# 226 
-	# 227 
-	# WW_A0W5e-6
-	126 
-	127 
-	128 
-	26 
-	27 
-	28 
-	54 
-	55 
-	228 
-	229 
-	230 
-	231 
-	# WW_ACW2e-5
-	129 
-	130 
-	131 
-	29 
-	30 
-	31 
-	56 
-	57 
-	232 
-	233 
-	234 
-	235 
-	# WW_ACW5e-6
-	132 
-	133 
-	134 
-	32 
-	33 
-	34 
-	58 
-	59 
-	236 
-	237 
-	238 
-	239 
-	# WW_ACW8e-6
-	135 
-	136 
-	137 
-	35 
-	36 
-	37 
-	60 
-	61 
-	240 
-	241 
-	242 
-	243 
+	# # WW Part
+	# # WW_A0W1e-6
+	# 120 
+	# 121 
+	# 122 
+	# 20 
+	# 21 
+	# 22 
+	# 50 
+	# 51 
+	# 220 
+	# 221 
+	# 222 
+	# 223 
+	# # WW_A0W2e-6
+	# # 123 
+	# # 124 
+	# # 125 
+	# # 23 
+	# # 24 
+	# # 25 
+	# # 52 
+	# # 53 
+	# # 224 
+	# # 225 
+	# # 226 
+	# # 227 
+	# # WW_A0W5e-6
+	# 126 
+	# 127 
+	# 128 
+	# 26 
+	# 27 
+	# 28 
+	# 54 
+	# 55 
+	# 228 
+	# 229 
+	# 230 
+	# 231 
+	# # WW_ACW2e-5
+	# 129 
+	# 130 
+	# 131 
+	# 29 
+	# 30 
+	# 31 
+	# 56 
+	# 57 
+	# 232 
+	# 233 
+	# 234 
+	# 235 
+	# # WW_ACW5e-6
+	# 132 
+	# 133 
+	# 134 
+	# 32 
+	# 33 
+	# 34 
+	# 58 
+	# 59 
+	# 236 
+	# 237 
+	# 238 
+	# 239 
+	# # WW_ACW8e-6
+	# 135 
+	# 136 
+	# 137 
+	# 35 
+	# 36 
+	# 37 
+	# 60 
+	# 61 
+	# 240 
+	# 241 
+	# 242 
+	# 243 
 	# ZZ Part
 	# ZZ_A0Z-1e-5
-	140 
-	40 
-	250 
+	# 140 
+	# 146
+	# 147
+	# 40
+	# 62
+	# 63
+	# 64
+	# 65 
+	# 250 
+	# 256
+	# 257
+	# 258
 	# ZZ_A0Z1e-5
 	141 
+	148
+	149
 	41 
+	66
+	67
+	68
+	69
 	251 
+	259
+	260
+	261
 	# ZZ_A0Z5e-5
 	142 
+	150
+	151
 	42 
+	70
+	71
+	72
+	73
 	252 
+	262
+	263
+	264
 	# ZZ_ACZ-1e-5
-	143 
-	43 
-	253 
+	# 143
+	# 152
+	# 153 
+	# 43 
+	# 74
+	# 75
+	# 76
+	# 77
+	# 253 
+	# 265
+	# 266
+	# 267
 	# ZZ_ACZ1e-5
 	144 
+	154
+	155
 	44 
+	78
+	79
+	80
+	81
 	254 
+	268
+	269
+	270
 	# ZZ_ACZ5e-5
 	145 
+	156
+	157
 	45 
+	82
+	83
+	84
+	85
 	255 
+	271
+	272
+	273
 # #
 # # FOR DATA
 # #
