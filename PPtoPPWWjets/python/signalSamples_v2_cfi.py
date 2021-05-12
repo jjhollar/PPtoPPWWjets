@@ -3189,12 +3189,16 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 
 
 	full_file_list = []
-	if sampleTag == "WW_A0W1e-6":
+	if sampleTag == "WW_A0W5e-7":
+		full_file_list = WW_A0W5e_7[year]
+	elif sampleTag == "WW_A0W1e-6":
 		full_file_list = WW_A0W1e_6[year]
 	elif sampleTag == "WW_A0W2e-6":
 		full_file_list = WW_A0W2e_6[year]
 	elif sampleTag == "WW_A0W5e-6":
 		full_file_list = WW_A0W5e_6[year]
+	elif sampleTag == "WW_ACW2e-6":
+		full_file_list = WW_ACW2e_6[year]
 	elif sampleTag == "WW_ACW2e-5":
 		full_file_list = WW_ACW2e_5[year]
 	elif sampleTag == "WW_ACW5e-6":
@@ -3205,12 +3209,16 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		full_file_list = ZZ_A0Z_1e_5[year]
 	elif sampleTag == "ZZ_A0Z1e-5":
 		full_file_list = ZZ_A0Z1e_5[year]
+	elif sampleTag == "ZZ_A0Z2e-5":
+		full_file_list = ZZ_A0Z2e_5[year]
 	elif sampleTag == "ZZ_A0Z5e-5":
 		full_file_list = ZZ_A0Z5e_5[year]
 	elif sampleTag == "ZZ_ACZ-1e-5":
 		full_file_list = ZZ_ACZ_1e_5[year]
 	elif sampleTag == "ZZ_ACZ1e-5":
 		full_file_list = ZZ_ACZ1e_5[year]
+	elif sampleTag == "ZZ_ACZ2e-5":
+		full_file_list = ZZ_ACZ2e_5[year]
 	elif sampleTag == "ZZ_ACZ5e-5":
 		full_file_list = ZZ_ACZ5e_5[year]
 	else:
