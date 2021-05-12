@@ -8,16 +8,14 @@
 #ifndef HadronicWWCuts_h
 #define HadronicWWCuts_h
 
-#include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <TROOT.h>
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
 
 #include "PPSProtonSelector.C"
-#include "PPSProtonEfficiency.h"
-#include "PPSProtonEfficiency.C"
 
 // gROOT->ProcessLine(".L
 // ../../../jecsys/CondFormats/JetMETObjects/src/JetCorrectionUncertainty_cc.so");
@@ -26,6 +24,9 @@ class HadronicWWCuts {
 public:
   TTree *fChain;  //! pointer to the analyzed TTree or TChain
   Int_t fCurrent; //! current Tree number in a TChain
+  bool protonSyst;
+  bool JECSystUp;
+  bool JECSystDown;
 
   // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -164,7 +165,9 @@ public:
 
   TString erastring;
 
-  HadronicWWCuts(Int_t mysample = 500, TTree *tree = 0);
+  HadronicWWCuts(Int_t mysample = 500, bool protonSyst = false,
+                 bool JECSystUp = false, bool JECSystDown = false,
+                 TTree *tree = 0);
   virtual ~HadronicWWCuts();
   virtual Int_t Cut(Long64_t entry);
   virtual Int_t GetEntry(Long64_t entry);
@@ -178,694 +181,25 @@ public:
 #endif
 
 #ifdef HadronicWWCuts_cxx
-HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
+HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
+                 bool JECSystUp, bool JECSystDown,TTree *tree) : fChain(0) {
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
-
+  this->protonSyst = protonSyst;
+  this->JECSystUp = JECSystUp;
+  this->JECSystDown = JECSystDown;
   // TString mcNtuplesFolder =
   //     "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v3";
   TString mcNtuplesFolder =
-    "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v3";
+      "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
+      "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v3";
   // TString mcNtuplesFolder =
   // "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
 
   // if parameter tree is not specified (or zero), connect the file
   // used to generate this class and read the Tree.
   if (tree == 0) {
-    TFile *f;
-    if (samplenumber == -1)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2017Bv1_17Nov2017_merge.root");
-    if (samplenumber == -2)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2017Cv1_17Nov2017_merge.root");
-    if (samplenumber == -3)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2017Dv1_17Nov2017_merge.root");
-    if (samplenumber == -4)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2017Ev1_17Nov2017_merge.root");
-    if (samplenumber == -5)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2017Fv1_17Nov2017_merge.root");
-
-    if (samplenumber == -6)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2016B_ver2v1_07Aug17_merge.root");
-    if (samplenumber == -7)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2016C_v1_07Aug17_merge.root");
-    if (samplenumber == -8)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2016G_v1_07Aug17_merge.root");
-    if (samplenumber == -9)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2016H_v1_07Aug17_merge.root");
-
-    if (samplenumber == -10)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root");
-    if (samplenumber == -11)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root");
-    if (samplenumber == -12)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2018C_v1_17Sep2018_merge.root");
-    if (samplenumber == -13)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-          "WWhadronic_JetHT_2018D_PromptReco_v2_merge.root");
-
-    if (samplenumber == 1)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/"
-          "QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
-    if (samplenumber == 2)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2017_merge.root");
-    if (samplenumber == 3)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2017_merge.root");
-    if (samplenumber == 4)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2017_merge.root");
-    if (samplenumber == 5)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2017_merge.root");
-    if (samplenumber == 6)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2017_merge.root");
-    if (samplenumber == 7)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "TTbarHadronic_PowhegPythia8_merge.root");
-    if (samplenumber == 8)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "WJetsToQQ_HT_800toInf_qc19_3j_TuneCP5_13TeV_MadgraphMLMPythia8."
-          "root");
-    if (samplenumber == 9)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_MadgraphMLMPythia8.root");
-    if (samplenumber == 10)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2017_merge.root");
-
-    // 2017 PreTS2
-    // WW_A0W1e-6
-    if (samplenumber == 20)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 21)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 22)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    // WW_A0W2e-6
-    if (samplenumber == 23)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 24)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 25)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    // WW_A0W5e-6
-    if (samplenumber == 26)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 27)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 28)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    // WW_ACW2e-5
-    if (samplenumber == 29)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 30)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 31)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 32)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 33)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 34)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 35)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 36)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 37)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    // ZZ_A0Z-1e-5
-    if (samplenumber == 40)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 62)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 63)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 64)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 65)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    // ZZ_A0Z1e-5
-    if (samplenumber == 41)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 66)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 67)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 68)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 69)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    // ZZ_A0Z5e-5
-    if (samplenumber == 42)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 70)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 71)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 72)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 73)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    // ZZ_ACZ-1e-5
-    if (samplenumber == 43)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 74)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 75)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 76)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 77)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    // ZZ_ACZ1e-5
-    if (samplenumber == 44)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 78)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 79)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 80)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 81)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    // ZZ_ACZ5e-5
-    if (samplenumber == 45)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 82)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/C/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 83)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/D/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 84)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 85)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-
-    // 2017 PostTS2
-    // WW_A0W1e-6
-    if (samplenumber == 50)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 51)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    // WW_A0W2e-6
-    if (samplenumber == 52)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 53)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    // WW_A0W5e-6
-    if (samplenumber == 54)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 55)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    // WW_ACW2e-5
-    if (samplenumber == 56)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 57)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 58)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 59)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 60)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/E/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 61)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2017/F/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-
-    if (samplenumber == 101)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/"
-          "QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
-    if (samplenumber == 102)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2016_ext_merge.root");
-    if (samplenumber == 103)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2016_merge.root");
-    if (samplenumber == 104)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2016_merge.root");
-    if (samplenumber == 105)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2016_merge.root");
-    if (samplenumber == 106)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2016_merge.root");
-    if (samplenumber == 107)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "TTbarHadronic_PowhegPythia8_mTT1000toInf_2016_merge.root");
-    if (samplenumber == 108)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "WJetsToQQ_HT_600toInf_TuneCP5_13TeV_MadgraphMLMPythia8_2016_merge."
-          "root");
-    if (samplenumber == 109)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2016_merge.root");
-    if (samplenumber == 110)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2016_merge.root");
-    if (samplenumber == 111)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "TTbarHadronic_PowhegPythia8_mTT700to1000_2016_merge.root");
-
-    // 2016 PreTS2
-    // WW_A0W1e-6
-    if (samplenumber == 120)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 121)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 122)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    // WW_A0W2e-6
-    if (samplenumber == 123)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 124)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 125)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    // WW_A0W5e-6
-    if (samplenumber == 126)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 127)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 128)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    // WW_ACW2e-5
-    if (samplenumber == 129)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 130)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 131)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 132)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 133)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 134)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    // WW_ACW8e-6
-    if (samplenumber == 135)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 136)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 137)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    // ZZ_A0Z-1e-5
-    if (samplenumber == 140)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 146)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 147)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    // ZZ_A0Z1e-5
-    if (samplenumber == 141)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 148)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 149)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    // ZZ_A0Z5e-5
-    if (samplenumber == 142)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 150)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 151)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    // ZZ_ACZ-1e-5
-    if (samplenumber == 143)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 152)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 153)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    // ZZ_ACZ1e-5
-    if (samplenumber == 144)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 154)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 155)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    // ZZ_ACZ5e-5
-    if (samplenumber == 145)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 156)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/C/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 157)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/G/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-
-    if (samplenumber == 201)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/"
-          "QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
-    if (samplenumber == 202)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2018_merge.root");
-    if (samplenumber == 203)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2018_merge.root");
-    if (samplenumber == 204)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2018_merge.root");
-    if (samplenumber == 205)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2018_merge.root");
-    if (samplenumber == 206)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2018_merge.root");
-    if (samplenumber == 207)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "TTbarHadronic_PowhegPythia8_2018_merge.root");
-    if (samplenumber == 208)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "WJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root");
-    if (samplenumber == 209)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root");
-    if (samplenumber == 210)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
-          "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2018_merge.root");
-
-    // WW_A0W1e-6
-    if (samplenumber == 220)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 221)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 222)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    if (samplenumber == 223)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-    // WW_A0W2e-6
-    if (samplenumber == 224)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 225)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 226)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    if (samplenumber == 227)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_A0W2e-6_Part1of1.root");
-    // WW_A0W5e-6
-    if (samplenumber == 228)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 229)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 230)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    if (samplenumber == 231)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
-    // WW_ACW2e-5
-    if (samplenumber == 232)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 233)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 234)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    if (samplenumber == 235)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 236)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 237)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 238)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    if (samplenumber == 239)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_ACW5e-6_Part1of1.root");
-    // WW_ACW5e-6
-    if (samplenumber == 240)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 241)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 242)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    if (samplenumber == 243)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_WW_ACW8e-6_Part1of1.root");
-    // ZZ_A0Z-1e-5
-    if (samplenumber == 250)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 256)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 257)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    if (samplenumber == 258)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_A0Z-1e-5_Part1of1.root");
-    // ZZ_A0Z1e-5
-    if (samplenumber == 251)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 259)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 260)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    if (samplenumber == 261)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
-    // ZZ_A0Z5e-5
-    if (samplenumber == 252)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 262)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 263)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    if (samplenumber == 264)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-    // ZZ_ACZ-1e-5
-    if (samplenumber == 253)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 265)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 266)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    if (samplenumber == 267)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_ACZ-1e-5_Part1of1.root");
-    // ZZ_ACZ1e-5
-    if (samplenumber == 254)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 268)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 269)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    if (samplenumber == 270)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
-    // ZZ_ACZ5e-5
-    if (samplenumber == 255)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/A/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 271)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/B/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 272)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/C/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-    if (samplenumber == 273)
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2018/D/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
-
-    if (samplenumber == 999)
-      //      f =
-      //      (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-      //      f =
-      //      (TFile*)gROOT->GetListOfFiles()->FindObject(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-      f = (TFile *)gROOT->GetListOfFiles()->FindObject(
-          mcNtuplesFolder + "/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
-
+    TFile *f = nullptr;
     if (!f || !f->IsOpen()) {
       if (samplenumber == -1)
         f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
@@ -956,6 +290,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       // 2017 signal samples
 
       // 2017 PreTS2
+      // WW_A0W5e-7
+      if (samplenumber == 400)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 401)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 402)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_WW_A0W5e-7_Part1of1.root");
       // WW_A0W1e-6
       if (samplenumber == 20)
         f = new TFile(mcNtuplesFolder +
@@ -986,6 +330,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 28)
         f = new TFile(mcNtuplesFolder +
                       "/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_ACW2e-6
+      if (samplenumber == 403)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 404)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 405)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_WW_ACW2e-6_Part1of1.root");
       // WW_ACW2e-5
       if (samplenumber == 29)
         f = new TFile(mcNtuplesFolder +
@@ -1048,6 +402,22 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 69)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      // ZZ_A0Z2e-5
+      if (samplenumber == 406)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 407)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 408)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 504)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 505)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if (samplenumber == 42)
         f = new TFile(mcNtuplesFolder +
@@ -1096,6 +466,22 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 81)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      // ZZ_ACZ2e-5
+      if (samplenumber == 409)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 410)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 411)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 506)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 507)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if (samplenumber == 45)
         f = new TFile(mcNtuplesFolder +
@@ -1114,6 +500,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
                       "/2017/F/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
       // 2017 PostTS2
+      // WW_A0W5e-7
+      if (samplenumber == 500)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 501)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_WW_A0W5e-7_Part1of1.root");
       // WW_A0W1e-6
       if (samplenumber == 50)
         f = new TFile(mcNtuplesFolder +
@@ -1135,6 +528,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 55)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_ACW2e-6
+      if (samplenumber == 502)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 503)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_WW_ACW2e-6_Part1of1.root");
       // WW_ACW2e-5
       if (samplenumber == 56)
         f = new TFile(mcNtuplesFolder +
@@ -1208,6 +608,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       // 2016 signal samples
 
       // 2016 PreTS2
+      // WW_A0W5e-7
+      if (samplenumber == 300)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 301)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 302)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_WW_A0W5e-7_Part1of1.root");
       // WW_A0W1e-6
       if (samplenumber == 120)
         f = new TFile(mcNtuplesFolder +
@@ -1238,6 +648,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 128)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_ACW2e-6
+      if (samplenumber == 303)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 304)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 305)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_WW_ACW2e-6_Part1of1.root");
       // WW_ACW2e-5
       if (samplenumber == 129)
         f = new TFile(mcNtuplesFolder +
@@ -1288,6 +708,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 149)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      // ZZ_A0Z2e-5
+      if (samplenumber == 306)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 307)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 308)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if (samplenumber == 142)
         f = new TFile(mcNtuplesFolder +
@@ -1318,6 +748,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 155)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      // ZZ_ACZ2e-5
+      if (samplenumber == 309)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 310)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 311)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if (samplenumber == 145)
         f = new TFile(mcNtuplesFolder +
@@ -1374,6 +814,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
 
       // 2018 signal samples
 
+      // WW_A0W5e-7
+      if (samplenumber == 600)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 601)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 602)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_WW_A0W5e-7_Part1of1.root");
+      if (samplenumber == 603)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_WW_A0W5e-7_Part1of1.root");
       // WW_A0W1e-6
       if (samplenumber == 220)
         f = new TFile(mcNtuplesFolder +
@@ -1413,6 +866,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 231)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_ACW2e-6
+      if (samplenumber == 604)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 605)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 606)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_WW_ACW2e-6_Part1of1.root");
+      if (samplenumber == 607)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_WW_ACW2e-6_Part1of1.root");
       // WW_ACW2e-5
       if (samplenumber == 232)
         f = new TFile(mcNtuplesFolder +
@@ -1478,6 +944,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 261)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_ZZ_A0Z1e-5_Part1of1.root");
+      // ZZ_A0Z2e-5
+      if (samplenumber == 608)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 609)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 610)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
+      if (samplenumber == 611)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_ZZ_A0Z2e-5_Part1of1.root");
       // ZZ_A0Z5e-5
       if (samplenumber == 252)
         f = new TFile(mcNtuplesFolder +
@@ -1517,6 +996,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
       if (samplenumber == 270)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_ZZ_ACZ1e-5_Part1of1.root");
+      // ZZ_ACZ2e-5
+      if (samplenumber == 612)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 613)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 614)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
+      if (samplenumber == 615)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_ZZ_ACZ2e-5_Part1of1.root");
       // ZZ_ACZ5e-5
       if (samplenumber == 255)
         f = new TFile(mcNtuplesFolder +
@@ -1533,203 +1025,203 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, TTree *tree) : fChain(0) {
 
       if (samplenumber == 999)
         //	f = new
-        //TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        // TFile(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
         //	f = new
-        //TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+        // TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
         f = new TFile(mcNtuplesFolder +
                       "/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
     }
 
     TDirectory *dir = (TDirectory *)f->Get((TString)f->GetName() + ":/demo");
 
-    // if(samplenumber == -1)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Bv1_17Nov2017_merge.root:/demo");
-    // if(samplenumber == -2)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Cv1_17Nov2017_merge.root:/demo");
-    // if(samplenumber == -3)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Dv1_17Nov2017_merge.root:/demo");
-    // if(samplenumber == -4)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Ev1_17Nov2017_merge.root:/demo");
-    // if(samplenumber == -5)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Fv1_17Nov2017_merge.root:/demo");
+    if(samplenumber == -1)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Bv1_17Nov2017_merge.root:/demo");
+    if(samplenumber == -2)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Cv1_17Nov2017_merge.root:/demo");
+    if(samplenumber == -3)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Dv1_17Nov2017_merge.root:/demo");
+    if(samplenumber == -4)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Ev1_17Nov2017_merge.root:/demo");
+    if(samplenumber == -5)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2017Fv1_17Nov2017_merge.root:/demo");
 
-    // if(samplenumber == -6)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016B_ver2v1_07Aug17_merge.root:/demo");
-    // if(samplenumber == -7)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016C_v1_07Aug17_merge.root:/demo");
-    // if(samplenumber == -8)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016G_v1_07Aug17_merge.root:/demo");
-    // if(samplenumber == -9)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016H_v1_07Aug17_merge.root:/demo");
+    if(samplenumber == -6)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016B_ver2v1_07Aug17_merge.root:/demo");
+    if(samplenumber == -7)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016C_v1_07Aug17_merge.root:/demo");
+    if(samplenumber == -8)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016G_v1_07Aug17_merge.root:/demo");
+    if(samplenumber == -9)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2016H_v1_07Aug17_merge.root:/demo");
 
-    // if(samplenumber == -10)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root:/demo");
-    // if(samplenumber == -11)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root:/demo");
-    // if(samplenumber == -12)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018C_v1_17Sep2018_merge.root:/demo");
-    // if(samplenumber == -13)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018D_PromptReco_v2_merge.root:/demo");
+    if(samplenumber == -10)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018A_v1_17Sep2018_merge.root:/demo");
+    if(samplenumber == -11)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018B_v1_17Sep2018_merge.root:/demo");
+    if(samplenumber == -12)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018C_v1_17Sep2018_merge.root:/demo");
+    if(samplenumber == -13)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/WWhadronic_JetHT_2018D_PromptReco_v2_merge.root:/demo");
 
-    // if(samplenumber == 1)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
-    // if(samplenumber == 2)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
-    // if(samplenumber == 3)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
-    // if(samplenumber == 4)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
-    // if(samplenumber == 5)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
-    // if(samplenumber == 6)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
-    // if(samplenumber == 7)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_merge.root:/demo");
-    // if(samplenumber == 8)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT_800toInf_qc19_3j_TuneCP5_13TeV_MadgraphMLMPythia8.root:/demo");
-    // if(samplenumber == 9)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_MadgraphMLMPythia8.root:/demo");
-    // if(samplenumber == 10)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 1)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
+    if(samplenumber == 2)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 3)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 4)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 5)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 6)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
+    if(samplenumber == 7)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_merge.root:/demo");
+    if(samplenumber == 8)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT_800toInf_qc19_3j_TuneCP5_13TeV_MadgraphMLMPythia8.root:/demo");
+    if(samplenumber == 9)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_MadgraphMLMPythia8.root:/demo");
+    if(samplenumber == 10)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2017_merge.root:/demo");
 
-    // if(samplenumber == 20)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 21)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/SIGNAL/ExclWWjets_A0W2e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 22)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 23)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 20)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 21)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/SIGNAL/ExclWWjets_A0W2e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 22)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 23)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_preTS2_NoPUProtons_Fall17.root:/demo");
 
-    // if(samplenumber == 40)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 42)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 43)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_postTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 40)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 42)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2017_postTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 43)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_ACW2e-5_2017_postTS2_NoPUProtons_Fall17.root:/demo");
 
-    // if(samplenumber == 101)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
-    // if(samplenumber == 102)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2016_ext_merge.root:/demo");
-    // if(samplenumber == 103)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
-    // if(samplenumber == 104)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
-    // if(samplenumber == 105)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
-    // if(samplenumber == 106)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
-    // if(samplenumber == 107)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_mTT1000toInf_2016_merge.root:/demo");
-    // if(samplenumber == 108)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT_600toInf_TuneCP5_13TeV_MadgraphMLMPythia8_2016_merge.root:/demo");
-    // if(samplenumber == 109)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2016_merge.root:/demo");
-    // if(samplenumber == 110)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
-    // if(samplenumber == 111)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_mTT700to1000_2016_merge.root:/demo");
+    if(samplenumber == 101)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root:/demo");
+    if(samplenumber == 102)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2016_ext_merge.root:/demo");
+    if(samplenumber == 103)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
+    if(samplenumber == 104)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
+    if(samplenumber == 105)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
+    if(samplenumber == 106)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
+    if(samplenumber == 107)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_mTT1000toInf_2016_merge.root:/demo");
+    if(samplenumber == 108)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT_600toInf_TuneCP5_13TeV_MadgraphMLMPythia8_2016_merge.root:/demo");
+    if(samplenumber == 109)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2016_merge.root:/demo");
+    if(samplenumber == 110)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2016_merge.root:/demo");
+    if(samplenumber == 111)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_mTT700to1000_2016_merge.root:/demo");
 
-    // if(samplenumber == 120)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W1e-6_2016_preTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 122)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W5e-6_2016preTS2_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 123)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2016_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 120)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W1e-6_2016_preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 122)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_A0W5e-6_2016preTS2_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 123)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2016_preTS2_NoPUProtons_Fall17.root:/demo");
 
-    // if(samplenumber == 201)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 202)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 203)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 204)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 205)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 206)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
-    // if(samplenumber == 207)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_2018_merge.root:/demo");
-    // if(samplenumber == 208)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root:/demo");
-    // if(samplenumber == 209)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root:/demo");
-    // if(samplenumber == 210)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 201)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAOD/QCD_Pt_170to300_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 202)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 203)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 204)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 205)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 206)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
+    if(samplenumber == 207)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/TTbarHadronic_PowhegPythia8_2018_merge.root:/demo");
+    if(samplenumber == 208)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/WJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root:/demo");
+    if(samplenumber == 209)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2018_merge.root:/demo");
+    if(samplenumber == 210)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2018_merge.root:/demo");
 
-    // if(samplenumber == 220)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2018_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 222)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root:/demo");
-    // if(samplenumber == 223)
-    //   dir =
-    //   (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 220)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W1e-6_2018_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 222)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal//ExclWWjets_A0W5e-6_2018_NoPUProtons_Fall17.root:/demo");
+    if(samplenumber == 223)
+      dir =
+      (TDirectory*)f->Get("/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/ExclWWjets_ACW2e-5_2018_NoPUProtons_Fall17.root:/demo");
 
-    // if(samplenumber == 999)
-    //   //      dir =
-    //   (TDirectory*)f->Get(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
-    //   //      dir =
-    //   (TDirectory*)f->Get(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
-    //   dir =
-    //   (TDirectory*)f->Get(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+    if(samplenumber == 999)
+      //      dir =
+      // (TDirectory*)f->Get(mcNtuplesFolder+"/2017/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+      //      dir =
+      // (TDirectory*)f->Get(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
+      dir =
+      (TDirectory*)f->Get(mcNtuplesFolder+"/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root:/demo");
 
     dir->GetObject("ntp1", tree);
   }

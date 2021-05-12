@@ -1,14 +1,26 @@
 executable			= runHadronicWWCuts.sh
-arguments			= $(sampleNumber) $ENV(CMSSW_BASE)
+# Activate one systematic at a time
+# For no syst
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 
 # output 				= signalSamples_v5/HadronicWWCuts_$(sampleNumber).out
+#
+# For proton syst
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics
 # output 				= signalSamples_v5_protonSystematics/HadronicWWCuts_$(sampleNumber).out
+#
+# For JEC syst up
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp
 # output 				= signalSamples_v5_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
-output 				= signalSamples_v5_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
+#
+# For JEC syst down
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown
+# output 				= signalSamples_v5_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
+#
 # output 				= dataRun2_v2/HadronicWWCuts_$(sampleNumber).out
 # output 				= backgroundSamples_v2/HadronicWWCuts_$(sampleNumber).out
-error 				= HadronicWWCuts_$(sampleNumber).err
-log 				= HadronicWWCuts_$(sampleNumber).log
-getenv				= True
+error 					= logs/HadronicWWCuts_$(sampleNumber).err
+log 						= logs/HadronicWWCuts_$(sampleNumber).log
+getenv					= True
 +JobFlavour			= "workday"
 notify_user			= andrea.bellora@cern.ch
 notification		= Always
@@ -17,6 +29,19 @@ queue sampleNumber in (
 # # FOR SIGNAL
 # #
 	# # WW Part
+	# # WW_A0W5e-6
+	# 300 
+	# 301 
+	# 302 
+	# 400
+	# 401
+	# 402
+	# 500
+	# 501 
+	# 600 
+	# 601 
+	# 602 
+	# 603 
 	# # WW_A0W1e-6
 	# 120 
 	# 121 
@@ -56,6 +81,19 @@ queue sampleNumber in (
 	# 229 
 	# 230 
 	# 231 
+	# # WW_ACW2e-6
+	# 303 
+	# 304 
+	# 305 
+	# 403
+	# 404
+	# 405
+	# 502
+	# 503 
+	# 604 
+	# 605 
+	# 606 
+	# 607 
 	# # WW_ACW2e-5
 	# 129 
 	# 130 
@@ -110,31 +148,44 @@ queue sampleNumber in (
 	# 257
 	# 258
 	# ZZ_A0Z1e-5
-	141 
-	148
-	149
-	41 
-	66
-	67
-	68
-	69
-	251 
-	259
-	260
-	261
+	# 141 
+	# 148
+	# 149
+	# 41 
+	# 66
+	# 67
+	# 68
+	# 69
+	# 251 
+	# 259
+	# 260
+	# 261
+	# ZZ_A0Z2e-5
+	# 306
+	# 307
+	# 308 
+	# 406
+	# 407
+	# 408
+	# 504
+	# 505 
+	# 608 
+	# 609 
+	# 610 
+	# 611 
 	# ZZ_A0Z5e-5
-	142 
-	150
-	151
-	42 
-	70
-	71
-	72
-	73
-	252 
-	262
-	263
-	264
+	# 142 
+	# 150
+	# 151
+	# 42 
+	# 70
+	# 71
+	# 72
+	# 73
+	# 252 
+	# 262
+	# 263
+	# 264
 	# ZZ_ACZ-1e-5
 	# 143
 	# 152
@@ -149,31 +200,44 @@ queue sampleNumber in (
 	# 266
 	# 267
 	# ZZ_ACZ1e-5
-	144 
-	154
-	155
-	44 
-	78
-	79
-	80
-	81
-	254 
-	268
-	269
-	270
+	# 144 
+	# 154
+	# 155
+	# 44 
+	# 78
+	# 79
+	# 80
+	# 81
+	# 254 
+	# 268
+	# 269
+	# 270
+	# ZZ_A0Z2e-5
+	# 309
+	# 310 
+	# 311 
+	# 409
+	# 410
+	# 411
+	# 506
+	# 507 
+	# 612 
+	# 613 
+	# 614 
+	# 615 
 	# ZZ_ACZ5e-5
-	145 
-	156
-	157
-	45 
-	82
-	83
-	84
-	85
-	255 
-	271
-	272
-	273
+	# 145 
+	# 156
+	# 157
+	# 45 
+	# 82
+	# 83
+	# 84
+	# 85
+	# 255 
+	# 271
+	# 272
+	# 273
 # #
 # # FOR DATA
 # #

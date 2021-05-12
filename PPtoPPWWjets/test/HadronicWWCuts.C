@@ -35,16 +35,16 @@ void HadronicWWCuts::Loop() {
     return;
   // Doing proton systematics
   TRandom3 ransource;
-  bool DOPROTONSYSTEMATICS = false;
-  bool DOJECSYSTEMATICSUP = false;
-  bool DOJECSYSTEMATICSDOWN = false;
+  bool DOPROTONSYSTEMATICS = protonSyst;
+  bool DOJECSYSTEMATICSUP = JECSystUp;
+  bool DOJECSYSTEMATICSDOWN = JECSystDown;
 
   // TString outputFolder = "testrun";
 
-  TString outputFolder = "signalSamples_v5";
+  // TString outputFolder = "signalSamples_v5";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
-  // TString outputFolder = "backgroundSamples";
+  TString outputFolder = "backgroundSamples";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
   if (DOJECSYSTEMATICSUP)
@@ -677,6 +677,21 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 9)
     outtextfile = outputFolder + "MC_EventsForMixing_zjets_2017.txt";
 
+  if (samplenumber == 400)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2017B.txt";
+  if (samplenumber == 401)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2017C.txt";
+  if (samplenumber == 402)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2017D.txt";
+  if (samplenumber == 500)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_postTS2_2017E.txt";
+  if (samplenumber == 501)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_postTS2_2017F.txt";
   if (samplenumber == 20)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017B.txt";
@@ -686,6 +701,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 22)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2017D.txt";
+  if (samplenumber == 50)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017E.txt";
+  if (samplenumber == 51)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017F.txt";
   if (samplenumber == 23)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017B.txt";
@@ -695,6 +716,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 25)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_preTS2_2017D.txt";
+  if (samplenumber == 52)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017E.txt";
+  if (samplenumber == 53)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017F.txt";
   if (samplenumber == 26)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017B.txt";
@@ -704,6 +731,27 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 28)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2017D.txt";
+  if (samplenumber == 54)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017E.txt";
+  if (samplenumber == 55)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017F.txt";
+  if (samplenumber == 403)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2017B.txt";
+  if (samplenumber == 404)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2017C.txt";
+  if (samplenumber == 405)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2017D.txt";
+  if (samplenumber == 502)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_postTS2_2017E.txt";
+  if (samplenumber == 503)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_postTS2_2017F.txt";
   if (samplenumber == 29)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017B.txt";
@@ -713,6 +761,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 31)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2017D.txt";
+  if (samplenumber == 56)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017E.txt";
+  if (samplenumber == 57)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017F.txt";
   if (samplenumber == 32)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017B.txt";
@@ -722,6 +776,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 34)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_preTS2_2017D.txt";
+  if (samplenumber == 58)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017E.txt";
+  if (samplenumber == 59)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017F.txt";
   if (samplenumber == 35)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017B.txt";
@@ -731,6 +791,12 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 37)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_preTS2_2017D.txt";
+  if (samplenumber == 60)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017E.txt";
+  if (samplenumber == 61)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017F.txt";
 
   if (samplenumber == 40)
     outtextfile =
@@ -762,6 +828,20 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 69)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_postTS2_2017F.txt";
+  if (samplenumber == 406)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2017B.txt";
+  if (samplenumber == 407)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2017C.txt";
+  if (samplenumber == 408)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2017D.txt";
+  if (samplenumber == 504)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_postTS2_2017E.txt";
+  outtextfile =
+      outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_postTS2_2017F.txt";
   if (samplenumber == 42)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2017B.txt";
@@ -807,6 +887,21 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 81)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_postTS2_2017F.txt";
+  if (samplenumber == 409)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2017B.txt";
+  if (samplenumber == 410)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2017C.txt";
+  if (samplenumber == 411)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2017D.txt";
+  if (samplenumber == 506)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_postTS2_2017E.txt";
+  if (samplenumber == 507)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_postTS2_2017F.txt";
   if (samplenumber == 45)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2017B.txt";
@@ -822,43 +917,6 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 85)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_postTS2_2017F.txt";
-
-  if (samplenumber == 50)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017E.txt";
-  if (samplenumber == 51)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_postTS2_2017F.txt";
-  if (samplenumber == 52)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017E.txt";
-  if (samplenumber == 53)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W2E-6_postTS2_2017F.txt";
-  if (samplenumber == 54)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017E.txt";
-  if (samplenumber == 55)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_postTS2_2017F.txt";
-  if (samplenumber == 56)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017E.txt";
-  if (samplenumber == 57)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_postTS2_2017F.txt";
-  if (samplenumber == 58)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017E.txt";
-  if (samplenumber == 59)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW5E-6_postTS2_2017F.txt";
-  if (samplenumber == 60)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017E.txt";
-  if (samplenumber == 61)
-    outtextfile =
-        outputFolder + "MC_EventsForMixing_signal_WWACW8E-6_postTS2_2017F.txt";
 
   if (samplenumber == 102)
     outtextfile = outputFolder + "MC_EventsForMixing_QCD300to470_2016.txt";
@@ -881,6 +939,24 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 111)
     outtextfile = outputFolder + "MC_EventsForMixing_ttbar700to1000_2016.txt";
 
+  if (samplenumber == 300)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016B.txt";
+  if (samplenumber == 301)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016C.txt";
+  if (samplenumber == 302)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016G.txt";
+  if (samplenumber == 300)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016B.txt";
+  if (samplenumber == 301)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016C.txt";
+  if (samplenumber == 302)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016G.txt";
   if (samplenumber == 120)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_preTS2_2016B.txt";
@@ -908,6 +984,15 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 128)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_preTS2_2016G.txt";
+  if (samplenumber == 303)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2016B.txt";
+  if (samplenumber == 304)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2016C.txt";
+  if (samplenumber == 305)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_preTS2_2016G.txt";
   if (samplenumber == 129)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_preTS2_2016B.txt";
@@ -954,6 +1039,15 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 149)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_preTS2_2016G.txt";
+  if (samplenumber == 306)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2016B.txt";
+  if (samplenumber == 307)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2016C.txt";
+  if (samplenumber == 308)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_preTS2_2016G.txt";
   if (samplenumber == 142)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_preTS2_2016B.txt";
@@ -981,6 +1075,15 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 155)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_preTS2_2016G.txt";
+  if (samplenumber == 309)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2016B.txt";
+  if (samplenumber == 310)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2016C.txt";
+  if (samplenumber == 311)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_preTS2_2016G.txt";
   if (samplenumber == 145)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_preTS2_2016B.txt";
@@ -1010,6 +1113,18 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 209)
     outtextfile = outputFolder + "MC_EventsForMixing_zjets_2018.txt";
 
+  if (samplenumber == 600)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_2018A.txt";
+  if (samplenumber == 601)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_2018B.txt";
+  if (samplenumber == 602)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_2018C.txt";
+  if (samplenumber == 603)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_2018D.txt";
   if (samplenumber == 220)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W1E-6_2018A.txt";
@@ -1046,6 +1161,18 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 231)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-6_2018D.txt";
+  if (samplenumber == 604)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_2018A.txt";
+  if (samplenumber == 605)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_2018B.txt";
+  if (samplenumber == 606)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_2018C.txt";
+  if (samplenumber == 607)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_WWACW2E-6_2018D.txt";
   if (samplenumber == 232)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWACW2E-5_2018A.txt";
@@ -1107,6 +1234,18 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 261)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z1E-5_2018D.txt";
+  if (samplenumber == 608)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_2018A.txt";
+  if (samplenumber == 609)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_2018B.txt";
+  if (samplenumber == 610)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_2018C.txt";
+  if (samplenumber == 611)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZA0Z2E-5_2018D.txt";
   if (samplenumber == 252)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZA0Z5E-5_2018A.txt";
@@ -1143,6 +1282,18 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 270)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ1E-5_2018D.txt";
+  if (samplenumber == 612)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_2018A.txt";
+  if (samplenumber == 613)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_2018B.txt";
+  if (samplenumber == 614)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_2018C.txt";
+  if (samplenumber == 615)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_ZZACZ2E-5_2018D.txt";
   if (samplenumber == 255)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_ZZACZ5E-5_2018A.txt";
@@ -1178,19 +1329,23 @@ void HadronicWWCuts::Loop() {
   if ((samplenumber >= 20 && samplenumber <= 45) || samplenumber == 66 ||
       samplenumber == 67 || samplenumber == 70 || samplenumber == 71 ||
       samplenumber == 74 || samplenumber == 75 || samplenumber == 78 ||
-      samplenumber == 79 || samplenumber == 82 || samplenumber == 83) {
+      samplenumber == 79 || samplenumber == 82 || samplenumber == 83 ||
+      (samplenumber >= 400 && samplenumber < 500)) {
     erastring = "2017preTS2";
   }
   if ((samplenumber >= 50 && samplenumber <= 61) || samplenumber == 68 ||
       samplenumber == 69 || samplenumber == 72 || samplenumber == 73 ||
       samplenumber == 76 || samplenumber == 77 || samplenumber == 80 ||
-      samplenumber == 81 || samplenumber == 84 || samplenumber == 85) {
+      samplenumber == 81 || samplenumber == 84 || samplenumber == 85 ||
+      (samplenumber >= 500 && samplenumber < 600)) {
     erastring = "2017postTS2";
   }
-  if (samplenumber >= 120 && samplenumber < 200) {
+  if ((samplenumber >= 120 && samplenumber < 200) ||
+      (samplenumber >= 300 && samplenumber < 400)) {
     erastring = "2016preTS2";
   }
-  if (samplenumber >= 220 && samplenumber < 300) {
+  if ((samplenumber >= 220 && samplenumber < 300) ||
+      (samplenumber >= 600 && samplenumber < 700)) {
     erastring = "2018";
   }
 
@@ -1199,9 +1354,6 @@ void HadronicWWCuts::Loop() {
     erastring = "2016preTS2";
   //     erastring = "2018";
   //     erastring = "2017preTS2";
-
-  // Proton efficiencies
-  PPSProtonEfficiency eff;
 
   Long64_t nbytes = 0, nb = 0;
   for (Long64_t jentry = 0; jentry < nentries; jentry++) {
@@ -2648,6 +2800,32 @@ void HadronicWWCuts::Loop() {
                        "qcdpt2400to3200.root",
                    "RECREATE");
 
+  if (samplenumber == 400)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 401)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 402)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 500)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 501)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_postTS2_2017F.root",
+                   "RECREATE");
+
   if (samplenumber == 20)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -2662,6 +2840,16 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWA0W1E-6_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 50)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W1E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 51)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W1E-6_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 23)
     fx = new TFile(outputFolder +
@@ -2678,6 +2866,17 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWA0W2E-6_preTS2_2017D.root",
                    "RECREATE");
+  if (samplenumber == 52)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 53)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_postTS2_2017F.root",
+                   "RECREATE");
+
   if (samplenumber == 26)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -2692,6 +2891,42 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWA0W5E-6_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 54)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 55)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-6_postTS2_2017F.root",
+                   "RECREATE");
+
+  if (samplenumber == 403)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 404)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 405)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 502)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 503)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 29)
     fx = new TFile(outputFolder +
@@ -2708,6 +2943,16 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWACW2E-5_preTS2_2017D.root",
                    "RECREATE");
+  if (samplenumber == 56)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 57)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-5_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 32)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -2722,6 +2967,16 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWACW5E-6_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 58)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW5E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 59)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW5E-6_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 35)
     fx = new TFile(outputFolder +
@@ -2738,7 +2993,16 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWACW8E-6_preTS2_2017D.root",
                    "RECREATE");
-
+  if (samplenumber == 60)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW8E-6_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 61)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW8E-6_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 40)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -2788,6 +3052,31 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_postTS2_2017F.root",
+                   "RECREATE");
+  if (samplenumber == 406)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 407)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 408)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 504)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 505)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_postTS2_2017F.root",
                    "RECREATE");
   if (samplenumber == 42)
     fx = new TFile(outputFolder +
@@ -2864,6 +3153,31 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_postTS2_2017F.root",
                    "RECREATE");
+  if (samplenumber == 409)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 410)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 411)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 506)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 507)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_postTS2_2017F.root",
+                   "RECREATE");
   if (samplenumber == 45)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -2888,67 +3202,6 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ5E-5_postTS2_2017F.root",
-                   "RECREATE");
-
-  if (samplenumber == 50)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W1E-6_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 51)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W1E-6_postTS2_2017F.root",
-                   "RECREATE");
-  if (samplenumber == 52)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 53)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_postTS2_2017F.root",
-                   "RECREATE");
-  if (samplenumber == 54)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W5E-6_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 55)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W5E-6_postTS2_2017F.root",
-                   "RECREATE");
-  if (samplenumber == 56)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW2E-5_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 57)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW2E-5_postTS2_2017F.root",
-                   "RECREATE");
-  if (samplenumber == 58)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW5E-6_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 59)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW5E-6_postTS2_2017F.root",
-                   "RECREATE");
-  if (samplenumber == 60)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW8E-6_postTS2_2017E.root",
-                   "RECREATE");
-  if (samplenumber == 61)
-    fx = new TFile(outputFolder +
-                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWACW8E-6_postTS2_2017F.root",
                    "RECREATE");
 
   // 2016
@@ -3008,6 +3261,21 @@ void HadronicWWCuts::Loop() {
                        "ttbarhadronic700ot1000_2016.root",
                    "RECREATE");
 
+  if (samplenumber == 300)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 301)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 302)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W5E-7_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 120)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3052,6 +3320,21 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWA0W5E-6_preTS2_2016G.root",
+                   "RECREATE");
+  if (samplenumber == 303)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 304)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 305)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_preTS2_2016G.root",
                    "RECREATE");
   if (samplenumber == 129)
     fx = new TFile(outputFolder +
@@ -3129,6 +3412,21 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_preTS2_2016G.root",
                    "RECREATE");
+  if (samplenumber == 306)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 307)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 308)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 142)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3173,6 +3471,21 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_preTS2_2016G.root",
+                   "RECREATE");
+  if (samplenumber == 309)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 310)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 311)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_preTS2_2016G.root",
                    "RECREATE");
   if (samplenumber == 145)
     fx = new TFile(outputFolder +
@@ -3242,6 +3555,26 @@ void HadronicWWCuts::Loop() {
                        "qcdpt1400to1800_2018.root",
                    "RECREATE");
 
+  if (samplenumber == 600)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 601)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 602)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 603)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWA0W2E-6_2018D.root",
+                   "RECREATE");
   if (samplenumber == 220)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3301,6 +3634,26 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWA0W5E-6_2018D.root",
+                   "RECREATE");
+  if (samplenumber == 604)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 605)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 606)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 607)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclWWACW2E-6_2018D.root",
                    "RECREATE");
   if (samplenumber == 232)
     fx = new TFile(outputFolder +
@@ -3403,6 +3756,26 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZA0Z1E-5_2018D.root",
                    "RECREATE");
+  if (samplenumber == 608)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 609)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 610)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 611)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZA0Z2E-5_2018D.root",
+                   "RECREATE");
   if (samplenumber == 252)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3462,6 +3835,26 @@ void HadronicWWCuts::Loop() {
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclZZACZ1E-5_2018D.root",
+                   "RECREATE");
+  if (samplenumber == 612)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 613)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 614)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 615)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclZZACZ2E-5_2018D.root",
                    "RECREATE");
   if (samplenumber == 255)
     fx = new TFile(outputFolder +

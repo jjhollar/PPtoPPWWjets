@@ -46,10 +46,10 @@ elif ((options.partNumber == 0) & (options.nParts == 0)):
 
 ###########################################################
 # possible sampleTags:                                    #
-# WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6                      #
-# WW_ACW2e-5, WW_ACW5e-6, WW_ACW8e-6                      #
-# ZZ_A0Z-1e-5, ZZ_A0Z1e-5, ZZ_A0Z5e-5                     #
-# ZZ_ACZ-1e-5, ZZ_ACZ1e-5, ZZ_ACZ5e-5                     #
+# WW_A0W5e-7, WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6,         #
+# WW_ACW5e-6, WW_ACW2e-5, WW_ACW5e-6, WW_ACW8e-6,         #
+# ZZ_A0Z1e-5, ZZ_A0Z2e-5, ZZ_A0Z5e-5                      #
+# ZZ_ACZ1e-5, ZZ_ACZ2e-5, ZZ_ACZ5e-5                      #
 ###########################################################
 
 MC=True
