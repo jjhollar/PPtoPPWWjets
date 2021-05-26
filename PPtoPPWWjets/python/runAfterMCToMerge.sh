@@ -24,7 +24,7 @@ function mergeFiles () {
 	done
 }
 
-output_dir="signalNTuples_v3"
+output_dir="signalNTuples_v4"
 
 pack1=("B1" "B2")
 pack2=("D1" "D2")

@@ -41,10 +41,10 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-  // TString outputFolder = "signalSamples_v5";
+  TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
-  TString outputFolder = "backgroundSamples";
+  // TString outputFolder = "backgroundSamples";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
   if (DOJECSYSTEMATICSUP)
@@ -585,17 +585,17 @@ void HadronicWWCuts::Loop() {
   // JEC systematics
   JetCorrectionUncertainty *jectotal;
   // For MC
-  if (samplenumber > 0 && samplenumber <= 100)
+  if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 300 && samplenumber < 400))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2017/"
         "Fall17_17Nov2017_V32_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
-  if (samplenumber > 100 && samplenumber <= 200)
+  if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 400 && samplenumber < 600))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2016/"
         "Summer16_07Aug2017_V11_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
-  if (samplenumber > 200 && samplenumber <= 300)
+  if ((samplenumber > 200 && samplenumber <= 300)  || (samplenumber >= 600 && samplenumber < 700))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JECAUTUMN18/Autumn18_V19_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
