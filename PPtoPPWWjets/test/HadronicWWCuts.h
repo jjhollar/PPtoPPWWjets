@@ -565,40 +565,40 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
             "QCD_Pt_170to300_TuneCP5_13TeV_pythia8_merge.root");
       if (samplenumber == 102)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_300to470_TuneCP5_13TeV_pythia8_2016_ext_merge.root");
       if (samplenumber == 103)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_470to600_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 104)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_600to800_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 105)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_800to1000_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 106)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 107)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "TTbarHadronic_PowhegPythia8_mTT1000toInf_2016_merge.root");
       if (samplenumber == 108)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "WJetsToQQ_HT_600toInf_TuneCP5_13TeV_MadgraphMLMPythia8_2016_merge."
             "root");
       if (samplenumber == 109)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "ZJetsToQQ_HT-800toInf_TuneCP5_13TeV_Madgraph_2016_merge.root");
       if (samplenumber == 110)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 111)
         f = new TFile(
@@ -769,7 +769,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
-      // 2016 BG samples
+      // 2018 BG samples
 
       if (samplenumber == 201)
         f = new TFile(
