@@ -314,7 +314,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   
   h2->Sumw2(); // 300-470, higher-stats extension
   //  h2->Scale((2578238.0/18319816.0)*mc2xsec*1000*lumi/(1000000.0));
-  h2->Scale(mc2xsec*1000*lumi/(18319816.0));
+  h2->Scale(mc2xsec*1000*lumi/(17839656.0));
   h2->SetFillColor(kAzure+1);
   //  h2->SetFillColor(2);
 
@@ -332,13 +332,13 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   h5->Sumw2(); // 800-1000
   //  h5->Scale((15679031.0/15704980.0)*mc5xsec*1000*lumi/(1000000.0));
-  h5->Scale(mc5xsec*1000*lumi/(15704980.0));
+  h5->Scale(mc5xsec*1000*lumi/(153592.0));
   h5->SetFillColor(kAzure+1);
   //  h5->SetFillColor(5);
 
   h6->Sumw2(); // 1000-1400
   //  h6->Scale((2999069.0/2995724.0)*mc6xsec*1000*lumi/(1000000.0));
-  h6->Scale(mc6xsec*1000*lumi/(2995724.0));
+  h6->Scale(mc6xsec*1000*lumi/(2999069.0));
   h6->SetFillColor(kAzure+1);
   //  h6->Scale((5316947.0/27905480.0)*mc6xsec*1000*lumi/(1000000.0));
 
@@ -356,10 +356,12 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   
   h10->Sumw2(); // 1400-1800
   //  h10->Scale((335704.0/395902.0)*mc10xsec*1000*lumi/1000000.0);
-  h10->Scale(mc10xsec*1000*lumi/395902.0);
+  h10->Scale(mc10xsec*1000*lumi/396409.0);
   h10->SetFillColor(kAzure+1);
 
-  h11->Sumw2(); // ttbar 700-1000                                                                                                                                        
+  h11->Sumw2(); // ttbar 700-1000                                                                                                                                     
+  
+  // NOTE (28-5-2021) t-tbar 700-1000 NOT YET UPDATED WITH FIX FOR 2016 HLT CONFIGURATION
   //  h11->Scale((913088.0/38426513.0)*mc11xsec*1000*lumi/(1000000.0));
   h11->Scale(mc11xsec*1000*lumi/(38426513.0));
 
