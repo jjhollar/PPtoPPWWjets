@@ -180,9 +180,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
     hist = "JetSubstructure/"+hist;
 
 
-  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2/";
-  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples/";
-  TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/";
+  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/"; // HLT fix for 2016 only
+  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v6/"; // HLT fix for 2016 only
+  TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/"; // HLT fix for 2016 only
 
   /*
   TFile *f100 = TFile::Open("vars_cuts_ntupleULv1recalcmjcut_jerallhltfixptetacuts_datahist2017C.root");
@@ -310,7 +310,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
       hd1_3->Rebin(rebinfactor);
     }
 
-  // For MC in higher QCD pT bins, only running on 100k events from the ntuple per bin, so renormalize to that                                               
+  // These are updated (June 2, 2021) with the HLT fix for 2016 data and MC
   
   h2->Sumw2(); // 300-470, higher-stats extension
   //  h2->Scale((2578238.0/18319816.0)*mc2xsec*1000*lumi/(1000000.0));
@@ -361,9 +361,8 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   h11->Sumw2(); // ttbar 700-1000                                                                                                                                     
   
-  // NOTE (28-5-2021) t-tbar 700-1000 NOT YET UPDATED WITH FIX FOR 2016 HLT CONFIGURATION
   //  h11->Scale((913088.0/38426513.0)*mc11xsec*1000*lumi/(1000000.0));
-  h11->Scale(mc11xsec*1000*lumi/(38426513.0));
+  h11->Scale(mc11xsec*1000*lumi/(38499867.0));
 
   ha1->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
   ha1->Scale(mcaxsec*1000*lumi/41500.0);
@@ -552,7 +551,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
   // lg1->AddEntry(hb1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=2*10^{-6} GeV^{-2}");
   lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
-  lg1->AddEntry(h100,"201GBCG Data");
+  lg1->AddEntry(h100,"2016BCG Data");
   lg1->Draw("same");
   
   c1->cd(2);

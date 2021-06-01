@@ -218,14 +218,14 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
                       "WWhadronic_JetHT_2017Fv1_17Nov2017_merge.root");
 
       if (samplenumber == -6)
-        f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-                      "WWhadronic_JetHT_2016B_ver2v1_07Aug17_merge.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+		      "WWhadronic_JetHT_2016Bver2v1_07Aug2017.root");
       if (samplenumber == -7)
-        f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-                      "WWhadronic_JetHT_2016C_v1_07Aug17_merge.root");
+	f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+		      "WWhadronic_JetHT_2016Cver2v1_07Aug2017.root");
       if (samplenumber == -8)
-        f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
-                      "WWhadronic_JetHT_2016G_v1_07Aug17_merge.root");
+        f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+                      "WWhadronic_JetHT_2016Gver2v1_07Aug2017.root");
       if (samplenumber == -9)
         f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"
                       "WWhadronic_JetHT_2016H_v1_07Aug17_merge.root");
@@ -602,7 +602,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
             "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8_2016_merge.root");
       if (samplenumber == 111)
         f = new TFile(
-            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinal/"
+            "/eos/cms/store/user/jjhollar/ExclWWHadronicRun2LegacyFromAODFinalHLTFix/"
             "TTbarHadronic_PowhegPythia8_mTT700to1000_2016_merge.root");
 
       // 2016 signal samples
