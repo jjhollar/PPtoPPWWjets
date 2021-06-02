@@ -17,7 +17,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
 
   // pre-TS2
-  Float_t lumi = 4.718+1.631+3.667; //+5.095;
+  Float_t lumi = 4.602909231+1.622461742+3.691150120; //+5.095;
 
 
   // QCD xsections from xsecDB
@@ -365,31 +365,31 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   h11->Scale(mc11xsec*1000*lumi/(38499867.0));
 
   ha1->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1->Scale(mcaxsec*1000*lumi/41500.0);
+  ha1->Scale(mcaxsec*1000*lumi/33833.0);
   ha1_2->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1_2->Scale(mcaxsec*1000*lumi/21700.0);
+  ha1_2->Scale(mcaxsec*1000*lumi/32874.0);
   ha1_3->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1_3->Scale(mcaxsec*1000*lumi/41700.0);
+  ha1_3->Scale(mcaxsec*1000*lumi/32879.0);
   ha1->Add(ha1_2);
   ha1->Add(ha1_3);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
   hb1->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1->Scale(mcbxsec*1000*lumi/36100.0);
+  hb1->Scale(mcbxsec*1000*lumi/32838.0);
   hb1_2->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1_2->Scale(mcbxsec*1000*lumi/18400.0);
+  hb1_2->Scale(mcbxsec*1000*lumi/32872.0);
   hb1_3->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1_3->Scale(mcbxsec*1000*lumi/15000.0);
+  hb1_3->Scale(mcbxsec*1000*lumi/32879.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan);
 
   hd1->Sumw2(); // Signal, aCW=2E-5, 2016 pre-TS2                                                                                                                                   
-  hd1->Scale(mcdxsec*1000*lumi/41700.0);
+  hd1->Scale(mcdxsec*1000*lumi/33833.0);
   hd1_2->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hd1_2->Scale(mcdxsec*1000*lumi/27800.0);
+  hd1_2->Scale(mcdxsec*1000*lumi/32873.0);
   hd1_3->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hd1_3->Scale(mcdxsec*1000*lumi/35600.0);
+  hd1_3->Scale(mcdxsec*1000*lumi/32879.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
   hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
