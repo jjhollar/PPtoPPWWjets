@@ -3,7 +3,7 @@
 import os, string, sys, posix, tokenize, array, getopt
 
 # Make combine datacards for a counting experiment with 6 bins (3 years * 2 channels, WW+ZZ)
-# This assumes a csv file produced from the Google spreadsheet is present in the current directory, named PPtoPPWWjets_MC_Results_v6b.csv
+# This assumes a csv file produced from the Google spreadsheet is present in the current directory, named PPtoPPWWjets_MC_Results_v6c.csv
 # Currently the background numbers and uncertainties are hard-coded, while on the MC statisitical errors are used for the signal systematics
 # This generates all possible combinations of couplings + values, including some invalid ones where we don't have MC samples (to be improved)
 
@@ -28,7 +28,7 @@ def main(argv):
 def makecard(channel, coupling):
     linenum = 0
 
-    infile = "PPtoPPWWjets_MC_Results_v6b.csv"
+    infile = "PPtoPPWWjets_MC_Results_v6c.csv"
     infilehandle = open(infile)
     lines = infilehandle.readlines()
 
