@@ -8,7 +8,7 @@ void NormTemplate(int region = 1, int year = 2016, int channel = 1)
   TFile *f1;
   if(year == 2016)
     //    f1 = TFile::Open("../test/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017BCDEF.root");
-    f1 = TFile::Open("/eos/cms/store/group/phys_smp/HadronicVV/dataRun2/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016BCG.root");
+    f1 = TFile::Open("/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016BCG.root");
   if(year == 2017)
     //    f1 = TFile::Open("../test/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2016BCG.root");
     f1 = TFile::Open("/eos/cms/store/group/phys_smp/HadronicVV/dataRun2/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_datahist2017BCDEF.root");
@@ -114,11 +114,11 @@ void NormTemplate(int region = 1, int year = 2016, int channel = 1)
 
   if(year == 2016)
     {
-      hsideband->SetTitle("2016, 10.0 fb^{-1}");
+      hsideband->SetTitle("2016, 9.9 fb^{-1}");
       if(region == 1)
-        hatemplate->SetTitle("2016, 10.0 fb^{-1}, anti-acoplanarity");
+        hatemplate->SetTitle("2016, 9.9 fb^{-1}, anti-acoplanarity");
       if(region == 3)
-        hatemplate->SetTitle("2016, 10.0 fb^{-1}, anti-#tau_{21}");
+        hatemplate->SetTitle("2016, 9.9 fb^{-1}, anti-#tau_{21}");
     }
   if(year == 2017)
     {
@@ -175,7 +175,7 @@ void NormTemplate(int region = 1, int year = 2016, int channel = 1)
 
   if(year == 2016)
     {
-      CMS_lumi2016(c1,0,0,"2016, L = 10.0 fb^{-1}");
+      CMS_lumi2016(c1,0,0,"2016, L = 9.9 fb^{-1}");
     }
   if(year == 2017)
     {

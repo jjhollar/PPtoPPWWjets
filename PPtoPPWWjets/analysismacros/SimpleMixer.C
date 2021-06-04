@@ -298,14 +298,14 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   Float_t eqlumi72017 = 8081153.0/(33.7*1000.0);
   Float_t eqlumi82017 = 9783887.0/(14.6*1000.0);
 
-  Float_t lumi2016 = 10.016;
-  Float_t eqlumi02016 = 18319816.0/(6830.0*1000.0);
+  Float_t lumi2016 = 9.917;
+  Float_t eqlumi02016 = 17839656.0/(6830.0*1000.0);
   Float_t eqlumi12016 = 3959986.0/(642.1*1000.0);
   Float_t eqlumi22016 = 3896412.0/(185.9*1000.0);
-  Float_t eqlumi32016 = 15704980.0/(32.293*1000.0);
+  Float_t eqlumi32016 = 153592.0/(32.293*1000.0);
   Float_t eqlumi42016 = 2999069.0/(9.4183*1000.0);
-  Float_t eqlumi52016 = 335704.0/(0.84265*1000.0);
-  Float_t eqlumi62016 = 38426513.0/(66.85*1000.0);
+  Float_t eqlumi52016 = 396409.0/(0.84265*1000.0);
+  Float_t eqlumi62016 = 38499867.0/(66.85*1000.0);
   Float_t eqlumi72016 = 1026587.0/(98.4*1000.0);
   Float_t eqlumi82016 = 1000000.0/(41.3*1000.0);
   Float_t eqlumi92016 = 24577608.0/(21.3*1000.0);
@@ -351,25 +351,25 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
   if(year == 2016)
     {
-      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2016.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD300to470_2016.txt";
       eqlumi0 = eqlumi02016;
-      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2016.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD470to600_2016.txt";
       eqlumi1 = eqlumi12016;
-      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2016.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD600to800_2016.txt";
       eqlumi2 = eqlumi22016;
-      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2016.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD800to1000_2016.txt";
       eqlumi3 = eqlumi32016;
-      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2016.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD1000to1400_2016.txt";
       eqlumi4 = eqlumi42016;
-      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2016.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD1400to1800_2016.txt";
       eqlumi5 = eqlumi52016;
-      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar700to1000_2016.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_ttbar700to1000_2016.txt";
       eqlumi6 = eqlumi62016;
-      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2016.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_wjets_2016.txt";
       eqlumi7 = eqlumi72016;
-      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2016.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_zjets_2016.txt";
       eqlumi8 = eqlumi82016;
-      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar1000inf_2016.txt";
+      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_ttbar1000inf_2016.txt";
       eqlumi9 = eqlumi92016;
 
       lumi = lumi2016;
@@ -1387,7 +1387,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c1,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c1,0,0,"2016, L = 10.0 fb^{-1}");
+    CMS_lumi2016(c1,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c1,0,0,"2018, L = 52.9 fb^{-1}");
 
@@ -1748,16 +1748,46 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   c2->Divide(1,2);
   c2->cd(1);
   hmjjsum->Sumw2(); hmjjsum->SetLineWidth(3); hmjjsum->SetLineColor(11); hmjjsum->SetFillColor(11); hmjjsum->SetMaximum(30);
-  //  hmjjsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
-  hmjjsum->SetXTitle("m(VV) [GeV]");
+  if(bosons == 1)
+    hmjjsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
+  if(bosons == 1)
+    hmjjsum->SetXTitle("m(Z_{j}Z_{j}) [GeV]");
   hmjjsum->SetYTitle("Events");
 
   hmjjqcd->Sumw2(); hmjjqcd->SetMaximum(30);
-  //  hmjjqcd->SetXTitle("m(W_{j}W_{j}) [GeV]");
-  hmjjqcd->SetXTitle("m(VV) [GeV]");                                                                                                                                                                 
+  if(bosons == 1)
+    hmjjqcd->SetXTitle("m(W_{j}W_{j}) [GeV]");
+  if(bosons == 2)
+    hmjjqcd->SetXTitle("m(Z_{j}Z_{j}) [GeV]");
+
   hmjjqcd->SetYTitle("Events");
   hmjjqcd->GetXaxis()->SetTitleSize(0.06);  hmjjqcd->GetXaxis()->SetTitleOffset(1.0);
   hmjjqcd->GetYaxis()->SetTitleSize(0.06);
+
+  // J
+  hmjjqcd->GetXaxis()->SetRange(11,25);
+  hmjjqcd->GetXaxis()->SetLabelFont(42);
+  hmjjqcd->GetXaxis()->SetLabelOffset(0.007);
+  hmjjqcd->GetXaxis()->SetLabelSize(0.05);
+  hmjjqcd->GetXaxis()->SetTitleSize(0.06);
+  hmjjqcd->GetXaxis()->SetTitleFont(42);
+  hmjjqcd->GetYaxis()->SetTitle("Events");
+  hmjjqcd->GetYaxis()->SetLabelFont(42);
+  hmjjqcd->GetYaxis()->SetLabelOffset(0.007);
+  hmjjqcd->GetYaxis()->SetLabelSize(0.05);
+  hmjjqcd->GetYaxis()->SetTitleSize(0.06);
+  hmjjqcd->GetYaxis()->SetTitleOffset(1.25);
+  hmjjqcd->GetYaxis()->SetTitleFont(42);
+  hmjjqcd->GetZaxis()->SetLabelFont(42);
+  hmjjqcd->GetZaxis()->SetLabelOffset(0.007);
+  hmjjqcd->GetZaxis()->SetLabelSize(0.05);
+  hmjjqcd->GetZaxis()->SetTitleSize(0.06);
+  hmjjqcd->GetZaxis()->SetTitleFont(42);
+  hmjjqcd->GetXaxis()->SetNdivisions(5);
+  hmjjqcd->GetYaxis()->SetNdivisions(5);
+
+
+
   hmjjqcd->Draw("hist");
   hmjjwjets->Draw("histsame");
   hmjjzjets->Draw("histsame");
@@ -1769,7 +1799,15 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   shmjj1->Scale(0.1); shmjj1->SetLineWidth(3); shmjj1->SetLineColor(6);
   //  shmjj1->Draw("histsame");
 
-  TLegend *lg1 = new TLegend(0.4,0.5,0.85,0.9);
+  TLegend *lg1 = new TLegend(0.3,0.4,0.85,0.9);
+  lg1->SetBorderSize(1);
+  lg1->SetTextFont(62);
+  lg1->SetLineColor(1);
+  lg1->SetLineStyle(1);
+  lg1->SetLineWidth(1);
+  lg1->SetFillColor(0);
+  lg1->SetFillStyle(1001);
+
   hmjjqcd->SetMarkerStyle(0); hmjjqcd->SetLineWidth(0);
   hmjjwjets->SetMarkerStyle(0); hmjjwjets->SetLineWidth(0);
   hmjjzjets->SetMarkerStyle(0); hmjjzjets->SetLineWidth(0);
@@ -1781,21 +1819,32 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   lg1->AddEntry(hmjjttbar,"Powheg ttbar + mixed protons");
   lg1->Draw("same");
 
+
+  c2->cd(1);
+
   if(year == 2017)
     CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2,0,0,"2016, L = 10.0 fb^{-1}");
+    CMS_lumi2016(c2,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
     CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
 
   c2->cd(2);
   hmjjbsum->Sumw2(); hmjjbsum->SetLineWidth(3); hmjjbsum->SetLineColor(11); hmjjbsum->SetFillColor(11); hmjjbsum->SetMaximum(30);
-  hmjjbsum->SetXTitle("m(VV) [GeV]");
+  if(bosons == 1)
+    hmjjbsum->SetXTitle("m(W_{j}W_{j}) [GeV]");
+  if(bosons == 2)
+    hmjjbsum->SetXTitle("m(Z_{j}Z_{j}) [GeV]");
+  
   hmjjbsum->SetYTitle("Events");
-
+  
   hmjjbqcd->Sumw2(); hmjjbqcd->SetMaximum(30);
-  hmjjbqcd->SetXTitle("m(VV) [GeV]");                                                                                                                                                
-  hmjjbqcd->SetYTitle("Events");
+  if(bosons == 1)
+    hmjjbqcd->SetXTitle("m(W_{j}W_{j}) [GeV]");
+  if(bosons == 2)
+    hmjjbqcd->SetXTitle("m(Z_{j}Z_{j}) [GeV]");
+
+																			     hmjjbqcd->SetYTitle("Events");
   hmjjbqcd->GetXaxis()->SetTitleSize(0.06);  hmjjbqcd->GetXaxis()->SetTitleOffset(1.0);
   hmjjbqcd->GetYaxis()->SetTitleSize(0.06);
   hmjjbqcd->Draw("hist");
@@ -1895,12 +1944,19 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   c2a->cd(1);
   hyjjsum->Sumw2(); hyjjsum->SetLineWidth(3); hyjjsum->SetLineColor(11); hyjjsum->SetFillColor(11); hyjjsum->SetMaximum(30);
   //  hyjjsum->SetXTitle("y(W_{j}W_{j}");
-  hyjjsum->SetXTitle("y(VV)");
+  if(bosons == 1)
+    hyjjsum->SetXTitle("y(W_{j}W_{j})");
+  if(bosons == 2)
+    hyjjsum->SetXTitle("y(Z_{j}Z_{j})");
+
   hyjjsum->SetYTitle("Events");
 
   hyjjqcd->Sumw2(); hyjjqcd->SetMaximum(30);
-  //  hyjjqcd->SetXTitle("y(W_{j}W_{j})");
-  hyjjqcd->SetXTitle("y(VV)");
+  if(bosons == 1)
+    hyjjqcd->SetXTitle("y(W_{j}W_{j})");
+  if(bosons == 2)
+    hyjjqcd->SetXTitle("y(Z_{j}Z_{j})");
+
   hyjjqcd->SetYTitle("Events");
   hyjjqcd->GetXaxis()->SetTitleSize(0.06);  hyjjqcd->GetXaxis()->SetTitleOffset(1.0);
   hyjjqcd->GetYaxis()->SetTitleSize(0.06);
@@ -1922,19 +1978,27 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   lg1a->Draw("same");
 
   if(year == 2017)
-    CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
+    CMS_lumi2016(c2a,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2,0,0,"2016, L = 10.0 fb^{-1}");
+    CMS_lumi2016(c2a,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi2016(c2a,0,0,"2018, L = 52.9 fb^{-1}");
 
   c2a->cd(2);
   hyjjbsum->Sumw2(); hyjjbsum->SetLineWidth(3); hyjjbsum->SetLineColor(11); hyjjbsum->SetFillColor(11); hyjjbsum->SetMaximum(30);
-  hyjjbsum->SetXTitle("y(VV)");
+  if(bosons == 1)
+    hyjjbsum->SetXTitle("y(W_{j}W_{j})");
+  if(bosons == 2)
+    hyjjbsum->SetXTitle("y(Z_{j}Z_{j})");
+
   hyjjbsum->SetYTitle("Events");
 
   hyjjbqcd->Sumw2(); hyjjbqcd->SetMaximum(30);
-  hyjjbqcd->SetXTitle("y(VV)");
+  if(bosons == 1)
+    hyjjbqcd->SetXTitle("y(W_{j}W_{j})");
+  if(bosons == 2)
+    hyjjbqcd->SetXTitle("y(Z_{j}Z_{j})");
+
   hyjjbqcd->SetYTitle("Events");
   hyjjbqcd->GetXaxis()->SetTitleSize(0.06);  hyjjbqcd->GetXaxis()->SetTitleOffset(1.0);
   hyjjbqcd->GetYaxis()->SetTitleSize(0.06);
@@ -1963,9 +2027,9 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   if(year == 2017)
     CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c3,0,0,"2016, L = 10.0 fb^{-1}");
+    CMS_lumi2016(c3,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi2016(c3,0,0,"2018, L = 52.9 fb^{-1}");
 
   if(year == 2018 && bosons == 1)
     {
