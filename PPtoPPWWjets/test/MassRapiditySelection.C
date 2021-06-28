@@ -259,7 +259,7 @@ void MassRapiditySelectionWW(TFile *file) {
   // band1->Draw("3same");
   // band2->Draw("3same");
   // diamond->Draw("3same");
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation, a_{W}^{0}/#Lambda^{2} = 2E-6");
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2 10^{-6} GeV^{-2}");
   c2->Print("MassMatchRatio.pdf");
 
   l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
@@ -289,11 +289,11 @@ void MassRapiditySelectionWW(TFile *file) {
 
   c2->Print("SignalRegionsDefinition.pdf");
   rotated_1->Draw("colz");
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2 10^{-6} GeV^{-2}");
   c2->Print("SignalRegionsDefinition_rotated.pdf");
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation, a_{W}^{0}/#Lambda^{2} = 2E-6");
   proj1->Draw();
+  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2 10^{-6} GeV^{-2}");
   c2->Print("SignalRegionsDefinition_bandFitted.pdf");  
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"CMS Simulation");
 
 
 

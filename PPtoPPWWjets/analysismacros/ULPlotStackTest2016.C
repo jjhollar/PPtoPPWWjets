@@ -4,7 +4,6 @@
  */
 #include "CMS_lumi.h"
 
-
 void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 {
   TString outplotdir = "validationplots/";
@@ -13,6 +12,10 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   gStyle->SetPadBottomMargin(0.2);
   gStyle->SetPadLeftMargin(0.15);
   gStyle->SetPadRightMargin(0.15);
+  gStyle->SetPadTickX(1);
+  gStyle->SetPadTickY(1);
+  gStyle->SetPadBorderSize(2);
+  gStyle->SetLegendBorderSize(0);
   TGaxis::SetExponentOffset(-0.085,-0.02,"y");
 
 
@@ -45,10 +48,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
-  Float_t mcbxsec = 0.0583; // pb, a0W=2E-6
+  Float_t mcbxsec = 1.7859991686478713; // pb, a0Z=5E-5
+  Float_t mccxsec = 0.12741628575501507; // pb, aCZ=5E-5
   Float_t mcdxsec = 0.1648; // pb, aCW=2E-5
-
-  Float_t mcaaxsec = 0.00264; // pb, a0Z=5E-5
 
 
   Float_t rangelo = 0.0;
@@ -103,39 +105,43 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   if(var == 21)
     {hist = "hyjjdat"; thetitle = "y(jj)"; filetitle = "yjj";}
   if(var == 22)
-    {hist = "hmassvvantitauww"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauww"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 23)
-    {hist = "hmassvvantiacopww"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mvvantiacopww"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 24)
-    {hist = "hmassvvantiptbalww"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalww"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 25)
-    {hist = "hmassvvsignalww"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
-  if(var == 26)
-    {hist = "hywwsignalww"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind"; rangelo = -3.0; rangehi = 3.0;}
-  if(var == 27)
-    {hist = "xijets45"; thetitle = "#xi(jets), 45"; filetitle = "xijets45";}
-  if(var == 28)
-    {hist = "xijets56"; thetitle = "#xi(jets), 56"; filetitle = "xijets56";}
-  if(var == 29)
-    {hist = "hmj1antiacopww"; thetitle = "m(j1), WW anti-acoplanarity"; filetitle = "mj1antiacopww"; rangelo = 65; rangehi = 105;}
-  if(var == 30)
-    {hist = "hmj2antiacopww"; thetitle = "m(j2), WW anti-acoplanarity"; filetitle = "mj2antiacopww"; rangelo = 65; rangehi = 105;}
-  if(var == 31)
-    {hist = "htau211antiacopww"; thetitle = "tau_{21}(j1), WW anti-acoplanarity"; filetitle = "tau211antiacopww";}
+    {hist = "hprunedrotatedjjdat"; thetitle = "cos(#pi / 4) * m(j1) + sin(#pi / 4) * m(j2) [GeV]"; filetitle = "prunedrotatedjjdat";}
+
+  // WW plots  
   if(var == 32)
-    {hist = "htau212antiacopww"; thetitle = "tau_{21}(j2), WW anti-acoplanarity"; filetitle = "tau212antiacopww";}
+    {hist = "hmassvvantitauww"; thetitle = "m(WW), #tau_{21, DDT} > 0.75"; filetitle = "mvvantitauww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 33)
-    {hist = "hmj1antitauww"; thetitle = "m(j1), WW anti-tau"; filetitle = "mj1antitauww"; rangelo = 65; rangehi = 105;}
+    {hist = "hmassvvantiacopww"; thetitle = "m(WW), acoplanarity > 0.1"; filetitle = "mvvantiacopww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 34)
-    {hist = "hmj2antitauww"; thetitle = "m(j2), WW anti-tau"; filetitle = "mj2antitauww"; rangelo = 65; rangehi = 105;}
+    {hist = "hmassvvantiptbalww"; thetitle = "m(WW), p_{T}(j1/j2) > 1.1"; filetitle = "mvvanttptbalww"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 35)
-    {hist = "htau211antitauww"; thetitle = "tau_{21}(j1), WW anti-tau21"; filetitle = "tau211antitauww";}
+    {hist = "hmassvvsignalww"; thetitle = "m(WW), signal"; filetitle = "mwwsignalblind"; rangelo = 1000.0; rangehi = 3000.0;}
   if(var == 36)
-    {hist = "htau212antitauww"; thetitle = "tau_{21}(j2), WW anti-tau21"; filetitle = "tau212antitauww";}
+    {hist = "hywwsignalww"; thetitle = "y(WW), signal"; filetitle = "ywwsignalblind"; rangelo = -3.0; rangehi = 3.0;}
   if(var == 37)
-    {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww";rangelo = 1000.0; rangehi = 3000.0;}
+    {hist = "xijets45"; thetitle = "#xi(jets), 45"; filetitle = "xijets45";}
   if(var == 38)
-    {hist = "hmassvvantiprunednarrowww"; thetitle = "m(WW) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowww";rangelo = 1000.0; rangehi = 3000.0;}  
+    {hist = "xijets56"; thetitle = "#xi(jets), 56"; filetitle = "xijets56";}
+  if(var == 39)
+    {hist = "hmj1antiacopww"; thetitle = "m(j1), anti-acoplanarity"; filetitle = "mj1antiacopww"; rangelo = 65; rangehi = 105;}
+  if(var == 40)
+    {hist = "hmj2antiacopww"; thetitle = "m(j2), anti-acoplanarity"; filetitle = "mj2antiacopww"; rangelo = 65; rangehi = 105;}
+  if(var == 41)
+    {hist = "htau211antiacopww"; thetitle = "tau_{21}(j1), anti-acoplanarity"; filetitle = "tau211antiacopww";}
+  if(var == 42)
+    {hist = "htau212antiacopww"; thetitle = "tau_{21}(j2), anti-acoplanarity"; filetitle = "tau212antiacopww";}
+  if(var == 43)
+    {hist = "hmj1antitauww"; thetitle = "m(j1), anti-tau"; filetitle = "mj1antitauww"; rangelo = 65; rangehi = 105;}
+  if(var == 44)
+    {hist = "hmj2antitauww"; thetitle = "m(j2), anti-tau"; filetitle = "mj2antitauww"; rangelo = 65; rangehi = 105;}
+  if(var == 45)
+    {hist = "htau211antitauww"; thetitle = "tau_{21}(j1), anti-tau"; filetitle = "tau211antitauww";}
+  if(var == 46)
+    {hist = "htau212antitauww"; thetitle = "tau_{21}(j2), anti-tau"; filetitle = "tau212antitauww";}
+  if(var == 47)
+    {hist = "hmassvvantiprunedww"; thetitle = "m(WW), m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunedww"; rangelo = 1000.0; rangehi = 3000.0;}
+  if(var == 48)
+    {hist = "hmassvvantiprunednarrowww"; thetitle = "m(WW) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowww"; rangelo = 1000.0; rangehi = 3000.0;}  
 
   // ZZ plots
   if(var == 58)
@@ -169,16 +175,15 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   if(var == 72)
     {hist = "hmassvvantiprunednarrowzz"; thetitle = "m(ZZ) narrow, m < 60 OR m > 107 GeV"; filetitle = "mvvantiprunednarrowzz";rangelo = 1000.0; rangehi = 3000.0;}
 
-  if ((var >= 29 && var <= 58) || var == 22 || var == 23 || var == 24 ||
+  if ((var >= 39 && var <= 58) || var == 32 || var == 33 || var == 34 ||
       (var >= 63) || var == 58 || var == 59 || var == 60)
     hist = "Sidebands/"+hist;
-  else if ( var == 1  || var == 21 || var == 25 || var == 26 || var == 27 || var == 28  || var == 4 ||  
+  else if ( var == 1  || var == 21 || var == 22 || var == 35 || var == 36 || var == 37 || var == 38  || var == 4 ||  
             var == 5  || var == 6  || var == 7  || var == 8  || var == 9  || var == 10  || var == 11 || 
-            var == 12 || var == 13 || var == 14 || var == 15 || var == 16  || var == 61 || var == 62 )
+            var == 12 || var == 13 || var == 14 || var == 15 || var == 16  || var == 61 || var == 62)
     hist = "PreselectionAndControl/"+hist;
   else if ( var == 2  || var == 3  || var == 17 || var == 18 || var == 19 || var == 20 )
     hist = "JetSubstructure/"+hist;
-
 
   TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/"; // HLT fix for 2016 only
   TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v6/"; // HLT fix for 2016 only
@@ -242,19 +247,19 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   TFile *fa1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016G.root");
   TH1F *ha1_3 = (TH1F *)fa1_3->Get(hist);
 
-  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016B.root");
+  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016B.root");
   TH1F *hb1 = (TH1F *)fb1->Get(hist);
-  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016C.root");
+  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016C.root");
   TH1F *hb1_2 = (TH1F *)fb1_2->Get(hist);
-  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_preTS2_2016G.root");
+  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016G.root");
   TH1F *hb1_3 = (TH1F *)fb1_3->Get(hist);
 
-  // TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016B.root");
-  // TH1F *hc1 = (TH1F *)fc1->Get(hist);
-  // TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016C.root");
-  // TH1F *hc2 = (TH1F *)fc2->Get(hist);
-  // TFile *fc3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W5E-6_preTS2_2016G.root");
-  // TH1F *hc3 = (TH1F *)fc3->Get(hist);
+  TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016B.root");
+  TH1F *hc1 = (TH1F *)fc1->Get(hist);
+  TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016C.root");
+  TH1F *hc2 = (TH1F *)fc2->Get(hist);
+  TFile *fc3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016G.root");
+  TH1F *hc3 = (TH1F *)fc3->Get(hist);
 
   TFile *fd1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016B.root");
   TH1F *hd1 = (TH1F *)fd1->Get(hist);
@@ -274,15 +279,15 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   
   int rebinfactor = 1;
   //  if((var > 20 && var < 25))
-  if(var == 3 || var == 6 || var == 7 || var == 8 || var == 9 || var == 18 || var == 19 || var == 20 || var == 16 || var == 25 || var == 26 || (var > 21))
+  if(var == 3 || var == 6 || var == 7 || var == 8 || var == 9 || var == 18 || var == 19 || var == 20 || var == 16 || var == 35 || var == 36 || (var > 22))
     {
       rebinfactor = 5;
       if(var == 19 || var == 20)
     rebinfactor = 10;
       // if(var == 25 || var == 26) {rebinfactor = 5;}
       if(var == 16) {rebinfactor = 10;}
-      if((var > 20 && var < 25) || (var > 57 && var < 61)) {rebinfactor = 10;}
-      if(var == 29 || var == 30 || var == 33 || var == 34 || var == 63 || var == 64 || var == 67 || var == 68)
+      if((var > 20 && var < 35) || (var > 57 && var < 61)) {rebinfactor = 10;}
+      if(var == 39 || var == 40 || var == 43 || var == 44 || var == 63 || var == 64 || var == 67 || var == 68)
         rebinfactor = 1;
       h2->Rebin(rebinfactor); 
       h3->Rebin(rebinfactor); h4->Rebin(rebinfactor); h5->Rebin(rebinfactor);
@@ -301,9 +306,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
       hb1_2->Rebin(rebinfactor);
       hb1_3->Rebin(rebinfactor);
 
-      // hc1->Rebin(rebinfactor);
-      // hc2->Rebin(rebinfactor);
-      // hc3->Rebin(rebinfactor);
+      hc1->Rebin(rebinfactor);
+      hc2->Rebin(rebinfactor);
+      hc3->Rebin(rebinfactor);
 
       hd1->Rebin(rebinfactor);
       hd1_2->Rebin(rebinfactor);
@@ -374,15 +379,25 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   ha1->Add(ha1_3);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
-  hb1->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1->Scale(mcbxsec*1000*lumi/32838.0);
-  hb1_2->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1_2->Scale(mcbxsec*1000*lumi/32872.0);
-  hb1_3->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hb1_3->Scale(mcbxsec*1000*lumi/32879.0);
+  hb1->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1->Scale(mcbxsec*1000*lumi/33856.0);
+  hb1_2->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1_2->Scale(mcbxsec*1000*lumi/32888.0);
+  hb1_3->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1_3->Scale(mcbxsec*1000*lumi/32892.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
-  hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan);
+  hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan); hb1->SetLineStyle(2);
+ 
+  hc1->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
+  hc1->Scale(mccxsec*1000*lumi/33853.0);
+  hc1_2->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
+  hc1_2->Scale(mccxsec*1000*lumi/32884.0);
+  hc1_3->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
+  hc1_3->Scale(mccxsec*1000*lumi/32892.0);
+  hc1->Add(hb1_2);
+  hc1->Add(hb1_3);
+  hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
   hd1->Sumw2(); // Signal, aCW=2E-5, 2016 pre-TS2                                                                                                                                   
   hd1->Scale(mcdxsec*1000*lumi/33833.0);
@@ -392,7 +407,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   hd1_3->Scale(mcdxsec*1000*lumi/32879.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
-  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); 
 
   /*
   h12->Add(h11);
@@ -533,12 +548,6 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   h100->SetMarkerStyle(20); h100->SetLineWidth(3); h100->SetLineColor(kBlack);
   h100->Draw("esame");
 
-  // Signal MC        
-  ha1->Draw("histsame");
-  // hb1->Draw("histsame");
-
-  hd1->Draw("histsame");
-
   TLegend *lg1 = new TLegend(0.35,0.5,0.8,0.85);
   h10->SetMarkerStyle(0); 
   h7->SetMarkerStyle(0); 
@@ -548,9 +557,26 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   lg1->AddEntry(h8,"Madgraph W+jets");
   lg1->AddEntry(h7,"Powheg ttbar (bins)");
   lg1->AddEntry(h9,"Madgraph Z+jets");
-  lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-  // lg1->AddEntry(hb1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=2*10^{-6} GeV^{-2}");
-  lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
+
+
+  // Signal MC
+  if (var < 32){
+    ha1->Draw("histsame");
+    hb1->Draw("histsame");
+    lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+  } else if (var < 58) {
+    ha1->Draw("histsame");
+    hd1->Draw("histsame");
+    lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+    lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
+  } else {
+    hb1->Draw("histsame");
+    hc1->Draw("histsame");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+  }
+
   lg1->AddEntry(h100,"2016BCG Data");
   lg1->Draw("same");
   
@@ -580,12 +606,17 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   gPad->SetLogy();
   h100->Draw("esame");
 
-  // Signal MC          
-  ha1->Draw("histsame");
-
-  // hb1->Draw("histsame");
-
-  hd1->Draw("histsame");
+  // Signal MC                                                                                                                                                                        
+  if (var < 32){
+    ha1->Draw("histsame");
+    hb1->Draw("histsame");
+  } else if (var < 58) {
+    ha1->Draw("histsame");
+    hd1->Draw("histsame");
+  } else {
+    hb1->Draw("histsame");
+    hc1->Draw("histsame");
+  }
 
   c1->cd(3);
   /*
@@ -644,7 +675,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   l3->SetLineWidth(3);
   //  l3->Draw("same");
 
-  CMS_lumi((TPad*)c1->GetPad(1),0,0,"2016, L = 10.0 fb^{-1}");
+  CMS_lumi((TPad*)c1->GetPad(1),0,0,"2016, L = 9.9 fb^{-1}");
+  CMS_lumi((TPad*)c1->GetPad(2),0,0,"2016, L = 9.9 fb^{-1}");
+  CMS_lumi((TPad*)c1->GetPad(3),0,0,"2016, L = 9.9 fb^{-1}");
 
   c1->Update();
 
@@ -653,14 +686,14 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   if (saveToRootFile){
     TString outplotname_root = "validationplots2016BCG_ntupleULReMiniv4final_" + filetitle + ".root";
-    TFile outRoot = TFile(outplotname_root,"RECREATE");
-    std::cout << "Data and MC plot saved in " << outRoot.GetName() << std::endl;
-    outRoot.cd();
+    TFile *outRoot = new TFile(outplotname_root,"RECREATE");
+    std::cout << "Data and MC plot saved in " << outRoot->GetName() << std::endl;
+    outRoot->cd();
     h10->SetName("MC");
     h10->Write();
     h100->SetName("Data");
     h100->Write();
-    outRoot.Close();
+    outRoot->Close();
   }
   // Signal MC only
   //  TCanvas *c3 = new TCanvas("c3","c3");
