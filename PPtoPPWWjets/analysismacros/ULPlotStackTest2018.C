@@ -12,6 +12,10 @@ void ULPlotStackTest2018(Int_t var = 1)
   gStyle->SetPadBottomMargin(0.2);
   gStyle->SetPadLeftMargin(0.15);
   gStyle->SetPadRightMargin(0.15);
+  gStyle->SetPadTickX(1);
+  gStyle->SetPadTickY(1);
+  gStyle->SetPadBorderSize(2);
+  gStyle->SetLegendBorderSize(0);
   TGaxis::SetExponentOffset(-0.085,-0.02,"y");
 
   // 2018

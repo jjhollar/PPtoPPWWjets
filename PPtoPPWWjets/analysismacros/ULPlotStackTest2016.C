@@ -410,7 +410,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   hd1_3->Scale(mcdxsec*1000*lumi2016G/32879.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
-  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); 
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
 
   /*
   h12->Add(h11);

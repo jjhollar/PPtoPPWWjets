@@ -12,6 +12,10 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   gStyle->SetPadBottomMargin(0.2);
   gStyle->SetPadLeftMargin(0.15);
   gStyle->SetPadRightMargin(0.15);
+  gStyle->SetPadTickX(1);
+  gStyle->SetPadTickY(1);
+  gStyle->SetPadBorderSize(2);
+  gStyle->SetLegendBorderSize(0);
   TGaxis::SetExponentOffset(-0.085,-0.02,"y");
 
 
@@ -434,7 +438,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hc1_3->Scale(mccxsec*1000*lumi/19792.0);
   hc1->Add(hc1_2);
   hc1->Add(hc1_3);
-  hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan); hc1->SetLineStyle(2);
+  hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
   hc2->Sumw2(); // Signal, aCZ=5E-5, 2017E --> 2017postTS2                                                                                       
   hc2->Scale(mccxsec*1000*lumipostTS2/19842.0);
@@ -452,7 +456,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hd1_3->Scale(mcdxsec*1000*lumi/41700.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
-  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); 
+  hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
 
   hd2->Sumw2(); // Signal, aCW=2E-5, 2017E --> 2017postTS2                                                                                       
   hd2->Scale(mcdxsec*1000*lumipostTS2/92100.0);
@@ -723,14 +727,14 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   
   if (saveToRootFile){
     TString outplotname_root = "validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".root";
-    TFile outRoot = TFile(outplotname_root,"RECREATE");
-    std::cout << "Data and MC plot saved in " << outRoot.GetName() << std::endl;
-    outRoot.cd();    
+    TFile *outRoot = new TFile(outplotname_root,"RECREATE");
+    std::cout << "Data and MC plot saved in " << outRoot->GetName() << std::endl;
+    outRoot->cd();    
     h10->SetName("MC");
     h10->Write();
     h100->SetName("Data");
     h100->Write();
-    outRoot.Close();
+    outRoot->Close();
   }
   // Signal MC only
   //  TCanvas *c3 = new TCanvas("c3","c3");
