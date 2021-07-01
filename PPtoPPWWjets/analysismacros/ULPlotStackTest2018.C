@@ -769,3 +769,60 @@ void PlotStackSideband2018()
   ULPlotStackTest2018(71);
   ULPlotStackTest2018(72);
 }
+
+void PlotEverything2018()
+{
+  ULPlotStackTest2018(1);
+  ULPlotStackTest2018(2);
+  ULPlotStackTest2018(3);
+  ULPlotStackTest2018(4);
+  ULPlotStackTest2018(5);
+  ULPlotStackTest2018(6);
+  ULPlotStackTest2018(7);
+  ULPlotStackTest2018(8);
+  ULPlotStackTest2018(9);
+  ULPlotStackTest2018(13);
+  ULPlotStackTest2018(14);
+  ULPlotStackTest2018(15);
+  ULPlotStackTest2018(16);
+  ULPlotStackTest2018(17);
+  ULPlotStackTest2018(18);
+  ULPlotStackTest2018(19);
+  ULPlotStackTest2018(20);
+  ULPlotStackTest2018(22);
+  ULPlotStackTest2018(32);
+  ULPlotStackTest2018(33);
+  ULPlotStackTest2018(34);
+  ULPlotStackTest2018(35);
+  ULPlotStackTest2018(36);
+  ULPlotStackTest2018(37);  
+  ULPlotStackTest2018(38);
+
+  ULPlotStackTest2018(58);
+  ULPlotStackTest2018(59);
+  ULPlotStackTest2018(60);
+  ULPlotStackTest2018(61);
+  ULPlotStackTest2018(62);
+
+  ULPlotStackTest2018(39);
+  ULPlotStackTest2018(40);
+  ULPlotStackTest2018(41);
+  ULPlotStackTest2018(42);
+  ULPlotStackTest2018(43);
+  ULPlotStackTest2018(44);
+  ULPlotStackTest2018(45);
+  ULPlotStackTest2018(46);
+  ULPlotStackTest2018(47);
+  ULPlotStackTest2018(48);
+
+  ULPlotStackTest2018(63);
+  ULPlotStackTest2018(64);
+  ULPlotStackTest2018(65);
+  ULPlotStackTest2018(66);
+  ULPlotStackTest2018(67);
+  ULPlotStackTest2018(68);
+  ULPlotStackTest2018(69);
+  ULPlotStackTest2018(70);
+  ULPlotStackTest2018(71);
+  ULPlotStackTest2018(72);
+}
