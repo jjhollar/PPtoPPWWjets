@@ -42,7 +42,7 @@ bool drawLogo      = false;
 void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi) {
 
   std::cout << periodAndLumi[0] << std::endl;
-  if(periodAndLumi[0] != 2){
+  if(periodAndLumi[0] != '2'){
     cmsText = "#font[61]{CMS} #scale[0.76]{#font[52]{Simulation }}";
   }
 

@@ -406,7 +406,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   ha2_2->Scale(mcaxsec*1000*lumi/139500.0);
   ha2->Add(ha2_2);
   ha2->SetLineWidth(3); ha2->SetLineColor(kCyan); ha2->SetMarkerStyle(0); ha2->SetMarkerColor(kCyan);
-
+  ha1->Add(ha2);
+  
   hb1->Sumw2(); // Signal, a0Z=5E-5, 2017B --> 2017preTS2
   hb1->Scale(mcbxsec*1000*lumi/19624.0);
   hb1_2->Sumw2(); // Signal, a0Z=5E-5, 2017C 
@@ -423,6 +424,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hb2_2->Scale(mcbxsec*1000*lumi/19698.0);
   hb2->Add(hb2_2);
   hb2->SetLineWidth(3); hb2->SetLineColor(kCyan); hb2->SetMarkerStyle(0); hb2->SetMarkerColor(kCyan);
+  hb1->Add(hb2);
 
   hc1->Sumw2(); // Signal, aCZ=5E-5, 2017B --> 2017preTS2
   hc1->Scale(mccxsec*1000*lumi/19730.0);
@@ -440,7 +442,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hc2_2->Scale(mccxsec*1000*lumi/19800.0);
   hc2->Add(hc2_2);
   hc2->SetLineWidth(3); hc2->SetLineColor(kCyan); hc2->SetMarkerStyle(0); hc2->SetMarkerColor(kCyan);
-
+  hc1->Add(hc2);
+  
   hd1->Sumw2(); // Signal, aCW=2E-5, 2017B --> 2017preTS2
   hd1->Scale(mcdxsec*1000*lumi/27800.0);
   hd1_2->Sumw2(); // Signal, aCW=2E-5, 2017C 
@@ -457,7 +460,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   hd2_2->Scale(mcdxsec*1000*lumi/119900.0);
   hd2->Add(hd2_2);
   hd2->SetLineWidth(3); hd2->SetLineColor(kCyan); hd2->SetMarkerStyle(0); hd2->SetMarkerColor(kCyan);
-
+  hd1->Add(hd2);
+  
   /*
   h12->Add(h11);
   h12->Add(h10);
@@ -779,12 +783,13 @@ void PlotStackAll2017()
   ULPlotStackTest2017(19);
   ULPlotStackTest2017(20);
   ULPlotStackTest2017(22);
-  ULPlotStackTest2017(23);
-  ULPlotStackTest2017(24);
-  ULPlotStackTest2017(25);
-  ULPlotStackTest2017(26);
-  ULPlotStackTest2017(27);
-  ULPlotStackTest2017(28);
+  ULPlotStackTest2017(32);
+  ULPlotStackTest2017(33);
+  ULPlotStackTest2017(34);
+  ULPlotStackTest2017(35);
+  ULPlotStackTest2017(36);
+  ULPlotStackTest2017(37);  
+  ULPlotStackTest2017(38);
 
   ULPlotStackTest2017(58);
   ULPlotStackTest2017(59);

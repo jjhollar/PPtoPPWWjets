@@ -16,6 +16,10 @@ void ULPlotStackTest2018(Int_t var = 1)
 
   // 2018
   Float_t lumi = 12.103+6.781+6.318+27.669;
+  Float_t lumi2018A = 12.103;
+  Float_t lumi2018B = 6.781;
+  Float_t lumi2018C = 6.318;
+  Float_t lumi2018D = 27.669;
 
 
   // QCD xsections from xsecDB
@@ -368,52 +372,52 @@ void ULPlotStackTest2018(Int_t var = 1)
   h10->SetFillColor(kAzure+1);
 
   ha1->Sumw2(); // Signal, a0W=1E-6, 2018A --> 2018
-  ha1->Scale(mcaxsec*1000*lumi/113000.0);
+  ha1->Scale(mcaxsec*1000*lumi2018A/113000.0);
   ha2->Sumw2(); // Signal, a0W=1E-6, 2018B 
-  ha2->Scale(mcaxsec*1000*lumi/66500.0);
+  ha2->Scale(mcaxsec*1000*lumi2018B/66500.0);
   ha3->Sumw2(); // Signal, a0W=1E-6, 2018C 
-  ha3->Scale(mcaxsec*1000*lumi/66500.0);
+  ha3->Scale(mcaxsec*1000*lumi2018C/66500.0);
   ha4->Sumw2(); // Signal, a0W=1E-6, 2018D 
-  ha4->Scale(mcaxsec*1000*lumi/265700.0);
+  ha4->Scale(mcaxsec*1000*lumi2018D/265700.0);
   ha1->Add(ha2);
   ha1->Add(ha3);  
   ha1->Add(ha4);  
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
   hb1->Sumw2(); // Signal, a0Z=5E-5, 2018A --> 2018
-  hb1->Scale(mcbxsec*1000*lumi/16936.0);
+  hb1->Scale(mcbxsec*1000*lumi2018A/16936.0);
   hb2->Sumw2(); // Signal, a0Z=5E-5, 2018B 
-  hb2->Scale(mcbxsec*1000*lumi/19895.0);
+  hb2->Scale(mcbxsec*1000*lumi2018B/19895.0);
   hb3->Sumw2(); // Signal, a0Z=5E-5, 2018C 
-  hb3->Scale(mcbxsec*1000*lumi/16939.0);
+  hb3->Scale(mcbxsec*1000*lumi2018C/16939.0);
   hb4->Sumw2(); // Signal, a0Z=5E-5, 2018D 
-  hb4->Scale(mcbxsec*1000*lumi/33875.0);
+  hb4->Scale(mcbxsec*1000*lumi2018D/33875.0);
   hb1->Add(hb2);
   hb1->Add(hb3);  
   hb1->Add(hb4);  
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan);hb1->SetLineStyle(2);
 
   hc1->Sumw2(); // Signal, acZ=5E-5, 2018A --> 2018
-  hc1->Scale(mccxsec*1000*lumi/16937.0);
+  hc1->Scale(mccxsec*1000*lumi2018A/16937.0);
   hc2->Sumw2(); // Signal, acZ=5E-5, 2018B 
-  hc2->Scale(mccxsec*1000*lumi/31847.0);
+  hc2->Scale(mccxsec*1000*lumi2018B/31847.0);
   hc3->Sumw2(); // Signal, acZ=5E-5, 2018C 
-  hc3->Scale(mccxsec*1000*lumi/16939.0);
+  hc3->Scale(mccxsec*1000*lumi2018C/16939.0);
   hc4->Sumw2(); // Signal, acZ=5E-5, 2018D 
-  hc4->Scale(mccxsec*1000*lumi/33874.0);
+  hc4->Scale(mccxsec*1000*lumi2018D/33874.0);
   hc1->Add(hb2);
   hc1->Add(hb3);  
   hc1->Add(hb4);  
   hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
   hd1->Sumw2(); // Signal, aCW=2E-5, 2018A --> 2018
-  hd1->Scale(mcdxsec*1000*lumi/125100.0);
+  hd1->Scale(mcdxsec*1000*lumi2018A/125100.0);
   hd2->Sumw2(); // Signal, aCW=2E-5, 2018B 
-  hd2->Scale(mcdxsec*1000*lumi/72100.0);
+  hd2->Scale(mcdxsec*1000*lumi2018B/72100.0);
   hd3->Sumw2(); // Signal, aCW=2E-5, 2018C 
-  hd3->Scale(mcdxsec*1000*lumi/63400.0);
+  hd3->Scale(mcdxsec*1000*lumi2018C/63400.0);
   hd4->Sumw2(); // Signal, aCW=2E-5, 2018D 
-  hd4->Scale(mcdxsec*1000*lumi/243100.0);
+  hd4->Scale(mcdxsec*1000*lumi2018D/243100.0);
   hd1->Add(hd2);
   hd1->Add(hd3);  
   hd1->Add(hd4);  

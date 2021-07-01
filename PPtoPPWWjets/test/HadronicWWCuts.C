@@ -41,11 +41,11 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-   // TString outputFolder = "signalSamples_v6";
+   TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "dataRun2_v3";
-  TString outputFolder = "backgroundSamples_v2";
+  // TString outputFolder = "backgroundSamples_v2";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
   if (DOJECSYSTEMATICSUP)
@@ -588,12 +588,12 @@ void HadronicWWCuts::Loop() {
   // JEC systematics
   JetCorrectionUncertainty *jectotal;
   // For MC
-  if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 300 && samplenumber < 400))
+  if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 400 && samplenumber < 600))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2017/"
         "Fall17_17Nov2017_V32_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
-  if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 400 && samplenumber < 600))
+  if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 300 && samplenumber < 400))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2016/"
         "Summer16_07Aug2017_V11_MC_UncertaintySources_AK8PFchs.txt",
@@ -3087,7 +3087,7 @@ void HadronicWWCuts::Loop() {
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWACW1_4E-5_preTS2_2017D.root",
                    "RECREATE");
-  if (samplenumber == 509)
+  if (samplenumber == 510)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
                        "exclWWACW1_4E-5_postTS2_2017E.root",

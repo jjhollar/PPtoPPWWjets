@@ -5356,7 +5356,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 		full_file_list = WW_ACW5e_6[year]
 	elif sampleTag == "WW_ACW8e-6":
 		full_file_list = WW_ACW8e_6[year]
-	elif sampleTag == "WW_A0W1_4e-5":
+	elif sampleTag == "WW_ACW1_4e-5":
 		full_file_list = WW_ACW1_4e_5[year]
 	elif sampleTag == "ZZ_A0Z-1e-5":
 		full_file_list = ZZ_A0Z_1e_5[year]

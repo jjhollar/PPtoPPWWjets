@@ -188,11 +188,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
   this->protonSyst = protonSyst;
   this->JECSystUp = JECSystUp;
   this->JECSystDown = JECSystDown;
-  // TString mcNtuplesFolder =
-  //     "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v3";
   TString mcNtuplesFolder =
-      "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
-      "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
+      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
+
+  // TString mcNtuplesFolder =
+  //     "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
+  //     "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
   // TString mcNtuplesFolder =
   // "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
 
@@ -454,22 +455,22 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
       if (samplenumber == 73)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_ZZ_A0Z5e-5_Part1of1.root");
-      // ZZ_ACZ6e-6
+      // ZZ_ACZ5e-6
       if (samplenumber == 421)
         f = new TFile(mcNtuplesFolder +
-                      "/2017/B/ExclWWjets_ZZ_ACZ6e-6_Part1of1.root");
+                      "/2017/B/ExclWWjets_ZZ_ACZ5e-6_Part1of1.root");
       if (samplenumber == 422)
         f = new TFile(mcNtuplesFolder +
-                      "/2017/C/ExclWWjets_ZZ_ACZ6e-6_Part1of1.root");
+                      "/2017/C/ExclWWjets_ZZ_ACZ5e-6_Part1of1.root");
       if (samplenumber == 423)
         f = new TFile(mcNtuplesFolder +
-                      "/2017/D/ExclWWjets_ZZ_ACZ6e-6_Part1of1.root");
+                      "/2017/D/ExclWWjets_ZZ_ACZ5e-6_Part1of1.root");
       if (samplenumber == 514)
         f = new TFile(mcNtuplesFolder +
-                      "/2017/E/ExclWWjets_ZZ_ACZ6e-6_Part1of1.root");
+                      "/2017/E/ExclWWjets_ZZ_ACZ5e-6_Part1of1.root");
       if (samplenumber == 515)
         f = new TFile(mcNtuplesFolder +
-                      "/2017/F/ExclWWjets_ZZ_ACZ6e-6_Part1of1.root");
+                      "/2017/F/ExclWWjets_ZZ_ACZ5e-6_Part1of1.root");
       // ZZ_ACZ1e-5
       if (samplenumber == 44)
         f = new TFile(mcNtuplesFolder +
@@ -749,7 +750,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample,  bool protonSyst,
       if (samplenumber == 319)
         f = new TFile(mcNtuplesFolder +
                       "/2016/C/ExclWWjets_ZZ_A0Z5e-6_Part1of1.root");
-      if (samplenumber == 32o)
+      if (samplenumber == 320)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_ZZ_A0Z5e-6_Part1of1.root");
       // ZZ_A0Z1e-5

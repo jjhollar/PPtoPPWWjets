@@ -21,6 +21,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   // pre-TS2
   Float_t lumi = 4.602909231+1.622461742+3.691150120; //+5.095;
+  Float_t lumi2016B = 4.602909231;
+  Float_t lumi2016C = 1.622461742;
+  Float_t lumi2016G = 3.691150120;
 
 
   // QCD xsections from xsecDB
@@ -257,9 +260,9 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016B.root");
   TH1F *hc1 = (TH1F *)fc1->Get(hist);
   TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016C.root");
-  TH1F *hc2 = (TH1F *)fc2->Get(hist);
+  TH1F *hc1_2 = (TH1F *)fc2->Get(hist);
   TFile *fc3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016G.root");
-  TH1F *hc3 = (TH1F *)fc3->Get(hist);
+  TH1F *hc1_3 = (TH1F *)fc3->Get(hist);
 
   TFile *fd1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016B.root");
   TH1F *hd1 = (TH1F *)fd1->Get(hist);
@@ -307,8 +310,8 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
       hb1_3->Rebin(rebinfactor);
 
       hc1->Rebin(rebinfactor);
-      hc2->Rebin(rebinfactor);
-      hc3->Rebin(rebinfactor);
+      hc1_2->Rebin(rebinfactor);
+      hc1_3->Rebin(rebinfactor);
 
       hd1->Rebin(rebinfactor);
       hd1_2->Rebin(rebinfactor);
@@ -370,41 +373,41 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   h11->Scale(mc11xsec*1000*lumi/(38499867.0));
 
   ha1->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1->Scale(mcaxsec*1000*lumi/33833.0);
+  ha1->Scale(mcaxsec*1000*lumi2016B/33833.0);
   ha1_2->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1_2->Scale(mcaxsec*1000*lumi/32874.0);
+  ha1_2->Scale(mcaxsec*1000*lumi2016C/32874.0);
   ha1_3->Sumw2(); // Signal, a0W=1E-6, 2016 pre-TS2
-  ha1_3->Scale(mcaxsec*1000*lumi/32879.0);
+  ha1_3->Scale(mcaxsec*1000*lumi2016G/32879.0);
   ha1->Add(ha1_2);
   ha1->Add(ha1_3);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
   hb1->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
-  hb1->Scale(mcbxsec*1000*lumi/33856.0);
+  hb1->Scale(mcbxsec*1000*lumi2016B/33856.0);
   hb1_2->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
-  hb1_2->Scale(mcbxsec*1000*lumi/32888.0);
+  hb1_2->Scale(mcbxsec*1000*lumi2016C/32888.0);
   hb1_3->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
-  hb1_3->Scale(mcbxsec*1000*lumi/32892.0);
+  hb1_3->Scale(mcbxsec*1000*lumi2016G/32892.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan); hb1->SetLineStyle(2);
  
   hc1->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1->Scale(mccxsec*1000*lumi/33853.0);
+  hc1->Scale(mccxsec*1000*lumi2016B/33853.0);
   hc1_2->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1_2->Scale(mccxsec*1000*lumi/32884.0);
+  hc1_2->Scale(mccxsec*1000*lumi2016C/32884.0);
   hc1_3->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1_3->Scale(mccxsec*1000*lumi/32892.0);
+  hc1_3->Scale(mccxsec*1000*lumi2016G/32892.0);
   hc1->Add(hb1_2);
   hc1->Add(hb1_3);
   hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
-  hd1->Sumw2(); // Signal, aCW=2E-5, 2016 pre-TS2                                                                                                                                   
-  hd1->Scale(mcdxsec*1000*lumi/33833.0);
+  hd1->Sumw2(); // Signal, aCW=2E-6, 2016 pre-TS2                                                                                                                                   
+  hd1->Scale(mcdxsec*1000*lumi2016B/33833.0);
   hd1_2->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hd1_2->Scale(mcdxsec*1000*lumi/32873.0);
+  hd1_2->Scale(mcdxsec*1000*lumi2016C/32873.0);
   hd1_3->Sumw2(); // Signal, a0W=2E-6, 2016 pre-TS2
-  hd1_3->Scale(mcdxsec*1000*lumi/32879.0);
+  hd1_3->Scale(mcdxsec*1000*lumi2016G/32879.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
   hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); 
@@ -739,13 +742,14 @@ void PlotStackAll2016()
   ULPlotStackTest2016(18);
   ULPlotStackTest2016(19);
   ULPlotStackTest2016(20);
-  ULPlotStackTest2016(23);
   ULPlotStackTest2016(22);
-  ULPlotStackTest2016(24);
-  ULPlotStackTest2016(25);
-  ULPlotStackTest2016(26);
-  ULPlotStackTest2016(27);
-  ULPlotStackTest2016(28);
+  ULPlotStackTest2016(32);
+  ULPlotStackTest2016(33);
+  ULPlotStackTest2016(34);
+  ULPlotStackTest2016(35);
+  ULPlotStackTest2016(36);
+  ULPlotStackTest2016(37);  
+  ULPlotStackTest2016(38);
 
   ULPlotStackTest2016(58);
   ULPlotStackTest2016(59);
