@@ -1,19 +1,19 @@
 executable			= runHadronicWWCuts.sh
 # Activate one systematic at a time
 # For no syst
-arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 
-output 				= signalSamples_v6/HadronicWWCuts_$(sampleNumber).out
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 0 
+# output 				= signalSamples_v6/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
-# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 0
 # output 				= signalSamples_v6_protonSystematics/HadronicWWCuts_$(sampleNumber).out
 #
 # For JEC syst up
-# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp 0
 # output 				= signalSamples_v6_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
 # 
 # For JEC syst down
-# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 0
 # output 				= signalSamples_v6_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
 #
 # output 				= dataRun2_v2/HadronicWWCuts_$(sampleNumber).out
@@ -33,15 +33,15 @@ queue sampleNumber in (
 	# 300 
 	# 301 
 	# 302 
-	# 400
-	# 401
-	# 402
-	# 500
-	# 501 
-	# 600 
-	# 601 
-	# 602 
-	# 603 
+	400
+	401
+	402
+	500
+	501 
+	600 
+	601 
+	602 
+	603 
 	# # WW_A0W1e-6
 	# 120 
 	# 121 
@@ -98,15 +98,15 @@ queue sampleNumber in (
 	# 303 
 	# 304 
 	# 305 
-	# 403
-	# 404
-	# 405
-	# 502
-	# 503 
-	# 604 
-	# 605 
-	# 606 
-	# 607 
+	403
+	404
+	405
+	502
+	503 
+	604 
+	605 
+	606 
+	607 
 	# # WW_ACW5e-6
 	# 132 
 	# 133 
@@ -222,9 +222,9 @@ queue sampleNumber in (
 	# 514 
 	# 515 
 	# 628 
-	629 
+	# 629 
 	# 630 
-	631 
+	# 631 
 	# ZZ_ACZ1e-5
 	# 144 
 	# 154

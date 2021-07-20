@@ -39,9 +39,9 @@ void HadronicWWCuts::Loop() {
   bool DOJECSYSTEMATICSUP = JECSystUp;
   bool DOJECSYSTEMATICSDOWN = JECSystDown;
 
-  // TString outputFolder = "testrun";
+  TString outputFolder = "testrun";
 
-   TString outputFolder = "signalSamples_v6";
+   // TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "dataRun2_v3";
@@ -74,6 +74,8 @@ void HadronicWWCuts::Loop() {
   TH1F *hxnew0 = new TH1F("xinew0", "xinew", 100, 0, 0.2);
   TH1F *hxold1 = new TH1F("xiold1", "xiold", 100, 0, 0.2);
   TH1F *hxnew1 = new TH1F("xinew1", "xinew", 100, 0, 0.2);
+
+  TH1F *hgenmjj = new TH1F("genmjj", "genmjj", 100, 0, 5000);
 
   // Pre-selection plots
   TH1F *hmjjdat = new TH1F("hmjjdat", "hmjjdat", 250, 0, 5000);
@@ -1476,6 +1478,7 @@ void HadronicWWCuts::Loop() {
       TLorentzVector jet1;
       TLorentzVector jet2;
       TLorentzVector mydijet;
+      TLorentzVector gen_jet1,gen_jet2,gen_dijet;
       float C_JER1 = -999.;
       float C_JER2 = -999.;
 
@@ -1621,6 +1624,16 @@ void HadronicWWCuts::Loop() {
       //(1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(-1*gen_jet_eta->at(0)) +
       // gen_jet_pt->at(1)*TMath::Exp(-1*gen_jet_eta->at(1)));
 
+      // Apply unitarity cut
+      if (gen_jet_pt->size() > 1){
+        gen_jet1.SetPtEtaPhiE(gen_jet_pt->at(0),gen_jet_eta->at(0),gen_jet_phi->at(0),gen_jet_energy->at(0));
+        gen_jet2.SetPtEtaPhiE(gen_jet_pt->at(1),gen_jet_eta->at(1),gen_jet_phi->at(1),gen_jet_energy->at(1));
+        gen_dijet = gen_jet1 + gen_jet2;
+        hgenmjj->Fill(gen_dijet.M());
+
+        if (gen_dijet.M() > unitarityCut)
+          continue;
+      }
       jet1.SetPtEtaPhiE(ptjet1, etajet1, phijet1, ejet1);
       jet2.SetPtEtaPhiE(ptjet2, etajet2, phijet2, ejet2);
 
@@ -4309,6 +4322,7 @@ void HadronicWWCuts::Loop() {
   resxijetscorr45->Write();
   resxijetscorr56->Write();
 
+  hgenmjj->Write();
   hgenxinomatch->Write();
   hmassmatchratiosigmcoutofacceptancemm->Write();
   hmassmatchratiosigmcinacceptancemm->Write();
