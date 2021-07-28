@@ -75,7 +75,7 @@ void HadronicWWCuts::Loop() {
   TH1F *hxold1 = new TH1F("xiold1", "xiold", 100, 0, 0.2);
   TH1F *hxnew1 = new TH1F("xinew1", "xinew", 100, 0, 0.2);
 
-  TH1F *hgenmjj = new TH1F("genmjj", "genmjj", 100, 0, 5000);
+  TH1F *hgenmvv = new TH1F("genmvv", "genmvv", 100, 0, 5000);
 
   // Pre-selection plots
   TH1F *hmjjdat = new TH1F("hmjjdat", "hmjjdat", 250, 0, 5000);
@@ -1625,13 +1625,11 @@ void HadronicWWCuts::Loop() {
       // gen_jet_pt->at(1)*TMath::Exp(-1*gen_jet_eta->at(1)));
 
       // Apply unitarity cut
-      if (gen_jet_pt->size() > 1){
-        gen_jet1.SetPtEtaPhiE(gen_jet_pt->at(0),gen_jet_eta->at(0),gen_jet_phi->at(0),gen_jet_energy->at(0));
-        gen_jet2.SetPtEtaPhiE(gen_jet_pt->at(1),gen_jet_eta->at(1),gen_jet_phi->at(1),gen_jet_energy->at(1));
-        gen_dijet = gen_jet1 + gen_jet2;
-        hgenmjj->Fill(gen_dijet.M());
+      if (gen_proton_xi->size() > 1){
+        double gen_mvv = TMath::Sqrt(13000.0 * 13000.0 * gen_proton_xi->at(0) * gen_proton_xi->at(1));;
+        hgenmvv->Fill(gen_mvv);
 
-        if (gen_dijet.M() > unitarityCut)
+        if (gen_mvv > unitarityCut)
           continue;
       }
       jet1.SetPtEtaPhiE(ptjet1, etajet1, phijet1, ejet1);
@@ -4322,7 +4320,7 @@ void HadronicWWCuts::Loop() {
   resxijetscorr45->Write();
   resxijetscorr56->Write();
 
-  hgenmjj->Write();
+  hgenmvv->Write();
   hgenxinomatch->Write();
   hmassmatchratiosigmcoutofacceptancemm->Write();
   hmassmatchratiosigmcinacceptancemm->Write();
