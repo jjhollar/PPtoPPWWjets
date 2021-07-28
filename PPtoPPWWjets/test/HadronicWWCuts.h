@@ -28,6 +28,7 @@ public:
   bool JECSystUp;
   bool JECSystDown;
   double unitarityCut;
+  double min_mvvCut;
 
   // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -167,7 +168,7 @@ public:
   TString erastring;
 
   HadronicWWCuts(Int_t mysample = 500, bool protonSyst = false,
-                 bool JECSystUp = false, bool JECSystDown = false, double unitarityCut=0,
+                 bool JECSystUp = false, bool JECSystDown = false, double unitarityCut=0,double min_mvvCut=999999,
                  TTree *tree = 0);
   virtual ~HadronicWWCuts();
   virtual Int_t Cut(Long64_t entry);
@@ -183,13 +184,14 @@ public:
 
 #ifdef HadronicWWCuts_cxx
 HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
-                 bool JECSystUp, bool JECSystDown, double unitarityCut, TTree *tree) : fChain(0) {
+                 bool JECSystUp, bool JECSystDown, double unitarityCut,double min_mvvCut=999999, TTree *tree) : fChain(0) {
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
   this->protonSyst = protonSyst;
   this->JECSystUp = JECSystUp;
   this->JECSystDown = JECSystDown;
   this->unitarityCut = unitarityCut;
+  this->min_mvvCut = min_mvvCut;
   TString mcNtuplesFolder =
       "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
 

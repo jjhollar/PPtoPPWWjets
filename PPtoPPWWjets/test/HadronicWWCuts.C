@@ -1631,6 +1631,8 @@ void HadronicWWCuts::Loop() {
 
         if (gen_mvv > unitarityCut)
           continue;
+        if (gen_mvv < min_mvvCut)
+          continue;
       }
       jet1.SetPtEtaPhiE(ptjet1, etajet1, phijet1, ejet1);
       jet2.SetPtEtaPhiE(ptjet2, etajet2, phijet2, ejet2);
