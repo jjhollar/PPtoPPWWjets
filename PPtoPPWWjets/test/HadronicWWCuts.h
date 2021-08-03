@@ -192,12 +192,12 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
   this->JECSystDown = JECSystDown;
   this->unitarityCut = unitarityCut;
   this->min_mvvCut = min_mvvCut;
-  TString mcNtuplesFolder =
-      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
-
   // TString mcNtuplesFolder =
-  //     "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
-  //     "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
+  //     "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
+
+  TString mcNtuplesFolder =
+      "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
+      "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
   // TString mcNtuplesFolder =
   // "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
 
@@ -295,6 +295,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       // 2017 signal samples
 
       // 2017 PreTS2
+      // SM_WW
+      if (samplenumber == 900)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 901)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 902)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_SM_WW_Part1of1.root");
       // WW_A0W5e-7
       if (samplenumber == 400)
         f = new TFile(mcNtuplesFolder +
@@ -525,6 +535,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
                       "/2017/F/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
       // 2017 PostTS2
+      // SM_WW
+      if (samplenumber == 903)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 904)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_SM_WW_Part1of1.root");
       // WW_A0W5e-7
       if (samplenumber == 500)
         f = new TFile(mcNtuplesFolder +
@@ -647,6 +664,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       // 2016 signal samples
 
       // 2016 PreTS2
+      // SM_WW
+      if (samplenumber == 905)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 906)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 907)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_SM_WW_Part1of1.root");
       // WW_A0W5e-7
       if (samplenumber == 300)
         f = new TFile(mcNtuplesFolder +
@@ -873,6 +900,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
 
       // 2018 signal samples
 
+      // SM_WW
+      if (samplenumber == 908)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 909)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 910)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_SM_WW_Part1of1.root");
+      if (samplenumber == 911)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_SM_WW_Part1of1.root");
       // WW_A0W5e-7
       if (samplenumber == 600)
         f = new TFile(mcNtuplesFolder +
@@ -1115,6 +1155,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
         // TFile(mcNtuplesFolder+"/2018/A/ExclWWjets_WW_A0W1e-6_Part1of1.root");
         f = new TFile(mcNtuplesFolder +
                       "/2016/B/ExclWWjets_WW_A0W1e-6_Part1of1.root");
+    }
+
+    if (f->IsOpen())
+      cout << "Opened file: " << f->GetName() << endl;
+    else{
+      cout << "ERROR: file could not be opened"<<endl;
+      return 1;
     }
 
     TDirectory *dir = (TDirectory *)f->Get((TString)f->GetName() + ":/demo");

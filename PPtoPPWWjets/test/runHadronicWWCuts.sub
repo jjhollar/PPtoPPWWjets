@@ -1,8 +1,8 @@
 executable			= runHadronicWWCuts.sh
 # Activate one systematic at a time
 # For no syst
-# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 0 999999
-# output 				= signalSamples_v6/HadronicWWCuts_$(sampleNumber).out
+arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 0 999999
+output 				= signalSamples_v6/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 0 999999
@@ -29,19 +29,32 @@ queue sampleNumber in (
 # # FOR SIGNAL
 # #
 	# # WW Part
+	# # SM_WW
+	900
+	901
+	902
+	903
+	904
+	905
+	906
+	907
+	908
+	909
+	910
+	911
 	# # WW_A0W5e-6
 	# 300 
 	# 301 
 	# 302 
-	400
-	401
-	402
-	500
-	501 
-	600 
-	601 
-	602 
-	603 
+	# 400
+	# 401
+	# 402
+	# 500
+	# 501 
+	# 600 
+	# 601 
+	# 602 
+	# 603 
 	# # WW_A0W1e-6
 	# 120 
 	# 121 
@@ -98,15 +111,15 @@ queue sampleNumber in (
 	# 303 
 	# 304 
 	# 305 
-	403
-	404
-	405
-	502
-	503 
-	604 
-	605 
-	606 
-	607 
+	# 403
+	# 404
+	# 405
+	# 502
+	# 503 
+	# 604 
+	# 605 
+	# 606 
+	# 607 
 	# # WW_ACW5e-6
 	# 132 
 	# 133 

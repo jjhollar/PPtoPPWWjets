@@ -590,17 +590,20 @@ void HadronicWWCuts::Loop() {
   // JEC systematics
   JetCorrectionUncertainty *jectotal;
   // For MC
-  if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 400 && samplenumber < 600))
+  if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 400 && samplenumber < 600)
+    || (samplenumber > 899 && samplenumber < 905))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2017/"
         "Fall17_17Nov2017_V32_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
-  if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 300 && samplenumber < 400))
+  if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 300 && samplenumber < 400)
+    || (samplenumber > 904 && samplenumber < 908))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JEC2016/"
         "Summer16_07Aug2017_V11_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
-  if ((samplenumber > 200 && samplenumber <= 300)  || (samplenumber >= 600 && samplenumber < 700))
+  if ((samplenumber > 200 && samplenumber <= 300)  || (samplenumber >= 600 && samplenumber < 700)
+    || (samplenumber > 907 && samplenumber < 912))
     jectotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters(
         "../python/JECAUTUMN18/Autumn18_V19_MC_UncertaintySources_AK8PFchs.txt",
         "Total")));
@@ -682,6 +685,21 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 9)
     outtextfile = outputFolder + "MC_EventsForMixing_zjets_2017.txt";
 
+  if (samplenumber == 900)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2017B.txt";
+  if (samplenumber == 901)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2017C.txt";
+  if (samplenumber == 902)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2017D.txt";
+  if (samplenumber == 903)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_postTS2_2017E.txt";
+  if (samplenumber == 904)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_postTS2_2017F.txt";
   if (samplenumber == 400)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2017B.txt";
@@ -974,6 +992,15 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 111)
     outtextfile = outputFolder + "MC_EventsForMixing_ttbar700to1000_2016.txt";
 
+  if (samplenumber == 905)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2016B.txt";
+  if (samplenumber == 906)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2016C.txt";
+  if (samplenumber == 907)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_preTS2_2016G.txt";
   if (samplenumber == 300)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_preTS2_2016B.txt";
@@ -1157,6 +1184,18 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 209)
     outtextfile = outputFolder + "MC_EventsForMixing_zjets_2018.txt";
 
+  if (samplenumber == 908)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_2018A.txt";
+  if (samplenumber == 909)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_2018B.txt";
+  if (samplenumber == 910)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_2018C.txt";
+  if (samplenumber == 911)
+    outtextfile =
+        outputFolder + "MC_EventsForMixing_signal_SM_WW_2018D.txt";
   if (samplenumber == 600)
     outtextfile =
         outputFolder + "MC_EventsForMixing_signal_WWA0W5E-7_2018A.txt";
@@ -1398,22 +1437,26 @@ void HadronicWWCuts::Loop() {
       samplenumber == 67 || samplenumber == 70 || samplenumber == 71 ||
       samplenumber == 74 || samplenumber == 75 || samplenumber == 78 ||
       samplenumber == 79 || samplenumber == 82 || samplenumber == 83 ||
-      (samplenumber >= 400 && samplenumber < 500)) {
+      (samplenumber >= 400 && samplenumber < 500) || 
+      (samplenumber >= 900 && samplenumber < 903)) {
     erastring = "2017preTS2";
   }
   if ((samplenumber >= 50 && samplenumber <= 61) || samplenumber == 68 ||
       samplenumber == 69 || samplenumber == 72 || samplenumber == 73 ||
       samplenumber == 76 || samplenumber == 77 || samplenumber == 80 ||
       samplenumber == 81 || samplenumber == 84 || samplenumber == 85 ||
-      (samplenumber >= 500 && samplenumber < 600)) {
+      (samplenumber >= 500 && samplenumber < 600) || 
+      (samplenumber >= 903 && samplenumber < 905)) {
     erastring = "2017postTS2";
   }
   if ((samplenumber >= 120 && samplenumber < 200) ||
-      (samplenumber >= 300 && samplenumber < 400)) {
+      (samplenumber >= 300 && samplenumber < 400) || 
+      (samplenumber >= 905 && samplenumber < 908)) {
     erastring = "2016preTS2";
   }
   if ((samplenumber >= 220 && samplenumber < 300) ||
-      (samplenumber >= 600 && samplenumber < 700)) {
+      (samplenumber >= 600 && samplenumber < 700) || 
+      (samplenumber >= 908 && samplenumber < 912)) {
     erastring = "2018";
   }
 
@@ -2883,6 +2926,32 @@ void HadronicWWCuts::Loop() {
                        "qcdpt2400to3200.root",
                    "RECREATE");
 
+  if (samplenumber == 900)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2017B.root",
+                   "RECREATE");
+  if (samplenumber == 901)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2017C.root",
+                   "RECREATE");
+  if (samplenumber == 902)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2017D.root",
+                   "RECREATE");
+  if (samplenumber == 903)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_postTS2_2017E.root",
+                   "RECREATE");
+  if (samplenumber == 904)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_postTS2_2017F.root",
+                   "RECREATE");
+
   if (samplenumber == 400)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3393,6 +3462,21 @@ void HadronicWWCuts::Loop() {
                        "ttbarhadronic700ot1000_2016.root",
                    "RECREATE");
 
+  if (samplenumber == 905)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2016B.root",
+                   "RECREATE");
+  if (samplenumber == 906)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2016C.root",
+                   "RECREATE");
+  if (samplenumber == 907)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_preTS2_2016G.root",
+                   "RECREATE");
   if (samplenumber == 300)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
@@ -3717,6 +3801,26 @@ void HadronicWWCuts::Loop() {
                        "qcdpt1400to1800_2018.root",
                    "RECREATE");
 
+  if (samplenumber == 908)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_2018A.root",
+                   "RECREATE");
+  if (samplenumber == 909)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_2018B.root",
+                   "RECREATE");
+  if (samplenumber == 910)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_2018C.root",
+                   "RECREATE");
+  if (samplenumber == 911)
+    fx = new TFile(outputFolder +
+                       "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
+                       "exclSM_WW_2018D.root",
+                   "RECREATE");
   if (samplenumber == 600)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
