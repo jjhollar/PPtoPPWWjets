@@ -39,9 +39,9 @@ void HadronicWWCuts::Loop() {
   bool DOJECSYSTEMATICSUP = JECSystUp;
   bool DOJECSYSTEMATICSDOWN = JECSystDown;
 
-  TString outputFolder = "testrun";
+  // TString outputFolder = "testrun";
 
-   // TString outputFolder = "signalSamples_v6";
+   TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "dataRun2_v3";
@@ -52,6 +52,9 @@ void HadronicWWCuts::Loop() {
     outputFolder += "_JECSystematicsUp";
   if (DOJECSYSTEMATICSDOWN)
     outputFolder += "_JECSystematicsDown";
+
+  if (min_mvvCut != 0)
+    outputFolder += "_fxs";
 
   outputFolder += "/";
 
@@ -543,6 +546,7 @@ void HadronicWWCuts::Loop() {
   std::vector<float> *yppsmultmultshiftdown = new std::vector<float>;
 
   // Counters for # of MC events passing cuts
+  Float_t npassgencuts = 0;
   Float_t npasspresel = 0;
   Float_t npassdijetkine = 0;
   Float_t npassjetsubstr = 0;
@@ -1676,7 +1680,15 @@ void HadronicWWCuts::Loop() {
           continue;
         if (gen_mvv < min_mvvCut)
           continue;
+        if (gen_proton_xi->at(0) < gen_xi_min || gen_proton_xi->at(0) > gen_xi_max)
+          continue;
+        if (gen_proton_xi->at(1) < gen_xi_min || gen_proton_xi->at(1) > gen_xi_max)
+          continue;
+      } else {
+        cout << "Less than 2 gen protons, what???" << endl;
       }
+      npassgencuts++;
+
       jet1.SetPtEtaPhiE(ptjet1, etajet1, phijet1, ejet1);
       jet2.SetPtEtaPhiE(ptjet2, etajet2, phijet2, ejet2);
 
@@ -4473,7 +4485,8 @@ void HadronicWWCuts::Loop() {
   std::cout << "Cut flow" << std::endl;
   std::cout << "====================================================="
             << std::endl;
-  std::cout << "Passing preselection = " << npasspresel << std::endl
+  std::cout << "Passing gencuts = " << npassgencuts << std::endl
+            << "Passing preselection = " << npasspresel << std::endl
             << "Passing dijet kinematics = " << npassdijetkine << std::endl
             << "Passing jet substructure = " << npassjetsubstr << std::endl
             << "Passing xi(jets) = " << npassjetxi << std::endl

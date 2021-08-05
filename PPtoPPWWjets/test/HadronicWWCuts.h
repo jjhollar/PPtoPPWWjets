@@ -29,6 +29,8 @@ public:
   bool JECSystDown;
   double unitarityCut;
   double min_mvvCut;
+  double gen_xi_min;
+  double gen_xi_max;
 
   // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -168,7 +170,9 @@ public:
   TString erastring;
 
   HadronicWWCuts(Int_t mysample = 500, bool protonSyst = false,
-                 bool JECSystUp = false, bool JECSystDown = false, double unitarityCut=0,double min_mvvCut=999999,
+                 bool JECSystUp = false, bool JECSystDown = false, 
+                 double unitarityCut=999999,double min_mvvCut=0,
+                 double gen_xi_min=0,double gen_xi_max=0.4,
                  TTree *tree = 0);
   virtual ~HadronicWWCuts();
   virtual Int_t Cut(Long64_t entry);
@@ -184,7 +188,7 @@ public:
 
 #ifdef HadronicWWCuts_cxx
 HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
-                 bool JECSystUp, bool JECSystDown, double unitarityCut,double min_mvvCut=999999, TTree *tree) : fChain(0) {
+                 bool JECSystUp, bool JECSystDown, double unitarityCut=999999,double min_mvvCut=0,double gen_xi_min=0,double gen_xi_max=0.4,TTree *tree) : fChain(0) {
   samplenumber = mysample;
   cout << "Opening sample = " << samplenumber << endl;
   this->protonSyst = protonSyst;
@@ -192,12 +196,14 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
   this->JECSystDown = JECSystDown;
   this->unitarityCut = unitarityCut;
   this->min_mvvCut = min_mvvCut;
-  // TString mcNtuplesFolder =
-  //     "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
-
+  this->gen_xi_min = gen_xi_min;
+  this->gen_xi_max = gen_xi_max;
   TString mcNtuplesFolder =
-      "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
-      "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
+      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
+
+  // TString mcNtuplesFolder =
+  //     "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"
+  //     "CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/signalNTuples_v4";
   // TString mcNtuplesFolder =
   // "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/CMSSW_10_6_17/src/PPtoPPWWjets/PPtoPPWWjets/python/testrun";
 
