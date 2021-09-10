@@ -483,9 +483,12 @@ process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ctppsP
 
 # process.out = cms.EndPath(process.output)
 
+process.load("PPtoPPWWjets.PPtoPPWWjets.genCutsFilter_cfi")
+
 # processing path
 process.p = cms.Path(
-  process.hltFilter
+  process.genCutsFilter
+  * process.hltFilter
   * process.beamDivergenceVtxGenerator
   * process.ctppsDirectProtonSimulation
   * process.ctppsPreMixProducer

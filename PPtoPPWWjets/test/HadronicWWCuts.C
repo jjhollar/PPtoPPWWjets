@@ -1673,7 +1673,7 @@ void HadronicWWCuts::Loop() {
 
       // Apply unitarity cut
       if (gen_proton_xi->size() > 1){
-        double gen_mvv = TMath::Sqrt(13000.0 * 13000.0 * gen_proton_xi->at(0) * gen_proton_xi->at(1));;
+        double gen_mvv = TMath::Sqrt(13000.0 * 13000.0 * gen_proton_xi->at(0) * gen_proton_xi->at(1));
         hgenmvv->Fill(gen_mvv);
 
         if (gen_mvv > unitarityCut)
