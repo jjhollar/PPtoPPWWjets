@@ -487,8 +487,8 @@ process.load("PPtoPPWWjets.PPtoPPWWjets.genCutsFilter_cfi")
 
 # processing path
 process.p = cms.Path(
-  process.genCutsFilter
-  * process.hltFilter
+  # process.genCutsFilter
+  process.hltFilter
   * process.beamDivergenceVtxGenerator
   * process.ctppsDirectProtonSimulation
   * process.ctppsPreMixProducer
