@@ -22,6 +22,25 @@ executable			= runHadronicWWCuts.sh
 # output 				= signalSamples_v6_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
 #
 
+# FOR AQGC STUDIES WITH CLIPPING
+# Activate one systematic at a time
+# For no syst
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 1400 0 0 0.4
+# output 				= signalSamples_v6_clip/HadronicWWCuts_$(sampleNumber).out
+#
+# For proton syst
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 1400 0 0 0.4
+# output 				= signalSamples_v6_protonSystematics_clip/HadronicWWCuts_$(sampleNumber).out
+#
+# For JEC syst up
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp 1400 0 0 0.4
+# output 				= signalSamples_v6_JECSystematicsUp_clip/HadronicWWCuts_$(sampleNumber).out
+# 
+# For JEC syst down
+arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 1400 0 0 0.4
+output 				= signalSamples_v6_JECSystematicsDown_clip/HadronicWWCuts_$(sampleNumber).out
+#
+
 # FOR FIDUCIAL CROSS SECTION STUDIES
 # For no syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 1000 0.04 0.2
@@ -66,71 +85,71 @@ queue sampleNumber in (
 	# 909
 	# 910
 	# 911
-	# WW_A0W5e-6
-	300 
-	301 
-	302 
-	400
-	401
-	402
-	500
-	501 
-	600 
-	601 
-	602 
-	603 
-	# WW_A0W1e-6
-	120 
-	121 
-	122 
-	20 
-	21 
-	22 
-	50 
-	51 
-	220 
-	221 
-	222 
-	223 
-	# WW_A0W2e-6
-	123 
-	124 
-	125 
-	23 
-	24 
-	25 
-	52 
-	53 
-	224 
-	225 
-	226 
-	227 
-	# WW_A0W3_5e-6
-	312 
-	313 
-	314 
-	412 
-	413 
-	414 
-	508 
-	509 
-	616 
-	617 
-	618 
-	619 
-	# WW_A0W5e-6
-	126 
-	127 
-	128 
-	26 
-	27 
-	28 
-	54 
-	55 
-	228 
-	229 
-	230 
-	231 
+	# # WW_A0W5e-6
+	# 300 
+	# 301 
+	# 302 
+	# 400
+	# 401
+	# 402
+	# 500
+	# 501 
+	# 600 
+	# 601 
+	# 602 
+	# 603 
+	# # WW_A0W1e-6
+	# 120 
+	# 121 
+	# 122 
+	# 20 
+	# 21 
+	# 22 
+	# 50 
+	# 51 
+	# 220 
+	# 221 
+	# 222 
+	# 223 
+	# # WW_A0W2e-6
+	# 123 
+	# 124 
+	# 125 
+	# 23 
+	# 24 
+	# 25 
+	# 52 
+	# 53 
+	# 224 
+	# 225 
+	# 226 
+	# 227 
+	# # WW_A0W3_5e-6
+	# 312 
+	# 313 
+	# 314 
+	# 412 
+	# 413 
+	# 414 
+	# 508 
+	# 509 
+	# 616 
+	# 617 
+	# 618 
+	# 619 
+	# # WW_A0W5e-6
+	# 126 
+	# 127 
+	# 128 
+	# 26 
+	# 27 
+	# 28 
+	# 54 
+	# 55 
+	# 228 
+	# 229 
+	# 230 
+	# 231 
 	# WW_ACW2e-6
 	303 
 	304 
@@ -301,7 +320,7 @@ queue sampleNumber in (
 	271
 	272
 	273
-# #
+#
 # # FOR DATA
 # #
 	# -1

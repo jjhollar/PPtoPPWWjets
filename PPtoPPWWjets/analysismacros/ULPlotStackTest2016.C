@@ -51,8 +51,8 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
-  Float_t mcbxsec = 1.7859991686478713; // pb, a0Z=5E-5
-  Float_t mccxsec = 0.12741628575501507; // pb, aCZ=5E-5
+  Float_t mcbxsec = 0.07147586892; // pb, a0Z=1E-5
+  Float_t mccxsec = 0.005100496092; // pb, aCZ=1E-5
   Float_t mcdxsec = 0.1648; // pb, aCW=2E-5
 
 
@@ -250,18 +250,18 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   TFile *fa1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_preTS2_2016G.root");
   TH1F *ha1_3 = (TH1F *)fa1_3->Get(hist);
 
-  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016B.root");
+  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2016B.root");
   TH1F *hb1 = (TH1F *)fb1->Get(hist);
-  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016C.root");
+  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2016C.root");
   TH1F *hb1_2 = (TH1F *)fb1_2->Get(hist);
-  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2016G.root");
+  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2016G.root");
   TH1F *hb1_3 = (TH1F *)fb1_3->Get(hist);
 
-  TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016B.root");
+  TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2016B.root");
   TH1F *hc1 = (TH1F *)fc1->Get(hist);
-  TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016C.root");
+  TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2016C.root");
   TH1F *hc1_2 = (TH1F *)fc2->Get(hist);
-  TFile *fc3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2016G.root");
+  TFile *fc3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2016G.root");
   TH1F *hc1_3 = (TH1F *)fc3->Get(hist);
 
   TFile *fd1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2016B.root");
@@ -382,22 +382,22 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   ha1->Add(ha1_3);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
-  hb1->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1->Sumw2(); // Signal, a0Z=1E-5, 2016 pre-TS2
   hb1->Scale(mcbxsec*1000*lumi2016B/33856.0);
-  hb1_2->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1_2->Sumw2(); // Signal, a0Z=1E-5, 2016 pre-TS2
   hb1_2->Scale(mcbxsec*1000*lumi2016C/32888.0);
-  hb1_3->Sumw2(); // Signal, a0Z=5E-5, 2016 pre-TS2
+  hb1_3->Sumw2(); // Signal, a0Z=1E-5, 2016 pre-TS2
   hb1_3->Scale(mcbxsec*1000*lumi2016G/32892.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan); hb1->SetLineStyle(2);
  
   hc1->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1->Scale(mccxsec*1000*lumi2016B/33853.0);
+  hc1->Scale(mccxsec*1000*lumi2016B/33849.0);
   hc1_2->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1_2->Scale(mccxsec*1000*lumi2016C/32884.0);
+  hc1_2->Scale(mccxsec*1000*lumi2016C/32888.0);
   hc1_3->Sumw2(); // Signal, aCZ=5E-5, 2016 pre-TS2
-  hc1_3->Scale(mccxsec*1000*lumi2016G/32892.0);
+  hc1_3->Scale(mccxsec*1000*lumi2016G/32890.0);
   hc1->Add(hb1_2);
   hc1->Add(hb1_3);
   hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
@@ -474,7 +474,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
 
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
-  if(var != 25 && var != 26 && var != 61 && var != 62)
+  if(var != 35 && var != 36 && var != 61 && var != 62)
     h10->SetMaximum(h100->GetMaximum()*2.5);                                                                                                                
   else
     h10->SetMaximum(h10->GetMaximum()*2.5);
@@ -567,7 +567,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
     ha1->Draw("histsame");
     hb1->Draw("histsame");
     lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   } else if (var < 58) {
     ha1->Draw("histsame");
     hd1->Draw("histsame");
@@ -576,8 +576,8 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   } else {
     hb1->Draw("histsame");
     hc1->Draw("histsame");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
-    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   }
 
   lg1->AddEntry(h100,"2016BCG Data");

@@ -53,8 +53,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
 
   //  Float_t mcaxsec = 0.1282; // pb
   Float_t mcaxsec = 0.0454; // pb, a0W=1E-6
-  Float_t mcbxsec = 1.7859991686478713; // pb, a0Z=5E-5
-  Float_t mccxsec = 0.12741628575501507; // pb, aCZ=5E-5
+  Float_t mcbxsec = 0.07147586892; // pb, a0Z=1E-5
+  Float_t mccxsec = 0.005100496092; // pb, aCZ=1E-5
   Float_t mcdxsec = 0.1648; // pb, aCW=2E-5
 
   Float_t rangelo = 0.0;
@@ -255,28 +255,28 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   TFile *fa2_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W1E-6_postTS2_2017F.root");
   TH1F *ha2_2 = (TH1F *)fa2_2->Get(hist);
 
-  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2017B.root");
+  TFile *fb1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2017B.root");
   TH1F *hb1 = (TH1F *)fb1->Get(hist);
-  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2017C.root");
+  TFile *fb1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2017C.root");
   TH1F *hb1_2 = (TH1F *)fb1_2->Get(hist);
-  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_preTS2_2017D.root");
+  TFile *fb1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_preTS2_2017D.root");
   TH1F *hb1_3 = (TH1F *)fb1_3->Get(hist);
 
-  TFile *fb2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_postTS2_2017E.root");
+  TFile *fb2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_postTS2_2017E.root");
   TH1F *hb2 = (TH1F *)fb2->Get(hist);
-  TFile *fb2_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z5E-5_postTS2_2017F.root");
+  TFile *fb2_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZA0Z1E-5_postTS2_2017F.root");
   TH1F *hb2_2 = (TH1F *)fb2_2->Get(hist);
 
-  TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2017B.root");
+  TFile *fc1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2017B.root");
   TH1F *hc1 = (TH1F *)fc1->Get(hist);
-  TFile *fc1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2017C.root");
+  TFile *fc1_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2017C.root");
   TH1F *hc1_2 = (TH1F *)fc1_2->Get(hist);
-  TFile *fc1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_preTS2_2017D.root");
+  TFile *fc1_3 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_preTS2_2017D.root");
   TH1F *hc1_3 = (TH1F *)fc1_3->Get(hist);
 
-  TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_postTS2_2017E.root");
+  TFile *fc2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_postTS2_2017E.root");
   TH1F *hc2 = (TH1F *)fc2->Get(hist);
-  TFile *fc2_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ5E-5_postTS2_2017F.root");
+  TFile *fc2_2 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclZZACZ1E-5_postTS2_2017F.root");
   TH1F *hc2_2 = (TH1F *)fc2_2->Get(hist);
 
   TFile *fd1 = TFile::Open(signalFolder+"vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWACW2E-5_preTS2_2017B.root");
@@ -412,38 +412,38 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   ha2->SetLineWidth(3); ha2->SetLineColor(kCyan); ha2->SetMarkerStyle(0); ha2->SetMarkerColor(kCyan);
   ha1->Add(ha2);
   
-  hb1->Sumw2(); // Signal, a0Z=5E-5, 2017B --> 2017preTS2
-  hb1->Scale(mcbxsec*1000*lumi/19624.0);
-  hb1_2->Sumw2(); // Signal, a0Z=5E-5, 2017C 
-  hb1_2->Scale(mcbxsec*1000*lumi/19031.0);
-  hb1_3->Sumw2(); // Signal, a0Z=5E-5, 2017D 
-  hb1_3->Scale(mcbxsec*1000*lumi/19918.0);
+  hb1->Sumw2(); // Signal, a0Z=1E-5, 2017B --> 2017preTS2
+  hb1->Scale(mcbxsec*1000*lumi/19686.0);
+  hb1_2->Sumw2(); // Signal, a0Z=1E-5, 2017C 
+  hb1_2->Scale(mcbxsec*1000*lumi/19768.0);
+  hb1_3->Sumw2(); // Signal, a0Z=1E-5, 2017D 
+  hb1_3->Scale(mcbxsec*1000*lumi/19786.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan); hb1->SetLineStyle(2);
 
-  hb2->Sumw2(); // Signal, a0Z=5E-5, 2017E --> 2017postTS2                                                                                       
-  hb2->Scale(mcbxsec*1000*lumipostTS2/19895.0);
-  hb2_2->Sumw2(); // Signal, a0Z=5E-5, 2017F 
-  hb2_2->Scale(mcbxsec*1000*lumi/19698.0);
+  hb2->Sumw2(); // Signal, a0Z=1E-5, 2017E --> 2017postTS2                                                                                       
+  hb2->Scale(mcbxsec*1000*lumipostTS2/19543.0);
+  hb2_2->Sumw2(); // Signal, a0Z=1E-5, 2017F 
+  hb2_2->Scale(mcbxsec*1000*lumi/19882.0);
   hb2->Add(hb2_2);
   hb2->SetLineWidth(3); hb2->SetLineColor(kCyan); hb2->SetMarkerStyle(0); hb2->SetMarkerColor(kCyan);
   hb1->Add(hb2);
 
-  hc1->Sumw2(); // Signal, aCZ=5E-5, 2017B --> 2017preTS2
-  hc1->Scale(mccxsec*1000*lumi/19730.0);
-  hc1_2->Sumw2(); // Signal, aCZ=5E-5, 2017C 
-  hc1_2->Scale(mccxsec*1000*lumi/19516.0);
-  hc1_3->Sumw2(); // Signal, aCZ=5E-5, 2017D 
-  hc1_3->Scale(mccxsec*1000*lumi/19792.0);
+  hc1->Sumw2(); // Signal, aCZ=1E-5, 2017B --> 2017preTS2
+  hc1->Scale(mccxsec*1000*lumi/19927.0);
+  hc1_2->Sumw2(); // Signal, aCZ=1E-5, 2017C 
+  hc1_2->Scale(mccxsec*1000*lumi/19930.0);
+  hc1_3->Sumw2(); // Signal, aCZ=1E-5, 2017D 
+  hc1_3->Scale(mccxsec*1000*lumi/19914.0);
   hc1->Add(hc1_2);
   hc1->Add(hc1_3);
   hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
-  hc2->Sumw2(); // Signal, aCZ=5E-5, 2017E --> 2017postTS2                                                                                       
-  hc2->Scale(mccxsec*1000*lumipostTS2/19842.0);
-  hc2_2->Sumw2(); // Signal, aCZ=5E-5, 2017F 
-  hc2_2->Scale(mccxsec*1000*lumi/19800.0);
+  hc2->Sumw2(); // Signal, aCZ=1E-5, 2017E --> 2017postTS2                                                                                       
+  hc2->Scale(mccxsec*1000*lumipostTS2/19662.0);
+  hc2_2->Sumw2(); // Signal, aCZ=1E-5, 2017F 
+  hc2_2->Scale(mccxsec*1000*lumi/19910.0);
   hc2->Add(hc2_2);
   hc2->SetLineWidth(3); hc2->SetLineColor(kCyan); hc2->SetMarkerStyle(0); hc2->SetMarkerColor(kCyan);
   hc1->Add(hc2);
@@ -527,7 +527,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
 
   if(rangelo != 0 || rangehi != 1)                                                                                                                        
     h10->GetXaxis()->SetRangeUser(rangelo,rangehi);                                                                                                       
-  if(var != 25 && var != 26 && var != 61 && var != 62)
+  if(var != 35 && var != 36 && var != 61 && var != 62)
     h10->SetMaximum(h100->GetMaximum()*2.5);
   else
     h10->SetMaximum(h10->GetMaximum()*2.5);
@@ -607,7 +607,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
     ha1->Draw("histsame");
     hb1->Draw("histsame");
     lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   } else if (var < 58) {
     ha1->Draw("histsame");
     hd1->Draw("histsame");
@@ -616,8 +616,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   } else {
     hb1->Draw("histsame");
     hc1->Draw("histsame");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
-    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   }
 
   lg1->AddEntry(h100,"2017BCDEF Data");

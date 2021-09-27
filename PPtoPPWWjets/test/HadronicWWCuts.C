@@ -56,6 +56,9 @@ void HadronicWWCuts::Loop() {
   if (min_mvvCut != 0)
     outputFolder += "_fxs";
 
+  if (unitarityCut != 999999)
+    outputFolder += "_clip";
+
   outputFolder += "/";
 
   // RP ID's
@@ -3836,22 +3839,22 @@ void HadronicWWCuts::Loop() {
   if (samplenumber == 600)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_2018A.root",
+                       "exclWWA0W5E-7_2018A.root",
                    "RECREATE");
   if (samplenumber == 601)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_2018B.root",
+                       "exclWWA0W5E-7_2018B.root",
                    "RECREATE");
   if (samplenumber == 602)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_2018C.root",
+                       "exclWWA0W5E-7_2018C.root",
                    "RECREATE");
   if (samplenumber == 603)
     fx = new TFile(outputFolder +
                        "vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_"
-                       "exclWWA0W2E-6_2018D.root",
+                       "exclWWA0W5E-7_2018D.root",
                    "RECREATE");
   if (samplenumber == 220)
     fx = new TFile(outputFolder +
