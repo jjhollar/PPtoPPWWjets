@@ -3,7 +3,7 @@
 import os, string, sys, posix, tokenize, array, getopt
 
 # Make combine datacards for a counting experiment with 6 bins (3 years * 2 channels, WW+ZZ)
-# This assumes a csv file produced from the Google spreadsheet is present in the current directory, named PPtoPPWWjets_MC_Results_v6c.csv
+# This assumes a csv file produced from the Google spreadsheet is present in the current directory, named PPtoPPWWjets_MC_Results_v6e.csv
 # Currently the background numbers and uncertainties are hard-coded, while on the MC statisitical errors are used for the signal systematics
 # This generates all possible combinations of couplings + values, including some invalid ones where we don't have MC samples (to be improved)
 
@@ -11,7 +11,7 @@ def main(argv):
 
     # default to do all combinations declared here, unless command line option is given                                                                                  
     mychannels = ["A0W","ACW","A0Z","ACZ"]
-    mycouplings = ["5e-7","1e-6","2e-6","5e-6","5e-6","8e-6","2e-5","1e-5","5e-5"]
+    mycouplings = ["5e-7","1e-6","2e-6","3_5e-6","5e-6","5e-6","8e-6","1e-5","1_4e-5","2e-5","5e-5"]
 
     mychannel = "A0W"
     mycoupling = "1e-6"
@@ -28,7 +28,8 @@ def main(argv):
 def makecard(channel, coupling):
     linenum = 0
 
-    infile = "PPtoPPWWjets_MC_Results_v6c.csv"
+    #    infile = "PPtoPPWWjets_MC_Results_v6e.csv"
+    infile = "PPtoPPWWjets_MC_ResultsAllCombined_v6e.csv"
     infilehandle = open(infile)
     lines = infilehandle.readlines()
 
@@ -308,18 +309,33 @@ def makecard(channel, coupling):
     runallfilename = "RunAllLimitsFromCardsNewRegions.txt"
     runallfilehandle = open(runallfilename,'w')
 
+    #
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_5e-7_newregions.txt --run blind --name a0W5e7 -m 5\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_1e-6_newregions.txt --run blind --name a0W1e6 -m 10\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_2e-6_newregions.txt --run blind --name a0W2e6 -m 20\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_3_5e-6_newregions.txt --run blind --name a0W3_5e6 -m 35\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_5e-6_newregions.txt --run blind --name a0W5e6 -m 50\n")
+    #
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_2e-6_newregions.txt --run blind --name aCW2e6 -m 20\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_5e-6_newregions.txt --run blind --name aCW5e6 -m 50\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_8e-6_newregions.txt --run blind --name aCW8e6 -m 80\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_1_4e-5_newregions.txt --run blind --name aCW1_4e5 -m 140\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_2e-5_newregions.txt --run blind --name aCW2e5 -m 200\n")
+    #
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-7_newregions.txt --run blind --name a0Z5e7 -m 5\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_1e-6_newregions.txt --run blind --name a0Z1e6 -m 10\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_2e-6_newregions.txt --run blind --name a0Z2e6 -m 20\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_3_5e-6_newregions.txt --run blind --name a0Z3_5e6 -m 35\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-6_newregions.txt --run blind --name a0Z5e6 -m 50\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_1e-5_newregions.txt --run blind --name a0Z1e5 -m 100\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_2e-5_newregions.txt --run blind --name a0Z2e5 -m 200\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-5_newregions.txt --run blind --name a0Z5e5 -m 500\n")
+    #
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-6_newregions.txt --run blind --name aCZ2e6 -m 20\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-6_newregions.txt --run blind --name aCZ5e6 -m 50\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_8e-6_newregions.txt --run blind --name aCZ8e6 -m 80\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1e-5_newregions.txt --run blind --name aCZ1e5 -m 100\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1_4e-6_newregions.txt --run blind --name aCZ1_4e6 -m 140\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-5_newregions.txt --run blind --name aCZ2e5 -m 200\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-5_newregions.txt --run blind --name aCZ5e5 -m 500\n")
 
@@ -341,18 +357,25 @@ def makecard(channel, coupling):
 
     runallfilehandle.write("\n")
 
+    #
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0W_5e-7_newregions.txt -m 5 -o workspace_hadronicA0W_5e-7.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0W_1e-6_newregions.txt -m 10 -o workspace_hadronicA0W_1e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0W_2e-6_newregions.txt -m 20 -o workspace_hadronicA0W_2e-6.root\n')
+    runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -m 35 -o workspace_hadronicA0W_3_5e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0W_5e-6_newregions.txt -m 50 -o workspace_hadronicA0W_5e-6.root\n')
+    #
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACW_2e-6_newregions.txt -m 20 -o workspace_hadronicACW_5e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACW_5e-6_newregions.txt -m 50 -o workspace_hadronicACW_5e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACW_8e-6_newregions.txt -m 80 -o workspace_hadronicACW_8e-6.root\n')
+    runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACW_1_4e-5_newregions.txt -m 140 -o workspace_hadronicACW_1_4e-5.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACW_2e-5_newregions.txt -m 200 -o workspace_hadronicACW_2e-5.root\n')
-
+    #
+    runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0Z_5e-6_newregions.txt -m 50 -o workspace_hadronicA0Z_5e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0Z_1e-5_newregions.txt -m 100 -o workspace_hadronicA0Z_1e-5.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0Z_2e-5_newregions.txt -m 200 -o workspace_hadronicA0Z_2e-5.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicA0Z_5e-5_newregions.txt -m 500 -o workspace_hadronicA0Z_5e-5.root\n')
+    #
+    runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACZ_5e-6_newregions.txt -m 50 -o workspace_hadronicACZ_5e-6.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACZ_1e-5_newregions.txt -m 100 -o workspace_hadronicACZ_1e-5.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACZ_2e-5_newregions.txt -m 200 -o workspace_hadronicACZ_2e-5.root\n')
     runallfilehandle.write('text2workspace.py pps-multichannel-hadronicACZ_5e-5_newregions.txt -m 500 -o workspace_hadronicACZ_5e-5.root\n')
@@ -363,32 +386,47 @@ def makecard(channel, coupling):
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-7.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_1e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_3_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-6.root\n")
+    #
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_8e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_1_4e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-5.root\n")
+    #
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_1e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_2e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-5.root\n")
+    #
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_1e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_2e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-5.root\n")
 
     runallfilehandle.write("\n")
 
-    # Fit diagnostics, expectedSignal=0                                                                                                                                                                           
+    # Fit diagnostics, expectedSignal=1                                                                                                                                                                           
+    #
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-7.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_1e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_3_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-6.root\n")
+    #
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_8e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_1_4e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-5.root\n")
+    #
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_1e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_2e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-5.root\n")
+    #
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-6.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_1e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_2e-5.root\n")
     runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-5.root\n")
@@ -398,14 +436,21 @@ def makecard(channel, coupling):
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0W_5e-7.root --all -g plots_a0w5e7_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0W_1e-6.root --all -g plots_a0w1e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0W_2e-6.root --all -g plots_a0w2e6_s0.root\n")
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0W_3_5e-6.root --all -g plots_a0w3_5e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0W_5e-6.root --all -g plots_a0w5e6_s0.root\n")
+    #
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACW_2e-6.root --all -g plots_aCw2e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACW_5e-6.root --all -g plots_aCw5e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACW_8e-6.root --all -g plots_aCw8e6_s0.root\n")
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACW_1_4e-5.root --all -g plots_aCw1_4e5_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACW_2e-5.root --all -g plots_aCw2e5_s0.root\n")
+    #
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0Z_5e-6.root --all -g plots_a0z5e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0Z_1e-5.root --all -g plots_a0z1e5_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0Z_2e-5.root --all -g plots_a0z1e5_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicA0Z_5e-5.root --all -g plots_a0z5e5_s0.root\n")
+    #
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACZ_5e-6.root --all -g plots_aCz5e6_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACZ_1e-5.root --all -g plots_aCz1e5_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACZ_2e-5.root --all -g plots_aCz2e5_s0.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s0_hadronicACZ_5e-5.root --all -g plots_aCz5e5_s0.root\n")
@@ -416,14 +461,21 @@ def makecard(channel, coupling):
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0W_5e-7.root --all -g plots_a0w5e7_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0W_1e-6.root --all -g plots_a0w1e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0W_2e-6.root --all -g plots_a0w2e6_s1.root\n")
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0W_3_5e-6.root --all -g plots_a0w3_5e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0W_5e-6.root --all -g plots_a0w5e6_s1.root\n")
+    #
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACW_2e-6.root --all -g plots_aCw2e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACW_5e-6.root --all -g plots_aCw5e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACW_8e-6.root --all -g plots_aCw8e6_s1.root\n")
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACW_1_4e-5.root --all -g plots_aCw1_4e5_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACW_2e-5.root --all -g plots_aCw2e5_s1.root\n")
+    #
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0Z_5e-6.root --all -g plots_a0z5e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0Z_1e-5.root --all -g plots_a0z1e5_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0Z_2e-5.root --all -g plots_a0z2e5_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicA0Z_5e-5.root --all -g plots_a0z5e5_s1.root\n")
+    #
+    runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACZ_5e-6.root --all -g plots_aCz5e6_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACZ_1e-5.root --all -g plots_aCz1e5_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACZ_2e-5.root --all -g plots_aCz2e5_s1.root\n")
     runallfilehandle.write("python ../../../test/diffNuisances.py fitDiagnostics_s1_hadronicACZ_5e-5.root --all -g plots_aCz5e5_s1.root\n")
