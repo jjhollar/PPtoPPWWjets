@@ -28,8 +28,8 @@ def main(argv):
 def makecard(channel, coupling):
     linenum = 0
 
-    #    infile = "PPtoPPWWjets_MC_Results_v6e.csv"
-    infile = "PPtoPPWWjets_MC_ResultsAllCombined_v6e.csv"
+    infile = "PPtoPPWWjets_MC_Results_v6e.csv"
+    #    infile = "PPtoPPWWjets_MC_ResultsAllCombined_v6e.csv"
     infilehandle = open(infile)
     lines = infilehandle.readlines()
 
@@ -227,7 +227,7 @@ def makecard(channel, coupling):
     outfilehandle.write("jmax *  number of processes-1\n")
     outfilehandle.write("kmax *  number of nuisance parameters (sources of systematical uncertainties)\n")
     outfilehandle.write("------------\n")
-    outfilehandle.write("# three channels (2016, 2017, 2018); 1 observed event in the first, 0 in the second\n")
+    outfilehandle.write("# 12 bins: (2016, 2017, 2018) * (WW, ZZ) * (RegionA, RegionB); observation is set to number of expected signal+bkg\n")
     outfilehandle.write("bin            y2016ww        y2017ww    y2018ww    y2016zz  y2017zz  y2018zz y2016wwb        y2017wwb   y2018wwb    y2016zzb  y2017zzb  y2018zzb\n")
     #    outfilehandle.write("observation     0             0          1          0        0        1 0             0          1          0        0        1\n")
     outfilehandle.write("observation      " + str(signalsvector[0]+signalsvector[1]) + " " + str(signalsvector[2]+signalsvector[3]) + " " + str(signalsvector[4]+signalsvector[5]) + " " + str(signalsvector[6]+signalsvector[7]) + " " + str(signalsvector[8]+signalsvector[9]) + " " + str(signalsvector[10]+signalsvector[11]) + " " + str(signalsvector[12]+signalsvector[13]) + " " + str(signalsvector[14]+signalsvector[15]) + " " + str(signalsvector[16]+signalsvector[17]) + " " + str(signalsvector[18]+signalsvector[19]) + " " + str(signalsvector[20]+signalsvector[21]) + " " + str(signalsvector[22]+signalsvector[23]) + "\n")
@@ -271,7 +271,7 @@ def makecard(channel, coupling):
     outfilehandle.write("signal_xi lnN  ",)
     for xiscaleerr in xiscale:
         outfilehandle.write(str(xiscaleerr)  + " ",)
-    outfilehandle.write("   # xi systematcs")
+    outfilehandle.write("   # proton xi systematcs")
     outfilehandle.write("\n")
 
     # Signal JEC systematics
@@ -285,21 +285,31 @@ def makecard(channel, coupling):
     outfilehandle.write("signal_survprob lnN  ",)
     for survprob in survprobvector:
         outfilehandle.write(str(survprob)   + " ",)
-    outfilehandle.write("   # Survival probability")
+    outfilehandle.write("   # Theoretical survival probability")
     outfilehandle.write("\n")
 
     # Background systematics - statistical error on sidebands
-    outfilehandle.write("bkg_stat lnN   ",)
-    for bkgerror in bgerrs:
-        outfilehandle.write(str(bkgerror) + " ",)
-    outfilehandle.write("   # bkg statistics")
-    outfilehandle.write("\n")
+    bkgstaterrcounter = 1
+
+    while bkgstaterrcounter < 13:
+        outfilehandle.write("bkg_stat" + str(bkgstaterrcounter) + " lnN   ",)
+        bkgstaterrbincounter = 1
+
+        for bkgerror in bgerrs:
+            if(bkgstaterrbincounter==2*bkgstaterrcounter):
+                outfilehandle.write(str(bkgerror) + " ",)
+            else:
+                outfilehandle.write(" - ",)
+            bkgstaterrbincounter+=1
+        outfilehandle.write("   # bkg statistics")
+        outfilehandle.write("\n")
+        bkgstaterrcounter+=1
 
     # Background systematics - shape variation (acoplanarity vs. pruned mass sideband regions)
     outfilehandle.write("bkg_shape lnN   ",)
     for bkgshapeerr in bkgshapeerrs:
         outfilehandle.write(str(bkgshapeerr) + " ",)
-    outfilehandle.write("   # bkg shape variation")
+    outfilehandle.write("   # alternative bkg sideband")
     outfilehandle.write("\n")
 
                             
@@ -350,10 +360,10 @@ def makecard(channel, coupling):
 
     # Note - here I modified a bit the default plotLimits.py, just to draw a horizontal line and to set useful defaults so we don't have to pass everything by 
     # command line
-    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_a0W.json --show exp --logy --x-title 'a^{0}_{W}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_a0W.png; mv limit.pdf limit_a0W.pdf\n")
-    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_aCW.json --show exp --logy --x-title 'a^{C}_{W}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_aCW.png; mv limit.pdf limit_aCW.pdf\n")
-    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_a0Z.json --show exp --logy --x-title 'a^{0}_{Z}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_a0Z.png; mv limit.pdf limit_a0Z.pdf\n")
-    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_aCZ.json --show exp --logy --x-title 'a^{C}_{Z}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_aCZ.png; mv limit.pdf limit_aCZ.pdf\n")
+    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_a0W.json --show exp --logy --x-title 'a^{W}_{0}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_a0W.png; mv limit.pdf limit_a0W.pdf\n")
+    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_aCW.json --show exp --logy --x-title 'a^{W}_{C}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_aCW.png; mv limit.pdf limit_aCW.pdf\n")
+    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_a0Z.json --show exp --logy --x-title 'a^{Z}_{0}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_a0Z.png; mv limit.pdf limit_a0Z.pdf\n")
+    runallfilehandle.write("../../../../../../bin/slc7_amd64_gcc700/plotLimitsAQGC.py limits_aCZ.json --show exp --logy --x-title 'a^{Z}_{C}/#Lambda^{2} (#times 10^{-7} GeV^{-2})'; mv limit.png limit_aCZ.png; mv limit.pdf limit_aCZ.pdf\n")
 
     runallfilehandle.write("\n")
 
@@ -383,53 +393,53 @@ def makecard(channel, coupling):
     runallfilehandle.write("\n")
 
     # Fit diagnostics, expectedSignal=0
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-7.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_1e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_2e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_3_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-7.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_1e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL  --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_3_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0W_5e-6.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_8e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_1_4e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_8e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_1_4e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACW_2e-5.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_1e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_2e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_1e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicA0Z_5e-5.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_1e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_2e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_1e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 0 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s0_hadronicACZ_5e-5.root\n")
 
     runallfilehandle.write("\n")
 
     # Fit diagnostics, expectedSignal=1                                                                                                                                                                           
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-7.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_1e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_2e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_3_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-7_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-7.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_1e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_1e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_3_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_3_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0W_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0W_5e-6.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_8e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_1_4e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_8e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_8e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_1_4e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_1_4e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACW_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACW_2e-5.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_1e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_2e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_1e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicA0Z_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicA0Z_5e-5.root\n")
     #
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-6.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_1e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_2e-5.root\n")
-    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-6_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-6.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_1e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_1e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_2e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_2e-5.root\n")
+    runallfilehandle.write("combine -M FitDiagnostics pps-multichannel-hadronicACZ_5e-5_newregions.txt -t -1 --expectSignal 1 --forceRecreateNLL --rMin -1 --rMax 2 --plots; mv fitDiagnostics.root fitDiagnostics_s1_hadronicACZ_5e-5.root\n")
 
     runallfilehandle.write("\n")
 
