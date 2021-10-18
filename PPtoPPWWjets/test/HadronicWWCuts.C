@@ -41,11 +41,11 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-   TString outputFolder = "signalSamples_v6";
+  //   TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "dataRun2_v3";
-  // TString outputFolder = "backgroundSamples_v2";
+  TString outputFolder = "backgroundSamples_v2";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
   if (DOJECSYSTEMATICSUP)
@@ -1688,7 +1688,7 @@ void HadronicWWCuts::Loop() {
         if (gen_proton_xi->at(1) < gen_xi_min || gen_proton_xi->at(1) > gen_xi_max)
           continue;
       } else {
-        cout << "Less than 2 gen protons, what???" << endl;
+	//        cout << "Less than 2 gen protons, what???" << endl;
       }
       npassgencuts++;
 
@@ -1699,6 +1699,43 @@ void HadronicWWCuts::Loop() {
 
       Float_t mwlowpreselcut = 55.0;
       Float_t mwhipreselcut = 215.0;
+
+      Float_t jet1prefireweight = 1.0;
+      Float_t jet2prefireweight = 1.0;
+
+      // 2016 in Andrea's numbering scheme                                                                                                                                           
+      if ((samplenumber > 100 && samplenumber <= 200) || (samplenumber >= 300 && samplenumber < 400)
+	  || (samplenumber > 904 && samplenumber < 908))
+        {
+          if(jet1.Pt() < 500)
+            jet1prefireweight = 1.0-(prefiringmap2016->GetBinContent(prefiringmap2016->FindBin(jet1.Eta(),jet1.Pt())));
+          else
+            jet1prefireweight = 1.0-(prefiringmap2016->GetBinContent(prefiringmap2016->FindBin(jet1.Eta(),499.0)));
+
+          if(jet2.Pt() < 500)
+            jet2prefireweight = 1.0-(prefiringmap2016->GetBinContent(prefiringmap2016->FindBin(jet2.Eta(),jet2.Pt())));
+          else
+            jet2prefireweight = 1.0-(prefiringmap2016->GetBinContent(prefiringmap2016->FindBin(jet2.Eta(),499.0)));
+        }
+      // 2017 in Andrea's numbering scheme                                                                                                                                           
+      if ((samplenumber > 0 && samplenumber <= 100) || (samplenumber >= 400 && samplenumber < 600)
+          || (samplenumber > 899 && samplenumber < 905))
+        {
+          if(jet1.Pt() < 500)
+            jet1prefireweight = 1.0-(prefiringmap2017->GetBinContent(prefiringmap2017->FindBin(jet1.Eta(),jet1.Pt())));
+          else
+            jet1prefireweight = 1.0-(prefiringmap2017->GetBinContent(prefiringmap2017->FindBin(jet1.Eta(),499.0)));
+
+          if(jet2.Pt() < 500)
+            jet2prefireweight = 1.0-(prefiringmap2017->GetBinContent(prefiringmap2017->FindBin(jet2.Eta(),jet2.Pt())));
+          else
+            jet2prefireweight = 1.0-(prefiringmap2017->GetBinContent(prefiringmap2017->FindBin(jet2.Eta(),499.0)));
+        }
+
+
+      myweight *= jet1prefireweight;
+      myweight *= jet2prefireweight;
+
 
       /*
        * Now start preselection cuts

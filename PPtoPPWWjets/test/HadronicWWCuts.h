@@ -167,6 +167,11 @@ public:
 
   TRandom *rnd;
 
+  TFile *prefiring2016;
+  TFile *prefiring2017;
+  TH2F *prefiringmap2016;
+  TH2F *prefiringmap2017;
+
   TString erastring;
 
   HadronicWWCuts(Int_t mysample = 500, bool protonSyst = false,
@@ -1369,6 +1374,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
   rnd = new TRandom();
   rnd->SetSeed(123456);
 
+  prefiring2016 = TFile::Open("L1prefiring_jetpt_2016BtoH.root");
+  prefiring2017 = TFile::Open("L1prefiring_jetpt_2017BtoF.root");
+
+  prefiringmap2016 = (TH2F *)prefiring2016->Get("L1prefiring_jetpt_2016BtoH");
+  prefiringmap2017 = (TH2F *)prefiring2017->Get("L1prefiring_jetpt_2017BtoF");
+
+
   Float_t lumi2017B = 2.361;
   Float_t lumi2017C1 = 5.3;
   Float_t lumi2017C2 = 3.3;
@@ -1538,6 +1550,8 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       (TH1F *)hmultistreffE56->Clone("hmultistreff2017PostTS256");
   hmultistreff2017PostTS245->Add(hmultistreffF45);
   hmultistreff2017PostTS256->Add(hmultistreffF56);
+
+
 }
 
 HadronicWWCuts::~HadronicWWCuts() {
