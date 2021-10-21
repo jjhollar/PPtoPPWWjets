@@ -97,7 +97,12 @@ def makecard(channel, coupling):
     bkgshapeerrs = ["-",1.26,"-",1.07,"-",1.02,"-",1.77,"-",1.45,"-",1.30,"-",1.75,"-",1.29,"-",1.04,"-",1.43,"-",1.45,"-",1.11]
 
     # Luminosity - applied to non-data driven yields (signal MC)
-    lumis = [1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-"]
+    #    lumis = [1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-",1.025,"-",1.023,"-",1.025,"-"]
+    lumis16 = [1.01,"-","-","-","-","-",1.01,"-","-","-","-","-",1.01,"-","-","-","-","-",1.01,"-","-","-","-","-"]
+    lumis17 = ["-","-",1.02,"-","-","-","-","-",1.02,"-","-","-","-","-",1.02,"-","-","-","-","-",1.02,"-","-","-"]
+    lumis18 = ["-","-","-","-",1.015,"-","-","-","-","-",1.015,"-","-","-","-","-",1.015,"-","-","-","-","-",1.015,"-"]
+    lumis161718 = [1.006,"-",1.009,"-",1.02,"-",1.006,"-",1.009,"-",1.02,"-",1.006,"-",1.009,"-",1.02,"-",1.006,"-",1.009,"-",1.02,"-"]
+    lumis1718 = ["-","-",1.006,"-",1.002,"-","-","-",1.006,"-",1.002,"-","-","-",1.006,"-",1.002,"-","-","-",1.006,"-",1.002,"-"]
 
     # xi scale systematics
     signalsvector[1] = bgs[0]
@@ -247,11 +252,23 @@ def makecard(channel, coupling):
 
     # Signal efficiency systematics - MC statistics
     outfilehandle.write("\n\n------------\n")
-    outfilehandle.write("signal_mcstat lnN  ",)
-    for sigerror in staterrorsvector:
-        outfilehandle.write(str(sigerror) + " ",)
-    outfilehandle.write("   # signal MC statistics")
-    outfilehandle.write("\n")
+
+    mcstaterrcounter = 1
+
+    while mcstaterrcounter < 13:
+        outfilehandle.write("signal_mcstat" + str(mcstaterrcounter) + " lnN  ",)
+        mcstaterrbincounter = 1
+
+        for sigerror in staterrorsvector:
+            if(mcstaterrbincounter==(2*mcstaterrcounter - 1)):
+                outfilehandle.write(str(sigerror) + " ",)
+            else:
+                outfilehandle.write(" - ",)
+            mcstaterrbincounter+=1
+
+        outfilehandle.write("   # signal MC statistics")
+        outfilehandle.write("\n")
+        mcstaterrcounter+=1
 
     # Signal efficiency systematics - proton efficiency/shower
     outfilehandle.write("signal_peff lnN  ",)
@@ -260,11 +277,34 @@ def makecard(channel, coupling):
     outfilehandle.write("   # proton eff")
     outfilehandle.write("\n")
 
-    # Signal normalization systematics - luminosity
-    outfilehandle.write("signal_lumi lnN  ",)
-    for lumierror in lumis:
+    # Signal normalization systematics - uncorrelated luminosity
+    outfilehandle.write("signal_lumi16 lnN  ",)
+    for lumierror in lumis16:
         outfilehandle.write(str(lumierror) + " ",)
-    outfilehandle.write("   # lumi")
+    outfilehandle.write("   # lumi 2016")
+    outfilehandle.write("\n")
+    outfilehandle.write("signal_lumi17 lnN  ",)
+    for lumierror in lumis17:
+        outfilehandle.write(str(lumierror) + " ",)
+    outfilehandle.write("   # lumi 2017")
+    outfilehandle.write("\n")
+    outfilehandle.write("signal_lumi18 lnN  ",)
+    for lumierror in lumis18:
+        outfilehandle.write(str(lumierror) + " ",)
+    outfilehandle.write("   # lumi 2018")
+    outfilehandle.write("\n")
+
+    # Signal normalization systematics - correlated luminosity
+    outfilehandle.write("signal_lumi1718 lnN  ",)
+    for lumierror in lumis1718:
+        outfilehandle.write(str(lumierror) + " ",)
+    outfilehandle.write("   # lumi 20172018")
+    outfilehandle.write("\n")
+
+    outfilehandle.write("signal_lumi161718 lnN  ",)
+    for lumierror in lumis161718:
+        outfilehandle.write(str(lumierror) + " ",)
+    outfilehandle.write("   # lumi 201620172018")
     outfilehandle.write("\n")
 
     # Signal xi scale systematics
@@ -275,11 +315,39 @@ def makecard(channel, coupling):
     outfilehandle.write("\n")
 
     # Signal JEC systematics
-    outfilehandle.write("signal_jec lnN  ",)
+    outfilehandle.write("signal_jec16 lnN  ",)
+    jecscalecounter = 1
     for jecscaleerr in jecscale:
-        outfilehandle.write(str(jecscaleerr)  + " ",)
-    outfilehandle.write("   # JEC systematics")
+        if(jecscalecounter == 1 or jecscalecounter == 7 or jecscalecounter == 13 or jecscalecounter == 19):
+            outfilehandle.write(str(jecscaleerr)  + " ",)
+        else:
+            outfilehandle.write(" - ",)
+        jecscalecounter+=1 
+    outfilehandle.write("   # JEC systematics 2016")
     outfilehandle.write("\n")
+
+    outfilehandle.write("signal_jec17 lnN  ",)
+    jecscalecounter = 1
+    for jecscaleerr in jecscale:
+        if(jecscalecounter == 3 or jecscalecounter == 9 or jecscalecounter == 15 or jecscalecounter == 21):
+            outfilehandle.write(str(jecscaleerr)  + " ",)
+        else:
+            outfilehandle.write(" - ",)
+        jecscalecounter+=1
+    outfilehandle.write("   # JEC systematics 2017")
+    outfilehandle.write("\n")
+
+    outfilehandle.write("signal_jec18 lnN  ",)
+    jecscalecounter = 1
+    for jecscaleerr in jecscale:
+        if(jecscalecounter == 5 or jecscalecounter == 11 or jecscalecounter == 17 or jecscalecounter == 23):
+            outfilehandle.write(str(jecscaleerr)  + " ",)
+        else:
+            outfilehandle.write(" - ",)
+        jecscalecounter+=1
+    outfilehandle.write("   # JEC systematics 2018")
+    outfilehandle.write("\n")
+
 
     # Signal survival probability - 10% systematic on all channels
     outfilehandle.write("signal_survprob lnN  ",)
