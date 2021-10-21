@@ -1,3 +1,5 @@
+#include "CMS_lumi.h"
+
 /*
  * Note (Aug 20, 2020): txt files and cross sections/numbers here are up to date for 2017 re-MiniAOD. 
  * The proton distributions for mixing are still the old ones, to be updated.
@@ -323,23 +325,23 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 
 
-  TString centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
+  TString centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD300to470_2017.txt";
   Float_t eqlumi0 = eqlumi02017;
-  TString centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2017.txt";
+  TString centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD470to600_2017.txt";
   Float_t eqlumi1 = eqlumi12017;
-  TString centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2017.txt";
+  TString centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD600to800_2017.txt";
   Float_t eqlumi2 = eqlumi22017;
-  TString centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2017.txt";
+  TString centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD800to1000_2017.txt";
   Float_t eqlumi3 = eqlumi32017; 
-  TString centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2017.txt";
+  TString centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD1000to1400_2017.txt";
   Float_t eqlumi4 = eqlumi42017;
-  TString centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2017.txt";
+  TString centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD1400to1800_2017.txt";
   Float_t eqlumi5 = eqlumi52017;
-  TString centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2017.txt";
+  TString centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_ttbar_2017.txt";
   Float_t eqlumi6 = eqlumi62017;
-  TString centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2017.txt";
+  TString centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_wjets_2017.txt";
   Float_t eqlumi7 = eqlumi72017;
-  TString centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2017.txt";
+  TString centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_zjets_2017.txt";
   Float_t eqlumi8 = eqlumi82017;
   TString centralfile9 = "";
   Float_t eqlumi9 = 0;
@@ -351,48 +353,48 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
   if(year == 2016)
     {
-      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD300to470_2016.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD300to470_2016.txt";
       eqlumi0 = eqlumi02016;
-      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD470to600_2016.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD470to600_2016.txt";
       eqlumi1 = eqlumi12016;
-      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD600to800_2016.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD600to800_2016.txt";
       eqlumi2 = eqlumi22016;
-      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD800to1000_2016.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD800to1000_2016.txt";
       eqlumi3 = eqlumi32016;
-      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD1000to1400_2016.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD1000to1400_2016.txt";
       eqlumi4 = eqlumi42016;
-      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_QCD1400to1800_2016.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_QCD1400to1800_2016.txt";
       eqlumi5 = eqlumi52016;
-      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_ttbar700to1000_2016.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_ttbar700to1000_2016.txt";
       eqlumi6 = eqlumi62016;
-      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_wjets_2016.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_wjets_2016.txt";
       eqlumi7 = eqlumi72016;
-      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_zjets_2016.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_zjets_2016.txt";
       eqlumi8 = eqlumi82016;
-      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/MC_EventsForMixing_ttbar1000inf_2016.txt";
+      centralfile9 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v4/MC_EventsForMixing_ttbar1000inf_2016.txt";
       eqlumi9 = eqlumi92016;
 
       lumi = lumi2016;
     }
   if(year == 2018)
     {
-      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD300to470_2018.txt";
+      centralfile0 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD300to470_2018.txt";
       eqlumi0 = eqlumi02018;
-      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD470to600_2018.txt";
+      centralfile1 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD470to600_2018.txt";
       eqlumi1 = eqlumi12018;
-      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD600to800_2018.txt";
+      centralfile2 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD600to800_2018.txt";
       eqlumi2 = eqlumi22018;
-      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD800to1000_2018.txt";
+      centralfile3 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD800to1000_2018.txt";
       eqlumi3 = eqlumi32018;
-      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1000to1400_2018.txt";
+      centralfile4 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD1000to1400_2018.txt";
       eqlumi4 = eqlumi42018;
-      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_QCD1400to1800_2018.txt";
+      centralfile5 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_QCD1400to1800_2018.txt";
       eqlumi5 = eqlumi52018;
-      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_ttbar_2018.txt";
+      centralfile6 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_ttbar_2018.txt";
       eqlumi6 = eqlumi62018;
-      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_wjets_2018.txt";
+      centralfile7 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_wjets_2018.txt";
       eqlumi7 = eqlumi72018;
-      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/MC_EventsForMixing_zjets_2018.txt";
+      centralfile8 = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v3/MC_EventsForMixing_zjets_2018.txt";
       eqlumi8 = eqlumi82018;
 
       lumi = lumi2018;
@@ -462,6 +464,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   Float_t mwhicut = 107.0;
   Float_t mrotatedcut = 117.8;
   Float_t tau21cut = 0.75;
+  Float_t jetptbalcut = 1.3;
 
   Float_t kseniammatchcut = 0.11506000;
   Float_t kseniarapmatchcut = 0.057220000;
@@ -601,6 +604,8 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 
   Float_t xicut = 0.05;
+  Float_t xijmincut = 0.04;
+  Float_t xijmaxcut = 0.205;
   Int_t ntotal = 0;
   Int_t ntwoarms = 0;
   Int_t ntwoarmsxi5 = 0;
@@ -666,6 +671,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 	  
 	  if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) && 
 	     (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) && 
+	     (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&  
 	     ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral0->Fill(mww,PUweight);
@@ -723,6 +729,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral1->Fill(mww,PUweight);
@@ -780,6 +787,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral2->Fill(mww,PUweight);
@@ -847,6 +855,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral3->Fill(mww,PUweight);
@@ -904,6 +913,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral4->Fill(mww,PUweight);
@@ -961,6 +971,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral5->Fill(mww,PUweight);
@@ -1019,6 +1030,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral6->Fill(mww,PUweight);
@@ -1078,6 +1090,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 	      if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 		 (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+		 (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
 		 ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 		{
 		  hmjjcentral9->Fill(mww,PUweight);
@@ -1139,6 +1152,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral7->Fill(mww,PUweight);
@@ -1197,6 +1211,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
           if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
              (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+             (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
              ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	    {
 	      hmjjcentral8->Fill(mww,PUweight);
@@ -1302,6 +1317,7 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
       
       if((acop < acopcut) && (taut21ddt1 <= tau21cut) && (taut21ddt2 <= tau21cut) &&
 	 (jetmass1>=mwlowcut && jetmass1 <=mwhicut) && (jetmass2>=mwlowcut && jetmass2 <=mwhicut) &&
+	 (xijets1 > xijmincut && xijets1 < xijmaxcut && xijets2 > xijmincut && xijets2 < xijmaxcut) && (jetptbal < jetptbalcut) &&
 	 ((rotatedprunedmasses <= mrotatedcut && bosons==1) || (rotatedprunedmasses>mrotatedcut && bosons==2)))
 	{
 	  if(xi45 >= xicut && xi56 >= xicut)
@@ -1385,11 +1401,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   hmresdysum->Draw("colz");
 
   if(year == 2017)
-    CMS_lumi2016(c1,0,0,"2017, L = 37.2 fb^{-1}");
+    CMS_lumi(c1,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c1,0,0,"2016, L = 9.9 fb^{-1}");
+    CMS_lumi(c1,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c1,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi(c1,0,0,"2018, L = 52.9 fb^{-1}");
 
 
   TBox *b1 = new TBox(-0.10,-0.06,0.10,0.06);
@@ -1823,11 +1839,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   c2->cd(1);
 
   if(year == 2017)
-    CMS_lumi2016(c2,0,0,"2017, L = 37.2 fb^{-1}");
+    CMS_lumi(c2,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2,0,0,"2016, L = 9.9 fb^{-1}");
+    CMS_lumi(c2,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c2,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi(c2,0,0,"2018, L = 52.9 fb^{-1}");
 
   c2->cd(2);
   hmjjbsum->Sumw2(); hmjjbsum->SetLineWidth(3); hmjjbsum->SetLineColor(11); hmjjbsum->SetFillColor(11); hmjjbsum->SetMaximum(30);
@@ -1978,11 +1994,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
   lg1a->Draw("same");
 
   if(year == 2017)
-    CMS_lumi2016(c2a,0,0,"2017, L = 37.2 fb^{-1}");
+    CMS_lumi(c2a,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c2a,0,0,"2016, L = 9.9 fb^{-1}");
+    CMS_lumi(c2a,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c2a,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi(c2a,0,0,"2018, L = 52.9 fb^{-1}");
 
   c2a->cd(2);
   hyjjbsum->Sumw2(); hyjjbsum->SetLineWidth(3); hyjjbsum->SetLineColor(11); hyjjbsum->SetFillColor(11); hyjjbsum->SetMaximum(30);
@@ -2025,11 +2041,11 @@ void AllSimpleMixer(Int_t remix = 1, Int_t year = 2017, Int_t bosons = 1)
 
 
   if(year == 2017)
-    CMS_lumi2016(c3,0,0,"2017, L = 37.2 fb^{-1}");
+    CMS_lumi(c3,0,0,"2017, L = 37.2 fb^{-1}");
   if(year == 2016)
-    CMS_lumi2016(c3,0,0,"2016, L = 9.9 fb^{-1}");
+    CMS_lumi(c3,0,0,"2016, L = 9.9 fb^{-1}");
   if(year == 2018)
-    CMS_lumi2016(c3,0,0,"2018, L = 52.9 fb^{-1}");
+    CMS_lumi(c3,0,0,"2018, L = 52.9 fb^{-1}");
 
   if(year == 2018 && bosons == 1)
     {
