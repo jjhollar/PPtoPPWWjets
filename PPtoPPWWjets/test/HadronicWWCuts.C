@@ -44,8 +44,8 @@ void HadronicWWCuts::Loop() {
   //   TString outputFolder = "signalSamples_v6";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
-  // TString outputFolder = "dataRun2_v3";
-  TString outputFolder = "backgroundSamples_v2";
+  TString outputFolder = "dataRun2_v3";
+  //  TString outputFolder = "backgroundSamples_v2";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
   if (DOJECSYSTEMATICSUP)
@@ -330,22 +330,42 @@ void HadronicWWCuts::Loop() {
   TH2F *hmassrapiditymatchsigmcmmzz =
       new TH2F("hmassrapiditymatchsigmcmmzz", "hmassrapiditymatchsigmcmmzz",
                500, -5, 5, 500, -5, 5);
-  TH1F *hmvvsigmcsigregionww =
-      new TH1F("hmvvsigmcsigregionww", "hmvvsigmcsigregionww", 250, 0, 5000);
-  TH1F *hmvvsigmcsigregionzz =
-      new TH1F("hmvvsigmcsigregionzz", "hmvvsigmcsigregionzz", 250, 0, 5000);
-  TH1F *hyvvsigmcsigregionww =
-      new TH1F("hyvvsigmcsigregionww", "hyvvsigmcsigregionww", 250, -5, 5);
-  TH1F *hyvvsigmcsigregionzz =
-      new TH1F("hyvvsigmcsigregionzz", "hyvvsigmcsigregionzz", 250, -5, 5);
-  TH1F *hmppsigmcsigregionww =
-      new TH1F("hmppsigmcsigregionww", "hmppsigmcsigregionww", 250, 0, 5000);
-  TH1F *hyppsigmcsigregionww =
-      new TH1F("hyppsigmcsigregionww", "hyppsigmcsigregionww", 250, -5, 5);
-  TH1F *hmppsigmcsigregionzz =
-      new TH1F("hmppsigmcsigregionzz", "hmppsigmcsigregionzz", 250, 0, 5000);
-  TH1F *hyppsigmcsigregionzz =
-      new TH1F("hyppsigmcsigregionzz", "hyppsigmcsigregionzz", 250, -5, 5);
+
+  // Signal region for signal MC
+  TH1F *hmvvsigmcsigregionaww =
+      new TH1F("hmvvsigmcsigregionaww", "hmvvsigmcsigregionaww", 250, 0, 5000);
+  TH1F *hmvvsigmcsigregionazz =
+      new TH1F("hmvvsigmcsigregionazz", "hmvvsigmcsigregionazz", 250, 0, 5000);
+  TH1F *hyvvsigmcsigregionaww =
+      new TH1F("hyvvsigmcsigregionaww", "hyvvsigmcsigregionaww", 250, -5, 5);
+  TH1F *hyvvsigmcsigregionazz =
+      new TH1F("hyvvsigmcsigregionazz", "hyvvsigmcsigregionazz", 250, -5, 5);
+  TH1F *hmppsigmcsigregionaww =
+      new TH1F("hmppsigmcsigregionaww", "hmppsigmcsigregionaww", 250, 0, 5000);
+  TH1F *hyppsigmcsigregionaww =
+      new TH1F("hyppsigmcsigregionaww", "hyppsigmcsigregionaww", 250, -5, 5);
+  TH1F *hmppsigmcsigregionazz =
+      new TH1F("hmppsigmcsigregionazz", "hmppsigmcsigregionazz", 250, 0, 5000);
+  TH1F *hyppsigmcsigregionazz =
+      new TH1F("hyppsigmcsigregionazz", "hyppsigmcsigregionazz", 250, -5, 5);
+  //
+  TH1F *hmvvsigmcsigregionbww =
+    new TH1F("hmvvsigmcsigregionbww", "hmvvsigmcsigregionbww", 250, 0, 5000);
+  TH1F *hmvvsigmcsigregionbzz =
+    new TH1F("hmvvsigmcsigregionbzz", "hmvvsigmcsigregionbzz", 250, 0, 5000);
+  TH1F *hyvvsigmcsigregionbww =
+    new TH1F("hyvvsigmcsigregionbww", "hyvvsigmcsigregionbww", 250, -5, 5);
+  TH1F *hyvvsigmcsigregionbzz =
+    new TH1F("hyvvsigmcsigregionbzz", "hyvvsigmcsigregionbzz", 250, -5, 5);
+  TH1F *hmppsigmcsigregionbww =
+    new TH1F("hmppsigmcsigregionbww", "hmppsigmcsigregionbww", 250, 0, 5000);
+  TH1F *hyppsigmcsigregionbww =
+    new TH1F("hyppsigmcsigregionbww", "hyppsigmcsigregionbww", 250, -5, 5);
+  TH1F *hmppsigmcsigregionbzz =
+    new TH1F("hmppsigmcsigregionbzz", "hmppsigmcsigregionbzz", 250, 0, 5000);
+  TH1F *hyppsigmcsigregionbzz =
+    new TH1F("hyppsigmcsigregionbzz", "hyppsigmcsigregionbzz", 250, -5, 5);
+
 
   // Anit-pT balance control plots
   TH1F *hmassvvantiptbalww =
@@ -375,30 +395,55 @@ void HadronicWWCuts::Loop() {
   TH1F *htau212antiacopzz =
       new TH1F("htau212antiacopzz", "htau212antiacopzz", 250, 0, 1);
 
-  TH1F *hmvvsigmcantiacopsigregionww =
-      new TH1F("hmvvsigmcantiacopsigregionww", "hmvvsigmcantiacopsigregionww",
+  TH1F *hmvvantiacopsigregionaww =
+      new TH1F("hmvvantiacopsigregionaww", "hmvvantiacopsigregionaww",
                250, 0, 5000);
-  TH1F *hmvvsigmcantiacopsigregionzz =
-      new TH1F("hmvvsigmcantiacopsigregionzz", "hmvvsigmcantiacopsigregionzz",
+  TH1F *hmvvantiacopsigregionazz =
+      new TH1F("hmvvantiacopsigregionazz", "hmvvantiacopsigregionazz",
                250, 0, 5000);
-  TH1F *hyvvsigmcantiacopsigregionww =
-      new TH1F("hyvvsigmcantiacopsigregionww", "hyvvsigmcantiacopsigregionww",
+  TH1F *hyvvantiacopsigregionaww =
+      new TH1F("hyvvantiacopsigregionaww", "hyvvantiacopsigregionaww",
                250, -5, 5);
-  TH1F *hyvvsigmcantiacopsigregionzz =
-      new TH1F("hyvvsigmcantiacopsigregionzz", "hyvvsigmcantiacopsigregionzz",
+  TH1F *hyvvantiacopsigregionazz =
+      new TH1F("hyvvantiacopsigregionazz", "hyvvantiacopsigregionazz",
                250, -5, 5);
-  TH1F *hmppsigmcantiacopsigregionww =
-      new TH1F("hmppsigmcantiacopsigregionww", "hmppsigmcantiacopsigregionww",
+  TH1F *hmppantiacopsigregionaww =
+      new TH1F("hmppantiacopsigregionaww", "hmppantiacopsigregionaww",
                250, 0, 5000);
-  TH1F *hyppsigmcantiacopsigregionww =
-      new TH1F("hyppsigmcantiacopsigregionww", "hyppsigmcantiacopsigregionww",
+  TH1F *hyppantiacopsigregionaww =
+      new TH1F("hyppantiacopsigregionaww", "hyppantiacopsigregionaww",
                250, -5, 5);
-  TH1F *hmppsigmcantiacopsigregionzz =
-      new TH1F("hmppsigmcantiacopsigregionzz", "hmppsigmcantiacopsigregionzz",
+  TH1F *hmppantiacopsigregionazz =
+      new TH1F("hmppantiacopsigregionazz", "hmppantiacopsigregionazz",
                250, 0, 5000);
-  TH1F *hyppsigmcantiacopsigregionzz =
-      new TH1F("hyppsigmcantiacopsigregionzz", "hyppsigmcantiacopsigregionzz",
+  TH1F *hyppantiacopsigregionazz =
+      new TH1F("hyppantiacopsigregionazz", "hyppantiacopsigregionazz",
                250, -5, 5);
+  //
+  TH1F *hmvvantiacopsigregionbww =
+    new TH1F("hmvvantiacopsigregionbww", "hmvvantiacopsigregionbww",
+	     250, 0, 5000);
+  TH1F *hmvvantiacopsigregionbzz =
+    new TH1F("hmvvantiacopsigregionbzz", "hmvvantiacopsigregionbzz",
+	     250, 0, 5000);
+  TH1F *hyvvantiacopsigregionbww =
+    new TH1F("hyvvantiacopsigregionbww", "hyvvantiacopsigregionbww",
+	     250, -5, 5);
+  TH1F *hyvvantiacopsigregionbzz =
+    new TH1F("hyvvantiacopsigregionbzz", "hyvvantiacopsigregionbzz",
+	     250, -5, 5);
+  TH1F *hmppantiacopsigregionbww =
+    new TH1F("hmppantiacopsigregionbww", "hmppantiacopsigregionbww",
+	     250, 0, 5000);
+  TH1F *hyppantiacopsigregionbww =
+    new TH1F("hyppantiacopsigregionbww", "hyppantiacopsigregionbww",
+	     250, -5, 5);
+  TH1F *hmppantiacopsigregionbzz =
+    new TH1F("hmppantiacopsigregionbzz", "hmppantiacopsigregionbzz",
+	     250, 0, 5000);
+  TH1F *hyppantiacopsigregionbzz =
+    new TH1F("hyppantiacopsigregionbzz", "hyppantiacopsigregionbzz",
+	     250, -5, 5);
 
   // Anti-tau21 control plots
   TH1F *hmassvvantitauww =
@@ -1674,23 +1719,25 @@ void HadronicWWCuts::Loop() {
       //(1.0/13000.0)*(gen_jet_pt->at(0)*TMath::Exp(-1*gen_jet_eta->at(0)) +
       // gen_jet_pt->at(1)*TMath::Exp(-1*gen_jet_eta->at(1)));
 
-      // Apply unitarity cut
-      if (gen_proton_xi->size() > 1){
-        double gen_mvv = TMath::Sqrt(13000.0 * 13000.0 * gen_proton_xi->at(0) * gen_proton_xi->at(1));
-        hgenmvv->Fill(gen_mvv);
-
-        if (gen_mvv > unitarityCut)
-          continue;
-        if (gen_mvv < min_mvvCut)
-          continue;
-        if (gen_proton_xi->at(0) < gen_xi_min || gen_proton_xi->at(0) > gen_xi_max)
-          continue;
-        if (gen_proton_xi->at(1) < gen_xi_min || gen_proton_xi->at(1) > gen_xi_max)
-          continue;
-      } else {
-	//        cout << "Less than 2 gen protons, what???" << endl;
+      // Apply unitarity cut - doesn't work on data
+      if(samplenumber > 0) {
+	if (gen_proton_xi->size() > 1){
+	  double gen_mvv = TMath::Sqrt(13000.0 * 13000.0 * gen_proton_xi->at(0) * gen_proton_xi->at(1));
+	  hgenmvv->Fill(gen_mvv);
+	  
+	  if (gen_mvv > unitarityCut)
+	    continue;
+	  if (gen_mvv < min_mvvCut)
+	    continue;
+	  if (gen_proton_xi->at(0) < gen_xi_min || gen_proton_xi->at(0) > gen_xi_max)
+	    continue;
+	  if (gen_proton_xi->at(1) < gen_xi_min || gen_proton_xi->at(1) > gen_xi_max)
+	    continue;
+	} else {
+	  //        cout << "Less than 2 gen protons, what???" << endl;
+	}
+	npassgencuts++;
       }
-      npassgencuts++;
 
       jet1.SetPtEtaPhiE(ptjet1, etajet1, phijet1, ejet1);
       jet2.SetPtEtaPhiE(ptjet2, etajet2, phijet2, ejet2);
@@ -2296,16 +2343,24 @@ void HadronicWWCuts::Loop() {
                             1 - (mydijet.M() / mppsmultmult->at(0)),
                             yppsmultmult->at(0) - mydijet.Rapidity(), myweight);
 
-                        if (passmassrapiditymatch_signalA ||
-                            passmassrapiditymatch_signalB) {
-                          hmvvsigmcsigregionww->Fill(mydijet.M(), myweight);
-                          hyvvsigmcsigregionww->Fill(mydijet.Rapidity(),
+                        if (passmassrapiditymatch_signalA) {
+                          hmvvsigmcsigregionaww->Fill(mydijet.M(), myweight);
+                          hyvvsigmcsigregionaww->Fill(mydijet.Rapidity(),
                                                      myweight);
-                          hmppsigmcsigregionww->Fill(mppsmultmult->at(0),
+                          hmppsigmcsigregionaww->Fill(mppsmultmult->at(0),
                                                      myweight);
-                          hyppsigmcsigregionww->Fill(yppsmultmult->at(0),
+                          hyppsigmcsigregionaww->Fill(yppsmultmult->at(0),
                                                      myweight);
                         }
+			if (passmassrapiditymatch_signalB) {
+                          hmvvsigmcsigregionbww->Fill(mydijet.M(), myweight);
+                          hyvvsigmcsigregionbww->Fill(mydijet.Rapidity(),
+						      myweight);
+                          hmppsigmcsigregionbww->Fill(mppsmultmult->at(0),
+						      myweight);
+                          hyppsigmcsigregionbww->Fill(yppsmultmult->at(0),
+						      myweight);
+			}
                       }
                       if (rotatedprunedmasses > mrotatedcut) {
                         hmassmatchratiosigmcmultzz->Fill(
@@ -2320,16 +2375,24 @@ void HadronicWWCuts::Loop() {
                             1 - (mydijet.M() / mppsmultmult->at(0)),
                             yppsmultmult->at(0) - mydijet.Rapidity(), myweight);
 
-                        if (passmassrapiditymatch_signalA ||
-                            passmassrapiditymatch_signalB) {
-                          hmvvsigmcsigregionzz->Fill(mydijet.M(), myweight);
-                          hyvvsigmcsigregionzz->Fill(mydijet.Rapidity(),
+                        if (passmassrapiditymatch_signalA) {
+                          hmvvsigmcsigregionazz->Fill(mydijet.M(), myweight);
+                          hyvvsigmcsigregionazz->Fill(mydijet.Rapidity(),
                                                      myweight);
-                          hmppsigmcsigregionzz->Fill(mppsmultmult->at(0),
+                          hmppsigmcsigregionazz->Fill(mppsmultmult->at(0),
                                                      myweight);
-                          hyppsigmcsigregionzz->Fill(yppsmultmult->at(0),
+                          hyppsigmcsigregionazz->Fill(yppsmultmult->at(0),
                                                      myweight);
                         }
+			if (passmassrapiditymatch_signalB) {
+                          hmvvsigmcsigregionbzz->Fill(mydijet.M(), myweight);
+                          hyvvsigmcsigregionbzz->Fill(mydijet.Rapidity(),
+						      myweight);
+                          hmppsigmcsigregionbzz->Fill(mppsmultmult->at(0),
+						      myweight);
+                          hyppsigmcsigregionbzz->Fill(yppsmultmult->at(0),
+						      myweight);
+			}
                       }
 
                       if (passmassrapiditymatch_signalA) {
@@ -2420,22 +2483,22 @@ void HadronicWWCuts::Loop() {
                     // Sideband background method
                     if (passmassrapiditymatch_signalA) {
                       npassantiacopsigregionww_A += 1.0 * myweight;
-                      hmvvsigmcantiacopsigregionww->Fill(mydijet.M(), myweight);
-                      hyvvsigmcantiacopsigregionww->Fill(mydijet.Rapidity(),
+                      hmvvantiacopsigregionaww->Fill(mydijet.M(), myweight);
+                      hyvvantiacopsigregionaww->Fill(mydijet.Rapidity(),
                                                          myweight);
-                      hmppsigmcantiacopsigregionww->Fill(mppsmultmult->at(0),
+                      hmppantiacopsigregionaww->Fill(mppsmultmult->at(0),
                                                          myweight);
-                      hyppsigmcantiacopsigregionww->Fill(yppsmultmult->at(0),
+                      hyppantiacopsigregionaww->Fill(yppsmultmult->at(0),
                                                          myweight);
                     }
                     if (passmassrapiditymatch_signalB) {
                       npassantiacopsigregionww_B += 1.0 * myweight;
-                      hmvvsigmcantiacopsigregionww->Fill(mydijet.M(), myweight);
-                      hyvvsigmcantiacopsigregionww->Fill(mydijet.Rapidity(),
+                      hmvvantiacopsigregionbww->Fill(mydijet.M(), myweight);
+                      hyvvantiacopsigregionbww->Fill(mydijet.Rapidity(),
                                                          myweight);
-                      hmppsigmcantiacopsigregionww->Fill(mppsmultmult->at(0),
+                      hmppantiacopsigregionbww->Fill(mppsmultmult->at(0),
                                                          myweight);
-                      hyppsigmcantiacopsigregionww->Fill(yppsmultmult->at(0),
+                      hyppantiacopsigregionbww->Fill(yppsmultmult->at(0),
                                                          myweight);
                     }
                     if ((fabs(1 - (mydijet.M() / mppsmultmult->at(0))) >
@@ -2465,22 +2528,22 @@ void HadronicWWCuts::Loop() {
                     // Sideband background method
                     if (passmassrapiditymatch_signalA) {
                       npassantiacopsigregionzz_A += 1.0 * myweight;
-                      hmvvsigmcantiacopsigregionzz->Fill(mydijet.M(), myweight);
-                      hyvvsigmcantiacopsigregionzz->Fill(mydijet.Rapidity(),
+                      hmvvantiacopsigregionazz->Fill(mydijet.M(), myweight);
+                      hyvvantiacopsigregionazz->Fill(mydijet.Rapidity(),
                                                          myweight);
-                      hmppsigmcantiacopsigregionzz->Fill(mppsmultmult->at(0),
+                      hmppantiacopsigregionazz->Fill(mppsmultmult->at(0),
                                                          myweight);
-                      hyppsigmcantiacopsigregionzz->Fill(yppsmultmult->at(0),
+                      hyppantiacopsigregionazz->Fill(yppsmultmult->at(0),
                                                          myweight);
                     }
                     if (passmassrapiditymatch_signalB) {
                       npassantiacopsigregionzz_B += 1.0 * myweight;
-                      hmvvsigmcantiacopsigregionzz->Fill(mydijet.M(), myweight);
-                      hyvvsigmcantiacopsigregionzz->Fill(mydijet.Rapidity(),
+                      hmvvantiacopsigregionbzz->Fill(mydijet.M(), myweight);
+                      hyvvantiacopsigregionbzz->Fill(mydijet.Rapidity(),
                                                          myweight);
-                      hmppsigmcantiacopsigregionzz->Fill(mppsmultmult->at(0),
+                      hmppantiacopsigregionbzz->Fill(mppsmultmult->at(0),
                                                          myweight);
-                      hyppsigmcantiacopsigregionzz->Fill(yppsmultmult->at(0),
+                      hyppantiacopsigregionbzz->Fill(yppsmultmult->at(0),
                                                          myweight);
                     }
                     if ((fabs(1 - (mydijet.M() / mppsmultmult->at(0))) >
@@ -4400,14 +4463,22 @@ void HadronicWWCuts::Loop() {
   hmassrapiditymatchvetosignalregionzz->Write();
   hmassrapiditymatchvetoorsignalregionzz->Write();
 
-  hmvvsigmcantiacopsigregionww->Write();
-  hyvvsigmcantiacopsigregionww->Write();
-  hmppsigmcantiacopsigregionww->Write();
-  hyppsigmcantiacopsigregionww->Write();
-  hmvvsigmcantiacopsigregionzz->Write();
-  hyvvsigmcantiacopsigregionzz->Write();
-  hmppsigmcantiacopsigregionzz->Write();
-  hyppsigmcantiacopsigregionzz->Write();
+  hmvvantiacopsigregionaww->Write();
+  hyvvantiacopsigregionaww->Write();
+  hmppantiacopsigregionaww->Write();
+  hyppantiacopsigregionaww->Write();
+  hmvvantiacopsigregionazz->Write();
+  hyvvantiacopsigregionazz->Write();
+  hmppantiacopsigregionazz->Write();
+  hyppantiacopsigregionazz->Write();
+  hmvvantiacopsigregionbww->Write();
+  hyvvantiacopsigregionbww->Write();
+  hmppantiacopsigregionbww->Write();
+  hyppantiacopsigregionbww->Write();
+  hmvvantiacopsigregionbzz->Write();
+  hyvvantiacopsigregionbzz->Write();
+  hmppantiacopsigregionbzz->Write();
+  hyppantiacopsigregionbzz->Write();
 
   fx->cd("Signal");
   hmassmatchsigmcmmww->Write();
@@ -4441,14 +4512,22 @@ void HadronicWWCuts::Loop() {
 
   hmassrapiditymatchsigmcmmww->Write();
   hmassrapiditymatchsigmcmmzz->Write();
-  hmvvsigmcsigregionww->Write();
-  hyvvsigmcsigregionww->Write();
-  hmppsigmcsigregionww->Write();
-  hyppsigmcsigregionww->Write();
-  hmvvsigmcsigregionzz->Write();
-  hyvvsigmcsigregionzz->Write();
-  hmppsigmcsigregionzz->Write();
-  hyppsigmcsigregionzz->Write();
+  hmvvsigmcsigregionaww->Write();
+  hyvvsigmcsigregionaww->Write();
+  hmppsigmcsigregionaww->Write();
+  hyppsigmcsigregionaww->Write();
+  hmvvsigmcsigregionazz->Write();
+  hyvvsigmcsigregionazz->Write();
+  hmppsigmcsigregionazz->Write();
+  hyppsigmcsigregionazz->Write();
+  hmvvsigmcsigregionbww->Write();
+  hyvvsigmcsigregionbww->Write();
+  hmppsigmcsigregionbww->Write();
+  hyppsigmcsigregionbww->Write();
+  hmvvsigmcsigregionbzz->Write();
+  hyvvsigmcsigregionbzz->Write();
+  hmppsigmcsigregionbzz->Write();
+  hyppsigmcsigregionbzz->Write();
 
   fx->cd("SingleProtonDistributions");
   hxipix45->Write();
