@@ -28,7 +28,7 @@ def main(argv):
 def makecard(channel, coupling):
     linenum = 0
 
-    infile = "PPtoPPWWjets_MC_Results_v6e.csv"
+    infile = "PPtoPPWWjets_MC_Results_v7.csv"
     #    infile = "PPtoPPWWjets_MC_ResultsAllCombined_v6e.csv"
     infilehandle = open(infile)
     lines = infilehandle.readlines()

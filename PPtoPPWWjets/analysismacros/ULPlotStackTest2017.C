@@ -191,7 +191,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
 
 
   TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v2/";
-  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v6/";
+  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/";
   TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/";
 
   /*

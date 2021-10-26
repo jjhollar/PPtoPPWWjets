@@ -189,7 +189,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
     hist = "JetSubstructure/"+hist;
 
   TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/"; // HLT fix for 2016 only
-  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v6/"; // HLT fix for 2016 only
+  TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/"; // HLT fix for 2016 only
   TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/"; // HLT fix for 2016 only
 
   /*
