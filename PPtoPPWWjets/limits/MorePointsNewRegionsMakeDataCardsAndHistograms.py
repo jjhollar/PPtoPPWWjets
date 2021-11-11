@@ -241,30 +241,30 @@ def makecard(channel, coupling):
     outfilehandle.write("jmax *  number of processes-1\n")
     outfilehandle.write("kmax *  number of nuisance parameters (sources of systematical uncertainties)\n")
     outfilehandle.write("------------\n")
-    outfilehandle.write("shapes *             y2016ww CombineSucks2016WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2016ww CombineSucks2016WW_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2017ww CombineSucks2017WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2017ww CombineSucks2017WW_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2018ww CombineSucks2018WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2018ww CombineSucks2018WW_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2016zz CombineSucks2016ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2016zz CombineSucks2016ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2017zz CombineSucks2017ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2017zz CombineSucks2017ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2018zz CombineSucks2018ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2018zz CombineSucks2018ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2016wwb CombineSucks2016WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2016wwb CombineSucks2016WWB_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2017wwb CombineSucks2017WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2017wwb CombineSucks2017WWB_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2018wwb CombineSucks2018WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2018wwb CombineSucks2018WWB_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2016zzb CombineSucks2016ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2016zzb CombineSucks2016ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2017zzb CombineSucks2017ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2017zzb CombineSucks2017ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
-    outfilehandle.write("shapes *             y2018zzb CombineSucks2018ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
-    outfilehandle.write("shapes data_obs      y2018zzb CombineSucks2018ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2016ww CombineShapes2016WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2016ww CombineShapes2016WW_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2017ww CombineShapes2017WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2017ww CombineShapes2017WW_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2018ww CombineShapes2018WW_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2018ww CombineShapes2018WW_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2016zz CombineShapes2016ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2016zz CombineShapes2016ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2017zz CombineShapes2017ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2017zz CombineShapes2017ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2018zz CombineShapes2018ZZ_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2018zz CombineShapes2018ZZ_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2016wwb CombineShapes2016WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2016wwb CombineShapes2016WWB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2017wwb CombineShapes2017WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2017wwb CombineShapes2017WWB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2018wwb CombineShapes2018WWB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2018wwb CombineShapes2018WWB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2016zzb CombineShapes2016ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2016zzb CombineShapes2016ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2017zzb CombineShapes2017ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2017zzb CombineShapes2017ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
+    outfilehandle.write("shapes *             y2018zzb CombineShapes2018ZZB_" + channel + "_" + coupling + ".root histo_$PROCESS\n")
+    outfilehandle.write("shapes data_obs      y2018zzb CombineShapes2018ZZB_" + channel + "_" + coupling + ".root histo_Data\n")
 
     outfilehandle.write("------------\n")
     outfilehandle.write("# 12 bins: (2016, 2017, 2018) * (WW, ZZ) * (RegionA, RegionB); observation is set to number of expected signal+bkg\n")
@@ -420,6 +420,15 @@ def makecard(channel, coupling):
                             
     outfilehandle.close()
 
+    outfilenamenotheory = outfilename.replace('.txt','_noTheoryUnc.txt')
+    linesnotheoryunc = []
+    with open(outfilename,'r') as f:
+        for line in f.read().split('\n'):
+            if not line.startswith('signal_survprob'):
+                linesnotheoryunc.append(line)
+    with open(outfilenamenotheory,'w') as of:
+        of.write('\n'.join(linesnotheoryunc))
+
     # Fill a text file with all combine commands for simple asymptotic limits, fit diagnostics, and plots. Only use valid ones (where samples currently exist).
     runallfilename = "RunAllLimitsFromCardsNewRegions.txt"
     runallfilehandle = open(runallfilename,'w')
@@ -468,19 +477,19 @@ def makecard(channel, coupling):
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-5_newregions.txt --run blind --name a0Z5e5 -m 500\n")
     #
     #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-6_newregions.txt --run blind --name aCZ2e6 -m 20\n")
-    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-6_newregions.txt --run blind --name aCZ5e6 -m 50\n")
     #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_8e-6_newregions.txt --run blind --name aCZ8e6 -m 80\n")
-    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1e-5_newregions.txt --run blind --name aCZ1e5 -m 100\n")
     #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1_4e-6_newregions.txt --run blind --name aCZ1_4e6 -m 140\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-6_newregions.txt --run blind --name aCZ5e6 -m 50\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1e-5_newregions.txt --run blind --name aCZ1e5 -m 100\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-5_newregions.txt --run blind --name aCZ2e5 -m 200\n")
     runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-5_newregions.txt --run blind --name aCZ5e5 -m 500\n")
 
     runallfilehandle.write("\n")
 
-    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0W*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0W.json\n")
-    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCW*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCW.json\n")
-    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0Z*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0Z.json\n")
-    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCZ*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCZ.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0W*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0W_noTheoryUnc.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCW*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCW_noTheoryUnc.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0Z*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0Z_noTheoryUnc.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCZ*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCZ_noTheoryUnc.json\n")
 
     runallfilehandle.write("\n")
 
@@ -638,7 +647,48 @@ def makecard(channel, coupling):
     runallfilehandle.write("python ../../../../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts -d workspace_hadronicA0Z_1e-5.root -m 200 -t -1 --expectSignal 1 --robustFit 1 --rMin -1 --rMax 2 --output impacts_hadronicA0Z_1e-5_azimov1.json\n")
     runallfilehandle.write("python ../../../../../CombineHarvester/CombineTools/scripts/plotImpacts.py -i impacts_hadronicA0Z_1e-5_azimov1.json -o impacts_hadronicA0Z_1e-5_azimov1\n")
 
+    runallfilehandle.write("\n")
 
+    # limits for fxs
+    # 
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_5e-7_newregions_noTheoryUnc.txt --run blind --name a0W5e7 -m 5\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_1e-6_newregions_noTheoryUnc.txt --run blind --name a0W1e6 -m 10\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_2e-6_newregions_noTheoryUnc.txt --run blind --name a0W2e6 -m 20\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_3_5e-6_newregions_noTheoryUnc.txt --run blind --name a0W3_5e6 -m 35\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0W_5e-6_newregions_noTheoryUnc.txt --run blind --name a0W5e6 -m 50\n")
+    #
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_2e-6_newregions_noTheoryUnc.txt --run blind --name aCW2e6 -m 20\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_5e-6_newregions_noTheoryUnc.txt --run blind --name aCW5e6 -m 50\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_8e-6_newregions_noTheoryUnc.txt --run blind --name aCW8e6 -m 80\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_1_4e-5_newregions_noTheoryUnc.txt --run blind --name aCW1_4e5 -m 140\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACW_2e-5_newregions_noTheoryUnc.txt --run blind --name aCW2e5 -m 200\n")
+    #
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-7_newregions_noTheoryUnc.txt --run blind --name a0Z5e7 -m 5\n")
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_1e-6_newregions_noTheoryUnc.txt --run blind --name a0Z1e6 -m 10\n")
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_2e-6_newregions_noTheoryUnc.txt --run blind --name a0Z2e6 -m 20\n")
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_3_5e-6_newregions_noTheoryUnc.txt --run blind --name a0Z3_5e6 -m 35\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-6_newregions_noTheoryUnc.txt --run blind --name a0Z5e6 -m 50\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_1e-5_newregions_noTheoryUnc.txt --run blind --name a0Z1e5 -m 100\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_2e-5_newregions_noTheoryUnc.txt --run blind --name a0Z2e5 -m 200\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicA0Z_5e-5_newregions_noTheoryUnc.txt --run blind --name a0Z5e5 -m 500\n")
+    #
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-6_newregions_noTheoryUnc.txt --run blind --name aCZ2e6 -m 20\n")
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_8e-6_newregions_noTheoryUnc.txt --run blind --name aCZ8e6 -m 80\n")
+    #    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1_4e-6_newregions_noTheoryUnc.txt --run blind --name aCZ1_4e6 -m 140\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-6_newregions_noTheoryUnc.txt --run blind --name aCZ5e6 -m 50\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_1e-5_newregions_noTheoryUnc.txt --run blind --name aCZ1e5 -m 100\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_2e-5_newregions_noTheoryUnc.txt --run blind --name aCZ2e5 -m 200\n")
+    runallfilehandle.write("combine -M AsymptoticLimits pps-multichannel-hadronicACZ_5e-5_newregions_noTheoryUnc.txt --run blind --name aCZ5e5 -m 500\n")
+
+    runallfilehandle.write("\n")
+
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0W*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0W.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCW*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCW.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *a0Z*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_a0Z.json\n")
+    runallfilehandle.write("python ../../../../../../bin/slc7_amd64_gcc700/combineTool.py -M CollectLimits *aCZ*AsymptoticLimits* --use-dirs -o limits.json; mv limits_default.json limits_aCZ.json\n")
+
+    runallfilehandle.write("\n")
+    
     runallfilehandle.close()
 
     #    print signalsvector
@@ -648,7 +698,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\tTH1F *histo_vvbg = new TH1F("histo_vvbg","histo_vvbg",1,0,1);\n')
     outhistomakerhandle.write('\tTH1F *histo_Data = new TH1F("histo_Data","histo_Data",1,0,1);\n\n')
 
-    outhistomakerhandle.write('\tTFile *f_' + coupling.replace("-","") + ' = new TFile("CombineSucks2016WW_' + str(channel) + '_' + str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f_' + coupling.replace("-","") + ' = new TFile("CombineShapes2016WW_' + str(channel) + '_' + str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[0]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[0]-1.0)*signalsvector[0]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -659,7 +709,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f2_' + coupling.replace("-","") + ' = new TFile("CombineSucks2017WW_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f2_' + coupling.replace("-","") + ' = new TFile("CombineShapes2017WW_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[2]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[2]-1.0)*signalsvector[2]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -670,7 +720,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf2_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f3_' + coupling.replace("-","") + ' = new TFile("CombineSucks2018WW_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f3_' + coupling.replace("-","") + ' = new TFile("CombineShapes2018WW_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[4]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[4]-1.0)*signalsvector[4]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -681,7 +731,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf3_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f4_' + coupling.replace("-","") + ' = new TFile("CombineSucks2016ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f4_' + coupling.replace("-","") + ' = new TFile("CombineShapes2016ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[6]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[6]-1.0)*signalsvector[6]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -692,7 +742,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf4_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f5_' + coupling.replace("-","") + ' = new TFile("CombineSucks2017ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f5_' + coupling.replace("-","") + ' = new TFile("CombineShapes2017ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[8]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[8]-1.0)*signalsvector[8]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -703,7 +753,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf5_' + coupling.replace("-","") + '->Close();\n\n')
     # 
-    outhistomakerhandle.write('\tTFile *f6_' + coupling.replace("-","") + ' = new TFile("CombineSucks2018ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f6_' + coupling.replace("-","") + ' = new TFile("CombineShapes2018ZZ_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[10]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[10]-1.0)*signalsvector[10]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -714,7 +764,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf6_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f7_' + coupling.replace("-","") + ' = new TFile("CombineSucks2016WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f7_' + coupling.replace("-","") + ' = new TFile("CombineShapes2016WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[12]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[12]-1.0)*signalsvector[12]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -725,7 +775,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf7_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f8_' + coupling.replace("-","") + ' = new TFile("CombineSucks2017WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f8_' + coupling.replace("-","") + ' = new TFile("CombineShapes2017WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[14]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[14]-1.0)*signalsvector[14]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -736,7 +786,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf8_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f9_' + coupling.replace("-","") + ' = new TFile("CombineSucks2018WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f9_' + coupling.replace("-","") + ' = new TFile("CombineShapes2018WWB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[16]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[16]-1.0)*signalsvector[16])  + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -748,7 +798,7 @@ def makecard(channel, coupling):
 
     outhistomakerhandle.write('\tf9_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f10_' + coupling.replace("-","") + ' = new TFile("CombineSucks2016ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f10_' + coupling.replace("-","") + ' = new TFile("CombineShapes2016ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[18]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[18]-1.0)*signalsvector[18]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -759,7 +809,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf10_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f11_' + coupling.replace("-","") + ' = new TFile("CombineSucks2017ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f11_' + coupling.replace("-","") + ' = new TFile("CombineShapes2017ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[20]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[20]-1.0)*signalsvector[20]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
@@ -770,7 +820,7 @@ def makecard(channel, coupling):
     outhistomakerhandle.write('\thisto_Data->Write();\n')
     outhistomakerhandle.write('\tf11_' + coupling.replace("-","") + '->Close();\n\n')
     #
-    outhistomakerhandle.write('\tTFile *f12_' + coupling.replace("-","") + ' = new TFile("CombineSucks2018ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
+    outhistomakerhandle.write('\tTFile *f12_' + coupling.replace("-","") + ' = new TFile("CombineShapes2018ZZB_' + str(channel) + '_'+ str(coupling) + '.root","RECREATE");\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinContent(1,' + str(signalsvector[22]) + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->SetBinError(1,' + str((staterrorsvector[22]-1.0)*signalsvector[22])  + ');\n')
     outhistomakerhandle.write('\thisto_vvsig->Write();\n')
