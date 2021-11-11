@@ -41,10 +41,10 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-  //   TString outputFolder = "signalSamples_v6";
+    TString outputFolder = "signalSamples_v7";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
-  TString outputFolder = "dataRun2_v3";
+  // TString outputFolder = "dataRun2_v3";
   //  TString outputFolder = "backgroundSamples_v2";
   if (DOPROTONSYSTEMATICS)
     outputFolder += "_protonSystematics";
@@ -53,8 +53,12 @@ void HadronicWWCuts::Loop() {
   if (DOJECSYSTEMATICSDOWN)
     outputFolder += "_JECSystematicsDown";
 
-  if (min_mvvCut != 0)
-    outputFolder += "_fxs";
+  if (min_mvvCut != 0){
+    if (unitarityCut == 1400)
+      outputFolder += "contribToClipped";
+    else
+      outputFolder += "_fxs";
+  }
 
   if (unitarityCut != 999999)
     outputFolder += "_clip";

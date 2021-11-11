@@ -96,6 +96,39 @@ void fiducialCrossSectionsPlot() {
   g_fxs_1s_ww_line->SetLineStyle(2);
   g_fxs_1s_ww_line->Draw("pzsame");
 
+  // TCanvas* c_ww = new TCanvas();
+  // TGraph* g_aux_ww = new TGraph(ww_points+2,y_ww_aux,x_ww_aux);
+  // TGraphAsymmErrors *g_fxs_1s_ww = new TGraphAsymmErrors(ww_points, fxs, x_ww, ey_fxs_l_1s, ey_fxs_h_1s, ex_fxs_l, ex_fxs_h);
+  // TGraphAsymmErrors *g_fxs_1s_ww_line = new TGraphAsymmErrors(ww_points, fxs, x_ww, nullptr, nullptr, ex_fxs_l, ex_fxs_h);
+  // TGraphAsymmErrors *g_fxs_2s_ww = new TGraphAsymmErrors(ww_points, fxs, x_ww, ey_fxs_l_2s, ey_fxs_h_2s, ex_fxs_l, ex_fxs_h);
+  // g_fxs_1s_ww->SetName("g_fxs_1s_ww");
+  // g_fxs_2s_ww->SetName("g_fxs_2s_ww");
+  // // for (int i = 0; i < ww_points+2; i++) {
+  // //   std::cout << "Found bin " << g_fxs_2s_ww->GetYaxis()->FindBin(i-2) << std::endl;
+  // //   if (i-2 >= 0)
+  // //     g_fxs_2s_ww->GetYaxis()->SetBinLabel(g_fxs_2s_ww->GetYaxis()->FindBin(i-2), axisLabels_ww[i-2].data());
+  // //   else
+  // //     g_fxs_2s_ww->GetYaxis()->SetBinLabel(g_fxs_2s_ww->GetYaxis()->FindBin(i-2), nullptr);
+  // // }
+
+  // g_fxs_2s_ww->GetYaxis()->SetLabelSize(0.03);
+  // g_fxs_2s_ww->GetYaxis()->SetTitleOffset(2.8);
+  // g_fxs_2s_ww->GetYaxis()->SetRangeUser(-1,12);
+  // g_fxs_2s_ww->GetYaxis()->SetTickSize(0);
+  // g_fxs_2s_ww->GetXaxis()->SetRangeUser(0, 200);
+  // g_fxs_2s_ww->SetTitle(";Coupling point;95\% limit on fiducial cross section [fb]");
+  // g_fxs_2s_ww->GetYaxis()->SetNdivisions(0,kFALSE);
+  // // g_aux_ww->Draw("ap");
+  // gPad->SetBottomMargin(0.2);
+  // g_fxs_2s_ww->SetFillColor(kYellow);
+  // g_fxs_2s_ww->Draw("a2same");
+  // // g_fxs_1s_ww->SetMarkerStyle(20);
+  // g_fxs_1s_ww->SetFillColor(kGreen);
+  // g_fxs_1s_ww->Draw("2same");
+  // g_fxs_1s_ww_line->SetLineWidth(2);
+  // g_fxs_1s_ww_line->SetLineStyle(2);
+  // g_fxs_1s_ww_line->Draw("pzsame");
+
   CMS_lumi((TPad*)c_ww->GetPad(0),0,0,"");
   c_ww->SaveAs("FiducialCrossSections_ww.pdf");
 
