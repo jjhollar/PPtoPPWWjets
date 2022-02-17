@@ -129,7 +129,7 @@ void fiducialCrossSectionsPlot() {
   // g_fxs_1s_ww_line->SetLineStyle(2);
   // g_fxs_1s_ww_line->Draw("pzsame");
 
-  CMS_lumi((TPad*)c_ww->GetPad(0),0,0,"");
+  CMS_TOTEM_lumi((TPad*)c_ww->GetPad(0),0,0,"L = 100.0 fb^{-1}");
   c_ww->SaveAs("FiducialCrossSections_ww.pdf");
 
   // ZZ plot
@@ -145,9 +145,9 @@ void fiducialCrossSectionsPlot() {
   }
   TCanvas* c_zz = new TCanvas();
   TGraph* g_aux_zz = new TGraph(zz_points+2,x_zz_aux,y_zz_aux);
-  TGraphAsymmErrors *g_fxs_1s_zz = new TGraphAsymmErrors(zz_points, x_zz, fxs, ex_fxs_l, ex_fxs_h, ey_fxs_l_1s, ey_fxs_h_1s);
-  TGraphAsymmErrors *g_fxs_1s_zz_line = new TGraphAsymmErrors(zz_points, x_zz, fxs, ex_fxs_l, ex_fxs_h, nullptr, nullptr);
-  TGraphAsymmErrors *g_fxs_2s_zz = new TGraphAsymmErrors(zz_points, x_zz, fxs, ex_fxs_l, ex_fxs_h, ey_fxs_l_2s, ey_fxs_h_2s);
+  TGraphAsymmErrors *g_fxs_1s_zz = new TGraphAsymmErrors(zz_points, x_zz, fxs+ww_points, ex_fxs_l+ww_points, ex_fxs_h+ww_points, ey_fxs_l_1s+ww_points, ey_fxs_h_1s+ww_points);
+  TGraphAsymmErrors *g_fxs_1s_zz_line = new TGraphAsymmErrors(zz_points, x_zz, fxs+ww_points, ex_fxs_l+ww_points, ex_fxs_h+ww_points, nullptr, nullptr);
+  TGraphAsymmErrors *g_fxs_2s_zz = new TGraphAsymmErrors(zz_points, x_zz, fxs+ww_points, ex_fxs_l+ww_points, ex_fxs_h+ww_points, ey_fxs_l_2s+ww_points, ey_fxs_h_2s+ww_points);
   g_fxs_1s_zz->SetName("g_fxs_1s_zz");
   g_fxs_2s_zz->SetName("g_fxs_2s_zz");
   for (int i = 0; i < zz_points+2; i++) {
@@ -175,7 +175,7 @@ void fiducialCrossSectionsPlot() {
   g_fxs_1s_zz_line->SetLineStyle(2);
   g_fxs_1s_zz_line->Draw("pzsame");
 
-  CMS_lumi((TPad*)c_zz->GetPad(0),0,0,"");
+  CMS_TOTEM_lumi((TPad*)c_zz->GetPad(0),0,0,"L = 100.0 fb^{-1}");
   c_zz->SaveAs("FiducialCrossSections_zz.pdf");
 
   cout << "Mean value for WW: " << TMath::Mean(ww_points, fxs) << " (+" << TMath::Mean(ww_points, fxs_plusSigma) - TMath::Mean(ww_points, fxs) << "/-"
