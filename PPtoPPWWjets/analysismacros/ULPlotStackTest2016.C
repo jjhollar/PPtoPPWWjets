@@ -188,7 +188,8 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   else if ( var == 2  || var == 3  || var == 17 || var == 18 || var == 19 || var == 20 )
     hist = "JetSubstructure/"+hist;
 
-  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/"; // HLT fix for 2016 only
+  // TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v3/"; // HLT fix for 2016 only - old, pre-unblinding
+  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v4_unblinded/"; // HLT fix for 2016 only - unblinded
   TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/"; // HLT fix for 2016 only
   TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples_v2/"; // HLT fix for 2016 only
 

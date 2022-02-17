@@ -24,9 +24,12 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   // pre-TS2
   //  Float_t lumi = 2.361+8.577+4.075; // +8.959+13.214;
   Float_t lumi = 2.361+8.577+4.075+8.948+13.214;
-  Float_t lumipreTS2 = 2.361+8.577+4.075;
-  Float_t lumipostTS2 = 8.948+13.214;
-
+  Float_t lumi2017B = 2.361;
+  Float_t lumi2017C = 8.577;
+  Float_t lumi2017D = 4.075;
+  Float_t lumi2017E = 8.948;
+  Float_t lumi2017F = 13.214;
+  
   // QCD xsections from xsecDB
   /*
   Float_t mc6xsec = 7.47;
@@ -190,7 +193,8 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
     hist = "JetSubstructure/"+hist;
 
 
-  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v2/";
+  // TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v2/"; // blinded
+  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v4_unblinded/"; // unblinded
   TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/";
   TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/";
 
@@ -395,73 +399,73 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h10->SetFillColor(kAzure+1);
 
   ha1->Sumw2(); // Signal, a0W=1E-6, 2017B --> 2017preTS2
-  ha1->Scale(mcaxsec*1000*lumi/27800.0);
+  ha1->Scale(mcaxsec*1000*lumi2017B/27800.0);
   ha1_2->Sumw2(); // Signal, a0W=1E-6, 2017C 
-  ha1_2->Scale(mcaxsec*1000*lumi/110100.0);
+  ha1_2->Scale(mcaxsec*1000*lumi2017C/110100.0);
   ha1_3->Sumw2(); // Signal, a0W=1E-6, 2017D 
-  ha1_3->Scale(mcaxsec*1000*lumi/39100.0);
+  ha1_3->Scale(mcaxsec*1000*lumi2017D/39100.0);
   ha1->Add(ha1_2);
   ha1->Add(ha1_3);
   ha1->SetLineWidth(3); ha1->SetLineColor(kCyan); ha1->SetMarkerStyle(0); ha1->SetMarkerColor(kCyan);
 
   ha2->Sumw2(); // Signal, a0W=1E-6, 2017E --> 2017postTS2                                                                                       
-  ha2->Scale(mcaxsec*1000*lumipostTS2/76700.0);
+  ha2->Scale(mcaxsec*1000*lumi2017E/76700.0);
   ha2_2->Sumw2(); // Signal, a0W=1E-6, 2017F 
-  ha2_2->Scale(mcaxsec*1000*lumi/139500.0);
+  ha2_2->Scale(mcaxsec*1000*lumi2017F/139500.0);
   ha2->Add(ha2_2);
   ha2->SetLineWidth(3); ha2->SetLineColor(kCyan); ha2->SetMarkerStyle(0); ha2->SetMarkerColor(kCyan);
   ha1->Add(ha2);
   
   hb1->Sumw2(); // Signal, a0Z=1E-5, 2017B --> 2017preTS2
-  hb1->Scale(mcbxsec*1000*lumi/19686.0);
+  hb1->Scale(mcbxsec*1000*lumi2017B/19686.0);
   hb1_2->Sumw2(); // Signal, a0Z=1E-5, 2017C 
-  hb1_2->Scale(mcbxsec*1000*lumi/19768.0);
+  hb1_2->Scale(mcbxsec*1000*lumi2017C/19768.0);
   hb1_3->Sumw2(); // Signal, a0Z=1E-5, 2017D 
-  hb1_3->Scale(mcbxsec*1000*lumi/19786.0);
+  hb1_3->Scale(mcbxsec*1000*lumi2017D/19786.0);
   hb1->Add(hb1_2);
   hb1->Add(hb1_3);
   hb1->SetLineWidth(3); hb1->SetLineColor(kCyan); hb1->SetMarkerStyle(0); hb1->SetMarkerColor(kCyan); hb1->SetLineStyle(2);
 
   hb2->Sumw2(); // Signal, a0Z=1E-5, 2017E --> 2017postTS2                                                                                       
-  hb2->Scale(mcbxsec*1000*lumipostTS2/19543.0);
+  hb2->Scale(mcbxsec*1000*lumi2017E/19543.0);
   hb2_2->Sumw2(); // Signal, a0Z=1E-5, 2017F 
-  hb2_2->Scale(mcbxsec*1000*lumi/19882.0);
+  hb2_2->Scale(mcbxsec*1000*lumi2017F/19882.0);
   hb2->Add(hb2_2);
   hb2->SetLineWidth(3); hb2->SetLineColor(kCyan); hb2->SetMarkerStyle(0); hb2->SetMarkerColor(kCyan);
   hb1->Add(hb2);
 
   hc1->Sumw2(); // Signal, aCZ=1E-5, 2017B --> 2017preTS2
-  hc1->Scale(mccxsec*1000*lumi/19927.0);
+  hc1->Scale(mccxsec*1000*lumi2017B/19927.0);
   hc1_2->Sumw2(); // Signal, aCZ=1E-5, 2017C 
-  hc1_2->Scale(mccxsec*1000*lumi/19930.0);
+  hc1_2->Scale(mccxsec*1000*lumi2017C/19930.0);
   hc1_3->Sumw2(); // Signal, aCZ=1E-5, 2017D 
-  hc1_3->Scale(mccxsec*1000*lumi/19914.0);
+  hc1_3->Scale(mccxsec*1000*lumi2017D/19914.0);
   hc1->Add(hc1_2);
   hc1->Add(hc1_3);
   hc1->SetLineWidth(3); hc1->SetLineColor(kCyan); hc1->SetMarkerStyle(0); hc1->SetMarkerColor(kCyan);
 
   hc2->Sumw2(); // Signal, aCZ=1E-5, 2017E --> 2017postTS2                                                                                       
-  hc2->Scale(mccxsec*1000*lumipostTS2/19662.0);
+  hc2->Scale(mccxsec*1000*lumi2017E/19662.0);
   hc2_2->Sumw2(); // Signal, aCZ=1E-5, 2017F 
-  hc2_2->Scale(mccxsec*1000*lumi/19910.0);
+  hc2_2->Scale(mccxsec*1000*lumi2017F/19910.0);
   hc2->Add(hc2_2);
   hc2->SetLineWidth(3); hc2->SetLineColor(kCyan); hc2->SetMarkerStyle(0); hc2->SetMarkerColor(kCyan);
   hc1->Add(hc2);
   
   hd1->Sumw2(); // Signal, aCW=2E-5, 2017B --> 2017preTS2
-  hd1->Scale(mcdxsec*1000*lumi/27800.0);
+  hd1->Scale(mcdxsec*1000*lumi2017B/27800.0);
   hd1_2->Sumw2(); // Signal, aCW=2E-5, 2017C 
-  hd1_2->Scale(mcdxsec*1000*lumi/92100.0);
+  hd1_2->Scale(mcdxsec*1000*lumi2017C/92100.0);
   hd1_3->Sumw2(); // Signal, aCW=2E-5, 2017D 
-  hd1_3->Scale(mcdxsec*1000*lumi/41700.0);
+  hd1_3->Scale(mcdxsec*1000*lumi2017D/41700.0);
   hd1->Add(hd1_2);
   hd1->Add(hd1_3);
   hd1->SetLineWidth(3); hd1->SetLineColor(kCyan); hd1->SetMarkerStyle(0); hd1->SetMarkerColor(kCyan); hd1->SetLineStyle(2);
 
   hd2->Sumw2(); // Signal, aCW=2E-5, 2017E --> 2017postTS2                                                                                       
-  hd2->Scale(mcdxsec*1000*lumipostTS2/92100.0);
+  hd2->Scale(mcdxsec*1000*lumi2017E/92100.0);
   hd2_2->Sumw2(); // Signal, aCW=2E-5, 2017F 
-  hd2_2->Scale(mcdxsec*1000*lumi/119900.0);
+  hd2_2->Scale(mcdxsec*1000*lumi2017F/119900.0);
   hd2->Add(hd2_2);
   hd2->SetLineWidth(3); hd2->SetLineColor(kCyan); hd2->SetMarkerStyle(0); hd2->SetMarkerColor(kCyan);
   hd1->Add(hd2);

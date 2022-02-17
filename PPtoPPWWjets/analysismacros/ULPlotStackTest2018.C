@@ -189,7 +189,8 @@ void ULPlotStackTest2018(Int_t var = 1)
   else if ( var == 2  || var == 3  || var == 17 || var == 18 || var == 19 || var == 20 )
     hist = "JetSubstructure/"+hist;
 
-  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v2/";
+  // TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v2/"; // blinded samples
+  TString dataFolder = "/eos/cms/store/group/phys_smp/HadronicVV/dataRun2_v4_unblinded/"; // unblinded
   TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/";
   TString backgroundFolder = "/eos/cms/store/group/phys_smp/HadronicVV/backgroundSamples/";
 

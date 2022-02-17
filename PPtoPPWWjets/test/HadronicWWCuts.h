@@ -234,13 +234,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
                       "WWhadronic_JetHT_2017Fv1_17Nov2017_merge.root");
 
       if (samplenumber == -6)
-	f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+	f = new TFile("/eos/cms/store/user/kshcheli/16hltfixRecover/JetHT/"
 		      "WWhadronic_JetHT_2016Bver2v1_07Aug2017.root");
       if (samplenumber == -7)
-	f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+	f = new TFile("/eos/cms/store/user/kshcheli/16hltfixRecover/JetHT/"
 		      "WWhadronic_JetHT_2016Cver2v1_07Aug2017.root");
       if (samplenumber == -8)
-        f = new TFile("/eos/cms/store/user/kshcheli/16hltfix/"
+        f = new TFile("/eos/cms/store/user/kshcheli/16hltfixRecover/JetHT/"
                       "WWhadronic_JetHT_2016Gver2v1_07Aug2017.root");
       if (samplenumber == -9)
         f = new TFile("/eos/cms/store/user/kshcheli/94X_reMiniAODprotonsJSON/"

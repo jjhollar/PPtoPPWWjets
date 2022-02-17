@@ -1910,9 +1910,9 @@ void HadronicWWCuts::Loop() {
             int nMultiTracks45 = 0;
             int nMultiTracks56 = 0;
             int nMultiRP = 0;
-            float xigen45 = 0;
-            float xigen56 = 0;
-            float mppgen = 0;
+            float xigen45 = 1;
+            float xigen56 = 1;
+            float mppgen = 99999;
 
             // Multiple candidate selection for 2018. Record and select the
             // highest xi protons
@@ -2216,7 +2216,7 @@ void HadronicWWCuts::Loop() {
             // bool passmassrapiditymatch_signalB = passkseniacut_signalB;
 
             // Signal region, only for MC
-            if (samplenumber > 0) {
+            if (true) {
               // Output txt files for mixing. Apply xi_jets, pruned mass, and pT
               // balance cuts
               if (xijets1 > 0.04 && xijets1 < 0.205 && xijets2 > 0.04 &&
@@ -2315,6 +2315,7 @@ void HadronicWWCuts::Loop() {
 
                       int match45 = 0;
                       int match56 = 0;
+                      if (samplenumber > 0) {
                       // GEN-level proton quantities for signal MC
                       for (Int_t gp = 0; gp < gen_proton_xi->size(); gp++) {
                         if (fabs(ximaxmulti45 - gen_proton_xi->at(gp)) < 0.01 &&
@@ -2327,6 +2328,7 @@ void HadronicWWCuts::Loop() {
                           xigen45 = gen_proton_xi->at(gp);
                         if (gen_proton_pz->at(gp) < 0)
                           xigen56 = gen_proton_xi->at(gp);
+                      }
                       }
                       float mppgen =
                           TMath::Sqrt(13000.0 * 13000.0 * xigen45 * xigen56);
