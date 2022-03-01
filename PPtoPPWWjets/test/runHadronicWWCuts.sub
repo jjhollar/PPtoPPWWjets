@@ -6,8 +6,8 @@ executable			= runHadronicWWCuts.sh
 # FOR AQGC STUDIES
 # Activate one systematic at a time
 # For no syst
-arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 0 0 0.4
-output 				= signalSamples_v7/HadronicWWCuts_$(sampleNumber).out
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 0 0 0.4
+# output 				= signalSamples_v7/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 999999 0 0 0.4
@@ -55,8 +55,8 @@ output 				= signalSamples_v7/HadronicWWCuts_$(sampleNumber).out
 # output 				= signalSamples_v7_JECSystematicsUp_fxs/HadronicWWCuts_$(sampleNumber).out
 # 
 # For JEC syst down
-# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 999999 1000 0.04 0.2
-# output 				= signalSamples_v7_JECSystematicsDown_fxs/HadronicWWCuts_$(sampleNumber).out
+arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 999999 1000 0.04 0.2
+output 				= signalSamples_v7_JECSystematicsDown_fxs/HadronicWWCuts_$(sampleNumber).out
 
 # FOR SM CONTRIBUTION TO CLIPPED PART CHECK
 # For no syst
@@ -79,18 +79,18 @@ queue sampleNumber in (
 # #
 	# WW Part
 	# SM_WW
-	900
-	901
-	902
-	903
-	904
-	905
-	906
-	907
-	908
-	909
-	910
-	911
+	# 900
+	# 901
+	# 902
+	# 903
+	# 904
+	# 905
+	# 906
+	# 907
+	# 908
+	# 909
+	# 910
+	# 911
 	# # WW_A0W5e-6
 	# 300 
 	# 301 
@@ -155,7 +155,20 @@ queue sampleNumber in (
 	# 228 
 	# 229 
 	# 230 
-	# 231 
+	# 231  
+	# # WW_A0W1e-5
+	# 324 
+	# 325 
+	# 326 
+	# 424 
+	# 425
+	# 426
+	# 516
+	# 517
+	# 632 
+	# 633 
+	# 634 
+	# 635 
 	# # WW_ACW2e-6
 	# 303 
 	# 304 
@@ -221,6 +234,32 @@ queue sampleNumber in (
 	# 233 
 	# 234 
 	# 235 
+	# # WW_ACW2.5e-5
+	# 327
+	# 328 
+	# 329 
+	# 427
+	# 428
+	# 429
+	# 518
+	# 519
+	# 636 
+	# 637 
+	# 638 
+	# 639 
+	# # WW_A0W-8.3E-6ACW2E-5
+	330
+	331 
+	332 
+	430
+	431
+	432
+	520
+	521
+	640 
+	641 
+	642 
+	643 
 	# # ZZ Part
 	# # ZZ_A0Z5e-6
 	# 318 
@@ -326,6 +365,19 @@ queue sampleNumber in (
 	# 271
 	# 272
 	# 273
+	# # ZZ_A0Z-2.1E-5ACZ5E-5
+	# 333
+	# 334
+	# 335
+	# 433 
+	# 434
+	# 435
+	# 522
+	# 523
+	# 644 
+	# 645
+	# 646
+	# 647
 #
 # # FOR DATA
 # #

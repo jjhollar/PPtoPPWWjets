@@ -366,6 +366,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 28)
         f = new TFile(mcNtuplesFolder +
                       "/2017/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_A0W1e-5
+      if (samplenumber == 424)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 425)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 426)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_WW_A0W1e-5_Part1of1.root");
       // WW_ACW2e-6
       if (samplenumber == 403)
         f = new TFile(mcNtuplesFolder +
@@ -416,6 +426,28 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 31)
         f = new TFile(mcNtuplesFolder +
                       "/2017/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      // WW_ACW2_5e-5
+      if (samplenumber == 427)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 428)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 429)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+
+      // WW_A0W_8_3e-6ACW2e-5
+      if (samplenumber == 430)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 431)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 432)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+
       // ZZ_A0Z5e-6
       if (samplenumber == 418)
         f = new TFile(mcNtuplesFolder +
@@ -545,6 +577,24 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
 
+      // ZZ_A0Z_2_1e-5ACZ5e-5
+      if (samplenumber == 433)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/B/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 434)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/C/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 435)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/D/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 522)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 523)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+
+
       // 2017 PostTS2
       // SM_WW
       if (samplenumber == 903)
@@ -588,6 +638,13 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 55)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_A0W1e-5
+      if (samplenumber == 516)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 517)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_WW_A0W1e-5_Part1of1.root");
       // WW_ACW2e-6
       if (samplenumber == 502)
         f = new TFile(mcNtuplesFolder +
@@ -623,6 +680,22 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 57)
         f = new TFile(mcNtuplesFolder +
                       "/2017/F/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      // WW_ACW2_5e-5
+      if (samplenumber == 518)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 519)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      
+      // WW_A0W_8_3e-6ACW2e-5
+      if (samplenumber == 520)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/E/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 521)
+        f = new TFile(mcNtuplesFolder +
+                      "/2017/F/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+
 
       // 2016 BG samples
 
@@ -735,6 +808,16 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 128)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_A0W1e-5
+      if (samplenumber == 324)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 325)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 326)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_WW_A0W1e-5_Part1of1.root");
       // WW_ACW2e-6
       if (samplenumber == 303)
         f = new TFile(mcNtuplesFolder +
@@ -785,6 +868,29 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 131)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      // WW_ACW2_5e-5
+      if (samplenumber == 327)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 328)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 329)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+
+      // WW_A0W_8_3e-6ACW2e-5
+      if (samplenumber == 330)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 331)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 332)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+
+
       // ZZ_A0Z5e-6
       if (samplenumber == 318)
         f = new TFile(mcNtuplesFolder +
@@ -865,6 +971,17 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 157)
         f = new TFile(mcNtuplesFolder +
                       "/2016/G/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+
+      // ZZ_A0Z_2_1e-5ACZ5e-5
+      if (samplenumber == 333)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/B/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 334)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/C/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 335)
+        f = new TFile(mcNtuplesFolder +
+                      "/2016/G/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
 
       // 2018 BG samples
 
@@ -989,6 +1106,19 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 231)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_WW_A0W5e-6_Part1of1.root");
+      // WW_A0W1e-5
+      if (samplenumber == 632)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 633)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 634)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_WW_A0W1e-5_Part1of1.root");
+      if (samplenumber == 635)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_WW_A0W1e-5_Part1of1.root");
       // WW_ACW2e-6
       if (samplenumber == 604)
         f = new TFile(mcNtuplesFolder +
@@ -1054,6 +1184,35 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 235)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_WW_ACW2e-5_Part1of1.root");
+      // WW_ACW2_5e-5
+      if (samplenumber == 636)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 637)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 638)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+      if (samplenumber == 639)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_WW_ACW2_5e-5_Part1of1.root");
+
+      // WW_A0W_8_3e-6ACW2e-5
+      if (samplenumber == 640)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 641)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 642)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+      if (samplenumber == 643)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_WW_A0W_8_3e-6ACW2e-5_Part1of1.root");
+
+
       // ZZ_A0Z5e-6
       if (samplenumber == 624)
         f = new TFile(mcNtuplesFolder +
@@ -1158,6 +1317,20 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
       if (samplenumber == 273)
         f = new TFile(mcNtuplesFolder +
                       "/2018/D/ExclWWjets_ZZ_ACZ5e-5_Part1of1.root");
+                      
+      // ZZ_A0Z_2_1e-5ACZ5e-5
+      if (samplenumber == 644)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/A/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 645)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/B/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 646)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/C/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
+      if (samplenumber == 647)
+        f = new TFile(mcNtuplesFolder +
+                      "/2018/D/ExclWWjets_ZZ_A0Z_2_1e-5ACZ5e-5_Part1of1.root");
 
       if (samplenumber == 999)
         //	f = new

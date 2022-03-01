@@ -59,11 +59,11 @@ if __name__ == "__main__":
 	results = []
 	for sampleTag in tqdm(sampleTags):
 		completed_process = subprocess.run(command.format(year=2016,era="B",sampleTag=sampleTag),shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+		print(completed_process.stderr)
 		fraction = process_stderr(completed_process.stderr)
 		results.append(sampleTag+" sigmaGEN/sigmaAQGC="+str(fraction)+" sigmaGEN="+str(fraction*xsec[sampleTag]*1000)+" fb "+" sigmaAQGC="+str(xsec[sampleTag]*1000)+" fb ")
 	for result in results:
 		print(result)
-
 
 """
 Output for 2016 B
@@ -86,4 +86,19 @@ ZZ_ACZ5e-6 sigmaGEN/sigmaAQGC=0.9126764705882353 sigmaGEN=1.1639300565226876 fb 
 ZZ_ACZ1e-5 sigmaGEN/sigmaAQGC=0.9140890425123341 sigmaGEN=4.662307588969588 fb  sigmaAQGC=5.100496091885575 fb 
 ZZ_ACZ2e-5 sigmaGEN/sigmaAQGC=0.9140484142700913 sigmaGEN=18.650874990567754 fb  sigmaAQGC=20.404690494935455 fb 
 ZZ_ACZ5e-5 sigmaGEN/sigmaAQGC=0.9170826810031607 sigmaGEN=116.93941575976444 fb  sigmaAQGC=127.51240229708516 fb 
+"""
+
+"""
+Output for 2016 B - FXS cuts added
+SM_WW sigmaGEN/sigmaAQGC=0.042179313592747396 sigmaGEN=1.7323277975418794 fb  sigmaAQGC=41.070554496641876 fb
+WW_A0W5e-7 sigmaGEN/sigmaAQGC=0.045607708678174506 sigmaGEN=1.9229722600262167 fb  sigmaAQGC=42.16331659183861 fb 
+WW_A0W1e-6 sigmaGEN/sigmaAQGC=0.05441432920521384 sigmaGEN=2.470124525103438 fb  sigmaAQGC=45.39474364900848 fb 
+WW_A0W2e-6 sigmaGEN/sigmaAQGC=0.08310493939947622 sigmaGEN=4.8463335841989865 fb  sigmaAQGC=58.31583079440319 fb 
+WW_A0W3_5e-6 sigmaGEN/sigmaAQGC=0.1141764705882353 sigmaGEN=10.673819902559297 fb  sigmaAQGC=93.48528508166306 fb 
+WW_A0W5e-6 sigmaGEN/sigmaAQGC=0.13625750007389234 sigmaGEN=20.184102487114306 fb  sigmaAQGC=148.13204760228598 fb 
+WW_ACW2e-6 sigmaGEN/sigmaAQGC=0.047720559125376864 sigmaGEN=2.026009479106744 fb  sigmaAQGC=42.45569448974355 fb 
+WW_ACW5e-6 sigmaGEN/sigmaAQGC=0.06484792953625158 sigmaGEN=3.1610693265746455 fb  sigmaAQGC=48.745879 fb 
+WW_ACW8e-6 sigmaGEN/sigmaAQGC=0.08615848432004256 sigmaGEN=5.290325357416269 fb  sigmaAQGC=61.402256541154266 fb 
+WW_ACW1_4e-5 sigmaGEN/sigmaAQGC=0.1176764705882353 sigmaGEN=12.007232912942571 fb  sigmaAQGC=102.03597076732004 fb 
+WW_ACW2e-5 sigmaGEN/sigmaAQGC=0.14128218012000118 sigmaGEN=23.277987300157136 fb  sigmaAQGC=164.76237329000344 fb 
 """

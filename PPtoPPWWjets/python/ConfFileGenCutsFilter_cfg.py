@@ -124,7 +124,8 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 process.load("PPtoPPWWjets.PPtoPPWWjets.genCutsFilter_cfi")
-process.genCutsFilter.gen_mvv_min = 1400
+process.genCutsFilter.gen_mvv_min = 1000
+process.genCutsFilter.gen_mvv_max = 1400
 # processing path
 process.p = cms.Path(
   process.genCutsFilter

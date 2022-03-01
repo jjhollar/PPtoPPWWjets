@@ -1,6 +1,6 @@
 #include "../analysismacros/CMS_lumi.h"
 
-void MassRapiditySelectionWW(TFile *file) {
+void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v7/vars_cuts_ntupleULReMiniv4finalWithJERandMultiCand_exclWWA0W2E-6_2018ABCD.root")) {
 
   // Band1 lower                                                                                                                                                            
   TLine *l1 = new TLine(-0.69695, -0.5,-0.0838473, -0.0144293);
@@ -128,8 +128,8 @@ void MassRapiditySelectionWW(TFile *file) {
   proj2->Fit(f2);
 
   c1->cd(4);
-  hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-1.5, 1.5);
-  hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-1.5, 1.5);
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-1.5, 0.4);
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-1.1, 0.9);
   hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
   hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("y(PP)-y(WW)");
   hmassrapiditymatchsigmcmmww->Draw("colz");
@@ -259,7 +259,10 @@ void MassRapiditySelectionWW(TFile *file) {
   // band1->Draw("3same");
   // band2->Draw("3same");
   // diamond->Draw("3same");
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2*10^{-6} GeV^{-2}");
+  CMS_TOTEM_lumi((TPad*)c2->GetPad(0),0,0,"");
+
+  TLatex latex;
+  latex.DrawLatexNDC(0.15,0.85,"#scale[0.76]{a_{W}^{0}/#Lambda^{2} = 2 #upoint 10^{-6} GeV^{-2}}");
   c2->Print("MassMatchRatio.pdf");
 
   l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();

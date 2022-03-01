@@ -41,13 +41,25 @@ TString lumi_tot = "100.0 fb^{-1}";
 
 bool drawLogo      = false;
 
-void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi) {
+bool preliminary = true;
 
-  std::cout << periodAndLumi[0] << std::endl;
+void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoLine = false) {
+
+  // std::cout << periodAndLumi[0] << std::endl;
   if(periodAndLumi[0] != '2'){
-    cmsText = "#font[61]{CMS} #scale[0.76]{#font[52]{Simulation }}";
+    cmsText = "#font[61]{CMS} #scale[0.76]{#font[52]{Simulation}}";
   }
 
+  if (twoLine)
+    cmsText = "#splitline{"+cmsText+"}{";
+  if (preliminary){
+    if (twoLine)  
+      cmsText += "#scale[0.76]{#font[52]{Preliminary}}";
+    else
+      cmsText += " #scale[0.76]{#font[52]{Preliminary}}";
+  }
+  if (twoLine)
+    cmsText += "}";
   bool outOfFrame = false;
   if (iPosX / 10 == 0) {
     outOfFrame = true;
@@ -200,13 +212,22 @@ void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi) {
   return;
 }
 
-void CMS_TOTEM_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi) {
+void CMS_TOTEM_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoLine = false) {
   cmsText     = "#font[61]{CMS-TOTEM}";
   // std::cout << periodAndLumi[0] << std::endl;
-  // if(periodAndLumi[0] != '2'){
-  //   cmsText = "#font[61]{CMS-TOTEM} #scale[0.76]{#font[52]{Simulation }}";
-  // }
-
+  if(periodAndLumi[0] != '2'){
+    cmsText = "#font[61]{CMS-TOTEM} #scale[0.76]{#font[52]{Simulation }}";
+  }
+  if (twoLine)
+    cmsText = "#splitline{"+cmsText+"}{";
+  if (preliminary){
+    if (twoLine)  
+      cmsText += "#scale[0.76]{#font[52]{Preliminary}}";
+    else
+      cmsText += " #scale[0.76]{#font[52]{Preliminary}}";
+  }
+  if (twoLine) 
+    cmsText += "}";
   bool outOfFrame = false;
   if (iPosX / 10 == 0) {
     outOfFrame = true;
