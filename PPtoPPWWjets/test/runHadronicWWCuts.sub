@@ -7,61 +7,61 @@ executable			= runHadronicWWCuts.sh
 # Activate one systematic at a time
 # For no syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 0 0 0.4
-# output 				= signalSamples_v7/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 999999 0 0 0.4
-# output 				= signalSamples_v7_protonSystematics/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_protonSystematics/HadronicWWCuts_$(sampleNumber).out
 #
 # For JEC syst up
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp 999999 0 0 0.4
-# output 				= signalSamples_v7_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_JECSystematicsUp/HadronicWWCuts_$(sampleNumber).out
 # 
 # For JEC syst down
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 999999 0 0 0.4
-# output 				= signalSamples_v7_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_JECSystematicsDown/HadronicWWCuts_$(sampleNumber).out
 
 
 # FOR AQGC STUDIES WITH CLIPPING
 # Activate one systematic at a time
 # For no syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 1400 0 0 0.4
-# output 				= signalSamples_v7_clip/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_clip/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 1400 0 0 0.4
-# output 				= signalSamples_v7_protonSystematics_clip/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_protonSystematics_clip/HadronicWWCuts_$(sampleNumber).out
 #
 # For JEC syst up
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp 1400 0 0 0.4
-# output 				= signalSamples_v7_JECSystematicsUp_clip/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_JECSystematicsUp_clip/HadronicWWCuts_$(sampleNumber).out
 # 
 # For JEC syst down
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 1400 0 0 0.4
-# output 				= signalSamples_v7_JECSystematicsDown_clip/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_JECSystematicsDown_clip/HadronicWWCuts_$(sampleNumber).out
 #
 
 # FOR FIDUCIAL CROSS SECTION STUDIES
 # For no syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 1000 0.04 0.2
-# output 				= signalSamples_v7_fxs/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_fxs/HadronicWWCuts_$(sampleNumber).out
 #
 # For proton syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) protonSystematics 999999 1000 0.04 0.2
-# output 				= signalSamples_v7_protonSystematics_fxs/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_protonSystematics_fxs/HadronicWWCuts_$(sampleNumber).out
 #
 # For JEC syst up
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsUp 999999 1000 0.04 0.2
-# output 				= signalSamples_v7_JECSystematicsUp_fxs/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_JECSystematicsUp_fxs/HadronicWWCuts_$(sampleNumber).out
 # 
 # For JEC syst down
-arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 999999 1000 0.04 0.2
-output 				= signalSamples_v7_JECSystematicsDown_fxs/HadronicWWCuts_$(sampleNumber).out
+# arguments			= $ENV(CMSSW_BASE) $(sampleNumber) JECSystematicsDown 999999 1000 0.04 0.2
+# output 				= signalSamples_v8_JECSystematicsDown_fxs/HadronicWWCuts_$(sampleNumber).out
 
 # FOR SM CONTRIBUTION TO CLIPPED PART CHECK
 # For no syst
 # arguments			= $ENV(CMSSW_BASE) $(sampleNumber) 999999 1400 0 0.4
-# output 				= signalSamples_v7_contribToClipped/HadronicWWCuts_$(sampleNumber).out
+# output 				= signalSamples_v8_contribToClipped/HadronicWWCuts_$(sampleNumber).out
 
 
 # FOR BACKGROUNDS & DATA
@@ -91,28 +91,28 @@ queue sampleNumber in (
 	# 909
 	# 910
 	# 911
-	# # WW_A0W5e-6
-	# 300 
-	# 301 
-	# 302 
-	# 400
-	# 401
-	# 402
-	# 500
-	# 501 
-	# 600 
-	# 601 
-	# 602 
-	# 603 
+	# # WW_A0W5e-7
+	300 
+	301 
+	302 
+	400
+	401
+	402
+	500
+	501 
+	600 
+	601 
+	602 
+	603 
 	# # WW_A0W1e-6
-	# 120 
-	# 121 
-	# 122 
-	# 20 
-	# 21 
-	# 22 
-	# 50 
-	# 51 
+	120 
+	121 
+	122 
+	20 
+	21 
+	22 
+	50 
+	51 
 	# 220 
 	# 221 
 	# 222 
@@ -147,11 +147,11 @@ queue sampleNumber in (
 	# 126 
 	# 127 
 	# 128 
-	# 26 
-	# 27 
-	# 28 
-	# 54 
-	# 55 
+	26 
+	27 
+	28 
+	54 
+	55 
 	# 228 
 	# 229 
 	# 230 
@@ -170,18 +170,18 @@ queue sampleNumber in (
 	# 634 
 	# 635 
 	# # WW_ACW2e-6
-	# 303 
-	# 304 
-	# 305 
-	# 403
-	# 404
-	# 405
-	# 502
-	# 503 
-	# 604 
-	# 605 
-	# 606 
-	# 607 
+	303 
+	304 
+	305 
+	403
+	404
+	405
+	502
+	503 
+	604 
+	605 
+	606 
+	607 
 	# # WW_ACW5e-6
 	# 132 
 	# 133 
@@ -248,18 +248,18 @@ queue sampleNumber in (
 	# 638 
 	# 639 
 	# # WW_A0W-8.3E-6ACW2E-5
-	330
-	331 
-	332 
-	430
-	431
-	432
-	520
-	521
-	640 
-	641 
-	642 
-	643 
+	# 330
+	# 331 
+	# 332 
+	# 430
+	# 431
+	# 432
+	# 520
+	# 521
+	# 640 
+	# 641 
+	# 642 
+	# 643 
 	# # ZZ Part
 	# # ZZ_A0Z5e-6
 	# 318 

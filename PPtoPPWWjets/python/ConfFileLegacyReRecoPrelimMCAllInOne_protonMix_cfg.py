@@ -44,13 +44,13 @@ elif ((options.partNumber == 0) & (options.nParts == 0)):
   options.partNumber = 1
   options.nParts = 1
 
-################################################################
-# possible sampleTags:                                         #
-# WW_A0W5e-7, WW_A0W1e-6, WW_A0W2e-6, WW_A0W3_5E-6, WW_A0W5e-6 #
-# WW_ACW5e-6, WW_ACW5e-6, WW_ACW8e-6, WW_ACW1_4E-5, WW_ACW2e-5 #
-# ZZ_A0Z5e-6, ZZ_A0Z1e-5, ZZ_A0Z2e-5, ZZ_A0Z5e-5               #
-# ZZ_ACZ5e-6, ZZ_ACZ1e-5, ZZ_ACZ2e-5, ZZ_ACZ5e-5               #
-################################################################
+###########################################################
+# possible sampleTags:                                    #
+# WW_A0W1e-6, WW_A0W2e-6, WW_A0W5e-6                      #
+# WW_ACW2e-5, WW_ACW5e-6, WW_ACW8e-6                      #
+# ZZ_A0Z-1e-5, ZZ_A0Z1e-5, ZZ_A0Z5e-5                     #
+# ZZ_ACZ-1e-5, ZZ_ACZ1e-5, ZZ_ACZ5e-5                     #
+###########################################################
 
 MC=True
 YEAR=options.year
@@ -141,16 +141,7 @@ if MC == True and YEAR == 2018:
     cms.PSet( xangle = cms.double(140), fileName = cms.FileInPath("CalibPPS/ESProducers/data/optical_functions/2018/version6/140urad.root") )
   )
 
-# from signalSamples_cfi import *
-# print "Signal sample file list: "
-# print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
-# print "\n"
-# process.source = cms.Source("PoolSource",
-#     fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
-# )
-
-print "Loading signal samples..."
-from signalSamples_v2_cfi import *
+from signalSamples_cfi import *
 print "Signal sample file list: "
 print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 print "\n"
@@ -169,27 +160,26 @@ print "Mixing PU samples: "
 print "\n".join(pileupSamples(YEAR,pu_ERA)[:3])
 print "...\n" 
 
-process.load("protonPreMix.protonPreMix.ctppsPreMixProducer_cfi")
-process.ctppsPreMixProducer.PUFilesList = cms.vstring(*pileupSamples(YEAR,pu_ERA))
-process.ctppsPreMixProducer.Verbosity = 0
+process.load("protonPreMix.protonPreMix.ctppsProtonMixer_cfi")
+process.ctppsProtonMixer.PUFilesList = cms.vstring(*pileupSamples(YEAR,pu_ERA))
+process.ctppsProtonMixer.Verbosity = 0
 
 import FWCore.PythonUtilities.LumiList as LumiList
 # use JSON for 2018 PU in order to mix the right events with the right period
 if MC == True and YEAR == 2018:
   pu_jsonFile = "/eos/project-c/ctpps/Operations/DataExternalConditions/2018/CMSgolden_2RPGood_anyarms_Era"+ERA+".json"
-  process.ctppsPreMixProducer.lumisToProcess = LumiList.LumiList(filename = pu_jsonFile).getVLuminosityBlockRange()
+  process.ctppsProtonMixer.lumisToProcess = LumiList.LumiList(filename = pu_jsonFile).getVLuminosityBlockRange()
   print "Using JSON file for PU: "+pu_jsonFile+"\n"
-  process.ctppsPreMixProducer.includeStrips = False
 
 # rng service for premixing
-process.RandomNumberGeneratorService.ctppsPreMixProducer = cms.PSet(initialSeed = cms.untracked.uint32(42))
+process.RandomNumberGeneratorService.ctppsProtonMixer = cms.PSet(initialSeed = cms.untracked.uint32(42))
 
 # number of events
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
   optionalPSet = cms.untracked.bool(True),
   reportEvery = cms.untracked.int32(100),
-  limit = cms.untracked.int32(2000)
+  limit = cms.untracked.int32(2000),
 )
 process.MessageLogger.categories.append('PPS')
 process.MessageLogger.cerr.threshold = cms.untracked.string('INFO')
@@ -329,23 +319,17 @@ process.ctppsBeamParametersESSource.vtxStddevZ = 0
 #process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.6924 * 1E-1
 #process.ctppsBeamParametersESSource.vtxOffsetZ45 = -8.1100 * 1E-1
 # These should be the vtx shift values for 2017...
+process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.024793
+process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.0692861
+process.ctppsBeamParametersESSource.vtxOffsetZ45 = -7.89895
 # end JH
 
 process.ctppsLHCInfoRandomXangleESSource.generateEveryNEvents = 1
 if MC == True and YEAR == 2016:
-    process.ctppsBeamParametersESSource.vtxOffsetX45 = -1.048 * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetY45 = -1.686 * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetZ45 = +10.04 * 1E-1
     process.ctppsLHCInfoRandomXangleESSource.xangleHistogramFile = "CrossingAngles2016.root"
 if MC == True and YEAR == 2017:
-    process.ctppsBeamParametersESSource.vtxOffsetX45 = +0.24793  * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.692861 * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetZ45 = -7.89895  * 1E-1
     process.ctppsLHCInfoRandomXangleESSource.xangleHistogramFile = "CrossingAngles2017.root"
 if MC == True and YEAR == 2018:
-    process.ctppsBeamParametersESSource.vtxOffsetX45 = -0.1078 * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetY45 = -0.4189 * 1E-1
-    process.ctppsBeamParametersESSource.vtxOffsetZ45 = -0.2488 * 1E-1
     process.ctppsLHCInfoRandomXangleESSource.xangleHistogramFile = "CrossingAngles2018.root"
 
 process.ctppsLHCInfoRandomXangleESSource.xangleHistogramObject = "hxang"
@@ -363,8 +347,8 @@ process.beamDivergenceVtxGenerator.srcGenParticle = cms.VInputTag(
 
 
 # point the track producers to the correct products
-process.ctppsPixelLocalTracks.label = "ctppsPreMixProducer"
-process.totemRPUVPatternFinder.tagRecHit = cms.InputTag("ctppsPreMixProducer")
+# process.ctppsPixelLocalTracks.label = "ctppsPreMixProducer"
+# process.totemRPUVPatternFinder.tagRecHit = cms.InputTag("ctppsPreMixProducer")
 
 # remove timing tracks from trackLites, they are not produced by protonPreMix
 process.ctppsLocalTrackLiteProducer.includeDiamonds = False
@@ -373,7 +357,7 @@ process.ctppsLocalTrackLiteProducer.includeDiamonds = False
 def RemoveModules(pr):
   pr.reco_local.remove(pr.ctppsPixelLocalTracks)
   pr.ctppsLocalTrackLiteProducer.includePixels = False
-  pr.ctppsPreMixProducer.includePixels = False
+  # pr.ctppsPreMixProducer.includePixels = False
 
 (ctpps_2016 & ~ctpps_2017 & ~ctpps_2018).toModify(process, RemoveModules)
 
@@ -386,6 +370,7 @@ process.load("protonPreMix.protonPreMix.ppsEfficiencyProducer_cfi")
 process.RandomNumberGeneratorService.ppsEfficiencyProducer = cms.PSet(initialSeed = cms.untracked.uint32(43))
 process.ppsEfficiencyProducer.year = cms.int32(YEAR)
 process.ppsEfficiencyProducer.era = cms.string(ERA)
+process.ppsEfficiencyProducer.mixedProtonsSrc = cms.InputTag("ctppsProtonMixer")
 
 if YEAR == 2016:
   process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Strips/StripsTracking/PreliminaryEfficiencies_July132020_1D2DMultiTrack.root")
@@ -399,7 +384,7 @@ if YEAR == 2018:
   # process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
   process.ppsEfficiencyProducer.efficiencyFileName_Near = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_radiation_reMiniAOD.root")  
   # process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/eos/project/c/ctpps/subsystems/Pixel/RPixTracking/pixelEfficiencies_radiation.root")
-  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_singleRP_reMiniAOD.root")
+  process.ppsEfficiencyProducer.efficiencyFileName_Far = cms.string("/afs/cern.ch/user/a/abellora/cernbox/PPS/Efficiency_reMiniAOD/pixelEfficiencies_multiRP_reMiniAOD.root")
 
 #########################                                                                                                                                                           
 # Configure Analyzer
@@ -440,9 +425,9 @@ if MC == True and YEAR == 2018:
   process.demo.mcPileupFile = cms.string("PUHistos_mc_2018.root")
 
 process.demo.jetAK8CHSCollection = cms.InputTag("slimmedJetsAK8JetId")
-process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP","CTPPSTestAcceptance")
-# process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance")
-process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ppsEfficiencyProducer", "multiRP")
+process.demo.ppsRecoProtonSingleRPTag = cms.InputTag("ctppsProtons", "singleRP")
+process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ctppsProtonMixer", "")
+# process.demo.ppsRecoProtonMultiRPTag = cms.InputTag("ppsEfficiencyProducer", "multiRP")
 process.demo.isMC = cms.bool(MC)
 process.demo.doMCTheorySystematics = cms.bool(DoTheorySystematics)
 process.demo.useMCProtons = cms.bool(UseMCProtons)
@@ -451,14 +436,14 @@ process.demo.era = cms.string(ERA)
 
 process.maxEvents = cms.untracked.PSet(
   # input = cms.untracked.int32(20)
-  input = cms.untracked.int32(-1)
+  input = cms.untracked.int32(5000)
 )
 
 # reconstruction plotter (analysis example)
 process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
   tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
   tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP","CTPPSTestAcceptance"),
-  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance"),
+  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtonMixer", "","CTPPSTestAcceptance"),
   # tagRecoProtonsMultiRP = cms.InputTag("ppsEfficiencyProducer", "multiRP"),
   rpId_45_F = cms.uint32(23),
   rpId_45_N = cms.uint32(3),
@@ -472,32 +457,24 @@ process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstruc
 )
 
 process.load("protonPreMix.protonPreMix.ctppsProductsInspector_cfi")
-process.ctppsProductsInspector.pixelRecHitTag = cms.untracked.InputTag("ctppsPreMixProducer","","CTPPSTestAcceptance")
+process.ctppsProductsInspector.pixelRecHitTag = cms.untracked.InputTag("ctppsDirectProtonSimulation","","CTPPSTestAcceptance")
 process.ctppsProductsInspector.trackLiteTag = cms.untracked.InputTag("ctppsLocalTrackLiteProducer","","CTPPSTestAcceptance")
+process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ctppsProtonMixer", "","CTPPSTestAcceptance")
 # process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ppsEfficiencyProducer", "multiRP","CTPPSTestAcceptance")
-process.ctppsProductsInspector.multiRPProtonTag = cms.untracked.InputTag("ctppsProtons", "multiRP","CTPPSTestAcceptance")
-
-# process.output = cms.OutputModule("PoolOutputModule",
-#     fileName = cms.untracked.string(OUTPUTDIR+"/output_data.root"),
-#     outputCommands = cms.untracked.vstring("keep *_ctpps*_*_*")
-# )
-
-# process.out = cms.EndPath(process.output)
-
-process.load("PPtoPPWWjets.PPtoPPWWjets.genCutsFilter_cfi")
 
 # processing path
 process.p = cms.Path(
-  # process.genCutsFilter
   process.hltFilter
   * process.beamDivergenceVtxGenerator
   * process.ctppsDirectProtonSimulation
-  * process.ctppsPreMixProducer
   * process.reco_local
   * process.ctppsProtons
-  * process.ppsEfficiencyProducer
+
+  * process.ctppsProtonMixer
+  # * process.ppsEfficiencyProducer
   # * process.ctppsProductsInspector
-  # * process.ctppsProtonReconstructionPlotter
+
+  * process.ctppsProtonReconstructionPlotter
 
   * process.genParticlesForJetsNoNu 
   * process.goodOfflinePrimaryVertices  

@@ -11,7 +11,7 @@
 // Global variables
 //
 
-TString cmsText     = "#font[61]{CMS} #scale[0.76]{#font[52]{Preliminary }}";
+TString cmsText     = "#font[61]{CMS} ";
 float cmsTextFont   = 61;  // default is helvetic-bold
 
 bool writeExtraText = true;
@@ -41,13 +41,15 @@ TString lumi_tot = "100.0 fb^{-1}";
 
 bool drawLogo      = false;
 
-bool preliminary = true;
+bool preliminary = false;
 
 void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoLine = false) {
 
   // std::cout << periodAndLumi[0] << std::endl;
+  bool isSimulation = false;
   if(periodAndLumi[0] != '2'){
     cmsText = "#font[61]{CMS} #scale[0.76]{#font[52]{Simulation}}";
+    isSimulation=true;
   }
 
   if (twoLine)
@@ -105,8 +107,12 @@ void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoL
     lumiText += lumi_7TeV;
     lumiText += " (7 TeV)";
   } else if (iPeriod == 4) {
-    lumiText += lumi_13TeV;
-    lumiText += " (13 TeV)";
+    if (!isSimulation){
+      lumiText += lumi_13TeV;
+      lumiText += " (13 TeV)";
+    } else {
+      lumiText += "(13 TeV)";
+    }
   } else if (iPeriod == 7) {
     if (outOfFrame)
       lumiText += "#scale[0.85]{";
@@ -215,7 +221,9 @@ void CMS_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoL
 void CMS_TOTEM_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,bool twoLine = false) {
   cmsText     = "#font[61]{CMS-TOTEM}";
   // std::cout << periodAndLumi[0] << std::endl;
+  bool isSimulation=false;
   if(periodAndLumi[0] != '2'){
+    isSimulation=true;
     cmsText = "#font[61]{CMS-TOTEM} #scale[0.76]{#font[52]{Simulation }}";
   }
   if (twoLine)
@@ -273,8 +281,12 @@ void CMS_TOTEM_lumi(TPad *pad, int iPeriod, int iPosX, TString periodAndLumi,boo
     lumiText += lumi_7TeV;
     lumiText += " (7 TeV)";
   } else if (iPeriod == 4) {
-    lumiText += lumi_13TeV;
-    lumiText += " (13 TeV)";
+    if (!isSimulation){
+      lumiText += lumi_13TeV;
+      lumiText += " (13 TeV)";
+    } else {
+      lumiText += "(13 TeV)";
+    }
   } else if (iPeriod == 7) {
     if (outOfFrame)
       lumiText += "#scale[0.85]{";

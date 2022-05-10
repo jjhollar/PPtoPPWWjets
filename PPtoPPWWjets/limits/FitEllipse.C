@@ -301,27 +301,27 @@ TGraph *GraphWW() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -3.699e-6;    y[0] = 0; // limit on a0W
-  x[1] =  3.699e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.383e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.383e-5; // limit on aCW
-  x[4] =  1.96942e-6;   y[4] = 0.7e-5;
-  x[5] =  -5.46232e-06;  y[5] = 0.7e-5;
-  x[6] =  5.557e-6;   y[6] = -0.7e-5;
-  x[7] =  -1.970e-6;  y[7] = -0.7e-5;
-  x[8] =  -1.719e-6;   y[8] = 2.0e-5;
-  x[9] =  -8.339e-6;  y[9] = 2.0e-5;
+  x[0] =  -3.699e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  3.699e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.383e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.383e-5*1e+7; // limit on aCW
+  x[4] =  1.96942e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -5.46232e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  5.557e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -1.970e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -1.719e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -8.339e-6*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -333,27 +333,27 @@ TGraph *GraphWW_observed() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -4.13276E-06;    y[0] = 0; // limit on a0W
-  x[1] =  4.13276E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.4936E-05; // limit on aCW
-  x[3] =  0;          y[3] = 1.4936E-05; // limit on aCW
-  x[4] =  2.31E-06;   y[4] = 0.7e-5;
-  x[5] =  -5.80E-06;  y[5] = 0.7e-5;
-  x[6] =  5.89E-06;   y[6] = -0.7e-5;
-  x[7] =  -2.30E-06;  y[7] = -0.7e-5;
-  x[8] =  -1.35E-06;   y[8] = 2.0e-5;
-  x[9] =  -8.71E-06;  y[9] = 2.0e-5;
+  x[0] =  -4.13276e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  4.13276e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.4936e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.4936e-5*1e+7; // limit on aCW
+  x[4] =  2.31e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -5.80e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  5.89e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -2.30e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -1.35e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -8.71e-6*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -365,27 +365,27 @@ TGraph *GraphWW_plusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -4.736e-6;    y[0] = 0; // limit on a0W
-  x[1] =  4.736e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.772e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.772e-5; // limit on aCW
-  x[4] =  2.97514e-6;   y[4] = 0.7e-5;
-  x[5] =  -6.46804e-6;  y[5] = 0.7e-5;
-  x[6] =  6.5555e-6;   y[6] = -0.7e-5;
-  x[7] =  -2.96835e-6;  y[7] = -0.7e-5;
-  x[8] =  -6.3158e-7;   y[8] = 2.0e-5;
-  x[9] =  -9.42674e-6;  y[9] = 2.0e-5;
+  x[0] =  -4.736e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  4.736e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.772e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.772e-5*1e+7; // limit on aCW
+  x[4] =  2.97514e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -6.46804e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  6.5555e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -2.96835e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -6.3158e-7*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -9.42674e-6*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -397,27 +397,27 @@ TGraph *GraphWW_plus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -6.001e-6;    y[0] = 0; // limit on a0W
-  x[1] =  6.001e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -2.249e-5; // limit on aCW
-  x[3] =  0;          y[3] = 2.249e-5; // limit on aCW
-  x[4] =  4.22678e-6;   y[4] = 0.7e-5;
-  x[5] =  -7.71968E-06;  y[5] = 0.7e-5;
-  x[6] =  7.80223E-06;   y[6] = -0.7e-5;
-  x[7] =  -4.21506E-06;  y[7] = -0.7e-5;
-  x[8] =  6.773E-07;   y[8] = 2.0e-5;
-  x[9] =  -1.07356E-05;  y[9] = 2.0e-5;
+  x[0] =  -6.001e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  6.001e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -2.249e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 2.249e-5*1e+7; // limit on aCW
+  x[4] =  4.22678e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -7.71968e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  7.80223e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -4.21506e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  6.773e-7*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -1.07356e-5*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -429,27 +429,27 @@ TGraph *GraphWW_minusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -2.961e-6;    y[0] = 0; // limit on a0W
-  x[1] =  2.961e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.110e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.110e-5; // limit on aCW
-  x[4] =  1.16134e-6;   y[4] = 0.7e-5;
-  x[5] =  -4.65424e-6;  y[5] = 0.7e-5;
-  x[6] =  4.75919e-6;   y[6] = -0.7e-5;
-  x[7] =  -1.17202e-6;  y[7] = -0.7e-5;
-  x[8] =  -2.64861e-6;   y[8] = 2.0e-5;
-  x[9] =  -7.40971e-6;  y[9] = 2.0e-5;
+  x[0] =  -2.961e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  2.961e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.110e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.110e-5*1e+7; // limit on aCW
+  x[4] =  1.16134e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -4.65424e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  4.75919e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -1.17202e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -2.64861e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -7.40971e-6*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -461,27 +461,27 @@ TGraph *GraphWW_minus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -2.504e-6;    y[0] = 0; // limit on a0W
-  x[1] =  2.504e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -9.354e-6; // limit on aCW
-  x[3] =  0;          y[3] = 9.354e-6; // limit on aCW
-  x[4] =  6.84303E-07;   y[4] = 0.7e-5;
-  x[5] =  -4.1772E-06;  y[5] = 0.7e-5;
-  x[6] =  4.29163E-06;   y[6] = -0.7e-5;
-  x[7] =  -7.04459E-07;  y[7] = -0.7e-5;
-  x[8] =  -3.25405E-06;   y[8] = 2.0e-5;
-  x[9] =  -6.80427E-06;  y[9] = 2.0e-5;
+  x[0] =  -2.504e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  2.504e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -9.354e-6*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 9.354e-6*1e+7; // limit on aCW
+  x[4] =  6.84303e-7*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -4.1772e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  4.29163e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -7.04459e-7*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -3.25405e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -6.80427e-6*1e+7;  y[9] = 2.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -493,26 +493,26 @@ TGraph *GraphWW_realPoints() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -3.699e-6;    y[0] = 0; // limit on a0W
-  x[1] =  3.699e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.383e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.383e-5; // limit on aCW
-  // x[4] =  2.065e-6;   y[4] = 0.7e-5;
-  // x[5] =  -5.558e-6;  y[5] = 0.7e-5;
-  // x[6] =  5.652e-6;   y[6] = -0.7e-5;
-  // x[7] =  -2.064e-6;  y[7] = -0.7e-5;
-  // x[8] =  -4.170e-6;   y[8] = 2.8e-5;
-  // x[9] =  -9.825e-6;  y[9] = 2.8e-5;
+  x[0] =  -3.699e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  3.699e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.383e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.383e-5*1e+7; // limit on aCW
+  // x[4] =  2.065e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  // x[5] =  -5.558e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  // x[6] =  5.652e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  // x[7] =  -2.064e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  // x[8] =  -4.170e-6*1e+7;   y[8] = 2.8e-5*1e+7;
+  // x[9] =  -9.825e-6*1e+7;  y[9] = 2.8e-5*1e+7;
 
   // create the test TGraph
   TGraph *g_aux = ((TGraph *)(gROOT->FindObject("g_aux")));
   if (g_aux) delete g_aux;
   g_aux = new TGraph(n, x, y);
   g_aux->SetNameTitle("g_aux", "WW ellipse");
-  g_aux->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g_aux->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g_aux->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g_aux->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g_aux->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g_aux->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g_aux->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g_aux->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g_aux->SetMarkerStyle(20);
 
   return g_aux;
@@ -528,27 +528,27 @@ TGraph *GraphZZ() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -9.742e-6;    y[0] = 0; // limit on a0W
-  x[1] =  9.742e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -3.652e-5; // limit on aCW
-  x[3] =  0;          y[3] = 3.652e-5; // limit on aCW
-  x[4] =  4.048e-6;   y[4] = 2.2e-5;
-  x[5] =  -1.504e-5;  y[5] = 2.2e-5;
-  x[6] =  1.503e-5;   y[6] = -2.2e-5;
-  x[7] =  -4.031e-6;  y[7] = -2.2e-5;
-  x[8] =  -3.791e-6;   y[8] = 5e-5;
-  x[9] =  -2.127e-5;  y[9] = 5e-5;
+  x[0] =  -9.742e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  9.742e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -3.652e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 3.652e-5*1e+7; // limit on aCW
+  x[4] =  4.048e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -1.504e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  1.503e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -4.031e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  -3.791e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -2.127e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-5e-5,5e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-5e-5*1e+7,5e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2.5e-4,2.5e-4);
+  g->GetYaxis()->SetRangeUser(-2.5e-4*1e+7,2.5e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -560,27 +560,27 @@ TGraph *GraphZZ_observed() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -8.1864E-06;    y[0] = 0; // limit on a0W
-  x[1] =  8.1864E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -3.0124E-05; // limit on aCW
-  x[3] =  0;          y[3] = 3.0124E-05; // limit on aCW
-  x[4] =  2.38E-06;   y[4] = 2.2e-5;
-  x[5] =  -1.34E-05;  y[5] = 2.2e-5;
-  x[6] =  1.34E-05;   y[6] = -2.2e-5;
-  x[7] =  -2.36E-06;  y[7] = -2.2e-5;
-  x[8] =  -5.65E-06;   y[8] = 5e-5;
-  x[9] =  -1.94E-05;  y[9] = 5e-5;
+  x[0] =  -8.1864e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  8.1864e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -3.0124e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 3.0124e-5*1e+7; // limit on aCW
+  x[4] =  2.38e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -1.34e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  1.34e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -2.36e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  -5.65e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -1.94e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-4e-5,4e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-4e-5*1e+7,4e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2e-4,2e-4);
+  g->GetYaxis()->SetRangeUser(-2e-4*1e+7,2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -592,27 +592,27 @@ TGraph *GraphZZ_plusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -1.205e-5;    y[0] = 0; // limit on a0W
-  x[1] =  1.205e-5;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -4.508e-5; // limit on aCW
-  x[3] =  0;          y[3] = 4.508e-5; // limit on aCW
-  x[4] =  6.3806e-6;   y[4] = 2.2e-5;
-  x[5] =  -1.73776e-5;  y[5] = 2.2e-5;
-  x[6] =  1.73664e-5;   y[6] = -2.2e-5;
-  x[7] =  -6.36685e-6;  y[7] = -2.2e-5;
-  x[8] =  -1.28928e-6;   y[8] = 5e-5;
-  x[9] =  -2.37714e-5;  y[9] = 5e-5;
+  x[0] =  -1.205e-5*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  1.205e-5*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -4.508e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 4.508e-5*1e+7; // limit on aCW
+  x[4] =  6.3806e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -1.73776e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  1.73664e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -6.36685e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  -1.28928e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -2.37714e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-4e-5,4e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-4e-5*1e+7,4e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2e-4,2e-4);
+  g->GetYaxis()->SetRangeUser(-2e-4*1e+7,2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -624,27 +624,27 @@ TGraph *GraphZZ_plus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -1.489E-05;    y[0] = 0; // limit on a0W
-  x[1] =  1.489E-05;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -5.572E-05; // limit on aCW
-  x[3] =  0;          y[3] = 5.572E-05; // limit on aCW
-  x[4] =  9.24572E-06;   y[4] = 2.2e-5;
-  x[5] =  -2.02427E-05;  y[5] = 2.2e-5;
-  x[6] =  2.02343E-05;   y[6] = -2.2e-5;
-  x[7] =  -9.23477E-06;  y[7] = -2.2e-5;
-  x[8] =  1.70584E-06;   y[8] = 5e-5;
-  x[9] =  -2.67665E-05;  y[9] = 5e-5;
+  x[0] =  -1.489e-5*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  1.489e-5*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -5.572e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 5.572e-5*1e+7; // limit on aCW
+  x[4] =  9.24572e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -2.02427e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  2.02343e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -9.23477e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  1.70584e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -2.67665e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-4e-5,4e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-4e-5*1e+7,4e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2e-4,2e-4);
+  g->GetYaxis()->SetRangeUser(-2e-4*1e+7,2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -656,27 +656,27 @@ TGraph *GraphZZ_minusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -8.011e-6;    y[0] = 0; // limit on a0W
-  x[1] =  8.011e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -2.999e-5; // limit on aCW
-  x[3] =  0;          y[3] = 2.999e-5; // limit on aCW
-  x[4] =  2.27569e-6;   y[4] = 2.2e-5;
-  x[5] =  -1.32727e-5;  y[5] = 2.2e-5;
-  x[6] =  1.32541e-5;   y[6] = -2.2e-5;
-  x[7] =  -2.25459e-6;  y[7] = -2.2e-5;
-  x[8] =  -5.77339e-6;   y[8] = 5e-5;
-  x[9] =  -1.92873e-5;  y[9] = 5e-5;
+  x[0] =  -8.011e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  8.011e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -2.999e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 2.999e-5*1e+7; // limit on aCW
+  x[4] =  2.27569e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -1.32727e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  1.32541e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -2.25459e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  -5.77339e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -1.92873e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-4e-5,4e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-4e-5*1e+7,4e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2e-4,2e-4);
+  g->GetYaxis()->SetRangeUser(-2e-4*1e+7,2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -688,27 +688,27 @@ TGraph *GraphZZ_minus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -6.847E-06;    y[0] = 0; // limit on a0W
-  x[1] =  6.847E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -2.563E-05; // limit on aCW
-  x[3] =  0;          y[3] = 2.563E-05; // limit on aCW
-  x[4] =  1.07365E-06;   y[4] = 2.2e-5;
-  x[5] =  -1.20707E-05;  y[5] = 2.2e-5;
-  x[6] =  1.20482E-05;   y[6] = -2.2e-5;
-  x[7] =  -1.04872E-06;  y[7] = -2.2e-5;
-  x[8] =  -7.2007E-06;   y[8] = 5e-5;
-  x[9] =  -1.786E-05;  y[9] = 5e-5;
+  x[0] =  -6.847e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  6.847e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -2.563e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 2.563e-5*1e+7; // limit on aCW
+  x[4] =  1.07365e-6*1e+7;   y[4] = 2.2e-5*1e+7;
+  x[5] =  -1.20707e-5*1e+7;  y[5] = 2.2e-5*1e+7;
+  x[6] =  1.20482e-5*1e+7;   y[6] = -2.2e-5*1e+7;
+  x[7] =  -1.04872e-6*1e+7;  y[7] = -2.2e-5*1e+7;
+  x[8] =  -7.2007e-6*1e+7;   y[8] = 5e-5*1e+7;
+  x[9] =  -1.786e-5*1e+7;  y[9] = 5e-5*1e+7;
 
   // create the test TGraph
   TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   if (g) delete g;
   g = new TGraph(n, x, y);
   g->SetNameTitle("g", "ZZ ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-4e-5,4e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-4e-5*1e+7,4e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-2e-4,2e-4);
+  g->GetYaxis()->SetRangeUser(-2e-4*1e+7,2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -720,20 +720,20 @@ TGraph *GraphZZ_realPoints() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -9.742e-6;    y[0] = 0; // limit on a0W
-  x[1] =  9.742e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -3.652e-5; // limit on aCW
-  x[3] =  0;          y[3] = 3.652e-5; // limit on aCW
+  x[0] =  -9.742e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  9.742e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -3.652e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 3.652e-5*1e+7; // limit on aCW
   // create the test TGraph
   TGraph *g_aux = ((TGraph *)(gROOT->FindObject("g_aux")));
   if (g_aux) delete g_aux;
   g_aux = new TGraph(n, x, y);
   g_aux->SetNameTitle("g_aux", "ZZ ellipse");
-  g_aux->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [GeV^{-2}]");
-  g_aux->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g_aux->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [GeV^{-2}]");
+  g_aux->GetXaxis()->SetTitle("a_{0}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g_aux->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g_aux->GetYaxis()->SetTitle("a_{C}^{Z}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g_aux->GetYaxis()->SetTitleOffset(1.2);
-  g_aux->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g_aux->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g_aux->SetMarkerStyle(20);
 
   return g_aux;
@@ -810,31 +810,31 @@ TGraph *GraphWW_clip() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -5.456e-6;    y[0] = 0; // limit on a0W
-  x[1] =  5.456e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.906e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.906e-5; // limit on aCW
-  x[4] =  3.504e-6;   y[4] = 0.7e-5;
-  x[5] =  -6.997e-06; y[5] = 0.7e-5;
-  x[6] =  7.082e-6;   y[6] = -0.7e-5;
-  x[7] =  -3.495e-6;  y[7] = -0.7e-5;
-  x[8] =  -7.409e-8;  y[8] = 2.0e-5;
-  x[9] =  -9.984e-6;  y[9] = 2.0e-5;
-  x[10] =  1.2054E-05;   y[10] = -3.0e-5;
-  x[11] =  2.87904E-06;  y[11] = -3.0e-5;
-  x[12] =  1.51365E-05;  y[12] = -5.0e-5;
-  x[13] =  9.78867E-06;  y[13] = -5.0e-5;
+  x[0] =  -5.456e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  5.456e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.906e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.906e-5*1e+7; // limit on aCW
+  x[4] =  3.504e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -6.997e-6*1e+7; y[5] = 0.7e-5*1e+7;
+  x[6] =  7.082e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -3.495e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -7.409e-8;  y[8] = 2.0e-5*1e+7;
+  x[9] =  -9.984e-6*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  1.2054e-5*1e+7;   y[10] = -3.0e-5*1e+7;
+  x[11] =  2.87904e-6*1e+7;  y[11] = -3.0e-5*1e+7;
+  x[12] =  1.51365e-5*1e+7;  y[12] = -5.0e-5*1e+7;
+  x[13] =  9.78867e-6*1e+7;  y[13] = -5.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1.2e-4,1.2e-4);
+  g->GetYaxis()->SetRangeUser(-1.2e-4*1e+7,1.2e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -846,31 +846,31 @@ TGraph *GraphWW_observed_clip() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -5.4781E-06;    y[0] = 0; // limit on a0W
-  x[1] =  5.4781E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.8675E-05; // limit on aCW
-  x[3] =  0;          y[3] = 1.8675E-05; // limit on aCW
-  x[4] =  3.48E-06;   y[4] = 0.7e-5;
-  x[5] =  -6.97E-06;  y[5] = 0.7e-5;
-  x[6] =  7.05E-06;   y[6] = -0.7e-5;
-  x[7] =  -3.47E-06;  y[7] = -0.7e-5;
-  x[8] =  -1.04E-07;  y[8] = 2.0e-5;
-  x[9] =  -9.95E-06;  y[9] = 2.0e-5;
-  x[10] =  1.2022E-05;  y[10] = -3.0e-5;
-  x[11] =  2.9114E-06;  y[11] = -3.0e-5;
-  x[12] =  1.5081E-05;  y[12] = -5.0e-5;
-  x[13] =  9.8446E-06;  y[13] = -5.0e-5;
+  x[0] =  -5.4781e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  5.4781e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.8675e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.8675e-5*1e+7; // limit on aCW
+  x[4] =  3.48e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -6.97e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  7.05e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -3.47e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -1.04e-7*1e+7;  y[8] = 2.0e-5*1e+7;
+  x[9] =  -9.95e-6*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  1.2022e-5*1e+7;  y[10] = -3.0e-5*1e+7;
+  x[11] =  2.9114e-6*1e+7;  y[11] = -3.0e-5*1e+7;
+  x[12] =  1.5081e-5*1e+7;  y[12] = -5.0e-5*1e+7;
+  x[13] =  9.8446e-6*1e+7;  y[13] = -5.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -882,31 +882,31 @@ TGraph *GraphWW_clip_plusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -7.077e-6;    y[0] = 0; // limit on a0W
-  x[1] =  7.077e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -2.395e-5; // limit on aCW
-  x[3] =  0;          y[3] = 2.395e-5; // limit on aCW
-  x[4] =  4.997e-6;   y[4] = 0.7e-5;
-  x[5] =  -8.490e-6;  y[5] = 0.7e-5;
-  x[6] =  8.571e-6;   y[6] = -0.7e-5;
-  x[7] =  -4.984e-6;  y[7] = -0.7e-5;
-  x[8] =  1.470e-6;   y[8] = 2.0e-5;
-  x[9] =  -1.153e-5;  y[9] = 2.0e-5;
-  x[10] =  1.36952E-05;  y[10] = -3.0e-5;
-  x[11] =  1.23782E-06;  y[11] = -3.0e-5;
-  x[12] =  1.74552E-05;  y[12] = -5.0e-5;
-  x[13] =  7.47002E-06;  y[13] = -5.0e-5;
+  x[0] =  -7.077e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  7.077e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -2.395e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 2.395e-5*1e+7; // limit on aCW
+  x[4] =  4.997e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -8.490e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  8.571e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -4.984e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  1.470e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -1.153e-5*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  1.36952e-5*1e+7;  y[10] = -3.0e-5*1e+7;
+  x[11] =  1.23782e-6*1e+7;  y[11] = -3.0e-5*1e+7;
+  x[12] =  1.74552e-5*1e+7;  y[12] = -5.0e-5*1e+7;
+  x[13] =  7.47002e-6*1e+7;  y[13] = -5.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -918,31 +918,31 @@ TGraph *GraphWW_clip_plus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -9.50916E-06;    y[0] = 0; // limit on a0W
-  x[1] =  9.50916E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -3.1262E-05; // limit on aCW
-  x[3] =  0;          y[3] = 3.1262E-05; // limit on aCW
-  x[4] =  7.22772E-06;   y[4] = 0.7e-5;
-  x[5] =  -1.07206E-05;  y[5] = 0.7e-5;
-  x[6] =  1.07991E-05;   y[6] = -0.7e-5;
-  x[7] =  -7.21195E-06;  y[7] = -0.7e-5;
-  x[8] =  3.73897E-06;   y[8] = 2.0e-5;
-  x[9] =  -1.37973E-05;  y[9] = 2.0e-5;
-  x[10] =  1.60423E-05;  y[10] = -3.0e-5;
-  x[11] =  -1.10927E-06;  y[11] = -3.0e-5;
-  x[12] =  2.0191E-05;  y[12] = -5.0e-5;
-  x[13] =  4.7347E-06;  y[13] = -5.0e-5;
+  x[0] =  -9.50916e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  9.50916e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -3.1262e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 3.1262e-5*1e+7; // limit on aCW
+  x[4] =  7.22772e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -1.07206e-5*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  1.07991e-5*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -7.21195e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  3.73897e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -1.37973e-5*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  1.60423e-5*1e+7;  y[10] = -3.0e-5*1e+7;
+  x[11] =  -1.10927e-6*1e+7;  y[11] = -3.0e-5*1e+7;
+  x[12] =  2.0191e-5*1e+7;  y[12] = -5.0e-5*1e+7;
+  x[13] =  4.7347e-6*1e+7;  y[13] = -5.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -954,29 +954,29 @@ TGraph *GraphWW_clip_minusSigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -4.290e-6;    y[0] = 0; // limit on a0W
-  x[1] =  4.290e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.545e-5; // limit on aCW
-  x[3] =  0;          y[3] = 1.545e-5; // limit on aCW
-  x[4] =  2.451e-6;   y[4] = 0.7e-5;
-  x[5] =  -5.944e-6;  y[5] = 0.7e-5;
-  x[6] =  6.035e-6;   y[6] = -0.7e-5;
-  x[7] =  -2.448e-6;  y[7] = -0.7e-5;
-  x[8] =  -1.192e-6;   y[8] = 2.0e-5;
-  x[9] =  -8.866e-6;  y[9] = 2.0e-5;
-  x[10] =  1.08105E-05;   y[10] = -3.0e-5;
-  x[11] =  4.12258E-06;  y[11] = -3.0e-5;
+  x[0] =  -4.290e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  4.290e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.545e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.545e-5*1e+7; // limit on aCW
+  x[4] =  2.451e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -5.944e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  6.035e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -2.448e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -1.192e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -8.866e-6*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  1.08105e-5*1e+7;   y[10] = -3.0e-5*1e+7;
+  x[11] =  4.12258e-6*1e+7;  y[11] = -3.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -988,29 +988,29 @@ TGraph *GraphWW_clip_minus2Sigma() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -3.4249E-06;    y[0] = 0; // limit on a0W
-  x[1] =  3.4249E-06;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -1.27098E-05; // limit on aCW
-  x[3] =  0;          y[3] = 1.27098E-05; // limit on aCW
-  x[4] =  1.6232E-06;   y[4] = 0.7e-5;
-  x[5] =  -5.1161E-06;  y[5] = 0.7e-5;
-  x[6] =  5.21457E-06;   y[6] = -0.7e-5;
-  x[7] =  -1.6274E-06;  y[7] = -0.7e-5;
-  x[8] =  -2.1083E-06;   y[8] = 2.0e-5;
-  x[9] =  -7.95003E-06;  y[9] = 2.0e-5;
-  x[10] =  9.69613E-06;   y[10] = -3.0e-5;
-  x[11] =  5.23691E-06;  y[11] = -3.0e-5;
+  x[0] =  -3.4249e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  3.4249e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -1.27098e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 1.27098e-5*1e+7; // limit on aCW
+  x[4] =  1.6232e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  x[5] =  -5.1161e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  x[6] =  5.21457e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  x[7] =  -1.6274e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  x[8] =  -2.1083e-6*1e+7;   y[8] = 2.0e-5*1e+7;
+  x[9] =  -7.95003e-6*1e+7;  y[9] = 2.0e-5*1e+7;
+  x[10] =  9.69613e-6*1e+7;   y[10] = -3.0e-5*1e+7;
+  x[11] =  5.23691e-6*1e+7;  y[11] = -3.0e-5*1e+7;
 
   // create the test TGraph
   // TGraph *g = ((TGraph *)(gROOT->FindObject("g")));
   // if (g) delete g;
   TGraph *g = new TGraph(n, x, y);
   g->SetNameTitle("g", "WW ellipse");
-  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
+  g->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
   g->GetYaxis()->SetTitleOffset(1.2);
-  g->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g->SetMarkerStyle(6);
 
   return g;
@@ -1024,26 +1024,26 @@ TGraph *GraphWW_clip_realPoints() {
   Double_t x[n], y[n];
 
   // Manually add points
-  x[0] =  -5.1e-6;    y[0] = 0; // limit on a0W
-  x[1] =  5.1e-6;     y[1] = 0; // limit on a0W
-  x[2] =  0;          y[2] = -2.0e-5; // limit on aCW
-  x[3] =  0;          y[3] = 2.0e-5; // limit on aCW
-  // x[4] =  2.065e-6;   y[4] = 0.7e-5;
-  // x[5] =  -5.558e-6;  y[5] = 0.7e-5;
-  // x[6] =  5.652e-6;   y[6] = -0.7e-5;
-  // x[7] =  -2.064e-6;  y[7] = -0.7e-5;
-  // x[8] =  -4.170e-6;   y[8] = 2.8e-5;
-  // x[9] =  -9.825e-6;  y[9] = 2.8e-5;
+  x[0] =  -5.1e-6*1e+7;    y[0] = 0; // limit on a0W
+  x[1] =  5.1e-6*1e+7;     y[1] = 0; // limit on a0W
+  x[2] =  0;          y[2] = -2.0e-5*1e+7; // limit on aCW
+  x[3] =  0;          y[3] = 2.0e-5*1e+7; // limit on aCW
+  // x[4] =  2.065e-6*1e+7;   y[4] = 0.7e-5*1e+7;
+  // x[5] =  -5.558e-6*1e+7;  y[5] = 0.7e-5*1e+7;
+  // x[6] =  5.652e-6*1e+7;   y[6] = -0.7e-5*1e+7;
+  // x[7] =  -2.064e-6*1e+7;  y[7] = -0.7e-5*1e+7;
+  // x[8] =  -4.170e-6*1e+7;   y[8] = 2.8e-5*1e+7;
+  // x[9] =  -9.825e-6*1e+7;  y[9] = 2.8e-5*1e+7;
 
   // create the test TGraph
   TGraph *g_aux = ((TGraph *)(gROOT->FindObject("g_aux")));
   if (g_aux) delete g_aux;
   g_aux = new TGraph(n, x, y);
   g_aux->SetNameTitle("g_aux", "WW ellipse");
-  g_aux->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g_aux->GetXaxis()->SetLimits(-3e-5,3e-5);
-  g_aux->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [GeV^{-2}]");
-  g_aux->GetYaxis()->SetRangeUser(-1e-4,1e-4);
+  g_aux->GetXaxis()->SetTitle("a_{0}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g_aux->GetXaxis()->SetLimits(-3e-5*1e+7,3e-5*1e+7);
+  g_aux->GetYaxis()->SetTitle("a_{C}^{W}/#Lambda^{2} [#times 10^{-7} GeV^{-2}]");
+  g_aux->GetYaxis()->SetRangeUser(-1e-4*1e+7,1e-4*1e+7);
   g_aux->SetMarkerStyle(20);
 
   return g_aux;
@@ -1103,29 +1103,49 @@ void FitEllipse(){
   g_ww_realpoints->SetMarkerColor(kRed);
   g_ww_realpoints->SetMarkerStyle(20);
   g_ww_realpoints->SetMarkerSize(0.8);
-  TLegend *leg_ww = new TLegend(0.4,0.7,0.9,0.9);
-  leg_ww->AddEntry(g_ww_obs_leg,"Observed 95\% CL exclusion contour");
+
+  TGraph *g_ww_forARC = GraphWW();
+  g_ww_forARC->SetMarkerColor(kRed);
+  g_ww_forARC->SetMarkerStyle(20);
+  g_ww_forARC->SetMarkerSize(0.8);
+
+  TGraph *g_ww_forARC_obs = GraphWW_observed();
+  g_ww_forARC_obs->SetMarkerColor(kBlack);
+  g_ww_forARC_obs->SetMarkerStyle(20);
+  g_ww_forARC_obs->SetMarkerSize(0.8);
+
+  TLegend *leg_ww = new TLegend(0.44,0.7,0.9,0.9);
+  leg_ww->AddEntry(g_ww_obs_leg,"Observed 95\% CL limit");
   leg_ww->AddEntry(g_ww_leg,"Expected 95\% CL limit");
   leg_ww->AddEntry(g_ww_leg_1s,"Expected 95\% CL limit #pm 1#sigma","F");
   leg_ww->AddEntry(g_ww_leg_2s,"Expected 95\% CL limit #pm 2#sigma","F");
   // leg_ww->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
-  gStyle->SetLegendTextSize(0.03);
+  gStyle->SetLegendTextSize(0.042);
 
+  gPad->SetBottomMargin(0.15);
+  gPad->SetLeftMargin(0.15);
   g_ww->GetXaxis()->SetLabelOffset(0.015);
+  g_ww->GetXaxis()->SetLabelSize(0.05);
   g_ww->GetXaxis()->SetTitleOffset(1.2);
+  g_ww->GetXaxis()->SetTitleSize(0.06);
   g_ww->GetYaxis()->SetLabelOffset(0.015);
-  g_ww->GetYaxis()->SetTitleOffset(1.4);
+  g_ww->GetYaxis()->SetLabelSize(0.05);
+  g_ww->GetYaxis()->SetTitleOffset(1.2);
+  g_ww->GetYaxis()->SetTitleSize(0.06);
   
+  cout << "Label size: " << g_ww->GetXaxis()->GetLabelSize()<<endl;
   g_ww->Draw("AP");
   twoSigmaLargeEllipse_ww->Draw("same");
   oneSigmaLargeEllipse_ww->Draw("same");
   oneSigmaSmallEllipse_ww->Draw("same");
   twoSigmaSmallEllipse_ww->Draw("same");
   expEllipse_ww->Draw("same");
+  // g_ww_forARC->Draw("Psame");
   // g_ww_realpoints->Draw("Psame");
   obsEllipse_ww->Draw("same");
-  fixDivisionsAndGrid(g_ww,506,510,-0.1e-3,0.1e-3);
-  CMS_TOTEM_lumi((TPad*)c_ww->GetPad(0),4,11,"",true);
+  // g_ww_forARC_obs->Draw("Psame");
+  fixDivisionsAndGrid(g_ww,506,510,-0.1e-3*1e+7,0.1e-3*1e+7);
+  CMS_TOTEM_lumi((TPad*)c_ww->GetPad(0),4,11,"2",true);
   leg_ww->Draw("same");
 
   c_ww->SaveAs("Ellipse_ww.pdf");
@@ -1159,7 +1179,7 @@ void FitEllipse(){
   twoSigmaLargeEllipse_zz->SetLineWidth(0);
   TCanvas *c_zz = new TCanvas();
   TGraph *g_zz  = GraphZZ();
-  TH1F *g_zz_leg = new TH1F("Expected 95\% CL exclusion contour #pm 1#sigma","Expected 95\% CL exclusion contour #pm 1#sigma",1,0,1);
+  TH1F *g_zz_leg = new TH1F("Expected 95\% CL limit #pm 1#sigma","Expected 95\% CL limit #pm 1#sigma",1,0,1);
   g_zz_leg->SetFillColor(kWhite);
   g_zz_leg->SetLineWidth(2);
   g_zz_leg->SetLineColor(kRed);
@@ -1174,7 +1194,7 @@ void FitEllipse(){
   g_zz_leg_2s->SetLineWidth(2);
   g_zz_leg_2s->SetLineColor(kYellow);
 
-  TH1F *g_zz_obs_leg = new TH1F("Observed 95\% CL exclusion contour #pm 1#sigma","Expected 95\% CL exclusion contour #pm 1#sigma",1,0,1);
+  TH1F *g_zz_obs_leg = new TH1F("Observed 95\% CL limit #pm 1#sigma","Expected 95\% CL limit #pm 1#sigma",1,0,1);
   g_zz_obs_leg->SetLineWidth(2);
   g_zz_obs_leg->SetLineColor(kBlack);
 
@@ -1182,18 +1202,35 @@ void FitEllipse(){
   g_zz_realpoints->SetMarkerColor(kRed);
   g_zz_realpoints->SetMarkerStyle(20);
   g_zz_realpoints->SetMarkerSize(0.8);  
-  TLegend *leg_zz = new TLegend(0.4,0.7,0.9,0.9);
-  leg_zz->AddEntry(g_zz_obs_leg,"Observed 95\% CL exclusion contour");
+
+  TGraph *g_zz_forARC = GraphZZ();
+  g_zz_forARC->SetMarkerColor(kRed);
+  g_zz_forARC->SetMarkerStyle(20);
+  g_zz_forARC->SetMarkerSize(0.8);  
+
+  TGraph *g_zz_forARC_obs = GraphZZ_observed();
+  g_zz_forARC_obs->SetMarkerColor(kBlack);
+  g_zz_forARC_obs->SetMarkerStyle(20);
+  g_zz_forARC_obs->SetMarkerSize(0.8);
+
+  TLegend *leg_zz = new TLegend(0.44,0.7,0.9,0.9);
+  leg_zz->AddEntry(g_zz_obs_leg,"Observed 95\% CL limit");
   leg_zz->AddEntry(g_zz_leg,"Expected 95\% CL limit");
   leg_zz->AddEntry(g_zz_leg_1s,"Expected 95\% CL limit #pm 1#sigma","F");
   leg_zz->AddEntry(g_zz_leg_2s,"Expected 95\% CL limit #pm 2#sigma","F");
-  // leg_zz->AddEntry(g_zz_realpoints,"Points tested with full CMS simulation","P");
-  gStyle->SetLegendTextSize(0.03);
+  // leg_zz->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
+  gStyle->SetLegendTextSize(0.042);
 
+  gPad->SetBottomMargin(0.15);
+  gPad->SetLeftMargin(0.15);
   g_zz->GetXaxis()->SetLabelOffset(0.015);
+  g_zz->GetXaxis()->SetLabelSize(0.05);
   g_zz->GetXaxis()->SetTitleOffset(1.2);
+  g_zz->GetXaxis()->SetTitleSize(0.06);
   g_zz->GetYaxis()->SetLabelOffset(0.015);
-  g_zz->GetYaxis()->SetTitleOffset(1.4);
+  g_zz->GetYaxis()->SetLabelSize(0.05);
+  g_zz->GetYaxis()->SetTitleOffset(1.2);
+  g_zz->GetYaxis()->SetTitleSize(0.06);
   
   g_zz->Draw("AP");
   twoSigmaLargeEllipse_zz->Draw("same");
@@ -1202,9 +1239,11 @@ void FitEllipse(){
   twoSigmaSmallEllipse_zz->Draw("same");
   expEllipse_zz->Draw("same");
   // g_zz_realpoints->Draw("Psame");
+  // g_zz_forARC->Draw("Psame");
   obsEllipse_zz->Draw("same");
-  fixDivisionsAndGrid(g_zz,508,510,-0.25e-3,0.25e-3);
-  CMS_TOTEM_lumi((TPad*)c_zz->GetPad(0),4,11,"",true);
+  // g_zz_forARC_obs->Draw("Psame");
+  fixDivisionsAndGrid(g_zz,508,510,-0.25e-3*1e+7,0.25e-3*1e+7);
+  CMS_TOTEM_lumi((TPad*)c_zz->GetPad(0),4,11,"2",true);
   leg_zz->Draw("same");
 
   c_zz->SaveAs("Ellipse_zz.pdf");
@@ -1263,19 +1302,35 @@ void FitEllipse(){
   g_ww_clip_realpoints->SetMarkerColor(kRed);
   g_ww_clip_realpoints->SetMarkerStyle(20);
   g_ww_clip_realpoints->SetMarkerSize(0.8);  
-  TLegend *leg_ww_clip = new TLegend(0.4,0.7,0.9,0.9);
-  leg_ww_clip->AddEntry(g_ww_clip_obs_leg,"Observed 95\% CL exclusion contour");
+
+  TGraph *g_ww_clip_forARC = GraphWW_clip();
+  g_ww_clip_forARC->SetMarkerColor(kRed);
+  g_ww_clip_forARC->SetMarkerStyle(20);
+  g_ww_clip_forARC->SetMarkerSize(0.8);  
+
+  TGraph *g_ww_clip_forARC_obs = GraphWW_observed_clip();
+  g_ww_clip_forARC_obs->SetMarkerColor(kBlack);
+  g_ww_clip_forARC_obs->SetMarkerStyle(20);
+  g_ww_clip_forARC_obs->SetMarkerSize(0.8);  
+
+  TLegend *leg_ww_clip = new TLegend(0.44,0.7,0.9,0.9);
+  leg_ww_clip->AddEntry(g_ww_clip_obs_leg,"Observed 95\% CL limit");
   leg_ww_clip->AddEntry(g_ww_clip_leg,"Expected 95\% CL limit");
   leg_ww_clip->AddEntry(g_ww_clip_leg_1s,"Expected 95\% CL limit #pm 1#sigma","F");
   leg_ww_clip->AddEntry(g_ww_clip_leg_2s,"Expected 95\% CL limit #pm 2#sigma","F");
-  // leg_ww_clip->AddEntry(g_ww_clip_realpoints,"Points tested with full CMS simulation","P");
-  gStyle->SetLegendTextSize(0.03);
+  // leg_ww_clip->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
+  gStyle->SetLegendTextSize(0.042);
 
+  gPad->SetBottomMargin(0.15);
+  gPad->SetLeftMargin(0.15);
   g_ww_clip->GetXaxis()->SetLabelOffset(0.015);
+  g_ww_clip->GetXaxis()->SetLabelSize(0.05);
   g_ww_clip->GetXaxis()->SetTitleOffset(1.2);
+  g_ww_clip->GetXaxis()->SetTitleSize(0.06);
   g_ww_clip->GetYaxis()->SetLabelOffset(0.015);
-  g_ww_clip->GetYaxis()->SetTitleOffset(1.4);
-  
+  g_ww_clip->GetYaxis()->SetLabelSize(0.05);
+  g_ww_clip->GetYaxis()->SetTitleOffset(1.2);
+  g_ww_clip->GetYaxis()->SetTitleSize(0.06);  
   g_ww_clip->Draw("AP");
   twoSigmaLargeEllipse_ww_clip->Draw("same");
   oneSigmaLargeEllipse_ww_clip->Draw("same");
@@ -1283,12 +1338,15 @@ void FitEllipse(){
   twoSigmaSmallEllipse_ww_clip->Draw("same");
   expEllipse_ww_clip->Draw("same");
   // g_ww_clip_realpoints->Draw("Psame");
+  // g_ww_clip_forARC->Draw("Psame");
   obsEllipse_ww_clip->Draw("same");
-  fixDivisionsAndGrid(g_ww_clip,506,512,-0.12e-3,0.12e-3);
-  CMS_TOTEM_lumi((TPad*)c_ww_clip->GetPad(0),4,11,"",true);
+  // g_ww_clip_forARC_obs->Draw("Psame");
+  fixDivisionsAndGrid(g_ww_clip,506,512,-0.12e-3*1e+7,0.12e-3*1e+7);
+  CMS_TOTEM_lumi((TPad*)c_ww_clip->GetPad(0),4,11,"2",true);
   leg_ww_clip->Draw("same");
 
   c_ww_clip->SaveAs("Ellipse_ww_clip.pdf");  
+  cout << "Legend text size " << gStyle->GetLegendTextSize() << endl;
   return;
 }
 
@@ -1394,13 +1452,13 @@ TMultiGraph* checkFit(TGraph* graph_orig = GraphWW()){
   g_delta_theta->SetMarkerStyle(20);
   g_delta_theta->SetNameTitle("rotation angle","rotation angle");
   mg->Add(g_delta_theta);
-  mg->SetMinimum(-0.2);
-  mg->SetMaximum(0.2);
+  mg->SetMinimum(-0.5);
+  mg->SetMaximum(0.5);
 
   return mg;
 }
 
-void checkFits(){
+void checkFitsExpected(){
   gStyle->SetPalette(kViridis);
   gStyle->SetLegendBorderSize(0);
   auto c = new TCanvas("CheckFits","CheckFits",500,900);
@@ -1421,5 +1479,31 @@ void checkFits(){
   c->cd(3);
   mg3->Draw("ALP pmc plc");
   gPad->BuildLegend(0.65,0.7,0.89,0.89);
+  c->SaveAs("CheckFitsExpected.pdf");
+
+}
+
+void checkFitsObserved(){
+  gStyle->SetPalette(kViridis);
+  gStyle->SetLegendBorderSize(0);
+  auto c = new TCanvas("CheckFits","CheckFits",500,900);
+  c->Divide(1,3);
+  auto mg1 = checkFit(GraphWW_observed());
+  // mg1->GetXaxis()->SetTitle("");
+  mg1->SetTitle("WW limit - no clipping;Index of the removed point;Parameter relative variation");
+  c->cd(1);
+  mg1->Draw("ALP pmc plc");
+  gPad->BuildLegend(0.65,0.7,0.89,0.89);
+  auto mg2 = checkFit(GraphZZ_observed());
+  mg2->SetTitle("ZZ limit;Index of the removed point;Parameter relative variation");
+  c->cd(2);
+  mg2->Draw("ALP pmc plc");
+  gPad->BuildLegend(0.65,0.7,0.89,0.89);
+  auto mg3 = checkFit(GraphWW_observed_clip());
+  mg3->SetTitle("WW limit - clipped;Index of the removed point;Parameter relative variation");
+  c->cd(3);
+  mg3->Draw("ALP pmc plc");
+  gPad->BuildLegend(0.65,0.7,0.89,0.89);
+  c->SaveAs("CheckFitsObserved.pdf");
 
 }

@@ -204,7 +204,7 @@ HadronicWWCuts::HadronicWWCuts(Int_t mysample, bool protonSyst,
   this->gen_xi_min = gen_xi_min;
   this->gen_xi_max = gen_xi_max;
   TString mcNtuplesFolder =
-      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v4";
+      "/eos/cms/store/group/phys_smp/HadronicVV/signalNTuples_v5";
 
   // TString mcNtuplesFolder =
   //     "/afs/cern.ch/work/a/abellora/Work/PPtoPPWWjets_analysis/newInstall/"

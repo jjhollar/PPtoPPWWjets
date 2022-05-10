@@ -87,8 +87,8 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   c1->cd(2);
   rotated_1->GetXaxis()->SetRangeUser(-1.5, 1.5);
   rotated_1->GetYaxis()->SetRangeUser(-1.5, 1.5); 
-  rotated_1->GetXaxis()->SetTitle("(1 - m(WW)/m(PP))*cos(#theta_{1})-(y(PP)-y(WW))*sin(#theta_{1})");
-  rotated_1->GetYaxis()->SetTitle("(1 - m(WW)/m(PP))*sin(#theta_{1})+(y(PP)-y(WW))*cos(#theta_{1})");
+  rotated_1->GetXaxis()->SetTitle("(1 - m(WW)/m(pp))*cos(#theta_{1})-(y(pp)-y(WW))*sin(#theta_{1})");
+  rotated_1->GetYaxis()->SetTitle("(1 - m(WW)/m(pp))*sin(#theta_{1})+(y(pp)-y(WW))*cos(#theta_{1})");
   rotated_1->Draw("colz");
   c1->cd(5);
   TH1D *proj1 = rotated_1->ProjectionX();
@@ -114,8 +114,8 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   c1->cd(3);
   rotated_2->GetXaxis()->SetRangeUser(-1.5, 1.5);
   rotated_2->GetYaxis()->SetRangeUser(-1.5, 1.5);
-  rotated_2->GetXaxis()->SetTitle("(1 - m(WW)/m(PP))*cos(#theta_{2})-(y(PP)-y(WW))*sin(#theta_{2})");
-  rotated_2->GetYaxis()->SetTitle("(1 - m(WW)/m(PP))*sin(#theta_{2})+(y(PP)-y(WW))*cos(#theta_{2})");
+  rotated_2->GetXaxis()->SetTitle("(1 - m(WW)/m(pp))*cos(#theta_{2})-(y(pp)-y(WW))*sin(#theta_{2})");
+  rotated_2->GetYaxis()->SetTitle("(1 - m(WW)/m(pp))*sin(#theta_{2})+(y(pp)-y(WW))*cos(#theta_{2})");
 
   rotated_2->Draw("colz");
   c1->cd(6);
@@ -130,8 +130,8 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   c1->cd(4);
   hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-1.5, 0.4);
   hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-1.1, 0.9);
-  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
-  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("y(PP)-y(WW)");
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("1 - m(WW)/m(pp)");
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("y(pp)-y(WW)");
   hmassrapiditymatchsigmcmmww->Draw("colz");
 
   TGraphErrors *band1 = new TGraphErrors(4);
@@ -255,14 +255,18 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   l19->SetLineColor(kRed); l19->SetLineWidth(3); l19->Draw("same");
   l20->SetLineColor(kRed); l20->SetLineWidth(3); l20->Draw("same");
   c2->cd();
+  gPad->SetRightMargin(0.13);
+  hmassrapiditymatchsigmcmmww->GetZaxis()->SetTitle("Events / bin");
   hmassrapiditymatchsigmcmmww->Draw("colz");
   // band1->Draw("3same");
   // band2->Draw("3same");
   // diamond->Draw("3same");
-  CMS_TOTEM_lumi((TPad*)c2->GetPad(0),0,0,"");
+  CMS_TOTEM_lumi((TPad*)c2->GetPad(0),4,0,"");
+  gPad->SetTicks(1,1);
+  // TPaletteAxis *pal = (TPaletteAxis*)(hmassrapiditymatchsigmcmmww->GetListOfFunctions()->FindObject("palette"));
 
   TLatex latex;
-  latex.DrawLatexNDC(0.15,0.85,"#scale[0.76]{a_{W}^{0}/#Lambda^{2} = 2 #upoint 10^{-6} GeV^{-2}}");
+  latex.DrawLatexNDC(0.15,0.83,"#scale[0.76]{a_{W}^{0}/#Lambda^{2} = 2 #times 10^{-6} GeV^{-2}}");
   c2->Print("MassMatchRatio.pdf");
 
   l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
@@ -375,8 +379,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(2);
   rotated_1->GetXaxis()->SetRangeUser(-2, 2);
   rotated_1->GetYaxis()->SetRangeUser(-2, 2);
-  rotated_1->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
-  rotated_1->GetYaxis()->SetTitle("y(PP)-y(WW)");
+  rotated_1->GetXaxis()->SetTitle("1 - m(WW)/m(pp)");
+  rotated_1->GetYaxis()->SetTitle("y(pp)-y(WW)");
   rotated_1->Draw("colz");
   c1->cd(5);
   TH1D *proj1 = rotated_1->ProjectionX();
@@ -400,8 +404,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(3);
   rotated_2->GetXaxis()->SetRangeUser(-2, 2);
   rotated_2->GetYaxis()->SetRangeUser(-2, 2);
-  rotated_2->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
-  rotated_2->GetYaxis()->SetTitle("y(PP)-y(WW)");
+  rotated_2->GetXaxis()->SetTitle("1 - m(WW)/m(pp)");
+  rotated_2->GetYaxis()->SetTitle("y(pp)-y(WW)");
   rotated_2->Draw("colz");
   c1->cd(6);
   TH1D *proj2 = rotated_2->ProjectionX();
@@ -415,8 +419,8 @@ void MassRapiditySelectionZZ(TFile *file) {
   c1->cd(4);
   hmassrapiditymatchsigmcmmzz->GetXaxis()->SetRangeUser(-2, 2);
   hmassrapiditymatchsigmcmmzz->GetYaxis()->SetRangeUser(-2, 2);
-  hmassrapiditymatchsigmcmmzz->GetXaxis()->SetTitle("1 - m(WW)/m(PP)");
-  hmassrapiditymatchsigmcmmzz->GetYaxis()->SetTitle("y(PP)-y(WW)");
+  hmassrapiditymatchsigmcmmzz->GetXaxis()->SetTitle("1 - m(WW)/m(pp)");
+  hmassrapiditymatchsigmcmmzz->GetYaxis()->SetTitle("y(pp)-y(WW)");
   hmassrapiditymatchsigmcmmzz->Draw("colz");
 
   TGraphErrors *band1 = new TGraphErrors(4);

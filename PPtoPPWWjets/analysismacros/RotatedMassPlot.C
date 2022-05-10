@@ -22,7 +22,8 @@ void RotatedMassPlot()
   Float_t lumi2017E = 8.948;
   Float_t lumi2017F = 13.214;
   TString hist = "hprunedrotatedjjdat";
-  TString thetitle = "cos(#pi / 4) * m(j1) + sin(#pi / 4) * m(j2) [GeV]";
+  TString thextitle = "cos(#pi / 4)m(j1) + sin(#pi / 4)m(j2) [GeV]";
+  TString theytitle = "Events / 2 GeV";
   TString filetitle = "prunedrotatedjjdatsignal";
   hist = "PreselectionAndControl/"+hist;
 
@@ -104,6 +105,7 @@ void RotatedMassPlot()
   hd2->Rebin(rebinfactor);
   hd2_2->Rebin(rebinfactor);
 
+  cout << "Using binsize: " << ha1->GetBinWidth(1) << " GeV" << endl;
   ha1->Sumw2(); // Signal, a0W=1E-6, 2017B --> 2017preTS2
   ha1->Scale(mcaxsec*1000*lumi2017B/27800.0);
   ha1_2->Sumw2(); // Signal, a0W=1E-6, 2017C 
@@ -177,20 +179,21 @@ void RotatedMassPlot()
   hd1->Add(hd2);
   
   TLegend *lg1 = new TLegend(0.45,0.5,0.8,0.85);
-  ha1->GetXaxis()->SetTitle(thetitle);
+  ha1->GetXaxis()->SetTitle(thextitle);
   ha1->GetXaxis()->SetRangeUser(50,300);
+  ha1->GetYaxis()->SetTitle(theytitle);
 
   auto clone = ha1->DrawNormalized("hist");
   hb1->DrawNormalized("histsame");
   hc1->DrawNormalized("histsame");
   hd1->DrawNormalized("histsame");
   lg1->SetBorderSize(0);
-  lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-  lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
-  lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=5*10^{-5} GeV^{-2}");
-  lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
+  lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{W}_{0}/#Lambda^{2} = 1 #times 10^{-6} GeV^{-2}");
+  lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{W}_{C}/#Lambda^{2} = 2 #times 10^{-5} GeV^{-2}");
+  lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{Z}_{0}/#Lambda^{2} = 5 #times 10^{-5} GeV^{-2}");
+  lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{Z}_{C}/#Lambda^{2} = 5 #times 10^{-5} GeV^{-2}");
   lg1->Draw("same");
-  CMS_lumi((TPad*)c1->GetPad(0),0,0,"");
+  CMS_lumi((TPad*)c1->GetPad(0),4,0,"");
   clone->GetYaxis()->SetRangeUser(0,0.12);
   c1->Update();
   TString outplotname = outplotdir+"validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".pdf";

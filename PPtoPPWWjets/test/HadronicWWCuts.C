@@ -41,7 +41,7 @@ void HadronicWWCuts::Loop() {
 
   // TString outputFolder = "testrun";
 
-    TString outputFolder = "signalSamples_v7";
+    TString outputFolder = "signalSamples_8";
   // TString outputFolder = "dataRun2";
   // TString outputFolder = "dataRun2_v2";
   // TString outputFolder = "dataRun2_v3";
