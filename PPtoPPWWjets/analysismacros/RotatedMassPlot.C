@@ -1,5 +1,7 @@
 #include "CMS_lumi.h"
 
+bool noSqrt2 = true;
+
 void RotatedMassPlot()
 {
   // TString outplotdir = "validationplots/";
@@ -26,6 +28,12 @@ void RotatedMassPlot()
   TString theytitle = "Events / 2 GeV";
   TString filetitle = "prunedrotatedjjdatsignal";
   hist = "PreselectionAndControl/"+hist;
+
+  if(noSqrt2){
+    thextitle = "m(j1) + m(j2) [GeV]";
+    filetitle = "prunedrotatedjjdatsignal_noSqrt2";
+    theytitle = "Events / 2.83 GeV";
+  }
 
   TString signalFolder = "/eos/cms/store/group/phys_smp/HadronicVV/signalSamples_v6/";
   // Load signal MC files
@@ -178,10 +186,23 @@ void RotatedMassPlot()
   hd2->SetLineWidth(3); hd2->SetLineColor(kSpring-1); hd2->SetMarkerStyle(0); hd2->SetMarkerColor(kSpring-1);
   hd1->Add(hd2);
   
-  TLegend *lg1 = new TLegend(0.45,0.5,0.8,0.85);
+  TLegend *lg1 = new TLegend(0.40,0.5,0.8,0.85);
+  gStyle->SetLegendFont(62);
+  gStyle->SetLegendTextSize(0.04);
   ha1->GetXaxis()->SetTitle(thextitle);
+  ha1->GetXaxis()->SetTitleSize(0.05);
   ha1->GetXaxis()->SetRangeUser(50,300);
+  if (noSqrt2){
+    double xmin = ha1->GetXaxis()->GetXmin();
+    double xmax = ha1->GetXaxis()->GetXmax();
+    ha1->GetXaxis()->SetLimits(xmin*sqrt(2),xmax*sqrt(2));
+    hb1->GetXaxis()->SetLimits(xmin*sqrt(2),xmax*sqrt(2));
+    hc1->GetXaxis()->SetLimits(xmin*sqrt(2),xmax*sqrt(2));
+    hd1->GetXaxis()->SetLimits(xmin*sqrt(2),xmax*sqrt(2));
+    ha1->GetXaxis()->SetRangeUser(50*sqrt(2),300*sqrt(2));
+  }
   ha1->GetYaxis()->SetTitle(theytitle);
+  ha1->GetYaxis()->SetTitleSize(0.05);
 
   auto clone = ha1->DrawNormalized("hist");
   hb1->DrawNormalized("histsame");

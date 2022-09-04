@@ -96,11 +96,11 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   if(var == 13)
     {hist = "hdeta"; rangelo = 0; rangehi = 1.3; thetitle = "#Delta(#eta)"; filetitle = "deltaeta";}
   if(var == 14)
-    {hist = "hacopdat"; thetitle = "acoplanarity(jj)"; filetitle = "acoplanarity";}
+    {hist = "hacopdat"; thetitle = "acoplanarity(jj)"; filetitle = "acoplanarity"; rangelo = 0; rangehi = 0.2;}
   if(var == 15)
     {hist = "hnvtx"; thetitle = "N(vertices)"; filetitle = "nvertices";}
   if(var == 16)
-    {hist = "hptratio"; thetitle = "p_{T}(j1)/p_{T}(j2)"; filetitle = "pTbalance";}
+    {hist = "hptratio"; thetitle = "p_{T}(j1)/p_{T}(j2)"; filetitle = "pTbalance"; rangelo = 1; rangehi = 2;}
   if(var == 17)
     {hist = "hmjdat2"; rangelo = 55; rangehi = 215; thetitle = "m(j2) [GeV]"; filetitle = "mj2";}
   if(var == 18)
@@ -298,6 +298,25 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h100->Sumw2(); //h101->Sumw2(); h102->Sumw2(); h103->Sumw2();  h104->Sumw2();
   //  h100->Add(h101); h100->Add(h102); h100->Add(h103); h100->Add(h104);
   TH1F *h1000 = (TH1F *)h100->Clone("h1000");
+
+  // Canvas for plot + ratio for thesis 
+  TCanvas *c_thesis = new TCanvas("c_thesis","c_thesis",700,800);
+  // Upper plot will be in pad1
+  TPad *pad1 = new TPad("pad1", "pad1", 0, 0.35, 1, 1.0);
+  pad1->SetBottomMargin(0); // Upper and lower plot are joined
+  pad1->SetRightMargin(0.1);
+  pad1->SetLeftMargin(0.1);
+  pad1->Draw();             // Draw the upper pad: pad1
+  pad1->cd();               // pad1 becomes the current pad
+  // lower plot will be in pad2
+  c_thesis->cd();          // Go back to the main canvas before defining pad2
+  TPad *pad2 = new TPad("pad2", "pad2", 0, 0.05, 1, 0.35);
+  pad2->SetTopMargin(0);
+  pad2->SetRightMargin(0.1);
+  pad2->SetLeftMargin(0.1);
+  pad2->SetBottomMargin(0.25);
+  pad2->Draw();
+
 
   TCanvas *c1 = new TCanvas("c1","c1",500,1000);
   c1->Divide(1,3);
@@ -516,6 +535,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h10->Add(h7);
   h10->Add(h8);
   h10->Add(h9);
+  h10->SetLineWidth(0);
   h10->Draw("histsame");
 
   h10->SetStats(0);     
@@ -552,6 +572,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h6->Add(h7);
   h6->Add(h8);
   h6->Add(h9);
+  h6->SetLineWidth(0);
   h6->Draw("histsame");
 
   h5->Add(h4);
@@ -560,6 +581,7 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h5->Add(h7);
   h5->Add(h8);
   h5->Add(h9);
+  h5->SetLineWidth(0);
   h5->Draw("histsame");
 
 
@@ -568,29 +590,35 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h4->Add(h7);
   h4->Add(h8);
   h4->Add(h9);
+  h4->SetLineWidth(0);
   h4->Draw("histsame");
 
   h3->Add(h2);
   h3->Add(h7);
   h3->Add(h8);
   h3->Add(h9);
+  h3->SetLineWidth(0);
   h3->Draw("histsame");
 
   h2->Add(h7);
   h2->Add(h8);
   h2->Add(h9);
+  h2->SetLineWidth(0);
   h2->Draw("histsame");
 
   h8->SetFillColor(kGreen+1);
   h8->Add(h7);
   h8->Add(h9);
+  h8->SetLineWidth(0);
   h8->Draw("histsame");
 
   h9->SetFillColor(kYellow+1);
   h9->Add(h7);
+  h9->SetLineWidth(0);
   h9->Draw("histsame");
 
   h7->SetFillColor(kOrange+1);
+  h7->SetLineWidth(0);
   h7->Draw("histsame");
 
   h100->SetMarkerStyle(20); h100->SetLineWidth(3); h100->SetLineColor(kBlack);
@@ -601,10 +629,10 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   h7->SetMarkerStyle(0); h7->SetLineWidth(0);
   h8->SetMarkerStyle(0); h8->SetLineWidth(0);
   h9->SetMarkerStyle(0); h9->SetLineWidth(0);
-  lg1->AddEntry(h10,"Pythia8 QCD (bins)");
-  lg1->AddEntry(h8,"Madgraph W+jets");
-  lg1->AddEntry(h7,"Powheg ttbar");
-  lg1->AddEntry(h9,"Madgraph Z+jets");
+  lg1->AddEntry(h10,"QCD","f");
+  lg1->AddEntry(h8,"W+jets","f");
+  lg1->AddEntry(h7,"t#bar{t}","f");
+  lg1->AddEntry(h9,"Z+jets","f");
 
   // Signal MC
   if (var < 32){
@@ -624,7 +652,10 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
     lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   }
 
-  lg1->AddEntry(h100,"2017BCDEF Data");
+  h100->SetLineColor(kBlack);
+  h100->SetLineWidth(2);
+
+  lg1->AddEntry(h100,"2017 Data", "elp");
   lg1->Draw("same");
   
   c1->cd(2);
@@ -728,7 +759,89 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   c1->Update();
   TString outplotname = outplotdir+"validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".pdf";
   c1->SaveAs(outplotname);
-  
+
+  // Draw on thesis histogram
+  pad1->cd();
+  h10->SetStats(0);                                                                                                                                           
+  h10->SetMinimum(0.03);
+  h10->SetMaximum(h10err->GetMaximum()*1E5);
+  h10->GetYaxis()->SetLabelOffset(0.01);                                                                                                                             
+  h10->GetYaxis()->SetLabelFont(43);                                                                                                                             
+  h10->GetYaxis()->SetLabelSize(20);
+  h10->GetYaxis()->SetTitleFont(43);
+  h10->GetYaxis()->SetTitleSize(24);
+  h10->GetYaxis()->SetTitleOffset(1.5);
+
+  // Logic for y axis title 
+  h10->GetYaxis()->SetTitle("Events / bin");
+  h10->Draw("hist");
+  lg1->SetX1NDC(0.4); 
+  lg1->Draw();
+
+  // h10->GetYaxis()->SetLabelSize(0.);
+  // TGaxis *axis = new TGaxis( 0.5, 0., 0.5, 1, 0,1,510,"");
+  // axis->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+  // axis->SetLabelSize(15);
+  // axis->Draw();            
+  h10err->Draw("e2same");                                                                                                                                     
+
+  h6->Draw("histsame");
+  h5->Draw("histsame");
+  h4->Draw("histsame");
+  h3->Draw("histsame");
+  h2->Draw("histsame");
+  h8->Draw("histsame");
+  h9->Draw("histsame");
+  h7->Draw("histsame");
+  gPad->SetLogy();
+  h100->Draw("esame");
+  gPad->RedrawAxis();
+
+  // Signal MC on thesis pad                                                                                                                                                                       
+  if (var < 32){
+    ha1->Draw("histsame");
+    hb1->Draw("histsame");
+  } else if (var < 58) {
+    ha1->Draw("histsame");
+    hd1->Draw("histsame");
+  } else {
+    hb1->Draw("histsame");
+    hc1->Draw("histsame");
+  }
+
+  pad2->cd();
+  h1000err->GetYaxis()->SetLabelFont(43);
+  h1000err->GetYaxis()->SetLabelOffset(0.01);
+  h1000err->GetYaxis()->SetLabelSize(20);
+  h1000err->GetXaxis()->SetLabelFont(43);
+  h1000err->GetXaxis()->SetLabelSize(20);
+  h1000err->GetXaxis()->SetTitleFont(43);
+  h1000err->GetXaxis()->SetTitleSize(24);
+  h1000err->GetXaxis()->SetTitleOffset(3.3);
+  h1000err->SetMinimum(0.2);
+  h1000err->SetMaximum(1.8);
+  h1000err->Draw("E2");
+  h1000err->GetYaxis()->SetTitleFont(43);
+  h1000err->GetYaxis()->SetTitleSize(24);
+  h1000err->GetYaxis()->SetTitleOffset(1.5);
+  h1000err->GetYaxis()->SetTitle("Data/Simulation ");
+  h1000->Draw("esame");
+  l1->Draw("same");
+
+
+
+  pad1->cd();
+  TLatex l;
+  l.SetNDC();
+  l.SetTextSize(0.06);
+  l.SetTextAlign(13);
+  l.SetTextColor(kBlack);
+  l.DrawLatex(0.15,0.85,"#splitline{#font[61]{CMS-TOTEM}}{#scale[0.76]{#font[52]{Internal}}}");
+  l.SetTextAlign(31);
+  l.DrawLatex(0.9,0.92,"#scale[0.85]{2017, 37.2 fb^{-1} (13 TeV)}");
+
+  c_thesis->SaveAs("ch-6/fig/validationplots2017BCDEF_ntupleULReMiniv4final_"+filetitle+".pdf");
+
   if (saveToRootFile){
     TString outplotname_root = "validationplots2017BCDEF_ntupleULReMiniv4final_" + filetitle + ".root";
     TFile *outRoot = new TFile(outplotname_root,"RECREATE");
@@ -744,31 +857,31 @@ void ULPlotStackTest2017(Int_t var = 1, bool saveToRootFile = false)
   //  TCanvas *c3 = new TCanvas("c3","c3");
   //  h7->Draw("hist");
   //  ha->Draw("hist");
-  f100->Close();
-  f2->Close();
-  f3->Close();
-  f4->Close();
-  f5->Close();
-  f6->Close();
-  f7->Close();
-  f8->Close();
-  f9->Close();
-  f10->Close();
-  fa1->Close();
-  fa1_2->Close();
-  fa1_3->Close();
-  fa2->Close();
-  fa2_2->Close();
-  fb1->Close();
-  fb1_2->Close();
-  fb1_3->Close();
-  fb2->Close();
-  fb2_2->Close();
-  fd1->Close();
-  fd1_2->Close();
-  fd1_3->Close();
-  fd2->Close();
-  fd2_2->Close();
+  // f100->Close();
+  // f2->Close();
+  // f3->Close();
+  // f4->Close();
+  // f5->Close();
+  // f6->Close();
+  // f7->Close();
+  // f8->Close();
+  // f9->Close();
+  // f10->Close();
+  // fa1->Close();
+  // fa1_2->Close();
+  // fa1_3->Close();
+  // fa2->Close();
+  // fa2_2->Close();
+  // fb1->Close();
+  // fb1_2->Close();
+  // fb1_3->Close();
+  // fb2->Close();
+  // fb2_2->Close();
+  // fd1->Close();
+  // fd1_2->Close();
+  // fd1_3->Close();
+  // fd2->Close();
+  // fd2_2->Close();
 }
 
 void PlotStackAll2017()
@@ -886,4 +999,11 @@ void PlotEverything2017()
   ULPlotStackTest2017(70);
   ULPlotStackTest2017(71);
   ULPlotStackTest2017(72);
+}
+
+void PlotThesis2017(){
+  ULPlotStackTest2017(2);
+  ULPlotStackTest2017(14);
+  ULPlotStackTest2017(16);
+  ULPlotStackTest2017(17);
 }

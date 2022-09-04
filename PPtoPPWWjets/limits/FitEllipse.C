@@ -1122,16 +1122,17 @@ void FitEllipse(){
   // leg_ww->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
   gStyle->SetLegendTextSize(0.042);
 
-  gPad->SetBottomMargin(0.15);
-  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.17);
+  gPad->SetLeftMargin(0.17);
   g_ww->GetXaxis()->SetLabelOffset(0.015);
   g_ww->GetXaxis()->SetLabelSize(0.05);
-  g_ww->GetXaxis()->SetTitleOffset(1.2);
-  g_ww->GetXaxis()->SetTitleSize(0.06);
+  g_ww->GetXaxis()->SetTitleOffset(1.1);
+  g_ww->GetXaxis()->SetTitleSize(0.07);
   g_ww->GetYaxis()->SetLabelOffset(0.015);
   g_ww->GetYaxis()->SetLabelSize(0.05);
   g_ww->GetYaxis()->SetTitleOffset(1.2);
-  g_ww->GetYaxis()->SetTitleSize(0.06);
+  g_ww->GetYaxis()->SetTitleSize(0.07);
+  g_ww->GetYaxis()->SetRangeUser(-900,1100);
   
   cout << "Label size: " << g_ww->GetXaxis()->GetLabelSize()<<endl;
   g_ww->Draw("AP");
@@ -1221,16 +1222,16 @@ void FitEllipse(){
   // leg_zz->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
   gStyle->SetLegendTextSize(0.042);
 
-  gPad->SetBottomMargin(0.15);
-  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.17);
+  gPad->SetLeftMargin(0.17);
   g_zz->GetXaxis()->SetLabelOffset(0.015);
   g_zz->GetXaxis()->SetLabelSize(0.05);
-  g_zz->GetXaxis()->SetTitleOffset(1.2);
-  g_zz->GetXaxis()->SetTitleSize(0.06);
+  g_zz->GetXaxis()->SetTitleOffset(1.1);
+  g_zz->GetXaxis()->SetTitleSize(0.07);
   g_zz->GetYaxis()->SetLabelOffset(0.015);
   g_zz->GetYaxis()->SetLabelSize(0.05);
   g_zz->GetYaxis()->SetTitleOffset(1.2);
-  g_zz->GetYaxis()->SetTitleSize(0.06);
+  g_zz->GetYaxis()->SetTitleSize(0.07);
   
   g_zz->Draw("AP");
   twoSigmaLargeEllipse_zz->Draw("same");
@@ -1321,16 +1322,17 @@ void FitEllipse(){
   // leg_ww_clip->AddEntry(g_ww_realpoints,"Points tested with full CMS simulation","P");
   gStyle->SetLegendTextSize(0.042);
 
-  gPad->SetBottomMargin(0.15);
-  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.17);
+  gPad->SetLeftMargin(0.17);
   g_ww_clip->GetXaxis()->SetLabelOffset(0.015);
   g_ww_clip->GetXaxis()->SetLabelSize(0.05);
-  g_ww_clip->GetXaxis()->SetTitleOffset(1.2);
-  g_ww_clip->GetXaxis()->SetTitleSize(0.06);
+  g_ww_clip->GetXaxis()->SetTitleOffset(1.1);
+  g_ww_clip->GetXaxis()->SetTitleSize(0.07);
   g_ww_clip->GetYaxis()->SetLabelOffset(0.015);
   g_ww_clip->GetYaxis()->SetLabelSize(0.05);
   g_ww_clip->GetYaxis()->SetTitleOffset(1.2);
-  g_ww_clip->GetYaxis()->SetTitleSize(0.06);  
+  g_ww_clip->GetYaxis()->SetTitleSize(0.07);  
+  g_ww_clip->GetYaxis()->SetRangeUser(-1100,1300);
   g_ww_clip->Draw("AP");
   twoSigmaLargeEllipse_ww_clip->Draw("same");
   oneSigmaLargeEllipse_ww_clip->Draw("same");
