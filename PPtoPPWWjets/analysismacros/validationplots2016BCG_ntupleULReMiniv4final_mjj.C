@@ -6826,7 +6826,7 @@ void validationplots2016BCG_ntupleULReMiniv4final_mjj()
    hmjjdat__14->Draw("histsame");
    
    //   TLegend *leg = new TLegend(0.35,0.5,0.8,0.85,NULL,"brNDC");
-   TLegend *leg = new TLegend(0.25,0.45,0.88,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.25,0.45,0.86,0.88,NULL,"brNDC");
    leg->SetMargin(0.1);
    leg->SetEntrySeparation(0.3);
    leg->SetBorderSize(0);
