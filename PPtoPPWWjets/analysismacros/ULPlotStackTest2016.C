@@ -582,7 +582,7 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   h100->SetLineWidth(0);
   h100->Draw("esame");
 
-  TLegend *lg1 = new TLegend(0.35,0.5,0.8,0.85);
+  TLegend *lg1 = new TLegend(0.30,0.5,0.8,0.85);
   h10->SetMarkerStyle(0); 
   h7->SetMarkerStyle(0); 
   h8->SetMarkerStyle(0); h8->SetLineWidth(0);
@@ -597,18 +597,18 @@ void ULPlotStackTest2016(Int_t var = 1, bool saveToRootFile = false)
   if (var < 32){
     ha1->Draw("histsame");
     hb1->Draw("histsame");
-    lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
+    lg1->AddEntry(ha1,"p#gamma#gamma#rightarrowpWWp, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+    lg1->AddEntry(hb1,"p#gamma#gammap#rightarrowpZZp, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   } else if (var < 58) {
     ha1->Draw("histsame");
     hd1->Draw("histsame");
-    lg1->AddEntry(ha1,"#gamma#gamma#rightarrowWW, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
-    lg1->AddEntry(hd1,"#gamma#gamma#rightarrowWW, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
+    lg1->AddEntry(ha1,"p#gamma#gamma#rightarrowpWWp, a^{0}_{W}/#Lambda^{2}=1*10^{-6} GeV^{-2}");
+    lg1->AddEntry(hd1,"p#gamma#gammap#rightarrowpZZp, a^{C}_{W}/#Lambda^{2}=2*10^{-5} GeV^{-2}");
   } else {
     hb1->Draw("histsame");
     hc1->Draw("histsame");
-    lg1->AddEntry(hb1,"#gamma#gamma#rightarrowZZ, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
-    lg1->AddEntry(hc1,"#gamma#gamma#rightarrowZZ, a^{C}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hb1,"p#gamma#gamma#rightarrowpWWp, a^{0}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
+    lg1->AddEntry(hc1,"p#gamma#gammap#rightarrowpZZp, a^{C}_{Z}/#Lambda^{2}=1*10^{-5} GeV^{-2}");
   }
 
   h100->SetLineColor(kBlack);

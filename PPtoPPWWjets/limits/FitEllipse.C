@@ -755,6 +755,12 @@ TEllipse* fitEllipseTGraphDLSF(TGraph *g = ((TGraph *)0))
     std::cout << "a = " << ellipse[2] << std::endl;
     std::cout << "b = " << ellipse[3] << std::endl;
     std::cout << "theta = " << ellipse[4] << std::endl;
+
+    std::cout << ellipse[0] << std::endl;
+    std::cout << ellipse[1] << std::endl;
+    std::cout << ellipse[2] << std::endl;
+    std::cout << ellipse[3] << std::endl;
+    std::cout << ellipse[4] << std::endl;
     std::cout << std::endl;
   }
 #endif /* 0 or 1 */
@@ -1053,11 +1059,17 @@ void FitEllipse(){
 
   // WW plot
   gStyle->SetOptTitle(0);
+  cout << "Expected" << endl;
   TEllipse *expEllipse_ww = fitEllipseTGraphDLSF(GraphWW());
+  cout << "Observed" << endl;
   TEllipse *obsEllipse_ww = fitEllipseTGraphDLSF(GraphWW_observed());
+  cout << "1s down" << endl;
   TEllipse *oneSigmaSmallEllipse_ww = fitEllipseTGraphDLSF(GraphWW_minusSigma());
+  cout << "2s down" << endl;
   TEllipse *twoSigmaSmallEllipse_ww = fitEllipseTGraphDLSF(GraphWW_minus2Sigma());
+  cout << "1s up" << endl;
   TEllipse *oneSigmaLargeEllipse_ww = fitEllipseTGraphDLSF(GraphWW_plusSigma());
+  cout << "2s up" << endl;
   TEllipse *twoSigmaLargeEllipse_ww = fitEllipseTGraphDLSF(GraphWW_plus2Sigma());
   expEllipse_ww->SetLineColor(kRed);
   expEllipse_ww->SetLineWidth(2);
@@ -1145,7 +1157,7 @@ void FitEllipse(){
   // g_ww_realpoints->Draw("Psame");
   obsEllipse_ww->Draw("same");
   // g_ww_forARC_obs->Draw("Psame");
-  fixDivisionsAndGrid(g_ww,506,510,-0.1e-3*1e+7,0.1e-3*1e+7);
+  fixDivisionsAndGrid(g_ww,506,510,-0.09e-3*1e+7,0.11e-3*1e+7);
   CMS_TOTEM_lumi((TPad*)c_ww->GetPad(0),4,11,"2",true);
   leg_ww->Draw("same");
 
@@ -1343,7 +1355,7 @@ void FitEllipse(){
   // g_ww_clip_forARC->Draw("Psame");
   obsEllipse_ww_clip->Draw("same");
   // g_ww_clip_forARC_obs->Draw("Psame");
-  fixDivisionsAndGrid(g_ww_clip,506,512,-0.12e-3*1e+7,0.12e-3*1e+7);
+  fixDivisionsAndGrid(g_ww_clip,506,512,-0.11e-3*1e+7,0.13e-3*1e+7);
   CMS_TOTEM_lumi((TPad*)c_ww_clip->GetPad(0),4,11,"2",true);
   leg_ww_clip->Draw("same");
 

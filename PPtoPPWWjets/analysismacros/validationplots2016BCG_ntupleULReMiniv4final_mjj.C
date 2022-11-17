@@ -6826,7 +6826,7 @@ void validationplots2016BCG_ntupleULReMiniv4final_mjj()
    hmjjdat__14->Draw("histsame");
    
    //   TLegend *leg = new TLegend(0.35,0.5,0.8,0.85,NULL,"brNDC");
-   TLegend *leg = new TLegend(0.32,0.45,0.88,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.25,0.45,0.88,0.88,NULL,"brNDC");
    leg->SetMargin(0.1);
    leg->SetEntrySeparation(0.3);
    leg->SetBorderSize(0);
@@ -6897,7 +6897,7 @@ void validationplots2016BCG_ntupleULReMiniv4final_mjj()
    entry->SetTextFont(62);
    entry->SetMarkerSize(0);
    
-   entry=leg->AddEntry("hmjjdat","#gamma#gamma#rightarrowWW, a^{W}_{0}/#Lambda^{2}=1*10^{-6} GeV^{-2}","lpf");
+   entry=leg->AddEntry("hmjjdat","p#gamma#gammap#rightarrowpWWp, a^{W}_{0}/#Lambda^{2}=1*10^{-6} GeV^{-2}","lpf");
    entry->SetFillStyle(1001);
    ci = TColor::GetColor("#d7191c");
    entry->SetLineColor(ci);
@@ -6909,7 +6909,7 @@ void validationplots2016BCG_ntupleULReMiniv4final_mjj()
    entry->SetMarkerColor(ci);
    entry->SetMarkerSize(0);
    entry->SetTextFont(62);
-   entry=leg->AddEntry("hmjjdat","#gamma#gamma#rightarrowWW, a^{W}_{C}/#Lambda^{2}=2*10^{-5} GeV^{-2}","lpf");
+   entry=leg->AddEntry("hmjjdat","p#gamma#gammap#rightarrowpWWp, a^{W}_{C}/#Lambda^{2}=2*10^{-5} GeV^{-2}","lpf");
    entry->SetFillStyle(1001);
    ci = TColor::GetColor("#d7191c");
    entry->SetLineColor(ci);

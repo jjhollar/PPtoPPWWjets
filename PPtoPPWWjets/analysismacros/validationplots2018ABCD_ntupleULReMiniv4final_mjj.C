@@ -6414,7 +6414,7 @@ void validationplots2018ABCD_ntupleULReMiniv4final_mjj()
    entry->SetLineWidth(0);
    entry->SetTextFont(62);
    
-   entry=leg->AddEntry("hmjjdat","#gamma#gamma#rightarrowWW, a^{W}_{0}/#Lambda^{2}=1*10^{-6} GeV^{-2}","lpf");
+   entry=leg->AddEntry("hmjjdat","p#gamma#gammap#rightarrowpWWp, a^{W}_{0}/#Lambda^{2}=1*10^{-6} GeV^{-2}","lpf");
    entry->SetFillStyle(1001);
 
    ci = TColor::GetColor("#d7191c");
@@ -6426,7 +6426,7 @@ void validationplots2018ABCD_ntupleULReMiniv4final_mjj()
    entry->SetMarkerColor(ci);
    entry->SetMarkerSize(0);
    entry->SetTextFont(62);
-   entry=leg->AddEntry("hmjjdat","#gamma#gamma#rightarrowWW, a^{W}_{C}/#Lambda^{2}=2*10^{-5} GeV^{-2}","lpf");
+   entry=leg->AddEntry("hmjjdat","p#gamma#gammap#rightarrowpWWp, a^{W}_{C}/#Lambda^{2}=2*10^{-5} GeV^{-2}","lpf");
    entry->SetFillStyle(1001);
 
    ci = TColor::GetColor("#d7191c");

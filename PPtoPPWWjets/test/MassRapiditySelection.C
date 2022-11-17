@@ -131,7 +131,11 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   hmassrapiditymatchsigmcmmww->GetXaxis()->SetRangeUser(-1.5, 0.4);
   hmassrapiditymatchsigmcmmww->GetYaxis()->SetRangeUser(-1.1, 0.9);
   hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitle("1 - m(WW)/m(pp)");
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitleSize(0.05);
+  hmassrapiditymatchsigmcmmww->GetXaxis()->SetTitleOffset(1.0);
   hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitle("y(pp)-y(WW)");
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitleSize(0.05);
+  hmassrapiditymatchsigmcmmww->GetYaxis()->SetTitleOffset(1.0);
   hmassrapiditymatchsigmcmmww->Draw("colz");
 
   TGraphErrors *band1 = new TGraphErrors(4);
@@ -230,33 +234,35 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   diamond->SetFillColor(kGreen);
   diamond->SetFillStyle(3001);
   // diamond->Draw("3same");
-  l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
-  l2->SetLineColor(1); l2->SetLineWidth(3); l2->Draw("same");
-  l3->SetLineColor(1); l3->SetLineWidth(3); l3->Draw("same");
-  l4->SetLineColor(1);l4->SetLineWidth(3); l4->Draw("same");
+  l1->SetLineColor(1); l1->SetLineWidth(5); l1->Draw();
+  l2->SetLineColor(1); l2->SetLineWidth(5); l2->Draw("same");
+  l3->SetLineColor(1); l3->SetLineWidth(5); l3->Draw("same");
+  l4->SetLineColor(1);l4->SetLineWidth(5); l4->Draw("same");
   /*
   l5->SetLineColor(1); l5->SetLineWidth(3); l5->Draw("same");
   l6->SetLineColor(1); l6->SetLineWidth(3); l6->Draw("same");
   l7->SetLineColor(1); l7->SetLineWidth(3); l7->Draw("same");
   l8->SetLineColor(1); l8->SetLineWidth(3); l8->Draw("same");
   */
-  l9->SetLineColor(1); l9->SetLineWidth(3); l9->Draw("same");
-  l10->SetLineColor(1); l10->SetLineWidth(3); l10->Draw("same");
-  l11->SetLineColor(1); l11->SetLineWidth(3); l11->Draw("same");
-  l12->SetLineColor(1); l12->SetLineWidth(3); l12->Draw("same");
+  l9->SetLineColor(1); l9->SetLineWidth(5); l9->Draw("same");
+  l10->SetLineColor(1); l10->SetLineWidth(5); l10->Draw("same");
+  l11->SetLineColor(1); l11->SetLineWidth(5); l11->Draw("same");
+  l12->SetLineColor(1); l12->SetLineWidth(5); l12->Draw("same");
   /*
   l13->SetLineColor(1); l13->SetLineWidth(3); l13->Draw("same");
   l14->SetLineColor(1); l14->SetLineWidth(3); l14->Draw("same");
   l15->SetLineColor(1); l15->SetLineWidth(3); l15->Draw("same");
   l16->SetLineColor(1); l16->SetLineWidth(3); l16->Draw("same");
   */
-  l17->SetLineColor(kRed); l17->SetLineWidth(3); l17->Draw("same");
-  l18->SetLineColor(kRed); l18->SetLineWidth(3); l18->Draw("same");
-  l19->SetLineColor(kRed); l19->SetLineWidth(3); l19->Draw("same");
-  l20->SetLineColor(kRed); l20->SetLineWidth(3); l20->Draw("same");
+  l17->SetLineColor(kRed); l17->SetLineWidth(5); l17->Draw("same");
+  l18->SetLineColor(kRed); l18->SetLineWidth(5); l18->Draw("same");
+  l19->SetLineColor(kRed); l19->SetLineWidth(5); l19->Draw("same");
+  l20->SetLineColor(kRed); l20->SetLineWidth(5); l20->Draw("same");
   c2->cd();
   gPad->SetRightMargin(0.13);
   hmassrapiditymatchsigmcmmww->GetZaxis()->SetTitle("Events / bin");
+  hmassrapiditymatchsigmcmmww->GetZaxis()->SetTitleSize(0.05);
+  hmassrapiditymatchsigmcmmww->GetZaxis()->SetTitleOffset(0.8);
   hmassrapiditymatchsigmcmmww->Draw("colz");
   // band1->Draw("3same");
   // band2->Draw("3same");
@@ -266,41 +272,44 @@ void MassRapiditySelectionWW(TFile *file= new TFile("/eos/cms/store/group/phys_s
   // TPaletteAxis *pal = (TPaletteAxis*)(hmassrapiditymatchsigmcmmww->GetListOfFunctions()->FindObject("palette"));
 
   TLatex latex;
-  latex.DrawLatexNDC(0.15,0.83,"#scale[0.76]{a_{W}^{0}/#Lambda^{2} = 2 #times 10^{-6} GeV^{-2}}");
+  latex.DrawLatexNDC(0.15,0.83,"#scale[0.76]{a_{0}^{W}/#Lambda^{2} = 2 #times 10^{-6} GeV^{-2}}");
+  latex.DrawLatex(0.125,-0.05,"#scale[1.5]{#color[2]{#delta}}");
+  latex.DrawLatex(-0.4,-0.5,"#scale[1.5]{#color[2]{#it{o}}}");
+  latex.DrawLatex(-0.4,0.42,"#scale[1.5]{#color[2]{#it{o}}}");
   c2->Print("MassMatchRatio.pdf");
 
-  l1->SetLineColor(1); l1->SetLineWidth(3); l1->Draw();
-  l2->SetLineColor(1); l2->SetLineWidth(3); l2->Draw("same");
-  l3->SetLineColor(1); l3->SetLineWidth(3); l3->Draw("same");
-  l4->SetLineColor(1);l4->SetLineWidth(3); l4->Draw("same");
+  l1->SetLineColor(kRed); l1->SetLineWidth(5); l1->Draw();
+  l2->SetLineColor(kRed); l2->SetLineWidth(5); l2->Draw("same");
+  l3->SetLineColor(kRed); l3->SetLineWidth(5); l3->Draw("same");
+  l4->SetLineColor(kRed);l4->SetLineWidth(5); l4->Draw("same");
   /*
   l5->SetLineColor(1); l5->SetLineWidth(3); l5->Draw("same");
   l6->SetLineColor(1); l6->SetLineWidth(3); l6->Draw("same");
   l7->SetLineColor(1); l7->SetLineWidth(3); l7->Draw("same");
   l8->SetLineColor(1); l8->SetLineWidth(3); l8->Draw("same");
   */
-  l9->SetLineColor(1); l9->SetLineWidth(3); l9->Draw("same");
-  l10->SetLineColor(1); l10->SetLineWidth(3); l10->Draw("same");
-  l11->SetLineColor(1); l11->SetLineWidth(3); l11->Draw("same");
-  l12->SetLineColor(1); l12->SetLineWidth(3); l12->Draw("same");
+  l9->SetLineColor(kRed); l9->SetLineWidth(5); l9->Draw("same");
+  l10->SetLineColor(kRed); l10->SetLineWidth(5); l10->Draw("same");
+  l11->SetLineColor(kRed); l11->SetLineWidth(5); l11->Draw("same");
+  l12->SetLineColor(kRed); l12->SetLineWidth(5); l12->Draw("same");
   /*
   l13->SetLineColor(1); l13->SetLineWidth(3); l13->Draw("same");
   l14->SetLineColor(1); l14->SetLineWidth(3); l14->Draw("same");
   l15->SetLineColor(1); l15->SetLineWidth(3); l15->Draw("same");
   l16->SetLineColor(1); l16->SetLineWidth(3); l16->Draw("same");
   */
-  l17->SetLineColor(kRed); l17->SetLineWidth(3); l17->Draw("same");
-  l18->SetLineColor(kRed); l18->SetLineWidth(3); l18->Draw("same");
-  l19->SetLineColor(kRed); l19->SetLineWidth(3); l19->Draw("same");
-  l20->SetLineColor(kRed); l20->SetLineWidth(3); l20->Draw("same");
+  l17->SetLineColor(kRed); l17->SetLineWidth(5); l17->Draw("same");
+  l18->SetLineColor(kRed); l18->SetLineWidth(5); l18->Draw("same");
+  l19->SetLineColor(kRed); l19->SetLineWidth(5); l19->Draw("same");
+  l20->SetLineColor(kRed); l20->SetLineWidth(5); l20->Draw("same");
 
   c2->Print("SignalRegionsDefinition.pdf");
-  rotated_1->Draw("colz");
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2*10^{-6} GeV^{-2}");
-  c2->Print("SignalRegionsDefinition_rotated.pdf");
-  proj1->Draw();
-  CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{W}^{0}/#Lambda^{2} = 2*10^{-6} GeV^{-2}");
-  c2->Print("SignalRegionsDefinition_bandFitted.pdf");  
+  // rotated_1->Draw("colz");
+  // CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{0}^{W}/#Lambda^{2} = 2*10^{-6} GeV^{-2}");
+  // c2->Print("SignalRegionsDefinition_rotated.pdf");
+  // proj1->Draw();
+  // CMS_lumi((TPad*)c2->GetPad(0),0,0,"a_{0}^{W}/#Lambda^{2} = 2*10^{-6} GeV^{-2}");
+  // c2->Print("SignalRegionsDefinition_bandFitted.pdf");  
 
 
 
@@ -534,4 +543,8 @@ void MassRapiditySelectionZZ(TFile *file) {
        << band2Center->Eval(0) - sigma_2 << " < Yn < "
        << "Mn/" << TMath::Tan(th_rot2) << " + "
        << band2Center->Eval(0) + sigma_2 << endl;
+}
+
+void MassRapiditySelection(){
+  MassRapiditySelectionWW();
 }
