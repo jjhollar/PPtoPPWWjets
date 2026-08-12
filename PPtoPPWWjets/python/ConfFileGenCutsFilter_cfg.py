@@ -38,7 +38,7 @@ options.nParts = 0
 options.parseArguments() 
 
 if ((options.partNumber == 0) ^ (options.nParts == 0)):
-  print "ERROR: either none or both partNumber and nParts must be set"
+  print("ERROR: either none or both partNumber and nParts must be set")
   sys.exit(1)
 elif ((options.partNumber == 0) & (options.nParts == 0)):
   options.partNumber = 1
@@ -65,12 +65,12 @@ UseMCProtons=True
 
 process = cms.Process('GenCuts')
 
-print "\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n"
+print("\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n")
 
 from signalSamples_v2_cfi import *
-print "Signal sample file list: "
-print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
-print "\n"
+print("Signal sample file list: ")
+print("\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS)))
+print("\n")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 )

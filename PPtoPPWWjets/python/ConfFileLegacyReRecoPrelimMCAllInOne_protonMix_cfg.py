@@ -38,7 +38,7 @@ options.nParts = 0
 options.parseArguments() 
 
 if ((options.partNumber == 0) ^ (options.nParts == 0)):
-  print "ERROR: either none or both partNumber and nParts must be set"
+  print("ERROR: either none or both partNumber and nParts must be set")
   sys.exit(1)
 elif ((options.partNumber == 0) & (options.nParts == 0)):
   options.partNumber = 1
@@ -63,7 +63,7 @@ NPARTS=options.nParts
 DoTheorySystematics=True
 UseMCProtons=True
 
-print "\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n"
+print("\nRunning with year = "+str(YEAR)+" era = "+ERA+" sampleTag = "+SAMPLETAG+"\n")
 
 from Configuration.Eras.Modifier_ctpps_2016_cff import ctpps_2016
 from Configuration.Eras.Modifier_ctpps_2017_cff import ctpps_2017
@@ -142,9 +142,9 @@ if MC == True and YEAR == 2018:
   )
 
 from signalSamples_cfi import *
-print "Signal sample file list: "
-print "\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
-print "\n"
+print("Signal sample file list: ")
+print("\n".join(signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS)))
+print("\n")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(*signalSamples(YEAR,ERA,SAMPLETAG,PARTNUMBER,NPARTS))
 )
@@ -156,9 +156,9 @@ if len(ERA) == 2 and YEAR == 2018:
   pu_ERA = ERA[0]
 
 from pileupSamples_cfi import *
-print "Mixing PU samples: "
-print "\n".join(pileupSamples(YEAR,pu_ERA)[:3])
-print "...\n" 
+print("Mixing PU samples: ")
+print("\n".join(pileupSamples(YEAR,pu_ERA)[:3]))
+print("...\n") 
 
 process.load("protonPreMix.protonPreMix.ctppsProtonMixer_cfi")
 process.ctppsProtonMixer.PUFilesList = cms.vstring(*pileupSamples(YEAR,pu_ERA))
@@ -169,7 +169,7 @@ import FWCore.PythonUtilities.LumiList as LumiList
 if MC == True and YEAR == 2018:
   pu_jsonFile = "/eos/project-c/ctpps/Operations/DataExternalConditions/2018/CMSgolden_2RPGood_anyarms_Era"+ERA+".json"
   process.ctppsProtonMixer.lumisToProcess = LumiList.LumiList(filename = pu_jsonFile).getVLuminosityBlockRange()
-  print "Using JSON file for PU: "+pu_jsonFile+"\n"
+  print("Using JSON file for PU: "+pu_jsonFile+"\n")
 
 # rng service for premixing
 process.RandomNumberGeneratorService.ctppsProtonMixer = cms.PSet(initialSeed = cms.untracked.uint32(42))
@@ -391,9 +391,9 @@ if YEAR == 2018:
 #########################                                                                                                                                                           
 process.load("PPtoPPWWjets.PPtoPPWWjets.CfiFile_cfi")
 process.TFileService = cms.Service("TFileService", fileName = cms.string(OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"))
-print "Output will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root"
-print "Log will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out"
-print ""
+print("Output will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".root")
+print("Log will be saved in: "+OUTPUTDIR+"/ExclWWjets_"+SAMPLETAG+"_Part"+str(PARTNUMBER)+"of"+str(NPARTS)+".out")
+print("")
 
 process.demo = cms.EDAnalyzer('PPtoPPWWjets')
 

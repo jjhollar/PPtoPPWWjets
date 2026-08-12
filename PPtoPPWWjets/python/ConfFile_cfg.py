@@ -310,5 +310,5 @@ process.p = cms.Path(process.hltFilter *
                      # Analyzer
                      process.demo)
 
-print process.dumpPython()
+print(process.dumpPython())
 

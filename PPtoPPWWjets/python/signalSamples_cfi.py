@@ -516,7 +516,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 	elif sampleTag == "ZZ_ACZ5e-5":
 		return ZZ_ACZ5e_5
 	else:
-		print "WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list"
+		print("WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list")
 		return []
 
 	nFiles = len(full_file_list)

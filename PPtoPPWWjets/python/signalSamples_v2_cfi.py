@@ -8730,7 +8730,7 @@ def signalSamples(year,era,sampleTag,i_sublists,n_sublists):
 	elif sampleTag == "SM_WW":
 		full_file_list = SM_WW[year]
 	else:
-		print "WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list"
+		print("WARNING: sampleTag"+sampleTag+"not recognized. Returning empty file list")
 		return []
 
 	nFiles = len(full_file_list)

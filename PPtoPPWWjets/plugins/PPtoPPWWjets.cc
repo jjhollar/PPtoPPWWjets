@@ -64,6 +64,7 @@
 
 #include "CondFormats/RunInfo/interface/LHCInfo.h"
 #include "CondFormats/DataRecord/interface/LHCInfoRcd.h"
+#include "CondTools/RunInfo/interface/LHCInfoCombined.h"
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
@@ -113,6 +114,12 @@ class PPtoPPWWjets : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT< GenEventInfoProduct > geneventToken_; 
   edm::EDGetTokenT<LHEEventProduct > lheEventProductToken_;
 
+  edm::ESGetToken<LHCInfo, LHCInfoRcd> lhcInfoToken_;
+  edm::ESGetToken<LHCInfoPerLS, LHCInfoPerLSRcd> lhcInfoPerLSToken_;
+  edm::ESGetToken<LHCInfoPerFill, LHCInfoPerFillRcd> lhcInfoPerFillToken_;
+
+  bool useNewLHCInfo_;
+  
   TTree * tree_;
 
 
@@ -281,29 +288,32 @@ PPtoPPWWjets::PPtoPPWWjets(const edm::ParameterSet& iConfig) :
   gen_jet_token_(consumes<reco::GenJetCollection>(edm::InputTag("ak8GenJets"))),
   geneventToken_            (consumes<GenEventInfoProduct>(edm::InputTag("generator"))),     
   lheEventProductToken_       (consumes<LHEEventProduct>(edm::InputTag("externalLHEProducer"))),     
+  lhcInfoToken_(esConsumes<LHCInfo, LHCInfoRcd>(edm::ESInputTag{"", iConfig.getParameter<std::string>("lhcInfoLabel")})),
+  lhcInfoPerLSToken_(esConsumes<LHCInfoPerLS, LHCInfoPerLSRcd>(edm::ESInputTag{"", iConfig.getParameter<std::string>("lhcInfoPerLSLabel")})),
+  lhcInfoPerFillToken_(esConsumes<LHCInfoPerFill, LHCInfoPerFillRcd>(edm::ESInputTag{"", iConfig.getParameter<std::string>("lhcInfoPerFillLabel")})),
   hltPrescaleProvider_(iConfig, consumesCollector(), *this)
-
+  
 {
-   //now do what ever initialization is needed
-   usesResource("TFileService");
-
-   //now do what ever initialization is needed                                                                                                                     
-
-   isMC = iConfig.getParameter<bool>("isMC");
-   year = iConfig.getParameter<int>("year");
-   era = iConfig.getParameter<std::string>("era");
-   doMCTheorySystematics = iConfig.getParameter<bool>("doMCTheorySystematics");
-   useMCProtons = iConfig.getParameter<bool>("useMCProtons");
-
-   if(isMC == true)
-     {
-       mcPileupFile = iConfig.getParameter<std::string>("mcPileupFile");
-       dataPileupFile = iConfig.getParameter<std::string>("dataPileupFile");
-       LumiWeights = new edm::LumiReWeighting(mcPileupFile, dataPileupFile, "pileup", "pileup");
-     }
-                                  
-   std::vector<std::string> jecAK8PayloadNames_;
-
+  //now do what ever initialization is needed
+  usesResource("TFileService");
+  
+  //now do what ever initialization is needed                                                                                                                     
+  
+  isMC = iConfig.getParameter<bool>("isMC");
+  year = iConfig.getParameter<int>("year");
+  era = iConfig.getParameter<std::string>("era");
+  doMCTheorySystematics = iConfig.getParameter<bool>("doMCTheorySystematics");
+  useMCProtons = iConfig.getParameter<bool>("useMCProtons");
+  
+  if(isMC == true)
+    {
+      mcPileupFile = iConfig.getParameter<std::string>("mcPileupFile");
+      dataPileupFile = iConfig.getParameter<std::string>("dataPileupFile");
+      LumiWeights = new edm::LumiReWeighting(mcPileupFile, dataPileupFile, "pileup", "pileup");
+    }
+  
+  std::vector<std::string> jecAK8PayloadNames_;
+  
    /* 2017 */
    if(isMC==false && year==2017 && era == "B")
      {
@@ -458,7 +468,7 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    const edm::TriggerNames & trigNames = iEvent.triggerNames(*hltResults);
    for(unsigned int i=0; i<trigNames.size();i++)
      {
-       int prescale_value=hltPrescaleProvider_.prescaleValue(iEvent, iSetup,trigNames.triggerName(i));
+       int prescale_value=hltPrescaleProvider_.prescaleValue<double>(iEvent, iSetup,trigNames.triggerName(i));
        //       int result = hltResults->accept(i);
        std::string TriggerName = trigNames.triggerName(i);
        if((hltResults->accept(i)>0)&&(prescale_value==1))
@@ -671,15 +681,15 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        
        for ( const auto& trk : *ppsTracks ) 
 	 {
-	   const CTPPSDetId detid( trk.getRPId() );
+	   const CTPPSDetId detid( trk.rpId() );
 	   
 	   // transform the raw, 32-bit unsigned integer detId into the TOTEM "decimal" notation
 	   const unsigned short raw_id = 100*detid.arm()+10*detid.station()+detid.rp();
 
-	   (*pps_track_x_).push_back(trk.getX());
-	   (*pps_track_y_).push_back(trk.getY());
+	   (*pps_track_x_).push_back(trk.x());
+	   (*pps_track_y_).push_back(trk.y());
 	   (*pps_track_rpid_).push_back(raw_id);
-	   (*pps_track_time_).push_back(trk.getTime());
+	   (*pps_track_time_).push_back(trk.time());
 	 }
 
        // Full reco protons
@@ -720,17 +730,17 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	       t = proton.t();
 	       time = proton.time(); 
 
-	       trackx1 = (*proton.contributingLocalTracks().begin())->getX();
-	       tracky1 = (*proton.contributingLocalTracks().begin())->getY();
+	       trackx1 = (*proton.contributingLocalTracks().begin())->x();
+	       tracky1 = (*proton.contributingLocalTracks().begin())->y();
 
-	       CTPPSpixelLocalTrackReconstructionInfo pixtrackinfo1 = (*proton.contributingLocalTracks().begin())->getPixelTrackRecoInfo();
+	       CTPPSpixelLocalTrackReconstructionInfo pixtrackinfo1 = (*proton.contributingLocalTracks().begin())->pixelTrackRecoInfo();
 	       if(pixtrackinfo1 == CTPPSpixelLocalTrackReconstructionInfo::notShiftedRun || pixtrackinfo1 == CTPPSpixelLocalTrackReconstructionInfo::noShiftedPlanes || 
 		  pixtrackinfo1 == CTPPSpixelLocalTrackReconstructionInfo::invalid)
 		 pixshift1 = 0;
 	       else
 		 pixshift1 = 1;
 
-	       CTPPSDetId rpId((*proton.contributingLocalTracks().begin())->getRPId());
+	       CTPPSDetId rpId((*proton.contributingLocalTracks().begin())->rpId());
 	       decRPId = rpId.arm()*100 + rpId.station()*10 + rpId.rp();
 	       ismultirp = 0;
 
@@ -767,15 +777,15 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	       int ij=0;
 	       for (const auto &tr : proton.contributingLocalTracks())
 		 {
-		   CTPPSDetId rpIdJ(tr->getRPId());
+		   CTPPSDetId rpIdJ(tr->rpId());
 		   unsigned int rpDecIdJ = rpIdJ.arm()*100 + rpIdJ.station()*10 + rpIdJ.rp();
 
-		   CTPPSpixelLocalTrackReconstructionInfo pixtrackinfo = (*proton.contributingLocalTracks().begin())->getPixelTrackRecoInfo();
+		   CTPPSpixelLocalTrackReconstructionInfo pixtrackinfo = (*proton.contributingLocalTracks().begin())->pixelTrackRecoInfo();
 
 		   if(ij == 0)
 		     {
-		       trackx1 = tr->getX();
-		       tracky1 = tr->getY();
+		       trackx1 = tr->x();
+		       tracky1 = tr->y();
 		       trackrpid1 = rpDecIdJ;
 		       armId = rpIdJ.arm();
 		       if(pixtrackinfo == CTPPSpixelLocalTrackReconstructionInfo::notShiftedRun || pixtrackinfo == CTPPSpixelLocalTrackReconstructionInfo::noShiftedPlanes ||
@@ -786,8 +796,8 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     }
 		   if(ij == 1)
 		     {
-		       trackx2 = tr->getX();
-		       tracky2 = tr->getY();
+		       trackx2 = tr->x();
+		       tracky2 = tr->y();
 		       trackrpid2 = rpDecIdJ;
 		       if(pixtrackinfo == CTPPSpixelLocalTrackReconstructionInfo::notShiftedRun || pixtrackinfo == CTPPSpixelLocalTrackReconstructionInfo::noShiftedPlanes ||
 			  pixtrackinfo == CTPPSpixelLocalTrackReconstructionInfo::invalid)
@@ -821,29 +831,36 @@ PPtoPPWWjets::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     }
 	 }
      }
-
+   
    // Run and vertex multiplicity info
    *run_ = iEvent.id().run();
    *ev_ = iEvent.id().event();
    *lumiblock_ = iEvent.luminosityBlock();
-
+   
    // Crossing angle information from DB - available for all years in legacy re-RECO
+   /*
    if((year == 2018 || year == 2017 || year == 2016) && (isMC == false || useMCProtons == true))
      {
        edm::ESHandle<LHCInfo> pSetup;
        const string label = "";
        iSetup.get<LHCInfoRcd>().get(label, pSetup);
-      
+       
        // re-initialise algorithm upon crossing-angle change                                                                                            
        const LHCInfo* pInfo = pSetup.product();
        *crossingangle_ = pInfo->crossingAngle();
      }
    else
      *crossingangle_ = -999;
-
+     */
+   
+   // Run 3
+   useNewLHCInfo_ = true; 
+   LHCInfoCombined lhcInfoCombined(iSetup, lhcInfoPerLSToken_, lhcInfoPerFillToken_, lhcInfoToken_, useNewLHCInfo_);   
+   *crossingangle_ = lhcInfoCombined.crossingAngle();
+   
    *nVertices_=-1;
    *nVertices_=vertices_->size();
-
+   
    // Fill pileup reweighting info if running on MC
    *pileupWeight_=1;
    *mc_pu_trueinteractions_=-1;
